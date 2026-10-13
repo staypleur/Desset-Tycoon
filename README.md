@@ -94,3 +94,9 @@ Rojo의 `default.project.json`은 기본 자동 생성 맵과 구역 할당기�
 `tests/CleanPlotLayout.studio.luau`는 새 구역 크기·구역 겹침·섬 경계·카페·합성 보드·보이지 않는 마커·영어 문구를 검사합니다. `tests/FreshCleanPlots.studio.luau`는 빈 구역 생성과 기존 카페 템플릿 재사용을 검사합니다. 이전 EntranceCafeLayout/ConveyorLayout 테스트는 과거 배치용입니다. `tests/DessertProduction.studio.luau`는 임시 구역과 모의 플레이어로 구매, 소유권/거리/돈/칸 제한, 합성, 상품 도착, 수집, 중복 수집 방지, 소유자 변경 정리를 검사합니다. 테스트는 편집 모드 Command Bar에서 실행하며 런타임 Script로 넣지 마세요.
 
 디자인은 독자적인 디저트 테마이며 다른 게임의 모델/이미지를 복사하지 않습니다.
+
+## 조경과 지형 (v9)
+
+`ReplicatedStorage.IslandLandscape`는 넓은 바닥 재질, 구역 사이 언덕 정원, 카페 테라스와 소품을 추가합니다. `tools/LandscapeIslandInStudio.luau`는 저장된 맵에 이미 적용했습니다. `tests/IslandLandscape.studio.luau`는 장식의 스크립트·충돌 여부와 구매/합성/펫 위치를 가리지 않는지 검사합니다.
+
+기본 생성기는 같은 지형 재질과 언덕을 만듭니다. 전체 무료 에셋 장식은 `DessertIsland.rbxlx`의 ServerStorage 템플릿을 포함하므로 저장된 장소를 사용하세요. 소품은 장식용이며 좌석·진열장은 추가 게임 기능을 제공하지 않습니다.

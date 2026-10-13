@@ -9,6 +9,9 @@
       },
       "TycoonPlotLayout": {
         "$path": "src/shared/TycoonPlotLayout.luau"
+      },
+      "IslandLandscape": {
+        "$path": "src/shared/IslandLandscape.luau"
       }
     },
     "ServerScriptService": {

@@ -87,3 +87,13 @@
 - Added shared TycoonPlotLayout so the fresh map generator builds the same layout directly without temporary grid parts. Added layout readiness guards for server startup. Saved Studio scripts match repository sources.
 - PASS in Studio: CleanPlotLayout geometry/English checks, FreshCleanPlots empty-plot/template reuse checks, PlotAllocator ownership/queue/respawn tests, DessertProduction purchase/merge/arrival/collection/cleanup tests with the new transport path. Actual Play showed one starter pudding, two moving products and $19 pending income. UI purchase prompts were verified through the mocked economy integration test rather than manual button interaction.
 - Legacy EntranceCafeLayout/ConveyorLayout tests remain as historical layout checks and are superseded by CleanPlotLayout for the current map.
+
+## 2026-10-14 — Free asset landscaping (map v9)
+
+- Searched Studio Toolbox cafe tables plus official Creator Store furniture, lamps, display cases, bakery props, terrain, grass, rocks and trees. Selected five free model packs/props; no purchases. Detached Toolbox WebView rejected remote clicks, so imports used the editor GetObjects API with verified Creator Store IDs. No security settings were changed.
+- Added 12 table/chair sets, 12 warm lamps, six pastry cases with heart cakes, grass tufts, rocks and low-poly ground banks. Reused existing free flowers, benches and sakura templates. Imported assets contained no scripts or package links.
+- Replaced flat plastic-looking ground materials with broad grass, limestone paths and wood cafe terraces; added six sculpted pocket gardens with rounded hills and mesh banks between plots. Kept the 96x120 player bases, thirty invisible slots per player, conveyors, side merge boards, and future central-model reserve. No SmoothTerrain voxels were changed.
+- Added IslandLandscape shared module, editor migration/import tools and source attribution. Fresh generation applies the same native ground treatment; the complete free-model set is stored in DessertIsland.rbxlx.
+- Studio visual inspection and LandscapeTest/CleanPlotTest/DessertProduction integration tests passed. Props are anchored and non-blocking, and do not cover pet markers, purchase pads or merge-board centers. Economy retains session-only behavior.
+
+Actual Play also confirmed successful plot assignment/spawn on the landscaped forecourt, visible garden props and the English game labels.
