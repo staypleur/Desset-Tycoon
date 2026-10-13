@@ -3,7 +3,7 @@
 local Lighting = game:GetService("Lighting")
 local Workspace = game:GetService("Workspace")
 
-local CONFIG = { PlotCount = 6, PlotRadius = 70, IslandRadius = 116, Seed = 31415 }
+local CONFIG = { PlotCount = 6, PlotRadius = 108, IslandRadius = 174, Seed = 31415 }
 local C = {
 	pink = Color3.fromRGB(255, 193, 218), lavender = Color3.fromRGB(211, 198, 248),
 	mint = Color3.fromRGB(185, 235, 211), cream = Color3.fromRGB(255, 245, 224),
@@ -83,16 +83,16 @@ local function face(parent, origin, scale)
 end
 
 local base = group("FloatingIsland")
-disc("LavenderCakeLayer", 218, 10, Vector3.new(0, -14, 0), C.lavender, base)
-disc("PinkCakeLayer", 232, 10, Vector3.new(0, -6, 0), C.pink, base)
-disc("MintIcingGround", 232, 2, Vector3.new(0, -1, 0), C.mint, base)
-ball("RoundedUnderside", Vector3.new(202, 34, 202), Vector3.new(0, -23, 0), C.lavender, base)
+disc("LavenderCakeLayer", 327, 10, Vector3.new(0, -14, 0), C.lavender, base)
+disc("PinkCakeLayer", 348, 10, Vector3.new(0, -6, 0), C.pink, base)
+disc("MintIcingGround", 348, 2, Vector3.new(0, -1, 0), C.mint, base)
+ball("RoundedUnderside", Vector3.new(303, 34, 303), Vector3.new(0, -23, 0), C.lavender, base)
 for i = 1, 48 do
 	local a = i * math.pi * 2 / 48
-	ball("ScallopedIcing", Vector3.new(12, 5, 12), Vector3.new(math.cos(a) * 110, -1.8, math.sin(a) * 110), C.mint, base)
+	ball("ScallopedIcing", Vector3.new(18, 5, 18), Vector3.new(math.cos(a) * 165, -1.8, math.sin(a) * 165), C.mint, base)
 	-- Invisible continuous fence protects players from the floating island's edge.
-	local cf = CFrame.new(math.cos(a) * 114, 6, math.sin(a) * 114) * CFrame.Angles(0, -a, 0)
-	local barrier = part("EdgeSafety", Vector3.new(2, 14, 16), cf, C.white, base)
+	local cf = CFrame.new(math.cos(a) * 171, 6, math.sin(a) * 171) * CFrame.Angles(0, -a, 0)
+	local barrier = part("EdgeSafety", Vector3.new(3, 14, 24), cf, C.white, base)
 	barrier.Transparency = 1
 	barrier.CastShadow = false
 end
@@ -169,7 +169,7 @@ for i = 1, CONFIG.PlotCount do
 	local function pp(name, size, pos, color, solid)
 		return part(name, size, cf * CFrame.new(pos), color, plot, nil, solid)
 	end
-	part("CreamPath", Vector3.new(9, 0.3, 30), CFrame.lookAt(radial * 38, Vector3.zero) + Vector3.new(0, 0.18, 0), C.cream, paths)
+	part("CreamPath", Vector3.new(10, 0.3, 66), CFrame.lookAt(radial * 57, Vector3.zero) + Vector3.new(0, 0.18, 0), C.cream, paths)
 	pp("PastelBoundary", Vector3.new(43, 0.6, 39), Vector3.new(0, 0.4, 0), palette[i])
 	plot.PrimaryPart = pp("PlotFloor", Vector3.new(40, 0.3, 36), Vector3.new(0, 0.85, 0), C.white)
 	for _, x in ipairs({ -21, 21 }) do
@@ -214,7 +214,7 @@ local function tree(pos, color)
 end
 for i = 1, 24 do
 	local a = (i - 0.5) * math.pi * 2 / 24
-	local pos = Vector3.new(math.sin(a) * 101, 0, math.cos(a) * 101)
+	local pos = Vector3.new(math.sin(a) * 163, 0, math.cos(a) * 163)
 	tree(pos, palette[(i - 1) % #palette + 1])
 	for j = 1, 3 do
 		ball("MarshmallowBush", Vector3.new(3.5, 2.5, 3.5), pos + Vector3.new(j * 2 - 4, 1.1, 5), C.white, garden)
@@ -233,7 +233,7 @@ end
 -- Distant cloud puffs have no collision and no external asset dependencies.
 for i = 1, 10 do
 	local a = i * math.pi * 2 / 10
-	local pos = Vector3.new(math.sin(a) * 151, rng:NextNumber(-16, -5), math.cos(a) * 151)
+	local pos = Vector3.new(math.sin(a) * 226, rng:NextNumber(-16, -5), math.cos(a) * 226)
 	for j = -1, 1 do
 		ball("SugarCloud", Vector3.new(18, 8, 12), pos + Vector3.new(j * 10, j == 0 and 2 or 0, 0), C.white, garden)
 	end

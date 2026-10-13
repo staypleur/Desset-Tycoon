@@ -6,7 +6,7 @@ local Workspace = game:GetService("Workspace")
 
 local CONFIG = {
 	PlotCount = 6,
-	Radius = 70, -- studs from CentralShop:GetPivot(), measured horizontally
+	Radius = 108, -- studs from CentralShop:GetPivot(), measured horizontally
 	StartAngleDegrees = 0,
 	ModelWaitSeconds = 30,
 	CharacterWaitSeconds = 10,

@@ -2,6 +2,10 @@
   "name": "DessertTycoon",
   "tree": {
     "$className": "DataModel",
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "DessertCatalog": { "$path": "src/shared/DessertCatalog.luau" }
+    },
     "ServerScriptService": {
       "$className": "ServerScriptService",
       "DessertIsland": { "$path": "src/server/DessertIsland.server.luau" },

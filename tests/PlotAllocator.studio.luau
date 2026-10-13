@@ -66,7 +66,7 @@ local ok, err = pcall(function()
 	for i = 1, 6 do
 		assert(initial[i].attributes.PlotId == i, "Unique assignment failed")
 		local pos = folder["Plot" .. i]:GetPivot().Position
-		assert(math.abs(Vector2.new(pos.X - 100, pos.Z + 200).Magnitude - 70) < 0.01, "Shop-relative radius failed")
+		assert(math.abs(Vector2.new(pos.X - 100, pos.Z + 200).Magnitude - 108) < 0.01, "Shop-relative radius failed")
 		assert(math.abs(pos.Y - 5) < 0.01, "Ground height was changed")
 	end
 	assert(initial[7].attributes.WaitingForPlot and not initial[7].attributes.PlotId, "Full server queue failed")
