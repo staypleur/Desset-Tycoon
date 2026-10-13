@@ -1,0 +1,10 @@
+{
+  "name": "DessertTycoon",
+  "tree": {
+    "$className": "DataModel",
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+      "DessertIsland": { "$path": "src/server/DessertIsland.server.luau" }
+    }
+  }
+}

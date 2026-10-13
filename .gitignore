@@ -1,0 +1,5 @@
+*.rbxl
+*.rbxl.lock
+*.rbxlx.lock
+*.autosave
+.DS_Store
