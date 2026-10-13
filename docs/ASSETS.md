@@ -4,10 +4,10 @@
 
 | Creator Store 표시 이름 | 제작자 | 적용 |
 | --- | --- | --- |
-| [Low poly Bench](https://create.roblox.com/store/asset/8924251735) | I4supraa | 중앙 광장의 파스텔 벤치 6개 |
-| [Low Poly Flower](https://create.roblox.com/store/asset/16071638063) | Dashon907AK | 개인 구역 화단 48개 + 중앙 화분 12개 |
+| [Low poly Bench](https://create.roblox.com/store/asset/8924251735) | I4supraa | 템플릿 보관; 중앙을 비우면서 벤치 배치 해제 |
+| [Low Poly Flower](https://create.roblox.com/store/asset/16071638063) | Dashon907AK | 개인 구역 화단 48개; 중앙 화분 배치 해제 |
 | [Sakura Tree](https://create.roblox.com/store/asset/3725991689) | plentune | 확장된 외곽 정원의 벚꽃 나무 12그루 |
-| [Heart Cake](https://create.roblox.com/store/asset/11382290827/Heart-Cake) | Taiyon | 중앙 가게 옆 2개 + 개인 구역 6개의 장식 케이크 |
+| [Heart Cake](https://create.roblox.com/store/asset/11382290827/Heart-Cake) | Taiyon | 개인 구역 카페 근처 장식 케이크 6개 |
 
 원본 템플릿은 장소 파일의 `ServerStorage.FreeBenchTemplate`, `ServerStorage.FreeFlowerTemplate`에 보관했습니다. Creator/SourceTitle 속성도 기록했습니다. 소품의 형태를 유지하고 색상, 재질, 크기를 디저트 섬 테마에 맞췄습니다.
 

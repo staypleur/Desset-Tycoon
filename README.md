@@ -14,17 +14,17 @@ Rojo의 `default.project.json`은 기본 자동 생성 맵과 구역 할당기�
 ## 맵 구성
 
 - 민트 아이싱, 핑크/라벤더 케이크 층의 둥근 공중 섬
-- 중앙 스폰, 줄무늬 차양 디저트 가게, 얼굴이 있는 대형 푸딩
+- 중앙 스폰과 비어 있는 중앙 전시 공간, 개인 카페의 줄무늬 차양과 얼굴이 있는 대형 푸딩
 - 중앙에서 60도 간격으로 배치한 동일 크기의 6개 구역과 크림색 길
 - 각 구역은 70×70 studs이며 중앙 통로 양쪽에 생산 트레이 5개씩 배치했습니다. 트레이마다 디저트 자리 3개로 총 30칸입니다.
 - 입구에 1/5/25/100개 구매 버튼 자리와 합성 보드(슬롯 3개)를 배치했습니다. 버튼은 아직 실제 구매 기능과 연결되지 않았습니다.
-- 각 구역 안쪽 끝에 입구를 바라보는 개인 디저트 가게를 배치했습니다. 가게 옆에는 수익 받기·디저트 상자 자리가 있습니다. 중앙 가게는 원형 배치 기준으로 유지합니다.
+- 중앙 카페의 원래 모습(대형 푸딩 포함)을 각 구역 입구에 하나씩 배치했습니다. 카페는 중앙을 등지고 생산 구역을 바라보며, 구매·합성·수익·상자 발판은 카페 주변에 모았습니다. 옆쪽 입구로 카페를 돌아 들어갑니다.
 - 솜사탕 나무 24그루, 마시멜로 덤불, 설탕 꽃, 구름
 - 오후 2시 조명, 약한 블러/색 보정/블룸, 따뜻한 반짝임과 하트 장식
 - 투명한 섬 가장자리 안전벽
-- 무료 Creator Store 벤치 6개, 꽃 모델 60개, 개인 구역 입구와 소유자 표지판
+- 무료 Creator Store 꽃 모델 48개, 개인 카페 소유자 표지판 (벤치 템플릿은 보관)
 - 무료 벚꽃 나무 12그루와 확장된 원형 섬(지름 348 studs)
-- 무료 하트 케이크 모델 전시 장식 8개
+- 무료 하트 케이크 모델 전시 장식 6개
 
 ## 자동 구역 배정 시스템
 
@@ -54,9 +54,10 @@ Rojo의 `default.project.json`은 기본 자동 생성 맵과 구역 할당기�
 | MergeBoard / RequiredCount = 3 | 동일 디저트 3개 합성 기능 연결 |
 | ProductionBeds.LeftRow1–5 / RightRow1–5 | 중앙 통로 양쪽의 생산 트레이 |
 | PurchaseButtons.Buy1 / Buy5 / Buy25 / Buy100 | PurchaseCount 속성을 가진 구매 버튼 자리 (GameplayConnected=false) |
-| PersonalShopArea.DessertShop | 각 구역의 개인 가게, PlotId 속성으로 구역 식별 |
+| PersonalShopArea.DessertCafe | 각 구역 입구의 전체 카페, PlotId 속성으로 구역 식별 |
 | PersonalShopArea.CollectIncome / DessertCrate | 수익 수집·랜덤 상자 연결 자리 (GameplayConnected=false) |
-| CentralHub.CentralShop | 원형 배치의 기준점, 향후 랜덤 상자/상점 연결 |
+| CentralHub.CentralShop.CenterAnchor | 원형 배치 기준점을 유지하는 투명 Part; 이동 시 다음 서버에서 반영 |
+| CentralHub.CentralDisplay | 나중에 제공할 중앙 모델을 넣을 빈 Model; 기준점과 독립적 |
 
 현재는 **맵과 구역 배정**을 구현했습니다. 생산, 화폐, 랜덤 상자, 실제 합성, 데이터 저장은 아직 구현하지 않았습니다. 젤리 마스코트는 장식입니다.
 
@@ -79,5 +80,7 @@ Rojo의 `default.project.json`은 기본 자동 생성 맵과 구역 할당기�
 `tools/RestyleProductionPlotsInStudio.luau`는 저장된 확장 맵을 이미지 참고 배치로 바꾼 편집용 도구입니다. Play를 정지한 뒤 Command Bar에서 실행하며, 저장된 장소에는 이미 적용되어 있습니다. 기본 생성기와 별개입니다.
 
 `tools/AddPersonalShopsInStudio.luau`는 생산 줄 간격을 조정하고 개인 가게 6개를 추가한 후 구역 경계 및 생산 구역과의 분리를 검증합니다. 저장된 장소에는 이미 적용되어 있습니다.
+
+최신 배치는 `tools/MoveCafesToEntrancesInStudio.luau`를 적용한 입구 카페 버전입니다. 원래 카페 소스는 `ServerStorage.CentralCafeTemplate`에 보관합니다. `tests/EntranceCafeLayout.studio.luau`는 중앙 예약 공간, 카페 방향, 디저트 자리 180개, 주변 발판 분리를 검사합니다. 런타임 Script로 넣지 마세요.
 
 디자인은 독자적인 디저트 테마이며 다른 게임의 모델/이미지를 복사하지 않습니다.
