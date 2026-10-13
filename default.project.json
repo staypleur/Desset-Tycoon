@@ -9,7 +9,8 @@
     "ServerScriptService": {
       "$className": "ServerScriptService",
       "DessertIsland": { "$path": "src/server/DessertIsland.server.luau" },
-      "PlotAllocator": { "$path": "src/server/PlotAllocator.server.luau" }
+      "PlotAllocator": { "$path": "src/server/PlotAllocator.server.luau" },
+      "DessertProduction": { "$path": "src/server/DessertProduction.server.luau" }
     }
   }
 }

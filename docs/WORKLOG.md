@@ -69,3 +69,12 @@
 - 카페 경계 검사 실패 뒤 Studio의 오류 상태에서 새 인스턴스와 기존 이동 상태가 달라지는 것을 확인했습니다. 원래 생성기의 카페 부분만 복구해 수정 배치를 완료했습니다. 섬 전체는 재생성하지 않았습니다.
 - 검증 PASS: 빈 중앙 공간, 고유한 중심 모델, 입구에서 안쪽을 바라보는 푸딩 카페 6개, 디저트 자리 180개, 서비스 발판의 구역 내 배치 및 상호 분리.
 - 저장된 XML에서도 전체 카페/푸딩 6개와 디저트 자리 180개를 확인했습니다. 실제 Play에서 투명 중심 기준점으로 할당기가 시작되고 Plot1 옆쪽 입구에 정상 스폰하는 것을 확인했습니다. 기존 할당기 소스는 변경하지 않았습니다.
+
+## 2026-10-14 — English game text and dessert conveyor production
+
+- Converted all game-facing labels and the thirty-tier catalog to English. Cafe ownership uses the Roblox username rather than the localized display name. Updated older editing utilities to emit English labels as well.
+- Kept the 70x70 plots and built ten lower feed channels plus one main conveyor per plot. Raised the production shelves, added footbridges, and moved decorative mascots out of the active lanes. Island expansion was unnecessary for this layout.
+- Added DessertProduction: one starter pudding and $25, $5 pudding purchases, five-second production, rolling miniature pudding products, arrival-only pending income, collection prompts, and three-to-one tier merges.
+- Server checks cover owner identity, living character/distance, rate limits, cash and thirty-slot capacity. Returning a plot clears pets and in-flight products. Data is session-only; crates and persistence are not implemented. Higher tiers currently reuse tinted pudding models.
+- Layout/English and existing allocator tests passed. Actual Play displayed the starter pudding and accumulating income (one sample: 34 pending, 25 cash). A numeric concatenation syntax error was caught before map mutation and fixed. The economy test's CFrame expression was corrected before it passed purchase, merge, transport, collection, ownership and cleanup cases.
+- Final miniature pudding Model transport also passed the full production integration test. Prompts were tested through mock Triggered callbacks; the actual client Play check covered startup, pet display and income arrival, not a six-client load test. Saved production/allocator/catalog sources were checked against repository files.

@@ -71,7 +71,7 @@ for i = 1, 6 do
 	board.Size, board.CFrame = Vector3.new(10, .4, 7), at(0, .55, -22)
 	board.Color = Color3.fromRGB(206, 198, 237)
 	if board:FindFirstChild("Label") then board.Label.Enabled = false end
-	sign(board, "합성 · 3 → 1", 9)
+	sign(board, "Merge 3 into 1", 9)
 	board:SetAttribute("RequiredCount", 3)
 	for n = 1, 3 do
 		local p = plot:FindFirstChild("MergeSlot" .. n)
@@ -88,7 +88,7 @@ for i = 1, 6 do
 		local p = part(buttons, "Buy" .. count, Vector3.new(7.2, .35, 5.2), at(x, .65, -22), n == 1 and Color3.fromRGB(174, 229, 192) or tint)
 		p:SetAttribute("PurchaseCount", count)
 		p:SetAttribute("GameplayConnected", false)
-		sign(p, count .. "개 구매", 7)
+		sign(p, "Buy " .. count, 7)
 	end
 	-- Move flowers away from the new beds, retaining the imported assets.
 	local flowerCounts = { [true] = 0, [false] = 0 }

@@ -65,8 +65,8 @@ for i = 1, 6 do
 			p.Text = "DESSERT " .. string.format("%02d", i)
 		end
 	end
-	pad(area, "CollectIncome", at(-15, .45, 25), Color3.fromRGB(181, 231, 201), "수익 받기")
-	pad(area, "DessertCrate", at(15, .45, 25), Color3.fromRGB(239, 215, 168), "디저트 상자")
+	pad(area, "CollectIncome", at(-15, .45, 25), Color3.fromRGB(181, 231, 201), "Collect Earnings")
+	pad(area, "DessertCrate", at(15, .45, 25), Color3.fromRGB(239, 215, 168), "Dessert Crate - Coming Soon")
 	local terrace = Instance.new("Part")
 	terrace.Name, terrace.Size, terrace.CFrame = "ShopCourtyard", Vector3.new(24, .1, 4), at(0, .24, 18.5)
 	terrace.Anchored, terrace.CanCollide, terrace.CanTouch = true, false, false
