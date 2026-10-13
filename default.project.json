@@ -4,7 +4,8 @@
     "$className": "DataModel",
     "ServerScriptService": {
       "$className": "ServerScriptService",
-      "DessertIsland": { "$path": "src/server/DessertIsland.server.luau" }
+      "DessertIsland": { "$path": "src/server/DessertIsland.server.luau" },
+      "PlotAllocator": { "$path": "src/server/PlotAllocator.server.luau" }
     }
   }
 }

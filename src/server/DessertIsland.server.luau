@@ -110,7 +110,7 @@ spawn.Duration = 0
 spawn.Parent = hub
 label(spawn, "Welcome to Sugar Island!", 280, 40, Vector3.new(0, 3, 0))
 
-local shop = group("DessertShop", hub)
+local shop = group("CentralShop", hub)
 part("ShopFloor", Vector3.new(24, 0.5, 18), CFrame.new(0, 1, -6), C.white, shop)
 part("BackWall", Vector3.new(24, 10, 1), CFrame.new(0, 6, -14.5), C.peach, shop)
 for _, x in ipairs({ -11.5, 11.5 }) do
@@ -162,7 +162,7 @@ for i = 1, CONFIG.PlotCount do
 	local radial = Vector3.new(math.sin(angle), 0, math.cos(angle))
 	local origin = radial * CONFIG.PlotRadius
 	local cf = CFrame.lookAt(origin, Vector3.zero)
-	local plot = group(string.format("Plot%02d", i), plots)
+	local plot = group("Plot" .. i, plots)
 	plot:SetAttribute("PlotId", i)
 	plot:SetAttribute("OwnerUserId", 0)
 	plot:SetAttribute("Theme", names[i])
@@ -171,7 +171,7 @@ for i = 1, CONFIG.PlotCount do
 	end
 	part("CreamPath", Vector3.new(9, 0.3, 30), CFrame.lookAt(radial * 38, Vector3.zero) + Vector3.new(0, 0.18, 0), C.cream, paths)
 	pp("PastelBoundary", Vector3.new(43, 0.6, 39), Vector3.new(0, 0.4, 0), palette[i])
-	pp("PlotFloor", Vector3.new(40, 0.3, 36), Vector3.new(0, 0.85, 0), C.white)
+	plot.PrimaryPart = pp("PlotFloor", Vector3.new(40, 0.3, 36), Vector3.new(0, 0.85, 0), C.white)
 	for _, x in ipairs({ -21, 21 }) do
 		pp("SideFence", Vector3.new(0.6, 1.2, 38), Vector3.new(x, 1.4, 0), palette[i])
 	end

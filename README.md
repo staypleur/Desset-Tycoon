@@ -5,11 +5,11 @@
 ## 실행
 
 1. `DessertIsland.rbxlx`를 Roblox Studio에서 엽니다.
-2. 저장된 파일에는 편집용 맵이 포함되어 있습니다. Play를 누르면 `ServerScriptService.DessertIsland`가 같은 맵을 다시 생성합니다.
+2. 저장된 파일에는 꾸민 맵과 `ServerScriptService.PlotAllocator`가 포함되어 있습니다. Play를 누르면 자동 구역 배정이 실행됩니다. 기존 `DessertIsland` 생성기는 편집된 맵을 보호하기 위해 비활성화했습니다.
 3. 별도 장소에서는 `src/server/DessertIsland.server.luau` 내용을 일반 **Script**에 붙여 넣고 ServerScriptService에 넣습니다. Workspace에서도 실행 가능합니다.
-4. 편집 모드에서 미리 생성하려면 Studio Command Bar에서 `loadstring(game.ServerScriptService.DessertIsland.Source)()`를 실행합니다.
+4. 원래 기본 맵을 다시 생성하려면 Studio Command Bar에서 `loadstring(game.ServerScriptService.DessertIsland.Source)()`를 실행합니다. 이 작업은 편집된 섬을 기본 맵으로 교체하므로 별도 복사본에서 사용하세요.
 
-Rojo를 사용하는 경우 `default.project.json`을 사용합니다. 외부 모델/플러그인 설치 없이 기본 Parts, GUI, 내장 sparkle texture로 구성됩니다.
+Rojo의 `default.project.json`은 기본 자동 생성 맵과 구역 할당기를 구성합니다. Creator Store 소품까지 포함된 버전은 `DessertIsland.rbxlx`를 사용하세요.
 
 ## 맵 구성
 
@@ -20,19 +20,37 @@ Rojo를 사용하는 경우 `default.project.json`을 사용합니다. 외부 �
 - 솜사탕 나무 24그루, 마시멜로 덤불, 설탕 꽃, 구름
 - 오후 2시 조명, 약한 블러/색 보정/블룸, 따뜻한 반짝임과 하트 장식
 - 투명한 섬 가장자리 안전벽
+- 무료 Creator Store 벤치 6개, 꽃 모델 60개, 개인 구역 입구와 소유자 표지판
+
+## 자동 구역 배정 시스템
+
+`src/server/PlotAllocator.server.luau` 하나를 일반 Script로 ServerScriptService에 넣으세요. 새 맵을 만들지 않고 **기존 모델**을 사용합니다.
+
+- Workspace 하위 어디에나 고유한 `CentralShop` Model과 `Plot1`~`Plot6` Model이 있으면 작동합니다.
+- 서버 시작 시 `CentralShop:GetPivot().Position`의 X/Z를 중심으로 반경 70 studs, 60도 간격으로 배치합니다. 각 구역의 기존 높이는 보존합니다. `PrimaryPart` 또는 모델 pivot을 바닥 중심으로 맞추세요.
+- 입장 시 빈 구역 하나를 서버에서 예약하며, 중복 배정하지 않습니다.
+- `PlotSpawn` BasePart, 없으면 `Entrance` BasePart로 캐릭터를 이동합니다. 리스폰 때도 같은 구역으로 이동합니다.
+- 퇴장 시 소유자 속성과 연결을 해제합니다. 7명 이상 입장하면 초과 인원은 중앙에서 기다리며, 빈 구역이 생기면 입장 순서대로 배정합니다.
+- `player:GetAttribute("PlotId")`와 `plot:GetAttribute("OwnerUserId")`로 다른 서버 게임 로직에 연결합니다. 실제 생산/합성 권한도 서버에서 검증해야 합니다.
+- `OwnerLabel` TextLabel이 있으면 소유자 표시를 갱신합니다.
+- 모델 누락은 최대 30초 기다린 뒤 오류를 표시합니다. 중복 이름은 즉시 오류로 처리합니다.
+
+상점 이동은 **편집 모드에서 이동 후 새 서버를 시작**할 때 반영됩니다. 진행 중인 서버에서 실시간으로 구역을 계속 움직이지 않습니다. 할당은 서버 세션 동안 유지되며 재접속 시 같은 구역 번호를 보장하지 않습니다.
+
+`tests/PlotAllocator.studio.luau`는 임시 모델과 모의 플레이어로 중심 좌표 이동, 높이 유지, 6명 배정, 초과 대기, 반환/재배정, 중복 입장, 캐릭터 이동/리스폰을 검증합니다.
 
 ## 게임플레이 연결 지점
 
-`Workspace.DessertJellyIsland.PlayerPlots.Plot01`부터 `Plot06`까지 존재합니다.
+`Workspace.DessertJellyIsland.PlayerPlots.Plot1`부터 `Plot6`까지 존재합니다.
 
 | 오브젝트/속성 | 용도 |
 | --- | --- |
-| PlotId / OwnerUserId = 0 | 구역 번호와 향후 소유자 배정 |
+| PlotId / OwnerUserId | 구역 번호와 현재 소유자 (0이면 비어 있음) |
 | PetSpawnPads.PetPad1–6 / SlotIndex | 향후 생산 디저트 배치 |
 | MergeBoard / RequiredCount = 3 | 동일 디저트 3개 합성 기능 연결 |
-| CentralHub.DessertShop | 향후 랜덤 상자/상점 연결 |
+| CentralHub.CentralShop | 원형 배치의 기준점, 향후 랜덤 상자/상점 연결 |
 
-현재는 **맵만 구현**했습니다. 생산, 화폐, 랜덤 상자, 실제 합성, 저장, 소유권 배정은 아직 구현하지 않았습니다. 젤리 마스코트는 장식입니다.
+현재는 **맵과 구역 배정**을 구현했습니다. 생산, 화폐, 랜덤 상자, 실제 합성, 데이터 저장은 아직 구현하지 않았습니다. 젤리 마스코트는 장식입니다.
 
 ## 서버 최대 인원
 
@@ -40,6 +58,8 @@ Rojo를 사용하는 경우 `default.project.json`을 사용합니다. 외부 �
 
 ## 유지 관리
 
-재실행하면 자신이 생성한 `DessertJellyIsland`만 교체합니다. 다른 맵 오브젝트는 삭제하지 않습니다. 조명 효과도 이름으로 재사용합니다. 기존 장소에 추가할 때 기존 Baseplate와 SpawnLocation은 직접 정리하거나 비활성화하세요.
+비활성화된 기본 생성기는 `DessertJellyIsland`를 교체합니다. 구역 할당기는 모델을 삭제하거나 맵을 재생성하지 않습니다. `tools/DecorateInStudio.luau`는 무료 모델을 먼저 가져온 다음 편집 모드에서 한 번 실행하는 꾸미기 도구입니다. 런타임 Script로 넣지 마세요.
+
+무료 모델 출처 및 적용 내역: `docs/ASSETS.md`.
 
 디자인은 독자적인 디저트 테마이며 다른 게임의 모델/이미지를 복사하지 않습니다.
