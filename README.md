@@ -33,7 +33,7 @@ Rojo의 `default.project.json`은 기본 자동 생성 맵과 구역 할당기�
 `src/server/PlotAllocator.server.luau` 하나를 일반 Script로 ServerScriptService에 넣으세요. 새 맵을 만들지 않고 **기존 모델**을 사용합니다.
 
 - Workspace 하위 어디에나 고유한 `CentralShop` Model과 `Plot1`~`Plot6` Model이 있으면 작동합니다.
-- 서버 시작 시 `CentralShop:GetPivot().Position`의 X/Z를 중심으로 반경 108 studs, 60도 간격으로 배치합니다. 각 구역의 기존 높이는 보존합니다. `PrimaryPart` 또는 모델 pivot을 바닥 중심으로 맞추세요.
+- 서버 시작 시 `CentralShop:GetPivot().Position`의 X/Z를 중심으로 반경 150 studs, 60도 간격으로 배치합니다. 각 구역의 기존 높이는 보존합니다. `PrimaryPart` 또는 모델 pivot을 바닥 중심으로 맞추세요.
 - 입장 시 빈 구역 하나를 서버에서 예약하며, 중복 배정하지 않습니다.
 - `PlotSpawn` BasePart, 없으면 `Entrance` BasePart로 캐릭터를 이동합니다. 리스폰 때도 같은 구역으로 이동합니다.
 - 퇴장 시 소유자 속성과 연결을 해제합니다. 7명 이상 입장하면 초과 인원은 중앙에서 기다리며, 빈 구역이 생기면 입장 순서대로 배정합니다.
@@ -54,7 +54,7 @@ Rojo의 `default.project.json`은 기본 자동 생성 맵과 구역 할당기�
 | PlotId / OwnerUserId | 구역 번호와 현재 소유자 (0이면 비어 있음) |
 | PetSpawnPads.PetPad1–30 / SlotIndex / DropLaneZ | 디저트 위치 및 생산 상품 공급 경로 |
 | MergeBoard / RequiredCount = 3 | 동일 단계 3개를 다음 단계 1개로 합성 |
-| ProductionBeds.LeftRow1–5 / RightRow1–5 | 낮은 공급 벨트 옆의 높인 생산 바닥 |
+| ProductionBeds.LeftMeadow / RightMeadow | 중앙 컨베이어 양옆의 넓은 민트색 디저트 필드 |
 | PurchaseButtons.Buy1 / Buy5 / Buy25 / Buy100 | 구매 요청 수량; 가격/돈/남은 칸 검증 후 전체 수량 구매 |
 | PersonalShopArea.DessertCafe | 각 구역 입구의 전체 카페, PlotId 속성으로 구역 식별 |
 | PersonalShopArea.CollectIncome / DessertCrate | 수익 수집 / 향후 랜덤 상자 자리 (상자는 GameplayConnected=false) |
@@ -63,7 +63,7 @@ Rojo의 `default.project.json`은 기본 자동 생성 맵과 구역 할당기�
 | CentralHub.CentralShop.CenterAnchor | 원형 배치 기준점을 유지하는 투명 Part; 이동 시 다음 서버에서 반영 |
 | CentralHub.CentralDisplay | 나중에 제공할 중앙 모델을 넣을 빈 Model; 기준점과 독립적 |
 
-현재는 **맵·구역 배정·세션 생산 루프**를 구현했습니다. 입장 시 푸딩 1개와 $25를 지급합니다. 디저트는 5초마다 미니 상품을 생산하고, 상품은 낮은 공급 벨트 → 중앙 벨트 → 카페 앞 수집함으로 이동합니다. 도착 때만 수익을 추가하며 수집 시 Cash로 옮깁니다. 수집함과 카페 옆 Collect Earnings 발판 모두 이용할 수 있습니다.
+현재는 **맵·구역 배정·세션 생산 루프**를 구현했습니다. 입장 시 푸딩 1개와 $25를 지급합니다. 디저트는 5초마다 미니 상품을 생산하고, 상품은 필드를 가로질러 굴러온 뒤 낮은 중앙 벨트 → 카페 앞 수집함으로 이동합니다. 도착 때만 수익을 추가하며 수집 시 Cash로 옮깁니다. 수집함과 카페 옆 Collect Earnings 발판 모두 이용할 수 있습니다.
 
 푸딩 가격은 개당 $5이며 구역 최대 수용량은 30개입니다. 1/5/25/100개 버튼은 돈과 빈칸이 충분할 때만 전체 구매를 처리합니다. 100개 구매는 현재 30칸 수용량에서 실행되지 않습니다. 합성은 가장 낮은 단계부터 같은 단계 3개를 찾아 1개로 올립니다. 단계별 상품 가치는 `2^(Tier-1)`이며 임시 밸런스입니다.
 
@@ -73,7 +73,7 @@ Rojo의 `default.project.json`은 기본 자동 생성 맵과 구역 할당기�
 
 `ReplicatedStorage.DessertCatalog` (`src/shared/DessertCatalog.luau`)에 요청한 순서를 저장했습니다. 푸딩을 1단계로 계산하므로 30단계 페르페 용의 푸딩 환산량은 `3^29 = 68,630,377,364,883`입니다. 세 마리를 하나로 합성하면 보관 개수가 줄어들므로 이 환산량만큼 물리적인 칸을 만들 필요는 없습니다. 실제 획득/생산 속도는 별도 밸런싱이 필요합니다.
 
-게임 표시 이름은 Pudding부터 Parfait Dragon까지 영어입니다. 현재 디저트 외형은 귀여운 푸딩 모양을 공통 사용하고 단계마다 색과 이름을 변경합니다. 30종 각각의 고유 외형은 아직 만들지 않았습니다. 기본 생성기(Rojo)에는 구형 6칸 구역이 있으므로 최신 컨베이어 플레이는 저장된 장소 파일을 사용하세요. 기본 장소에서는 생산 스크립트가 컨베이어 누락을 안내하고 종료합니다.
+게임 표시 이름은 Pudding부터 Parfait Dragon까지 영어입니다. 현재 디저트 외형은 귀여운 푸딩 모양을 공통 사용하고 단계마다 색과 이름을 변경합니다. 30종 각각의 고유 외형은 아직 만들지 않았습니다. 기본 생성기(Rojo)와 저장된 장소 모두 `ReplicatedStorage.TycoonPlotLayout`을 사용해 같은 96×120 구역을 만듭니다. 저장된 장소에는 무료 나무 등 추가 장식이 있습니다.
 
 ## 서버 최대 인원
 
@@ -89,8 +89,8 @@ Rojo의 `default.project.json`은 기본 자동 생성 맵과 구역 할당기�
 
 `tools/AddPersonalShopsInStudio.luau`는 생산 줄 간격을 조정하고 개인 가게 6개를 추가한 후 구역 경계 및 생산 구역과의 분리를 검증합니다. 저장된 장소에는 이미 적용되어 있습니다.
 
-최신 배치는 입구 카페에 `tools/BuildConveyorsInStudio.luau`를 추가 적용한 버전입니다. 원래 카페 소스는 `ServerStorage.CentralCafeTemplate`에 보관합니다. 벨트를 가리던 장식 마스코트는 `ServerStorage.DecorativeMascots`로 옮겼습니다.
+최신 배치는 `tools/SimplifyPlotsInStudio.luau`로 바꾼 버전입니다. 96×120의 단일 바닥, 한쪽 18×18 합성 보드(3×3), 두 개의 넓은 민트 필드와 폭 8의 단일 컨베이어를 사용합니다. 펫 간격은 11~12 studs이며 배치 마커는 보이지 않습니다. 입구 카페는 중앙을 등지고, 구역 반경은 150, 섬 지름은 460입니다. 원래 카페 소스는 `ServerStorage.CentralCafeTemplate`에 보관합니다. 벨트를 가리던 장식 마스코트는 `ServerStorage.DecorativeMascots`로 옮겼습니다.
 
-`tests/EntranceCafeLayout.studio.luau`, `tests/ConveyorLayout.studio.luau`는 중앙 예약 공간·카페 방향·180개 위치·벨트 높이·영어 문구를 검사합니다. `tests/DessertProduction.studio.luau`는 임시 구역과 모의 플레이어로 구매, 소유권/거리/돈/칸 제한, 합성, 상품 도착, 수집, 중복 수집 방지, 소유자 변경 정리를 검사합니다. 테스트는 편집 모드 Command Bar에서 실행하며 런타임 Script로 넣지 마세요.
+`tests/CleanPlotLayout.studio.luau`는 새 구역 크기·구역 겹침·섬 경계·카페·합성 보드·보이지 않는 마커·영어 문구를 검사합니다. `tests/FreshCleanPlots.studio.luau`는 빈 구역 생성과 기존 카페 템플릿 재사용을 검사합니다. 이전 EntranceCafeLayout/ConveyorLayout 테스트는 과거 배치용입니다. `tests/DessertProduction.studio.luau`는 임시 구역과 모의 플레이어로 구매, 소유권/거리/돈/칸 제한, 합성, 상품 도착, 수집, 중복 수집 방지, 소유자 변경 정리를 검사합니다. 테스트는 편집 모드 Command Bar에서 실행하며 런타임 Script로 넣지 마세요.
 
 디자인은 독자적인 디저트 테마이며 다른 게임의 모델/이미지를 복사하지 않습니다.

@@ -6,7 +6,7 @@ local Workspace = game:GetService("Workspace")
 
 local CONFIG = {
 	PlotCount = 6,
-	Radius = 108, -- studs from CentralShop:GetPivot(), measured horizontally
+	Radius = 150, -- studs from CentralShop:GetPivot(), measured horizontally
 	StartAngleDegrees = 0,
 	ModelWaitSeconds = 30,
 	CharacterWaitSeconds = 10,
@@ -30,7 +30,8 @@ repeat
 	shop = findUniqueModel("CentralShop")
 	plots = {}
 	for i = 1, CONFIG.PlotCount do plots[i] = findUniqueModel("Plot" .. i) end
-	local complete = shop ~= nil
+	local island = Workspace:FindFirstChild("DessertJellyIsland")
+	local complete = shop ~= nil and (not island or island:GetAttribute("LayoutReady") ~= false)
 	for i = 1, CONFIG.PlotCount do complete = complete and plots[i] ~= nil end
 	if complete then break end
 	assert(os.clock() < deadline, "[PlotAllocator] CentralShop or Plot1–Plot6 is missing")

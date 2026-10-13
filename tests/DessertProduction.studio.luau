@@ -3,6 +3,7 @@ assert(not game:GetService("RunService"):IsRunning(), "Stop Play first")
 local fixture=Instance.new("Model")
 fixture.Name="DessertJellyIsland"
 fixture:SetAttribute("ConveyorLayoutVersion",1)
+fixture:SetAttribute("CleanPlotLayoutVersion",workspace.DessertJellyIsland:GetAttribute("CleanPlotLayoutVersion"))
 local plots=Instance.new("Model")
 plots.Name,plots.Parent="PlayerPlots",fixture
 for i=1,6 do

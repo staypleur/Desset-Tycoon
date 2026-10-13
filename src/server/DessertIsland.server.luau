@@ -2,8 +2,9 @@
 -- Map foundation only: pads/boards are integration points, not economy mechanics.
 local Lighting = game:GetService("Lighting")
 local Workspace = game:GetService("Workspace")
+local PlotLayout = require(game.ReplicatedStorage:WaitForChild("TycoonPlotLayout"))
 
-local CONFIG = { PlotCount = 6, PlotRadius = 108, IslandRadius = 174, Seed = 31415 }
+local CONFIG = { PlotCount = 6, PlotRadius = 150, IslandRadius = 174, Seed = 31415 }
 local C = {
 	pink = Color3.fromRGB(255, 193, 218), lavender = Color3.fromRGB(211, 198, 248),
 	mint = Color3.fromRGB(185, 235, 211), cream = Color3.fromRGB(255, 245, 224),
@@ -19,6 +20,7 @@ local previous = Workspace:FindFirstChild("DessertJellyIsland")
 if previous then previous:Destroy() end
 local map = Instance.new("Model")
 map.Name = "DessertJellyIsland"
+map:SetAttribute("LayoutReady", false)
 map:SetAttribute("MapVersion", "1.0.0")
 map:SetAttribute("PlotCount", CONFIG.PlotCount)
 map:SetAttribute("RecommendedMaxPlayers", 6)
@@ -158,50 +160,11 @@ frontFace:PivotTo(CFrame.new(0, 16, -6) * CFrame.Angles(0, math.pi, 0) * CFrame.
 local paths = group("SugarPaths")
 local plots = group("PlayerPlots")
 for i = 1, CONFIG.PlotCount do
-	local angle = (i - 1) * 2 * math.pi / CONFIG.PlotCount
-	local radial = Vector3.new(math.sin(angle), 0, math.cos(angle))
-	local origin = radial * CONFIG.PlotRadius
-	local cf = CFrame.lookAt(origin, Vector3.zero)
 	local plot = group("Plot" .. i, plots)
 	plot:SetAttribute("PlotId", i)
 	plot:SetAttribute("OwnerUserId", 0)
 	plot:SetAttribute("Theme", names[i])
-	local function pp(name, size, pos, color, solid)
-		return part(name, size, cf * CFrame.new(pos), color, plot, nil, solid)
-	end
-	part("CreamPath", Vector3.new(10, 0.3, 66), CFrame.lookAt(radial * 57, Vector3.zero) + Vector3.new(0, 0.18, 0), C.cream, paths)
-	pp("PastelBoundary", Vector3.new(43, 0.6, 39), Vector3.new(0, 0.4, 0), palette[i])
-	plot.PrimaryPart = pp("PlotFloor", Vector3.new(40, 0.3, 36), Vector3.new(0, 0.85, 0), C.white)
-	for _, x in ipairs({ -21, 21 }) do
-		pp("SideFence", Vector3.new(0.6, 1.2, 38), Vector3.new(x, 1.4, 0), palette[i])
-	end
-	pp("BackFence", Vector3.new(42, 1.2, 0.6), Vector3.new(0, 1.4, 19), palette[i])
-	local entrance = pp("Entrance", Vector3.new(10, 0.2, 3), Vector3.new(0, 1.1, -17), palette[i])
-	label(entrance, string.format("%02d  %s", i, names[i]), 260, 42, Vector3.new(0, 4, 0))
-	local board = pp("MergeBoard", Vector3.new(17, 0.3, 9), Vector3.new(0, 1.15, 10), palette[i])
-	board:SetAttribute("RequiredCount", 3)
-	board:SetAttribute("Purpose", "Merge three matching desserts (future gameplay)")
-	label(board, "MERGE  3 → 1", 165, 30, Vector3.new(0, 2.4, 0))
-	for slot = 1, 3 do
-		disc("MergeSlot" .. slot, 3.4, 0.15, (cf * CFrame.new((slot - 2) * 5, 1.4, 10)).Position, C.white, plot)
-	end
-	local pads = group("PetSpawnPads", plot)
-	for row = 1, 2 do
-		for col = 1, 3 do
-			local index = (row - 1) * 3 + col
-			local pos = (cf * CFrame.new((col - 2) * 10, 1.2, -10 + (row - 1) * 8)).Position
-			local pad = disc("PetPad" .. index, 6.2, 0.3, pos, palette[i], pads)
-			pad:SetAttribute("SlotIndex", index)
-			pad:SetAttribute("PlotId", i)
-			disc("PadIcing", 5.3, 0.12, pos + Vector3.new(0, 0.2, 0), C.cream, pads, false)
-		end
-	end
-	-- A decorative mascot, kept separate from the empty gameplay pads.
-	local mascot = group("DisplayMascot", plot)
-	local pos = (cf * CFrame.new(-16, 2.2, 11)).Position
-	ball("Jelly", Vector3.new(4, 2.8, 4), pos, palette[i], mascot)
-	face(mascot, pos, 2.4)
-	ball("CreamHat", Vector3.new(2, 1.2, 2), pos + Vector3.new(0, 1.7, 0), C.white, mascot)
+	plot.WorldPivot = CFrame.new(0, .85, 0)
 end
 
 local garden = group("CandyGarden")
@@ -286,14 +249,8 @@ correction.TintColor = Color3.fromRGB(255, 244, 247)
 local bloom = lightingEffect("BloomEffect", "DessertSoftBloom")
 bloom.Intensity, bloom.Size, bloom.Threshold = 0.12, 20, 1.4
 
--- Fast structural checks; useful both in Studio and when future gameplay is added.
-assert(#plots:GetChildren() == CONFIG.PlotCount, "Expected exactly six plots")
-for _, plot in ipairs(plots:GetChildren()) do
-	local count = 0
-	for _, child in ipairs(plot.PetSpawnPads:GetChildren()) do
-		if child:GetAttribute("SlotIndex") then count += 1 end
-	end
-	assert(count == 6, "Each plot needs six pet pads")
-	assert(plot:FindFirstChild("MergeBoard"), "Merge board missing")
-end
-print("[DessertIsland] Built 6 plots, 36 pet pads, central shop and pudding. Map v1.0.0")
+-- Build the same spacious bases as the saved place, without temporary grid parts.
+PlotLayout.Apply(map)
+map:SetAttribute("LayoutReady", true)
+assert(#plots:GetChildren() == 6)
+print("[DessertIsland] Built six clean tycoon plots; map v8.0.0")

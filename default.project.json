@@ -4,13 +4,24 @@
     "$className": "DataModel",
     "ReplicatedStorage": {
       "$className": "ReplicatedStorage",
-      "DessertCatalog": { "$path": "src/shared/DessertCatalog.luau" }
+      "DessertCatalog": {
+        "$path": "src/shared/DessertCatalog.luau"
+      },
+      "TycoonPlotLayout": {
+        "$path": "src/shared/TycoonPlotLayout.luau"
+      }
     },
     "ServerScriptService": {
       "$className": "ServerScriptService",
-      "DessertIsland": { "$path": "src/server/DessertIsland.server.luau" },
-      "PlotAllocator": { "$path": "src/server/PlotAllocator.server.luau" },
-      "DessertProduction": { "$path": "src/server/DessertProduction.server.luau" }
+      "DessertIsland": {
+        "$path": "src/server/DessertIsland.server.luau"
+      },
+      "PlotAllocator": {
+        "$path": "src/server/PlotAllocator.server.luau"
+      },
+      "DessertProduction": {
+        "$path": "src/server/DessertProduction.server.luau"
+      }
     }
   }
 }

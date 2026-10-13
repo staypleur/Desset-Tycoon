@@ -5,6 +5,8 @@ local RunService = game:GetService("RunService")
 local Catalog = require(game.ReplicatedStorage:WaitForChild("DessertCatalog"))
 local island = workspace:WaitForChild("DessertJellyIsland",30)
 assert(island, "Dessert island missing")
+local layoutDeadline = os.clock() + 30
+while island:GetAttribute("LayoutReady") == false and os.clock() < layoutDeadline do task.wait(.1) end
 if not island:GetAttribute("ConveyorLayoutVersion") then
 	warn("[DessertProduction] Use the saved conveyor place; basic generator has no belts")
 	return
@@ -116,6 +118,11 @@ local function emit(state,pet,now)
 	local laneZ=pad:GetAttribute("DropLaneZ")
 	local points={Vector3.new(pos.X,3,laneZ-1.25),Vector3.new(pos.X,1,laneZ),Vector3.new(0,1,laneZ),Vector3.new(0,1,-1)}
 	local durations={.55,math.abs(pos.X)/7,(laneZ+1)/7}
+	if island:GetAttribute("CleanPlotLayoutVersion") then
+		local collectorZ=state.plot:GetAttribute("CollectorZ") or -20
+		points={Vector3.new(pos.X,3.2,laneZ),Vector3.new(0,3.2,laneZ),Vector3.new(0,1.2,laneZ),Vector3.new(0,1.2,collectorZ)}
+		durations={math.abs(pos.X)/7,.55,(laneZ-collectorZ)/7}
+	end
 	local product=Instance.new("Model")
 	product.Name,product.Parent="DessertDrop",state.products
 	disc(product,"MiniPudding",.8,.6,CFrame.new(),pet.model.Pudding.Color)
