@@ -99,11 +99,11 @@ function UI.ApplyWorld(island)
 	for _,d in ipairs(island:GetDescendants()) do if d:IsA("BillboardGui") then UI.Billboard(d) end end
 	for _,plot in ipairs(island.PlayerPlots:GetChildren()) do
 		for _,pad in ipairs(plot.PurchaseButtons:GetChildren()) do local count=tonumber(pad.Name:match("Buy(%d+)")); if count then
-			local cost=count*require(script.Parent.TycoonConfig).PuddingCost; UI.Pad(pad,nil,cost); UI.Label(pad,"Buy "..count,"$"..UI.Format(cost),UI.Idle)
+			local cost=require(script.Parent.DessertRules).BuyCost(count); UI.Pad(pad,nil,cost); UI.Label(pad,"Buy "..count,"$"..UI.Format(cost),UI.Idle)
 		end end
 		UI.Pad(plot.PersonalShopArea.UpgradeConverter,nil,require(script.Parent.TycoonConfig).CafeUpgradeBaseCost)
-		UI.Label(plot.PersonalShopArea.UpgradeConverter,"Convert Faster","$25 | 15%",UI.Idle)
-		UI.Label(plot.PersonalShopArea.CollectIncome,"Collect Cash","$0",UI.Green)
+		UI.Label(plot.PersonalShopArea.UpgradeConverter,"+2 / sec","$60",UI.Idle)
+		UI.Label(plot.PersonalShopArea.CollectIncome,"$0","$1 / sec",UI.Green)
 		UI.Label(plot.PersonalShopArea.RobuxShop,"Shop","Hold E",Color3.fromRGB(255,231,169))
 		UI.Label(plot.MergeBoard,"Merge","")
 	end

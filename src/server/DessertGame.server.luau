@@ -18,6 +18,8 @@ Layout.Apply(island)
 require(RS:WaitForChild("CentralCafeLayout")).Apply(island)
 require(RS:WaitForChild("ReferenceStyle")).Apply(island)
 require(RS:WaitForChild("CleanPresentation")).Apply(island)
+require(RS:WaitForChild("HubPromenade")).Apply(island)
+require(RS:WaitForChild("DessertBaskets")).Apply(island)
 UI.ApplyWorld(island)
 local remotes=Instance.new("Folder"); remotes.Name="DessertRemotes"; remotes.Parent=RS
 local action=Instance.new("RemoteFunction"); action.Name="Action"; action.Parent=remotes
@@ -41,6 +43,7 @@ end
 local function snapshot(player)
 	local p=profiles[player]; if not p then return nil end; local d=p.Data
 	return {Cash=d.Cash,Bag=d.Bag,Pending=d.Pending,CafeQueue=d.CafeQueue,CafeLevel=d.CafeLevel,
+		AFKStored=d.AFKStored,OfflineStored=d.OfflineStored,TotalCashEarned=d.TotalCashEarned,TotalMiniCollected=d.TotalMiniCollected,PlaySeconds=d.PlaySeconds,
 		CafeRate=Rules.CafeRate(d),CafeUpgradeCost=Rules.CafeUpgradeCost(d),Index=d.Index,Highest=Rules.Highest(d),
 		NormalTokens=d.NormalTokens,PerkTokens=d.PerkTokens,PaidNormalTokens=d.PaidNormalTokens,PaidPerkTokens=d.PaidPerkTokens,NextGift=d.NextGift,AFKSeconds=d.AFKSeconds,
 		Multiplier=multiplier(p),Luck=p.Passes.Luck==true,Settings=d.Settings,Equipped=d.Equipped,
@@ -55,12 +58,14 @@ local function update(player,message)
 	if s then
 		for _,count in ipairs({1,10,100,1000}) do
 			local pad=s.Plot.PurchaseButtons["Buy"..count]
-			UI.Pad(pad,p.Data.Cash,count*Config.PuddingCost)
-			UI.Label(pad,"Buy "..count,"$"..UI.Format(count*Config.PuddingCost),pad.Color)
+			UI.Pad(pad,p.Data.Cash,Rules.BuyCost(count))
+			UI.Label(pad,"Buy "..count,"$"..UI.Format(Rules.BuyCost(count)),pad.Color)
 		end
+		local baskets=s.Plot:FindFirstChild("DessertBaskets")
+		if baskets then require(RS.DessertBaskets).Refresh(s.Plot,p.Data.AFKStored,p.Data.OfflineStored) end
 		UI.Pad(s.Plot.PersonalShopArea.UpgradeConverter,p.Data.Cash,Rules.CafeUpgradeCost(p.Data),p.Data.CafeLevel>=Config.CafeMaxLevel)
-		UI.Label(s.Plot.PersonalShopArea.CollectIncome,"Collect Cash","$"..UI.Format(p.Data.Pending),UI.Green)
-		UI.Label(s.Plot.PersonalShopArea.UpgradeConverter,"Convert Faster",p.Data.CafeLevel>=Config.CafeMaxLevel and "Max | 100%" or string.format("$%s | %.0f%%",UI.Format(Rules.CafeUpgradeCost(p.Data)),math.min(1,Rules.CafeRate(p.Data)+Config.CafeRateStep)*100),s.Plot.PersonalShopArea.UpgradeConverter.Color)
+		UI.Label(s.Plot.PersonalShopArea.CollectIncome,"$"..UI.Format(p.Data.Pending),"$"..UI.Format(Rules.CafeRate(p.Data)*(os.time()<p.Data.HotUntil and Config.HotTimeMultiplier or 1)).." / sec",UI.Green)
+		UI.Label(s.Plot.PersonalShopArea.UpgradeConverter,p.Data.CafeLevel>=Config.CafeMaxLevel and "MAX" or "+"..UI.Format(Rules.CafeRate(p.Data)*(Config.CafeRateGrowth-1)).." / sec",p.Data.CafeLevel>=Config.CafeMaxLevel and "" or "$"..UI.Format(Rules.CafeUpgradeCost(p.Data)),s.Plot.PersonalShopArea.UpgradeConverter.Color)
 	end
 	events:FireClient(player,"State",snapshot(player),message)
 end
@@ -93,7 +98,7 @@ local function emit(s,pet,now)
 		Vector3.new(0,.8,-7),Vector3.new(rng:NextNumber(-4,4),.45,rng:NextNumber(-13,-9))}
 	local durations={}; for n=1,#points-1 do durations[n]=(points[n+1]-points[n]).Magnitude/9 end
 	local value=3^(pet.Tier-1)*multiplier(p)
-	if #s.Drops>=120 then s.Drops[#s.Drops].Value+=value; return end
+	if #s.Drops>=Config.MaxDrops then p.Data.AFKStored+=value; return end
 	local m=Visuals.Build(pet.Tier,pet.Shiny); m.Name="MiniDessert"; m:ScaleTo(.25)
 	m:SetAttribute("OwnerUserId",s.Owner.UserId); m.Parent=s.Products; m:PivotTo(cf*CFrame.new(points[1]))
 	table.insert(s.Drops,{Model=m,Points=points,Durations=durations,Start=now,Value=value,CF=cf})
@@ -137,7 +142,7 @@ local function perform(player,verb,arg)
 	if verb=="Buy" then
 		if arg~=1 and arg~=10 and arg~=100 and arg~=1000 then return false end
 		if not near(player,s.Plot.PurchaseButtons["Buy"..arg]) then return false end
-		local ok,result=Rules.Buy(d,arg,rng,p.Passes.Luck)
+		local ok,result=Rules.Buy(d,arg,rng,p.Passes.Luck,p.Passes.AutoMerge)
 		if ok then render(player); discoveries(player,result); update(player,"Purchased "..arg.." puddings") else update(player,result) end; return ok
 	elseif verb=="Merge" then
 		if not near(player,s.Plot.MergeBoard) then return false end
@@ -222,7 +227,7 @@ for i=1,6 do
 		s.Models:ClearAllChildren(); s.Products:ClearAllChildren(); s.Pets={}; s.Drops={}
 		s.Owner=Players:GetPlayerByUserId(plot:GetAttribute("OwnerUserId") or 0)
 		if s.Owner then render(s.Owner); update(s.Owner)
-		else for _,count in ipairs({1,10,100,1000}) do UI.Pad(plot.PurchaseButtons["Buy"..count],nil,count*Config.PuddingCost) end; UI.Pad(plot.PersonalShopArea.UpgradeConverter,nil,Config.CafeUpgradeBaseCost) end
+		else require(RS.DessertBaskets).Refresh(plot,0,0); for _,count in ipairs({1,10,100,1000}) do UI.Pad(plot.PurchaseButtons["Buy"..count],nil,Rules.BuyCost(count)) end; UI.Pad(plot.PersonalShopArea.UpgradeConverter,nil,Config.CafeUpgradeBaseCost) end
 	end)
 end
 local function refreshPasses(player,p)
@@ -232,23 +237,28 @@ local function refreshPasses(player,p)
 	if p.Restricted then p.Passes.Luck=false end
 end
 local function join(player)
-	local p,message=Profiles.Load(player); if not p then player:Kick(message); return end
-	if player.Parent~=Players then Profiles.Save(p,true); return end
-	p.Passes={}; p.Restricted=true; p.Premium=player.MembershipType==Enum.MembershipType.Premium
-	p.LastActivity=os.clock(); profiles[player]=p
-	Rules.NormalizeCafe(p.Data)
-	if p.Data.CafeQueue>0 then p.NextCafeTick=os.clock()+Config.CafeInterval end
-	local stats=Instance.new("Folder"); stats.Name="leaderstats"; stats.Parent=player
-	local cash=Instance.new("NumberValue"); cash.Name="Cash"; cash.Parent=stats
-	player:GetAttributeChangedSignal("PlotId"):Connect(function() render(player); update(player) end)
-	if not Run:IsStudio() then local ok,info=pcall(Policy.GetPolicyInfoForPlayerAsync,Policy,player); p.Restricted=not ok or info.ArePaidRandomItemsRestricted~=false end
-	refreshPasses(player,p); Rules.Gift(p.Data,os.time(),p.Premium); render(player); update(player)
-	print("[DessertGame] Profile ready: "..(p.Durable and "saved" or "Studio session").."; gifts every 5h")
+ local arrival=os.time()
+ local p,message=Profiles.Load(player); if not p then player:Kick(message); return end
+ if player.Parent~=Players then Profiles.Save(p,true,true); return end
+ p.Passes={}; p.Restricted=true; p.Premium=player.MembershipType==Enum.MembershipType.Premium
+ Rules.NormalizeCafe(p.Data)
+ if not Run:IsStudio() then local ok,info=pcall(Policy.GetPolicyInfoForPlayerAsync,Policy,player); p.Restricted=not ok or info.ArePaidRandomItemsRestricted~=false end
+ refreshPasses(player,p)
+ Rules.AccrueOffline(p.Data,arrival,multiplier(p))
+ if player.Parent~=Players then Profiles.Save(p,true,true); return end
+ p.LastActivity=os.clock(); p.LastPlayCheck=os.clock(); profiles[player]=p
+ if p.Data.CafeQueue>0 then p.NextCafeTick=os.clock()+Config.CafeInterval end
+ local stats=Instance.new("Folder"); stats.Name="leaderstats"; stats.Parent=player
+ local cash=Instance.new("NumberValue"); cash.Name="Cash"; cash.Parent=stats
+ player:GetAttributeChangedSignal("PlotId"):Connect(function() render(player); update(player) end)
+ Rules.Gift(p.Data,os.time(),p.Premium); render(player); update(player)
+ print("[DessertGame] Profile ready: "..(p.Durable and "saved" or "Studio session").."; gifts every 5h")
 end
 Players.PlayerAdded:Connect(join); for _,player in ipairs(Players:GetPlayers()) do task.spawn(join,player) end
 local function close(player)
 	local p=profiles[player]; if not p or p.Closing then return end; p.Closing=true
 	local deadline=os.clock()+15; while p.Busy and os.clock()<deadline do task.wait(.1) end
+	p.Data.PlaySeconds+=math.max(0,os.clock()-(p.LastPlayCheck or os.clock())); p.LastPlayCheck=os.clock()
 	if not Profiles.Save(p,true) then warn("[DessertGame] Save failed on leave") end
 	if p.Companion then p.Companion:Destroy() end; profiles[player]=nil
 end
@@ -278,14 +288,24 @@ Run.Heartbeat:Connect(function(dt)
 	if workspace:GetServerTimeNow()>=market.NextChange then refreshMarket() end
 	for _,s in ipairs(states) do local p=s.Owner and profiles[s.Owner]
 		if p and not p.Busy and not p.Closing and not p.Faulted then
-			for _,pet in ipairs(s.Pets) do if now>=pet.Next then emit(s,pet,now); pet.Next=now+Config.ProductionInterval end end
+			for _,pet in ipairs(s.Pets) do if now>=pet.Next then
+				emit(s,pet,now)
+				pet.Next=now+Config.ProductionInterval
+			end end
+			s.Plot:SetAttribute("UncollectedDrops",#s.Drops)
 			local r=root(s.Owner); local picked=false
+			if r then for _,item in ipairs({{"AFKAnchor","AFKStored"},{"OfflineAnchor","OfflineStored"}}) do
+				local baskets=s.Plot:FindFirstChild("DessertBaskets"); local anchor=baskets and baskets:FindFirstChild(item[1])
+				if anchor and p.Data[item[2]]>0 and (r.Position-anchor.Position).Magnitude<=6 then
+					local amount=p.Data[item[2]]; p.Data[item[2]]=0; p.Data.Bag+=amount; p.Data.TotalMiniCollected+=amount; picked=true
+				end
+			end end
 			for n=#s.Drops,1,-1 do
 				local drop=s.Drops[n]; local elapsed=now-drop.Start; local segment=1
 				while segment<=#drop.Durations and elapsed>=drop.Durations[segment] do elapsed-=drop.Durations[segment]; segment+=1 end
 				local pos=segment>#drop.Durations and drop.Points[#drop.Points] or drop.Points[segment]:Lerp(drop.Points[segment+1],elapsed/drop.Durations[segment])
 				drop.Model:PivotTo(drop.CF*CFrame.new(pos)*CFrame.Angles(0,now*2,segment>#drop.Durations and 0 or now*3))
-				if r and (r.Position-drop.Model:GetPivot().Position).Magnitude<=(p.Passes.Magnet and 25 or 6) then p.Data.Bag+=drop.Value; drop.Model:Destroy(); table.remove(s.Drops,n); picked=true end
+				if r and (r.Position-drop.Model:GetPivot().Position).Magnitude<=(p.Passes.Magnet and 25 or 6) then p.Data.Bag+=drop.Value; p.Data.TotalMiniCollected+=drop.Value; drop.Model:Destroy(); table.remove(s.Drops,n); picked=true end
 			end
 			if picked then update(s.Owner) end
 		end
@@ -305,6 +325,7 @@ Run.Heartbeat:Connect(function(dt)
 			p.LastPosition=r and r.Position; p.Premium=player.MembershipType==Enum.MembershipType.Premium
 			Rules.Gift(p.Data,os.time(),p.Premium)
 			-- Include idle time spent waiting for a save instead of losing busy-frame seconds.
+			p.Data.PlaySeconds+=math.max(0,now-(p.LastPlayCheck or now)); p.LastPlayCheck=now
 			local idleSeconds=math.max(0,now-math.max(p.LastAFKCheck or now,p.LastActivity+60))
 			p.LastAFKCheck=now
 			if r and idleSeconds>0 then Rules.AFK(p.Data,idleSeconds) end

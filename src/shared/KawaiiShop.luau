@@ -1,17 +1,13 @@
--- Approved PocoGamesCo FREE KAWAII GUI PACK: artwork only, no imported code.
--- Original atlas stays local; license and source are recorded in docs/ASSETS.md.
+-- Approved ToffeeCraft Pastel Dream FREE art; legacy module name retained.
+-- Raw atlas stays local; shared rendering is in PastelArt.
 local Shop={}
+local Art=require(script.Parent.PastelArt)
 local Market=game:GetService('MarketplaceService')
 local Tween=game:GetService('TweenService')
 local Config=require(script.Parent.TycoonConfig)
 local Style=require(script.Parent.DessertUI)
 local ink=Color3.fromRGB(105,62,88)
-local cream=Color3.fromRGB(255,239,213)
-local sprites={
- Window={1100,2650,780,230},
- Button={1015,1840,475,215},
- Picture={1470,20,515,275},
-}
+local cream=Color3.fromRGB(255,242,233)
 local products={
  {Key='Boost12',Name='1.2x Production',Description='Collect 20% more mini desserts.',Tier=1,Badge='1.2x'},
  {Key='Boost15',Name='1.5x Production',Description='Collect 50% more mini desserts.',Tier=2,Badge='1.5x'},
@@ -28,14 +24,10 @@ local function label(parent,name,value,size,pos,fontSize)
  return t
 end
 local function sprite(parent,key,size,pos)
- local clip=Instance.new('Frame'); clip.Name=key..'Crop'; clip.BackgroundTransparency=1; clip.ClipsDescendants=true
- clip.Size=size; clip.Position=pos; clip.ZIndex=parent.ZIndex+1; clip.Parent=parent
- local im=Instance.new('ImageLabel'); im.Name='Kawaii'..key; im.BackgroundTransparency=1; im.Image=Config.KawaiiShopAtlasId
- im.ZIndex=clip.ZIndex; im.ScaleType=Enum.ScaleType.Stretch; im.Parent=clip
- local r=sprites[key]
- -- Normalized clipping preserves the crop even if Roblox resamples the atlas.
- im.Size=UDim2.fromScale(3000/r[3],3000/r[4]); im.Position=UDim2.fromScale(-r[1]/r[3],-r[2]/r[4])
- return im
+ local mapped=key=="Window" and "Panel" or key=="Picture" and "Card" or "Button"
+ local art=Art.Image(parent,mapped,size,pos); art.ZIndex=parent.ZIndex+1
+ art.Atlas.ZIndex=art.ZIndex
+ return art.Atlas
 end
 function Shop.Open(parent,data,callbacks)
  local backdrop=Instance.new('Frame'); backdrop.Name='KawaiiShopBackdrop'; backdrop.Size=UDim2.fromScale(1,1)
@@ -46,7 +38,7 @@ function Shop.Open(parent,data,callbacks)
  local outline=Instance.new('UIStroke'); outline.Color=Color3.fromRGB(244,187,212); outline.Thickness=3; outline.Parent=root
  sprite(root,'Window',UDim2.new(1,-16,1,-16),UDim2.fromOffset(8,8))
  sprite(root,'Button',UDim2.fromOffset(280,58),UDim2.new(.5,-140,0,-18))
- local title=label(root,'ShopTitle','SUGAR SHOP',UDim2.fromOffset(280,58),UDim2.new(.5,-140,0,-18),26)
+ local title=label(root,'ShopTitle','SHOP',UDim2.fromOffset(280,58),UDim2.new(.5,-140,0,-18),26)
  local close=Instance.new('TextButton'); close.Name='CloseShop'; close.Text='×'; close.Font=Enum.Font.GothamBlack; close.TextSize=30; close.TextColor3=ink
  close.BackgroundColor3=Color3.fromRGB(255,196,223); close.Size=UDim2.fromOffset(38,38); close.AnchorPoint=Vector2.new(1,0); close.Position=UDim2.new(1,-20,0,20); close.ZIndex=18; close.Parent=root
  local round=Instance.new('UICorner'); round.CornerRadius=UDim.new(0,12); round.Parent=close

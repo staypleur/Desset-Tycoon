@@ -23,11 +23,11 @@ function Profiles.Load(player)
 	profile.Data=result.Data
 	return profile
 end
-function Profiles.Save(profile,release)
+function Profiles.Save(profile,release,preserveSeen)
 	if not profile.Durable then return true end
 	if profile.Faulted then return false end
 	if profile.Busy then return false end
-	profile.Busy=true; local data=clone(profile.Data); local saved=false
+	profile.Busy=true; local data=clone(profile.Data); if not preserveSeen then data.LastSeen=os.time() end; local saved=false
 	local ok=pcall(function() Store:UpdateAsync(profile.Key,function(old)
 		saved=false
 		if not old or not old.Lock or old.Lock.Session~=session or old.Lock.Expires<os.time() then return nil end
@@ -35,6 +35,7 @@ function Profiles.Save(profile,release)
 		return {Data=data,Lock=not release and {Session=session,Expires=os.time()+180} or nil}
 	end) end)
 	profile.Busy=false
+	if ok and saved then profile.Data.LastSeen=data.LastSeen end
 	return ok and saved
 end
 -- Receipt and reward are written in the SAME atomic profile update before acknowledging Roblox.
@@ -46,7 +47,7 @@ function Profiles.Receipt(profile,id,grant)
 		committed=false
 		if not old or not old.Lock or old.Lock.Session~=session or old.Lock.Expires<os.time() then return nil end
 		if old.Data.Receipts[id] then committed=true; return old end
-		local trial=clone(snapshot)
+		local trial=clone(snapshot); trial.LastSeen=os.time()
 		grant(trial); trial.Receipts[id]=true
 		committed=true
 		return {Data=trial,Lock={Session=session,Expires=os.time()+180}}

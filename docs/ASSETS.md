@@ -90,3 +90,17 @@ v15의 은행·상점 건물은 충돌합니다. 각 구역의 상자는 하나�
 - 업로드한 Decal ID **116058453183198**, 실제 이미지 Texture ID **82678981874379**. 3000×3000 원본을 변경 없이 업로드했고 Frame.ClipsDescendants와 정규화된 비율로 필요한 부분을 표시합니다. 이미지 파일을 직접 잘라 다시 만들지 않았습니다. 카드의 디저트 그림은 기존 프로젝트 모델을 ViewportFrame에서 표시하고, 기능 아이콘은 승인된 Laurel 소스를 재사용합니다.
 - 무료 ZIP은 PNG/PSD와 macOS 메타데이터만 포함했습니다. 실행 파일·Luau 스크립트를 실행하지 않았습니다. 상점 동작은 자체 `KawaiiShop` 코드와 기존 서버 구매 검증에 연결됩니다. 상품 ID 0에 대한 구매 잠금은 유지합니다.
 - 검토 후 제외: [StoreUI](https://devforum.roblox.com/t/free-storeui-an-animated-modern-gamepass-store-ui/632073), [Comet Shop UI 무료 그래픽](https://devforum.roblox.com/t/shop-ui-free-graphics-tutorial/2297542). 해당 후보 코드는 게임에 가져오지 않았습니다.
+
+## 2026-10-15 — Unified Pastel Dream menus and promenade
+
+User selected the new **Pastel Dream FREE edition** by **ToffeeCraft**, https://toffeecraft.itch.io/ui-user-interface-pack-pastel-dream. The free download is `PastelUIFree.png.zip` (22 kB), containing one 256×300 PNG and macOS metadata, no executable code. Author permits commercial/personal use and editing, prohibits raw redistribution/resale. Paid full edition was excluded. Raw files stay in ignored `.local-ui-review/PastelDream/`, never committed. Uploaded private decal **131118160849287**, actual texture **127272710931588**. Source panel/card/blank-button crops render every opening game menu, including Index, Settings, Shop, Crates, Stats and discovery. Existing owned models supply 3D previews; interaction and purchase code remains ours.
+
+Reused previously approved **White Picket Fence 4539718362** and **Street Lamp 11146095708** (BryanROBLOXgamer10) around the plaza and six paths. Imported LuaSourceContainer/PackageLink are asserted absent. Decorative beams disabled, warm lights softened, clear passage left at path/plot entrances. Reused Tycoon Button Pack 12528362526 single union for pad bases to remove coplanar overlap. Source geometry and unused imported templates were audited again.
+
+Review proof: `docs/previews/index-pastel-dream.png`, `pastel-ui-upload.png`, `index-v16.png`, `stats-v16.png`, `shop-v16.png`. These are project screenshots, not redistributable source atlases.
+
+### Approved AFK / offline baskets
+
+The user approved **basket**, **Glowziing**, free Creator Store asset **6132018569**: https://create.roblox.com/store/asset/6132018569/basket. Search and detail screenshots are in `docs/previews/free-basket-candidate.png`. Imported through editor GetObjects after approval; sanitization found zero foreign executable scripts/interactions. Original stored as ServerStorage.FreeDesignSources.OverflowBasket. Twelve placed copies are recolored pink, texture removed to get the requested true pastel color, widened/lowered, anchored and non-colliding. Counter labels and storage logic are ours. Baskets stay empty at the user’s latest request; stored amounts are represented only by English number labels.
+
+Basket visibility follows its own stored count: zero hides mesh and sign; positive shows the empty basket. Owner pickup hides it again.

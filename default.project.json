@@ -48,6 +48,15 @@
       },
       "KawaiiShop": {
         "$path": "src/shared/KawaiiShop.luau"
+      },
+      "PastelArt": {
+        "$path": "src/shared/PastelArt.luau"
+      },
+      "HubPromenade": {
+        "$path": "src/shared/HubPromenade.luau"
+      },
+      "DessertBaskets": {
+        "$path": "src/shared/DessertBaskets.luau"
       }
     },
     "ServerScriptService": {

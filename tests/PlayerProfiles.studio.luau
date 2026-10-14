@@ -19,7 +19,10 @@ local fn=assert(loadstring(game.ServerScriptService.PlayerProfiles.Source))
 setfenv(fn,setmetatable({game=fakeGame},{__index=getfenv()}))
 local Profiles=fn()
 local profile=assert(Profiles.Load({UserId=999999999}))
-profile.Data.AFKSeconds=1234; profile.Data.NextGift=987654; assert(Profiles.Save(profile,false))
+profile.Data.AFKSeconds=1234; profile.Data.NextGift=987654
+profile.Data.TotalCashEarned=456; profile.Data.TotalMiniCollected=789; profile.Data.PlaySeconds=2345
+profile.Data.AFKStored=12.5; profile.Data.OfflineStored=24.25
+assert(Profiles.Save(profile,false))
 local grants=0
 assert(Profiles.Receipt(profile,"first",function(d) grants+=1; d.PaidNormalTokens+=1 end))
 profile.Data.Cash+=10
@@ -28,6 +31,8 @@ assert(grants==1 and profile.Data.Cash==35 and profile.Data.PaidNormalTokens==1)
 assert(Profiles.Save(profile,true))
 profile=assert(Profiles.Load({UserId=999999999}))
 assert(profile.Data.NextGift==987654 and profile.Data.AFKSeconds==1234 and profile.Data.Receipts.first)
+assert(profile.Data.TotalCashEarned==456 and profile.Data.TotalMiniCollected==789 and profile.Data.PlaySeconds==2345)
+assert(profile.Data.AFKStored==12.5 and profile.Data.OfflineStored==24.25 and profile.Data.LastSeen>0)
 failAfterCommit=true
 assert(not Profiles.Receipt(profile,"uncertain",function(d) d.PaidPerkTokens+=1 end))
 assert(profile.Faulted and saved.Data.PaidPerkTokens==1 and saved.Data.Receipts.uncertain)

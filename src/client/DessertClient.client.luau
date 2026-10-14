@@ -12,6 +12,7 @@ local Rules=require(RS:WaitForChild("DessertRules"))
 local Visuals=require(RS:WaitForChild("DessertVisuals"))
 local Style=require(RS:WaitForChild("DessertUI"))
 local Gauge=require(RS:WaitForChild("CircularGauge"))
+local Art=require(RS:WaitForChild("PastelArt"))
 local ShopUI=require(RS:WaitForChild("KawaiiShop"))
 local remotes=RS:WaitForChild("DessertRemotes")
 local action=remotes:WaitForChild("Action"); local event=remotes:WaitForChild("Event")
@@ -28,10 +29,12 @@ end
 resize(); workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(resize)
 local data,panelName,spinning=nil,nil,{}
 local giftLabel
+local statLabels={}
+local indexGrid
 local voiceStatus="Voice Chat: checking availability..."
 task.spawn(function()
 	local ok,enabled=pcall(function() return game:GetService("VoiceChatService"):IsVoiceEnabledForUserIdAsync(player.UserId) end)
-	voiceStatus=ok and enabled and "Voice Chat: use Roblox microphone controls" or "Voice Chat: unavailable for this account or experience"
+	voiceStatus=Run:IsStudio() and "Voice Chat: test in a published voice-enabled experience" or ok and enabled and "Voice Chat: use Roblox microphone controls" or "Voice Chat: unavailable for this account or experience"
 	screen:SetAttribute("VoiceEligible",ok and enabled or false)
 end)
 local function giftText()
@@ -46,11 +49,11 @@ end
 local click=Instance.new("Sound"); click.SoundId=Config.ClickSoundId; click.Volume=.3; click.Parent=SoundService
 local revealSound=Instance.new("Sound"); revealSound.SoundId=Config.DiscoverySoundId; revealSound.Volume=.3; revealSound.Parent=SoundService
 local music=Instance.new("Sound"); music.Name="DessertCafeMusic"; music.SoundId=Config.MusicId; music.Volume=.12; music.Looped=true; music.Parent=SoundService
-local function button(parent,label,size,pos,callback,color)
+local function button(parent,label,size,pos,callback,color,shortcut)
 	local b=Instance.new("TextButton"); b.Size=size; b.Position=pos; b.Text=label; b.Font=Enum.Font.GothamBold; b.TextSize=16
 	b.TextColor3=colors.Text; b.BackgroundColor3=color or colors.Pink; b.BorderSizePixel=0; b.ZIndex=parent.ZIndex+1; b.Parent=parent
 	local icon=Style.Icons[label] and label or label:find("Open") and "Crates" or label:find("Equipped") and "Check" or label:find("Equip") and "Cake" or "Sparkles"
-	Style.Button(b,icon)
+	if shortcut then Style.Button(b,icon) else Art.Apply(b,"Button"); b.Font=Enum.Font.FredokaOne; b.TextXAlignment=Enum.TextXAlignment.Center; b.TextWrapped=true end
 	b.Activated:Connect(function() if not data or data.Settings.Effects then click:Play() end; callback() end)
 	return b
 end
@@ -85,10 +88,9 @@ task.spawn(function()
 	cafeGauge=Gauge.Create(board); cafeRateLabel=cafeGauge.Label
 end)
 local window=Instance.new("Frame"); window.Name="Panel"; window.Size=UDim2.fromScale(.78,.72); window.Position=UDim2.fromScale(.11,.15)
-window.ZIndex=10; window.Visible=false; window.Parent=gui; Style.Card(window,colors.Cream,24)
-Style.Art(window,"Window")
-local title=text(window,"",UDim2.new(1,-140,0,54),UDim2.fromOffset(18,0)); title.TextXAlignment=Enum.TextXAlignment.Left; title.TextSize=24
-button(window,"Close",UDim2.fromOffset(100,36),UDim2.new(1,-114,0,10),function() window.Visible=false; panelName=nil end)
+window.ZIndex=10; window.Visible=false; window.Parent=screen; Art.Apply(window,"Panel")
+local title=text(window,"",UDim2.new(1,-140,0,54),UDim2.fromOffset(18,0)); title.TextXAlignment=Enum.TextXAlignment.Center; title.TextSize=24
+button(window,"×",UDim2.fromOffset(38,38),UDim2.new(1,-65,0,22),function() window.Visible=false; panelName=nil end)
 local scroll=Instance.new("ScrollingFrame"); scroll.Size=UDim2.new(1,-24,1,-70); scroll.Position=UDim2.fromOffset(12,60)
 scroll.ZIndex=window.ZIndex+1; scroll.BackgroundTransparency=1; scroll.BorderSizePixel=0; scroll.ScrollBarThickness=6; scroll.ScrollBarImageColor3=colors.Text; scroll.AutomaticCanvasSize=Enum.AutomaticSize.Y; scroll.CanvasSize=UDim2.new(); scroll.Parent=window
 local function request(verb,arg)
@@ -101,11 +103,18 @@ local function preview(parent,tier,shiny,size,pos)
 	view.ZIndex=parent.ZIndex+1; view.Ambient=Color3.fromRGB(220,208,220); view.LightColor=Color3.fromRGB(255,247,233); view.Parent=parent
 	local world=Instance.new("WorldModel"); world.Parent=view
 	local model=Visuals.Build(tier,shiny); model.Parent=world
-	local camera=Instance.new("Camera"); camera.CFrame=CFrame.lookAt(Vector3.new(0,3.7,-8),Vector3.new(0,1.3,0)); camera.Parent=view; view.CurrentCamera=camera
+	local camera=Instance.new("Camera"); camera.FieldOfView=35; camera.CFrame=CFrame.lookAt(Vector3.new(0,2.6,-4.5),Vector3.new(0,1.2,0)); camera.Parent=view; view.CurrentCamera=camera
 	table.insert(spinning,{Model=model,View=view})
 	return view
 end
 local show,kawaiiShop
+local function fitPanel()
+ local v=workspace.CurrentCamera.ViewportSize
+ local w=math.max(260,math.min(940,v.X-24)); local h=math.max(260,math.min(660,v.Y-90))
+ window.AnchorPoint=Vector2.new(.5,.5); window.Position=UDim2.fromScale(.5,.5); window.Size=UDim2.fromOffset(w,h)
+ if indexGrid then local cols=w>=800 and 4 or w>=600 and 3 or w>=400 and 2 or 1; indexGrid.FillDirectionMaxCells=cols; indexGrid.CellSize=UDim2.fromOffset(math.floor((w-42-(cols-1)*12)/cols),190) end
+end
+workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(fitPanel)
 local function productButton(key,spec,y,isPass)
 	local b=button(scroll,(spec.Name or key).." | "..spec.Price.." R$",UDim2.new(1,-18,0,50),UDim2.fromOffset(6,y),function() request("Purchase",key) end,colors.Lavender)
 	if spec.Id==0 or not data.Durable or ((spec.Crate or key=="Luck") and data.Restricted) then
@@ -118,7 +127,7 @@ end
 show=function(name)
 	if not data then return end
 	if kawaiiShop then kawaiiShop.Destroy(); kawaiiShop=nil end
-	panelName=name; window.Visible=name~="Shop"; title.Text=name; scroll:ClearAllChildren(); spinning={}; giftLabel=nil
+	panelName=name; window.Visible=name~="Shop"; title.Text=name; scroll:ClearAllChildren(); spinning={}; giftLabel=nil; statLabels={}; indexGrid=nil
 	if name=="Shop" then
 		kawaiiShop=ShopUI.Open(screen,data,{
 			Click=function() if data.Settings.Effects then click:Play() end end,
@@ -133,14 +142,14 @@ show=function(name)
 		return
 	end
 	if name=="Index" then
+		indexGrid=Instance.new("UIGridLayout"); indexGrid.CellPadding=UDim2.fromOffset(12,12); indexGrid.SortOrder=Enum.SortOrder.LayoutOrder; indexGrid.Parent=scroll
 		for tier=1,30 do for variant=0,1 do
 			local shiny=variant==1; local key=Rules.Key(tier,shiny); local owned=data.Index[key]
 			local index=(tier-1)*2+variant; local row=math.floor(index/4); local column=index%4
 			local card=Instance.new("Frame"); card.Size=UDim2.new(.25,-12,0,190); card.Position=UDim2.new(column*.25,6,0,row*200)
-			card.ZIndex=scroll.ZIndex+1; card.Parent=scroll; Style.Card(card,shiny and colors.Lavender or colors.Pink,18)
-			Style.Art(card,"Inventory")
+			card.LayoutOrder=index; card.ZIndex=scroll.ZIndex+1; card.Parent=scroll; Art.Apply(card,"Card")
 			if owned then preview(card,tier,shiny,UDim2.new(1,0,0,112),UDim2.new()) else text(card,"?",UDim2.new(1,0,0,110),UDim2.new()) end
-			text(card,owned and ((shiny and "Shiny " or "")..Catalog[tier].Name) or "Undiscovered",UDim2.new(1,-8,0,34),UDim2.fromOffset(4,112))
+			text(card,owned and ((shiny and "Shiny " or "")..Catalog[tier].Name) or "Undiscovered",UDim2.new(1,-8,0,34),UDim2.fromOffset(4,112)).TextSize=14
 			if owned then button(card,data.Equipped==key and "Equipped" or "Equip",UDim2.new(1,-16,0,32),UDim2.fromOffset(8,152),function() request("Equip",key) end,colors.Mint) end
 		end end
 	elseif name=="Settings" then
@@ -150,6 +159,12 @@ show=function(name)
 			end,colors.Lavender)
 		end
 		text(scroll,voiceStatus,UDim2.new(1,-18,0,54),UDim2.fromOffset(6,210)).TextSize=15
+	elseif name=="Stats" then
+		for n,item in ipairs({{"TotalCashEarned","Total Cash Earned"},{"TotalMiniCollected","Mini Desserts Collected"},{"PlaySeconds","Total Play Time"}}) do
+			local card=Instance.new("Frame"); card.Size=UDim2.new(1,-32,0,108); card.Position=UDim2.fromOffset(16,(n-1)*126); card.ZIndex=scroll.ZIndex+1; card.Parent=scroll; Art.Apply(card,"Card")
+			text(card,item[2],UDim2.new(1,-24,0,38),UDim2.fromOffset(12,12)).TextSize=20
+			statLabels[item[1]]=text(card,"",UDim2.new(1,-24,0,40),UDim2.fromOffset(12,54)); statLabels[item[1]].TextSize=27
+		end
 	elseif name=="Crates" then
 		giftLabel=text(scroll,giftText(),UDim2.new(1,-18,0,72),UDim2.fromOffset(6,0))
 		local y=80
@@ -167,15 +182,20 @@ show=function(name)
 			for _,count in ipairs({1,10}) do productButton(kind..count,Config.Products[kind..count],y,false); y+=58 end
 		end
 	end
+ fitPanel()
+ for key,label in pairs(statLabels) do local value=data[key] or 0; label.Text=key=="PlaySeconds" and string.format("%dh %02dm %02ds",math.floor(value/3600),math.floor(value/60)%60,math.floor(value)%60) or (key=="TotalCashEarned" and "$" or "")..format(value) end
 end
-button(gui,"Index",UDim2.fromOffset(118,54),UDim2.new(0,18,.5,-70),function() show("Index") end)
-button(gui,"Shop",UDim2.fromOffset(118,48),UDim2.new(0,18,.5,-8),function() show("Shop") end,colors.Mint)
+button(gui,"Index",UDim2.fromOffset(118,54),UDim2.new(0,18,.5,-70),function() show("Index") end,colors.Pink,true)
+button(gui,"Shop",UDim2.fromOffset(118,48),UDim2.new(0,18,.5,-8),function() show("Shop") end,colors.Mint,true)
 local topbar=Instance.new("ScreenGui"); topbar.Name="DessertTopbar"; topbar.IgnoreGuiInset=true; topbar.ResetOnSpawn=false; topbar.Parent=screen.Parent
-local settings=Instance.new("ImageButton"); settings.Name="SettingsButton"; settings.Size=UDim2.fromOffset(42,42)
-settings.Image=Style.Icons.Settings; settings.ImageColor3=colors.Text; settings.BackgroundColor3=colors.Lavender; settings.Parent=topbar; corner(settings,21)
+local settings=Instance.new("ImageButton"); settings.Name="SettingsButton"; settings.Size=UDim2.fromOffset(56,56)
+settings.Image=Style.Icons.Settings; settings.ImageColor3=Color3.fromRGB(255,240,245); settings.BackgroundColor3=Color3.fromRGB(35,36,40); settings.Parent=topbar; corner(settings,28)
+local statsButton=Instance.new("ImageButton"); statsButton.Name="StatsButton"; statsButton.Size=UDim2.fromOffset(56,56); statsButton.Image="rbxthumb://type=AvatarHeadShot&id="..player.UserId.."&w=150&h=150"; statsButton.BackgroundColor3=Color3.fromRGB(35,36,40); statsButton.Parent=topbar; corner(statsButton,28)
+statsButton.Activated:Connect(function() show("Stats") end)
 local function positionSettings()
 	local inset=game:GetService("GuiService").TopbarInset
-	settings.Position=UDim2.fromOffset(inset.Min.X+8,inset.Min.Y+math.max(0,(inset.Height-42)/2))
+	settings.Position=UDim2.fromOffset(inset.Min.X+8,inset.Min.Y+math.max(8,(inset.Height-56)/2))
+	statsButton.Position=settings.Position+UDim2.fromOffset(64,0)
 end
 positionSettings(); game:GetService("GuiService"):GetPropertyChangedSignal("TopbarInset"):Connect(positionSettings)
 settings.Activated:Connect(function() if not data or data.Settings.Effects then click:Play() end; show("Settings") end)
@@ -197,7 +217,7 @@ local function reveal(item)
 	task.spawn(function()
 		while #revealQueue>0 do
 			local found=table.remove(revealQueue,1)
-			local f=Instance.new("Frame"); f.Size=UDim2.fromScale(1,1); f.BackgroundColor3=colors.Lavender; f.BackgroundTransparency=.12; f.ZIndex=20; f.Parent=gui
+			local f=Instance.new("Frame"); f.Size=UDim2.fromScale(1,1); f.BackgroundColor3=colors.Lavender; f.BackgroundTransparency=.12; f.ZIndex=20; f.Parent=gui; Art.Apply(f,"Panel")
 			text(f,found.Shiny and "SHINY DISCOVERED!" or "NEW DESSERT!",UDim2.new(1,0,0,60),UDim2.fromScale(0,.17)).TextSize=32
 			preview(f,found.Tier,found.Shiny,UDim2.fromScale(.5,.46),UDim2.fromScale(.25,.25))
 			text(f,Catalog[found.Tier].Name.." | Tier "..found.Tier,UDim2.new(1,0,0,60),UDim2.fromScale(0,.72)).TextSize=28
@@ -229,7 +249,7 @@ event.OnClientEvent:Connect(function(kind,value,message)
 		local previousHighest=data and data.Highest
 		local previousNormal=data and data.NormalTokens
 		local previousPerk=data and data.PerkTokens
-		data=value; cash.Text="$"..format(data.Cash); bag.Text=format(data.Bag); boost.Text="×"..data.Multiplier
+		data=value; for key,label in pairs(statLabels) do local value=data[key] or 0; label.Text=key=="PlaySeconds" and string.format("%dh %02dm %02ds",math.floor(value/3600),math.floor(value/60)%60,math.floor(value)%60) or (key=="TotalCashEarned" and "$" or "")..format(value) end; cash.Text="$"..format(data.Cash); bag.Text=format(data.Bag); boost.Text="×"..data.Multiplier
 		applySettings()
 		if giftLabel and giftLabel.Parent then giftLabel.Text=giftText() end
 		if panelName=="Index" and previousEquipped~=data.Equipped then show("Index") end
@@ -241,8 +261,25 @@ event.OnClientEvent:Connect(function(kind,value,message)
 	end
 end)
 local lastActivity=0
-Input.InputBegan:Connect(function()
-	if os.clock()-lastActivity>5 then lastActivity=os.clock(); task.spawn(request,"Activity") end
+local actualLastInput=os.clock(); local lastCameraNudge=os.clock()
+local function recordInput(input)
+ actualLastInput=os.clock()
+ if os.clock()-lastActivity>5 then lastActivity=os.clock(); task.spawn(request,"Activity") end
+end
+Input.InputBegan:Connect(recordInput)
+Input.InputChanged:Connect(function(input)
+ if input.UserInputType==Enum.UserInputType.MouseMovement or input.UserInputType==Enum.UserInputType.Touch then recordInput(input) end
+end)
+-- Experimental ordinary camera motion, NOT virtual input and NOT a proven idle bypass.
+-- It never sends Activity pings itself or changes character/economy state.
+Run:BindToRenderStep("DessertIdleCameraMotion",Enum.RenderPriority.Camera.Value+1,function()
+ local now=os.clock(); local camera=workspace.CurrentCamera
+ if Config.IdleCameraNudgeEnabled and camera and now-actualLastInput>=Config.IdleCameraStartSeconds
+  and now-lastCameraNudge>=Config.IdleCameraInterval then
+  lastCameraNudge=now
+  camera.CFrame=camera.CFrame*CFrame.Angles(0,math.rad(.03),0)
+  screen:SetAttribute("IdleCameraNudges",(screen:GetAttribute("IdleCameraNudges") or 0)+1)
+ end
 end)
 local visibilityTimer=0
 Run.RenderStepped:Connect(function(dt)
