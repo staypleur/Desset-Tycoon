@@ -248,27 +248,27 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 		<Item class="Camera" referent="RBX1619F03E19AA45DD9F9D70421D691A23">
 			<Properties>
 				<CoordinateFrame name="CFrame">
-					<X>85</X>
-					<Y>93.764267</Y>
-					<Z>80.25</Z>
-					<R00>0.707106829</R00>
-					<R01>-0.294197619</R01>
-					<R02>0.642999053</R02>
+					<X>-52.9999962</X>
+					<Y>7.94325972</Y>
+					<Z>143.25</Z>
+					<R00>0.955779076</R00>
+					<R01>-0.101469263</R01>
+					<R02>0.276026219</R02>
 					<R10>0</R10>
-					<R11>0.909338057</R11>
-					<R12>0.416058242</R12>
-					<R20>-0.707106829</R20>
-					<R21>-0.294197619</R21>
-					<R22>0.642999053</R22>
+					<R11>0.938590646</R11>
+					<R12>0.345032781</R12>
+					<R20>-0.29408586</R20>
+					<R21>-0.329775125</R21>
+					<R22>0.89708519</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">6</token>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>72.1400146</X>
-					<Y>85.4431</Y>
-					<Z>67.3900146</Z>
+					<X>-58.5205193</X>
+					<Y>1.04260397</Y>
+					<Z>125.308296</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -175118,18 +175118,18 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 							<Properties>
 								<token name="LevelOfDetail">0</token>
 								<CoordinateFrame name="ModelMeshCFrame">
-									<X>517.680847</X>
-									<Y>-99.8086395</Y>
-									<Z>231.078888</Z>
-									<R00>-3.68204581e-07</R00>
-									<R01>0.0403585508</R01>
-									<R02>0.999186516</R02>
-									<R10>-0.0222368427</R10>
-									<R11>0.998941958</R11>
-									<R12>-0.0403488614</R12>
-									<R20>-0.999756455</R20>
-									<R21>-0.0222194437</R21>
-									<R22>0.000897884194</R22>
+									<X>-631.681274</X>
+									<Y>-99.8089142</Y>
+									<Z>29.4208069</Z>
+									<R00>6.76513309e-07</R00>
+									<R01>-0.040358521</R01>
+									<R02>-0.999187231</R02>
+									<R10>-0.0222366806</R10>
+									<R11>0.998944104</R11>
+									<R12>-0.0403489992</R12>
+									<R20>0.999758601</R20>
+									<R21>0.022219697</R21>
+									<R22>-0.00089802919</R22>
 								</CoordinateFrame>
 								<SharedString name="ModelMeshData">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 								<Vector3 name="ModelMeshSize">
@@ -175144,21 +175144,22 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 								<SharedString name="SlimHash">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 								<OptionalCoordinateFrame name="WorldPivotData">
 									<CFrame>
-										<X>-57</X>
+										<X>-56.9999962</X>
 										<Y>2.94325972</Y>
 										<Z>130.25</Z>
-										<R00>1.00000036</R00>
-										<R01>-2.60770321e-08</R01>
-										<R02>1.11060217e-07</R02>
+										<R00>-1.00000036</R00>
+										<R01>2.6077041e-08</R01>
+										<R02>-1.98483093e-07</R02>
 										<R10>-2.60770321e-08</R10>
 										<R11>1.00000107</R11>
 										<R12>-1.0511576e-07</R12>
-										<R20>1.11060217e-07</R20>
-										<R21>-1.0511576e-07</R21>
-										<R22>1.00000107</R22>
+										<R20>-2.3637412e-08</R20>
+										<R21>1.0511576e-07</R21>
+										<R22>-1.00000107</R22>
 									</CFrame>
 								</OptionalCoordinateFrame>
-								<BinaryString name="AttributesSerialize">AgAAAA4AAABEZWNvcmF0aW9uT25seQMBDQAAAFNvdXJjZUFzc2V0SWQGAABQhPcEAEI=</BinaryString>
+								<BinaryString name="AttributesSerialize"><![CDATA[AwAAAA4AAABEZWNvcmF0aW9uT25seQMBDgAAAEZhY2luZ0ludG9QbG90AwENAAAAU291cmNl
+QXNzZXRJZAYAAFCE9wQAQg==]]></BinaryString>
 								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
 								<bool name="DefinesCapabilities">false</bool>
 								<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
@@ -175198,18 +175199,18 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 									<SharedString name="SlimHash">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 									<OptionalCoordinateFrame name="WorldPivotData">
 										<CFrame>
-											<X>-57</X>
+											<X>-56.9999962</X>
 											<Y>2.94325972</Y>
 											<Z>130.25</Z>
-											<R00>1.00000072</R00>
-											<R01>-5.21541104e-08</R01>
-											<R02>2.22120605e-07</R02>
+											<R00>-1.00000072</R00>
+											<R01>5.21541317e-08</R01>
+											<R02>-3.09543566e-07</R02>
 											<R10>-5.21541104e-08</R10>
 											<R11>1.00000215</R11>
 											<R12>-2.10231747e-07</R12>
-											<R20>2.22120605e-07</R20>
-											<R21>-2.10231747e-07</R21>
-											<R22>1.00000215</R22>
+											<R20>-1.34697757e-07</R20>
+											<R21>2.10231747e-07</R21>
+											<R22>-1.00000215</R22>
 										</CFrame>
 									</OptionalCoordinateFrame>
 									<BinaryString name="AttributesSerialize">AQAAAA0AAABTb3VyY2VBc3NldElkBgAAUIT3BABC</BinaryString>
@@ -175273,18 +175274,18 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 										<token name="BottomSurface">0</token>
 										<token name="BottomSurfaceInput">0</token>
 										<CoordinateFrame name="CFrame">
-											<X>-57</X>
+											<X>-56.9999962</X>
 											<Y>2.94325972</Y>
 											<Z>130.25</Z>
-											<R00>1.00000072</R00>
-											<R01>-5.21541104e-08</R01>
-											<R02>2.22120605e-07</R02>
+											<R00>-1.00000072</R00>
+											<R01>5.21541317e-08</R01>
+											<R02>-3.09543566e-07</R02>
 											<R10>-5.21541104e-08</R10>
 											<R11>1.00000215</R11>
 											<R12>-2.10231747e-07</R12>
-											<R20>2.22120605e-07</R20>
-											<R21>-2.10231747e-07</R21>
-											<R22>1.00000215</R22>
+											<R20>-1.34697757e-07</R20>
+											<R21>2.10231747e-07</R21>
+											<R22>-1.00000215</R22>
 										</CoordinateFrame>
 										<bool name="CanCollide">false</bool>
 										<bool name="CanQuery">true</bool>
@@ -381818,18 +381819,18 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 							<Properties>
 								<token name="LevelOfDetail">0</token>
 								<CoordinateFrame name="ModelMeshCFrame">
-									<X>463.07428</X>
-									<Y>-99.8086395</Y>
-									<Z>-335.160217</Z>
-									<R00>-0.865814686</R00>
-									<R01>0.000936675118</R01>
-									<R02>0.50037092</R02>
-									<R10>-0.0222368427</R10>
-									<R11>0.998941958</R11>
-									<R12>-0.0403488614</R12>
-									<R20>-0.499877781</R20>
-									<R21>-0.0460612439</R21>
-									<R22>-0.8648718</R22>
+									<X>-286.247986</X>
+									<Y>-99.8089142</Y>
+									<Z>559.387329</Z>
+									<R00>0.865816712</R00>
+									<R01>-0.000936443044</R01>
+									<R02>-0.500371456</R02>
+									<R10>-0.0222366806</R10>
+									<R11>0.998944104</R11>
+									<R12>-0.0403489992</R12>
+									<R20>0.499878526</R20>
+									<R21>0.0460613407</R21>
+									<R22>0.864872336</R22>
 								</CoordinateFrame>
 								<SharedString name="ModelMeshData">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 								<Vector3 name="ModelMeshSize">
@@ -381844,21 +381845,22 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 								<SharedString name="SlimHash">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 								<OptionalCoordinateFrame name="WorldPivotData">
 									<CFrame>
-										<X>88.4134216</X>
+										<X>88.413414</X>
 										<Y>2.94325972</Y>
-										<Z>112.113449</Z>
-										<R00>0.500000298</R00>
-										<R01>-1.04071432e-07</R01>
-										<R02>0.866026402</R02>
+										<Z>112.113457</Z>
+										<R00>-0.500000238</R00>
+										<R01>1.04071432e-07</R01>
+										<R02>-0.866026461</R02>
 										<R10>-2.60770321e-08</R10>
 										<R11>1.00000107</R11>
 										<R12>-1.0511576e-07</R12>
-										<R20>-0.866025627</R20>
-										<R21>-2.99745082e-08</R21>
-										<R22>0.500000417</R22>
+										<R20>0.866025686</R20>
+										<R21>2.99744976e-08</R21>
+										<R22>-0.500000358</R22>
 									</CFrame>
 								</OptionalCoordinateFrame>
-								<BinaryString name="AttributesSerialize">AgAAAA4AAABEZWNvcmF0aW9uT25seQMBDQAAAFNvdXJjZUFzc2V0SWQGAABQhPcEAEI=</BinaryString>
+								<BinaryString name="AttributesSerialize"><![CDATA[AwAAAA4AAABEZWNvcmF0aW9uT25seQMBDgAAAEZhY2luZ0ludG9QbG90AwENAAAAU291cmNl
+QXNzZXRJZAYAAFCE9wQAQg==]]></BinaryString>
 								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
 								<bool name="DefinesCapabilities">false</bool>
 								<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
@@ -381898,18 +381900,18 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 									<SharedString name="SlimHash">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 									<OptionalCoordinateFrame name="WorldPivotData">
 										<CFrame>
-											<X>88.4134216</X>
+											<X>88.413414</X>
 											<Y>2.94325972</Y>
-											<Z>112.113449</Z>
-											<R00>0.500000596</R00>
-											<R01>-2.08143092e-07</R01>
-											<R02>0.866027415</R02>
+											<Z>112.113457</Z>
+											<R00>-0.500000536</R00>
+											<R01>2.08143092e-07</R01>
+											<R02>-0.866027474</R02>
 											<R10>-5.21541104e-08</R10>
 											<R11>1.00000215</R11>
 											<R12>-2.10231747e-07</R12>
-											<R20>-0.866025865</R20>
-											<R21>-5.99490875e-08</R21>
-											<R22>0.500000834</R22>
+											<R20>0.866025925</R20>
+											<R21>5.99490733e-08</R21>
+											<R22>-0.500000775</R22>
 										</CFrame>
 									</OptionalCoordinateFrame>
 									<BinaryString name="AttributesSerialize">AQAAAA0AAABTb3VyY2VBc3NldElkBgAAUIT3BABC</BinaryString>
@@ -381973,18 +381975,18 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 										<token name="BottomSurface">0</token>
 										<token name="BottomSurfaceInput">0</token>
 										<CoordinateFrame name="CFrame">
-											<X>88.4134216</X>
+											<X>88.413414</X>
 											<Y>2.94325972</Y>
-											<Z>112.113449</Z>
-											<R00>0.500000596</R00>
-											<R01>-2.08143092e-07</R01>
-											<R02>0.866027415</R02>
+											<Z>112.113457</Z>
+											<R00>-0.500000536</R00>
+											<R01>2.08143092e-07</R01>
+											<R02>-0.866027474</R02>
 											<R10>-5.21541104e-08</R10>
 											<R11>1.00000215</R11>
 											<R12>-2.10231747e-07</R12>
-											<R20>-0.866025865</R20>
-											<R21>-5.99490875e-08</R21>
-											<R22>0.500000834</R22>
+											<R20>0.866025925</R20>
+											<R21>5.99490733e-08</R21>
+											<R22>-0.500000775</R22>
 										</CoordinateFrame>
 										<bool name="CanCollide">false</bool>
 										<bool name="CanQuery">true</bool>
@@ -596001,18 +596003,18 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 							<Properties>
 								<token name="LevelOfDetail">0</token>
 								<CoordinateFrame name="ModelMeshCFrame">
-									<X>-54.6065903</X>
-									<Y>-99.8086472</Y>
-									<Z>-570.989136</Z>
-									<R00>-0.865814388</R00>
-									<R01>-0.0394218788</R01>
-									<R02>-0.498815626</R02>
-									<R10>-0.0222368427</R10>
-									<R11>0.998941958</R11>
-									<R12>-0.0403488614</R12>
-									<R20>0.499878556</R20>
-									<R21>-0.023841802</R21>
-									<R22>-0.865769744</R22>
+									<X>345.43335</X>
+									<Y>-99.8089142</Y>
+									<Z>525.216492</Z>
+									<R00>0.865816116</R00>
+									<R01>0.0394220762</R01>
+									<R02>0.498815775</R02>
+									<R10>-0.0222366806</R10>
+									<R11>0.998944104</R11>
+									<R12>-0.0403489992</R12>
+									<R20>-0.499879897</R20>
+									<R21>0.0238416456</R21>
+									<R22>0.86577034</R22>
 								</CoordinateFrame>
 								<SharedString name="ModelMeshData">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 								<Vector3 name="ModelMeshSize">
@@ -596029,19 +596031,20 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 									<CFrame>
 										<X>145.413422</X>
 										<Y>2.94325972</Y>
-										<Z>-22.8865509</Z>
-										<R00>-0.50000006</R00>
-										<R01>-7.79944003e-08</R01>
-										<R02>0.866026282</R02>
+										<Z>-22.8865528</Z>
+										<R00>0.500000119</R00>
+										<R01>7.79943932e-08</R01>
+										<R02>-0.866026223</R02>
 										<R10>-2.60770321e-08</R10>
 										<R11>1.00000107</R11>
 										<R12>-1.0511576e-07</R12>
-										<R20>-0.866025746</R20>
-										<R21>7.51412514e-08</R21>
-										<R22>-0.500000656</R22>
+										<R20>0.866025686</R20>
+										<R21>-7.51412585e-08</R21>
+										<R22>0.500000715</R22>
 									</CFrame>
 								</OptionalCoordinateFrame>
-								<BinaryString name="AttributesSerialize">AgAAAA4AAABEZWNvcmF0aW9uT25seQMBDQAAAFNvdXJjZUFzc2V0SWQGAABQhPcEAEI=</BinaryString>
+								<BinaryString name="AttributesSerialize"><![CDATA[AwAAAA4AAABEZWNvcmF0aW9uT25seQMBDgAAAEZhY2luZ0ludG9QbG90AwENAAAAU291cmNl
+QXNzZXRJZAYAAFCE9wQAQg==]]></BinaryString>
 								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
 								<bool name="DefinesCapabilities">false</bool>
 								<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
@@ -596083,16 +596086,16 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 										<CFrame>
 											<X>145.413422</X>
 											<Y>2.94325972</Y>
-											<Z>-22.8865509</Z>
-											<R00>-0.500000119</R00>
-											<R01>-1.55988971e-07</R01>
-											<R02>0.866027176</R02>
+											<Z>-22.8865528</Z>
+											<R00>0.500000179</R00>
+											<R01>1.55988957e-07</R01>
+											<R02>-0.866027117</R02>
 											<R10>-5.21541104e-08</R10>
 											<R11>1.00000215</R11>
 											<R12>-2.10231747e-07</R12>
-											<R20>-0.866026103</R20>
-											<R21>1.50282659e-07</R21>
-											<R22>-0.500001311</R22>
+											<R20>0.866026044</R20>
+											<R21>-1.50282673e-07</R21>
+											<R22>0.500001371</R22>
 										</CFrame>
 									</OptionalCoordinateFrame>
 									<BinaryString name="AttributesSerialize">AQAAAA0AAABTb3VyY2VBc3NldElkBgAAUIT3BABC</BinaryString>
@@ -596158,16 +596161,16 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 										<CoordinateFrame name="CFrame">
 											<X>145.413422</X>
 											<Y>2.94325972</Y>
-											<Z>-22.8865509</Z>
-											<R00>-0.500000119</R00>
-											<R01>-1.55988971e-07</R01>
-											<R02>0.866027176</R02>
+											<Z>-22.8865528</Z>
+											<R00>0.500000179</R00>
+											<R01>1.55988957e-07</R01>
+											<R02>-0.866027117</R02>
 											<R10>-5.21541104e-08</R10>
 											<R11>1.00000215</R11>
 											<R12>-2.10231747e-07</R12>
-											<R20>-0.866026103</R20>
-											<R21>1.50282659e-07</R21>
-											<R22>-0.500001311</R22>
+											<R20>0.866026044</R20>
+											<R21>-1.50282673e-07</R21>
+											<R22>0.500001371</R22>
 										</CoordinateFrame>
 										<bool name="CanCollide">false</bool>
 										<bool name="CanQuery">true</bool>
@@ -802701,18 +802704,18 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 							<Properties>
 								<token name="LevelOfDetail">0</token>
 								<CoordinateFrame name="ModelMeshCFrame">
-									<X>-517.680847</X>
-									<Y>-99.8086472</Y>
-									<Z>-240.578873</Z>
-									<R00>3.68204581e-07</R00>
-									<R01>-0.0403585508</R01>
-									<R02>-0.999186516</R02>
-									<R10>-0.0222368427</R10>
-									<R11>0.998941958</R11>
-									<R12>-0.0403488614</R12>
-									<R20>0.999756455</R20>
-									<R21>0.0222194437</R21>
-									<R22>-0.000897884194</R22>
+									<X>631.681274</X>
+									<Y>-99.8089218</Y>
+									<Z>-38.9208221</Z>
+									<R00>-6.76513309e-07</R00>
+									<R01>0.040358521</R01>
+									<R02>0.999187231</R02>
+									<R10>-0.0222366806</R10>
+									<R11>0.998944104</R11>
+									<R12>-0.0403489992</R12>
+									<R20>-0.999758601</R20>
+									<R21>-0.022219697</R21>
+									<R22>0.00089802919</R22>
 								</CoordinateFrame>
 								<SharedString name="ModelMeshData">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 								<Vector3 name="ModelMeshSize">
@@ -802727,21 +802730,22 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 								<SharedString name="SlimHash">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 								<OptionalCoordinateFrame name="WorldPivotData">
 									<CFrame>
-										<X>57</X>
+										<X>56.9999962</X>
 										<Y>2.94325972</Y>
 										<Z>-139.75</Z>
-										<R00>-1.00000036</R00>
-										<R01>2.60770321e-08</R01>
-										<R02>-1.11060217e-07</R02>
+										<R00>1.00000036</R00>
+										<R01>-2.6077041e-08</R01>
+										<R02>1.98483093e-07</R02>
 										<R10>-2.60770321e-08</R10>
 										<R11>1.00000107</R11>
 										<R12>-1.0511576e-07</R12>
-										<R20>-1.11060217e-07</R20>
-										<R21>1.0511576e-07</R21>
-										<R22>-1.00000107</R22>
+										<R20>2.3637412e-08</R20>
+										<R21>-1.0511576e-07</R21>
+										<R22>1.00000107</R22>
 									</CFrame>
 								</OptionalCoordinateFrame>
-								<BinaryString name="AttributesSerialize">AgAAAA4AAABEZWNvcmF0aW9uT25seQMBDQAAAFNvdXJjZUFzc2V0SWQGAABQhPcEAEI=</BinaryString>
+								<BinaryString name="AttributesSerialize"><![CDATA[AwAAAA4AAABEZWNvcmF0aW9uT25seQMBDgAAAEZhY2luZ0ludG9QbG90AwENAAAAU291cmNl
+QXNzZXRJZAYAAFCE9wQAQg==]]></BinaryString>
 								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
 								<bool name="DefinesCapabilities">false</bool>
 								<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
@@ -802781,18 +802785,18 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 									<SharedString name="SlimHash">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 									<OptionalCoordinateFrame name="WorldPivotData">
 										<CFrame>
-											<X>57</X>
+											<X>56.9999962</X>
 											<Y>2.94325972</Y>
 											<Z>-139.75</Z>
-											<R00>-1.00000072</R00>
-											<R01>5.21541104e-08</R01>
-											<R02>-2.22120605e-07</R02>
+											<R00>1.00000072</R00>
+											<R01>-5.21541317e-08</R01>
+											<R02>3.09543566e-07</R02>
 											<R10>-5.21541104e-08</R10>
 											<R11>1.00000215</R11>
 											<R12>-2.10231747e-07</R12>
-											<R20>-2.22120605e-07</R20>
-											<R21>2.10231747e-07</R21>
-											<R22>-1.00000215</R22>
+											<R20>1.34697757e-07</R20>
+											<R21>-2.10231747e-07</R21>
+											<R22>1.00000215</R22>
 										</CFrame>
 									</OptionalCoordinateFrame>
 									<BinaryString name="AttributesSerialize">AQAAAA0AAABTb3VyY2VBc3NldElkBgAAUIT3BABC</BinaryString>
@@ -802856,18 +802860,18 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 										<token name="BottomSurface">0</token>
 										<token name="BottomSurfaceInput">0</token>
 										<CoordinateFrame name="CFrame">
-											<X>57</X>
+											<X>56.9999962</X>
 											<Y>2.94325972</Y>
 											<Z>-139.75</Z>
-											<R00>-1.00000072</R00>
-											<R01>5.21541104e-08</R01>
-											<R02>-2.22120605e-07</R02>
+											<R00>1.00000072</R00>
+											<R01>-5.21541317e-08</R01>
+											<R02>3.09543566e-07</R02>
 											<R10>-5.21541104e-08</R10>
 											<R11>1.00000215</R11>
 											<R12>-2.10231747e-07</R12>
-											<R20>-2.22120605e-07</R20>
-											<R21>2.10231747e-07</R21>
-											<R22>-1.00000215</R22>
+											<R20>1.34697757e-07</R20>
+											<R21>-2.10231747e-07</R21>
+											<R22>1.00000215</R22>
 										</CoordinateFrame>
 										<bool name="CanCollide">false</bool>
 										<bool name="CanQuery">true</bool>
@@ -1016884,18 +1016888,18 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 							<Properties>
 								<token name="LevelOfDetail">0</token>
 								<CoordinateFrame name="ModelMeshCFrame">
-									<X>-463.074249</X>
-									<Y>-99.8086395</Y>
-									<Z>325.660217</Z>
-									<R00>0.865814686</R00>
-									<R01>-0.000936675118</R01>
-									<R02>-0.50037092</R02>
-									<R10>-0.0222368427</R10>
-									<R11>0.998941958</R11>
-									<R12>-0.0403488614</R12>
-									<R20>0.499877781</R20>
-									<R21>0.0460612439</R21>
-									<R22>0.8648718</R22>
+									<X>286.247955</X>
+									<Y>-99.8089066</Y>
+									<Z>-568.887329</Z>
+									<R00>-0.865816712</R00>
+									<R01>0.000936443044</R01>
+									<R02>0.500371456</R02>
+									<R10>-0.0222366806</R10>
+									<R11>0.998944104</R11>
+									<R12>-0.0403489992</R12>
+									<R20>-0.499878526</R20>
+									<R21>-0.0460613407</R21>
+									<R22>-0.864872336</R22>
 								</CoordinateFrame>
 								<SharedString name="ModelMeshData">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 								<Vector3 name="ModelMeshSize">
@@ -1016910,21 +1016914,22 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 								<SharedString name="SlimHash">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 								<OptionalCoordinateFrame name="WorldPivotData">
 									<CFrame>
-										<X>-88.4134216</X>
+										<X>-88.413414</X>
 										<Y>2.94325972</Y>
-										<Z>-121.613449</Z>
-										<R00>-0.500000298</R00>
-										<R01>1.04071432e-07</R01>
-										<R02>-0.866026402</R02>
+										<Z>-121.613457</Z>
+										<R00>0.500000238</R00>
+										<R01>-1.04071432e-07</R01>
+										<R02>0.866026461</R02>
 										<R10>-2.60770321e-08</R10>
 										<R11>1.00000107</R11>
 										<R12>-1.0511576e-07</R12>
-										<R20>0.866025627</R20>
-										<R21>2.99745082e-08</R21>
-										<R22>-0.500000417</R22>
+										<R20>-0.866025686</R20>
+										<R21>-2.99744976e-08</R21>
+										<R22>0.500000358</R22>
 									</CFrame>
 								</OptionalCoordinateFrame>
-								<BinaryString name="AttributesSerialize">AgAAAA4AAABEZWNvcmF0aW9uT25seQMBDQAAAFNvdXJjZUFzc2V0SWQGAABQhPcEAEI=</BinaryString>
+								<BinaryString name="AttributesSerialize"><![CDATA[AwAAAA4AAABEZWNvcmF0aW9uT25seQMBDgAAAEZhY2luZ0ludG9QbG90AwENAAAAU291cmNl
+QXNzZXRJZAYAAFCE9wQAQg==]]></BinaryString>
 								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
 								<bool name="DefinesCapabilities">false</bool>
 								<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
@@ -1016964,18 +1016969,18 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 									<SharedString name="SlimHash">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 									<OptionalCoordinateFrame name="WorldPivotData">
 										<CFrame>
-											<X>-88.4134216</X>
+											<X>-88.413414</X>
 											<Y>2.94325972</Y>
-											<Z>-121.613449</Z>
-											<R00>-0.500000596</R00>
-											<R01>2.08143092e-07</R01>
-											<R02>-0.866027415</R02>
+											<Z>-121.613457</Z>
+											<R00>0.500000536</R00>
+											<R01>-2.08143092e-07</R01>
+											<R02>0.866027474</R02>
 											<R10>-5.21541104e-08</R10>
 											<R11>1.00000215</R11>
 											<R12>-2.10231747e-07</R12>
-											<R20>0.866025865</R20>
-											<R21>5.99490875e-08</R21>
-											<R22>-0.500000834</R22>
+											<R20>-0.866025925</R20>
+											<R21>-5.99490733e-08</R21>
+											<R22>0.500000775</R22>
 										</CFrame>
 									</OptionalCoordinateFrame>
 									<BinaryString name="AttributesSerialize">AQAAAA0AAABTb3VyY2VBc3NldElkBgAAUIT3BABC</BinaryString>
@@ -1017039,18 +1017044,18 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 										<token name="BottomSurface">0</token>
 										<token name="BottomSurfaceInput">0</token>
 										<CoordinateFrame name="CFrame">
-											<X>-88.4134216</X>
+											<X>-88.413414</X>
 											<Y>2.94325972</Y>
-											<Z>-121.613449</Z>
-											<R00>-0.500000596</R00>
-											<R01>2.08143092e-07</R01>
-											<R02>-0.866027415</R02>
+											<Z>-121.613457</Z>
+											<R00>0.500000536</R00>
+											<R01>-2.08143092e-07</R01>
+											<R02>0.866027474</R02>
 											<R10>-5.21541104e-08</R10>
 											<R11>1.00000215</R11>
 											<R12>-2.10231747e-07</R12>
-											<R20>0.866025865</R20>
-											<R21>5.99490875e-08</R21>
-											<R22>-0.500000834</R22>
+											<R20>-0.866025925</R20>
+											<R21>-5.99490733e-08</R21>
+											<R22>0.500000775</R22>
 										</CoordinateFrame>
 										<bool name="CanCollide">false</bool>
 										<bool name="CanQuery">true</bool>
@@ -1223584,18 +1223589,18 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 							<Properties>
 								<token name="LevelOfDetail">0</token>
 								<CoordinateFrame name="ModelMeshCFrame">
-									<X>54.6065826</X>
-									<Y>-99.8086472</Y>
-									<Z>561.489136</Z>
-									<R00>0.865814388</R00>
-									<R01>0.0394218788</R01>
-									<R02>0.498815626</R02>
-									<R10>-0.0222368427</R10>
-									<R11>0.998941958</R11>
-									<R12>-0.0403488614</R12>
-									<R20>-0.499878556</R20>
-									<R21>0.023841802</R21>
-									<R22>0.865769744</R22>
+									<X>-345.43335</X>
+									<Y>-99.8089218</Y>
+									<Z>-534.716492</Z>
+									<R00>-0.865816116</R00>
+									<R01>-0.0394220762</R01>
+									<R02>-0.498815775</R02>
+									<R10>-0.0222366806</R10>
+									<R11>0.998944104</R11>
+									<R12>-0.0403489992</R12>
+									<R20>0.499879897</R20>
+									<R21>-0.0238416456</R21>
+									<R22>-0.86577034</R22>
 								</CoordinateFrame>
 								<SharedString name="ModelMeshData">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 								<Vector3 name="ModelMeshSize">
@@ -1223612,19 +1223617,20 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 									<CFrame>
 										<X>-145.413422</X>
 										<Y>2.94325972</Y>
-										<Z>13.3865509</Z>
-										<R00>0.50000006</R00>
-										<R01>7.79944003e-08</R01>
-										<R02>-0.866026282</R02>
+										<Z>13.3865499</Z>
+										<R00>-0.500000119</R00>
+										<R01>-7.79943932e-08</R01>
+										<R02>0.866026223</R02>
 										<R10>-2.60770321e-08</R10>
 										<R11>1.00000107</R11>
 										<R12>-1.0511576e-07</R12>
-										<R20>0.866025746</R20>
-										<R21>-7.51412514e-08</R21>
-										<R22>0.500000656</R22>
+										<R20>-0.866025686</R20>
+										<R21>7.51412585e-08</R21>
+										<R22>-0.500000715</R22>
 									</CFrame>
 								</OptionalCoordinateFrame>
-								<BinaryString name="AttributesSerialize">AgAAAA4AAABEZWNvcmF0aW9uT25seQMBDQAAAFNvdXJjZUFzc2V0SWQGAABQhPcEAEI=</BinaryString>
+								<BinaryString name="AttributesSerialize"><![CDATA[AwAAAA4AAABEZWNvcmF0aW9uT25seQMBDgAAAEZhY2luZ0ludG9QbG90AwENAAAAU291cmNl
+QXNzZXRJZAYAAFCE9wQAQg==]]></BinaryString>
 								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
 								<bool name="DefinesCapabilities">false</bool>
 								<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
@@ -1223666,16 +1223672,16 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 										<CFrame>
 											<X>-145.413422</X>
 											<Y>2.94325972</Y>
-											<Z>13.3865509</Z>
-											<R00>0.500000119</R00>
-											<R01>1.55988971e-07</R01>
-											<R02>-0.866027176</R02>
+											<Z>13.3865499</Z>
+											<R00>-0.500000179</R00>
+											<R01>-1.55988957e-07</R01>
+											<R02>0.866027117</R02>
 											<R10>-5.21541104e-08</R10>
 											<R11>1.00000215</R11>
 											<R12>-2.10231747e-07</R12>
-											<R20>0.866026103</R20>
-											<R21>-1.50282659e-07</R21>
-											<R22>0.500001311</R22>
+											<R20>-0.866026044</R20>
+											<R21>1.50282673e-07</R21>
+											<R22>-0.500001371</R22>
 										</CFrame>
 									</OptionalCoordinateFrame>
 									<BinaryString name="AttributesSerialize">AQAAAA0AAABTb3VyY2VBc3NldElkBgAAUIT3BABC</BinaryString>
@@ -1223741,16 +1223747,16 @@ eHQCBAAAAFNIT1A=]]></BinaryString>
 										<CoordinateFrame name="CFrame">
 											<X>-145.413422</X>
 											<Y>2.94325972</Y>
-											<Z>13.3865509</Z>
-											<R00>0.500000119</R00>
-											<R01>1.55988971e-07</R01>
-											<R02>-0.866027176</R02>
+											<Z>13.3865499</Z>
+											<R00>-0.500000179</R00>
+											<R01>-1.55988957e-07</R01>
+											<R02>0.866027117</R02>
 											<R10>-5.21541104e-08</R10>
 											<R11>1.00000215</R11>
 											<R12>-2.10231747e-07</R12>
-											<R20>0.866026103</R20>
-											<R21>-1.50282659e-07</R21>
-											<R22>0.500001311</R22>
+											<R20>-0.866026044</R20>
+											<R21>1.50282673e-07</R21>
+											<R22>-0.500001371</R22>
 										</CoordinateFrame>
 										<bool name="CanCollide">false</bool>
 										<bool name="CanQuery">true</bool>
@@ -1529995,6 +1530001,7 @@ local Rules=require(RS:WaitForChild("DessertRules"))
 local Visuals=require(RS:WaitForChild("DessertVisuals"))
 local Style=require(RS:WaitForChild("DessertUI"))
 local Gauge=require(RS:WaitForChild("CircularGauge"))
+local ShopUI=require(RS:WaitForChild("KawaiiShop"))
 local remotes=RS:WaitForChild("DessertRemotes")
 local action=remotes:WaitForChild("Action"); local event=remotes:WaitForChild("Event")
 local colors={Cream=Color3.fromRGB(255,248,239),Pink=Color3.fromRGB(255,193,217),Lavender=Color3.fromRGB(215,199,249),Mint=Color3.fromRGB(184,233,212),Text=Color3.fromRGB(105,66,90)}
@@ -1530087,7 +1530094,7 @@ local function preview(parent,tier,shiny,size,pos)
 	table.insert(spinning,{Model=model,View=view})
 	return view
 end
-local show
+local show,kawaiiShop
 local function productButton(key,spec,y,isPass)
 	local b=button(scroll,(spec.Name or key).." | "..spec.Price.." R$",UDim2.new(1,-18,0,50),UDim2.fromOffset(6,y),function() request("Purchase",key) end,colors.Lavender)
 	if spec.Id==0 or not data.Durable or ((spec.Crate or key=="Luck") and data.Restricted) then
@@ -1530098,7 +1530105,22 @@ local function productButton(key,spec,y,isPass)
 	end) end
 end
 show=function(name)
-	if not data then return end; panelName=name; window.Visible=true; title.Text=name; scroll:ClearAllChildren(); spinning={}; giftLabel=nil
+	if not data then return end
+	if kawaiiShop then kawaiiShop.Destroy(); kawaiiShop=nil end
+	panelName=name; window.Visible=name~="Shop"; title.Text=name; scroll:ClearAllChildren(); spinning={}; giftLabel=nil
+	if name=="Shop" then
+		kawaiiShop=ShopUI.Open(screen,data,{
+			Click=function() if data.Settings.Effects then click:Play() end end,
+			Close=function() panelName=nil; kawaiiShop=nil end,
+			Purchase=function(key) request("Purchase",key) end,
+			Preview=function(parent,tier,size,pos)
+				local view=preview(parent,tier,false,size,pos)
+				view.CurrentCamera.CFrame=CFrame.lookAt(Vector3.new(0,2.6,-4.5),Vector3.new(0,1.2,0)); view.CurrentCamera.FieldOfView=35
+				return view
+			end,
+		})
+		return
+	end
 	if name=="Index" then
 		for tier=1,30 do for variant=0,1 do
 			local shiny=variant==1; local key=Rules.Key(tier,shiny); local owned=data.Index[key]
@@ -1530117,10 +1530139,6 @@ show=function(name)
 			end,colors.Lavender)
 		end
 		text(scroll,voiceStatus,UDim2.new(1,-18,0,54),UDim2.fromOffset(6,210)).TextSize=15
-	elseif name=="Shop" then
-		local y=0; for _,key in ipairs({"Boost12","Boost15","Boost2","Boost5","AutoMerge","Magnet","Luck"}) do productButton(key,Config.Passes[key],y,true); y+=60 end
-		productButton("HotTime",{Id=Config.Products.HotTime.Id,Price=19,Name="15-min 2x Cash Hot Time"},y,false)
-		text(scroll,"Production boosts use the highest owned multiplier. They do not stack.\nLuck: summons/normal crates 1% -> 2%; perk crates 10% -> 20% shiny.",UDim2.new(1,-18,0,90),UDim2.fromOffset(6,y+60))
 	elseif name=="Crates" then
 		giftLabel=text(scroll,giftText(),UDim2.new(1,-18,0,72),UDim2.fromOffset(6,0))
 		local y=80
@@ -1531023,6 +1531041,7 @@ local Config = {
 	PuddingCost = 5,
 	Capacity = 60,
 	PlateImageId = "rbxassetid://73464157423623",
+	KawaiiShopAtlasId = "rbxassetid://82678981874379",
 	CafeInterval = 2,
 	CafeMarketInterval = 30,
 	CafeMarketMinTenths = 5,
@@ -1532038,6 +1532057,16 @@ local function roofCake(island,sources)
  cake:SetAttribute('SourceName','Happy Birthday Cake'); cake:SetAttribute('SourceCreator','Marko97_IT')
  local cakeCenter,cakeSize=bounds(cake); architecture.CafeMultiplierAnchor.CFrame=CFrame.new(center+Vector3.new(0,cakeCenter.Y+cakeSize.Y/2+5,0))
 end
+local function faceChestsIntoPlots(island)
+ for _,plot in ipairs(island.PlayerPlots:GetChildren()) do
+  local chest=plot.PersonalShopArea:FindFirstChild('NormalChest')
+  if chest and not chest:GetAttribute('FacingIntoPlot') then
+   local center=chest:GetBoundingBox().Position
+   chest:PivotTo(CFrame.new(center)*CFrame.Angles(0,math.pi,0)*CFrame.new(-center)*chest:GetPivot())
+   chest:SetAttribute('FacingIntoPlot',true)
+  end
+ end
+end
 function Presentation.Apply(island)
  for _,g in ipairs(island:GetDescendants()) do if g:IsA('BillboardGui') then
   local t=g:FindFirstChildWhichIsA('TextLabel',true); if t and t.Text:lower():find('welcome') then g:Destroy() end
@@ -1532057,6 +1532086,7 @@ function Presentation.Apply(island)
    local board=plot.PersonalShopArea:FindFirstChild('OwnerBoard'); local gui=board and board:FindFirstChildWhichIsA('SurfaceGui',true)
    if gui then bindOwner(gui.Parent,plot) end
   end
+  faceChestsIntoPlots(island)
   return
  end
  local skySource=sources and sources:FindFirstChild('CottonCandySky')
@@ -1532100,6 +1532130,7 @@ function Presentation.Apply(island)
  for n=1,6 do local a=(n-.5)*math.pi/3
   prop(sources[n%2==1 and 'FlowerPot' or 'PottedFlowers'],garden,'CafeFlowerPot'..n,CFrame.new(center+Vector3.new(math.sin(a)*58,.7,math.cos(a)*58)),3.8)
  end
+ faceChestsIntoPlots(island)
  island:SetAttribute('PresentationVersion',2); island:SetAttribute('MapVersion','15.0.0')
 end
 return Presentation
@@ -1532177,6 +1532208,132 @@ return Gauge
 				<int64 name="SourceAssetId">-1</int64>
 				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 				<UniqueId name="UniqueId">24be45843d2709660ae0e4c00000b5a3</UniqueId>
+			</Properties>
+		</Item>
+		<Item class="ModuleScript" referent="RBXA74B8F7350784396A78FF7210952066D">
+			<Properties>
+				<Content name="LinkedSource"><null></null></Content>
+				<ProtectedString name="Source"><![CDATA[-- Approved PocoGamesCo FREE KAWAII GUI PACK: artwork only, no imported code.
+-- Original atlas stays local; license and source are recorded in docs/ASSETS.md.
+local Shop={}
+local Market=game:GetService('MarketplaceService')
+local Tween=game:GetService('TweenService')
+local Config=require(script.Parent.TycoonConfig)
+local Style=require(script.Parent.DessertUI)
+local ink=Color3.fromRGB(105,62,88)
+local cream=Color3.fromRGB(255,239,213)
+local sprites={
+ Window={1100,2650,780,230},
+ Button={1015,1840,475,215},
+ Picture={1470,20,515,275},
+}
+local products={
+ {Key='Boost12',Name='1.2x Production',Description='Collect 20% more mini desserts.',Tier=1,Badge='1.2x'},
+ {Key='Boost15',Name='1.5x Production',Description='Collect 50% more mini desserts.',Tier=2,Badge='1.5x'},
+ {Key='Boost2',Name='2x Production',Description='Collect twice as many mini desserts.',Tier=3,Badge='2x'},
+ {Key='Boost5',Name='5x Production',Description='Collect five times as many mini desserts.',Tier=5,Badge='5x'},
+ {Key='AutoMerge',Name='Auto Merge',Description='Automatically merge matching desserts.',Icon='Cake',Badge='AUTO'},
+ {Key='Magnet',Name='Magnet',Description='Collect mini desserts from farther away.',Icon='Sparkles',Badge='PICKUP'},
+ {Key='Luck',Name='Shiny Luck',Description='Double your shiny dessert chance.',Icon='Sparkles',Badge='2x LUCK'},
+ {Key='HotTime',Name='Cash Hot Time',Description='Double cash conversion for 15 minutes.',Icon='Coins',Badge='15 MIN',Product=true},
+}
+local function label(parent,name,value,size,pos,fontSize)
+ local t=Instance.new('TextLabel'); t.Name=name; t.BackgroundTransparency=1; t.Text=value; t.TextColor3=ink
+ t.Font=Enum.Font.FredokaOne; t.TextSize=fontSize; t.TextWrapped=true; t.Size=size; t.Position=pos; t.ZIndex=parent.ZIndex+2; t.Parent=parent
+ return t
+end
+local function sprite(parent,key,size,pos)
+ local clip=Instance.new('Frame'); clip.Name=key..'Crop'; clip.BackgroundTransparency=1; clip.ClipsDescendants=true
+ clip.Size=size; clip.Position=pos; clip.ZIndex=parent.ZIndex+1; clip.Parent=parent
+ local im=Instance.new('ImageLabel'); im.Name='Kawaii'..key; im.BackgroundTransparency=1; im.Image=Config.KawaiiShopAtlasId
+ im.ZIndex=clip.ZIndex; im.ScaleType=Enum.ScaleType.Stretch; im.Parent=clip
+ local r=sprites[key]
+ -- Normalized clipping preserves the crop even if Roblox resamples the atlas.
+ im.Size=UDim2.fromScale(3000/r[3],3000/r[4]); im.Position=UDim2.fromScale(-r[1]/r[3],-r[2]/r[4])
+ return im
+end
+function Shop.Open(parent,data,callbacks)
+ local backdrop=Instance.new('Frame'); backdrop.Name='KawaiiShopBackdrop'; backdrop.Size=UDim2.fromScale(1,1)
+ backdrop.BackgroundColor3=Color3.fromRGB(106,67,94); backdrop.BackgroundTransparency=.48; backdrop.BorderSizePixel=0; backdrop.ZIndex=9; backdrop.Parent=parent
+ local root=Instance.new('Frame'); root.Name='KawaiiShopWindow'; root.AnchorPoint=Vector2.new(.5,.5); root.Position=UDim2.fromScale(.5,.5)
+ root.BackgroundColor3=cream; root.BorderSizePixel=0; root.ZIndex=10; root.Parent=parent
+ local rootRound=Instance.new('UICorner'); rootRound.CornerRadius=UDim.new(0,24); rootRound.Parent=root
+ local outline=Instance.new('UIStroke'); outline.Color=Color3.fromRGB(244,187,212); outline.Thickness=3; outline.Parent=root
+ sprite(root,'Window',UDim2.new(1,-16,1,-16),UDim2.fromOffset(8,8))
+ sprite(root,'Button',UDim2.fromOffset(280,58),UDim2.new(.5,-140,0,-18))
+ local title=label(root,'ShopTitle','SUGAR SHOP',UDim2.fromOffset(280,58),UDim2.new(.5,-140,0,-18),26)
+ local close=Instance.new('TextButton'); close.Name='CloseShop'; close.Text='×'; close.Font=Enum.Font.GothamBlack; close.TextSize=30; close.TextColor3=ink
+ close.BackgroundColor3=Color3.fromRGB(255,196,223); close.Size=UDim2.fromOffset(38,38); close.AnchorPoint=Vector2.new(1,0); close.Position=UDim2.new(1,-20,0,20); close.ZIndex=18; close.Parent=root
+ local round=Instance.new('UICorner'); round.CornerRadius=UDim.new(0,12); round.Parent=close
+ local scrolling=Instance.new('ScrollingFrame'); scrolling.Name='ProductCards'; scrolling.BackgroundTransparency=1; scrolling.BorderSizePixel=0
+ scrolling.Position=UDim2.fromOffset(24,82); scrolling.Size=UDim2.new(1,-48,1,-124); scrolling.ScrollBarThickness=5
+ scrolling.ScrollBarImageColor3=Color3.fromRGB(225,140,182); scrolling.AutomaticCanvasSize=Enum.AutomaticSize.Y; scrolling.CanvasSize=UDim2.new(); scrolling.ZIndex=12; scrolling.Parent=root
+ local grid=Instance.new('UIGridLayout'); grid.CellPadding=UDim2.fromOffset(12,12); grid.SortOrder=Enum.SortOrder.LayoutOrder; grid.Parent=scrolling
+ local padding=Instance.new('UIPadding'); padding.PaddingRight=UDim.new(0,8); padding.PaddingBottom=UDim.new(0,10); padding.Parent=scrolling
+ local foot=label(root,'BoostRule','Production boosts use your highest multiplier.',UDim2.new(1,-52,0,26),UDim2.new(0,26,1,-34),13)
+ local disposed=false; local resizeConnection
+ local function destroy()
+  if disposed then return end; disposed=true
+  if resizeConnection then resizeConnection:Disconnect() end
+  root:Destroy(); backdrop:Destroy()
+ end
+ close.Activated:Connect(function() callbacks.Click(); destroy(); callbacks.Close() end)
+ for n,item in ipairs(products) do
+  local spec=item.Product and Config.Products[item.Key] or Config.Passes[item.Key]
+  local card=Instance.new('Frame'); card.Name=item.Key; card.LayoutOrder=n; card.BackgroundColor3=cream; card.BorderSizePixel=0; card.ZIndex=13; card.Parent=scrolling
+  local curve=Instance.new('UICorner'); curve.CornerRadius=UDim.new(0,18); curve.Parent=card
+  local border=Instance.new('UIStroke'); border.Color=Color3.fromRGB(246,192,208); border.Thickness=2; border.Parent=card
+  local picture=sprite(card,'Picture',UDim2.new(1,-24,0,102),UDim2.fromOffset(12,10)); picture.ImageTransparency=.2
+  if item.Tier then callbacks.Preview(card,item.Tier,UDim2.new(1,-24,0,105),UDim2.fromOffset(12,8))
+  else local icon=Style.Icon(card,item.Icon,62,UDim2.new(.5,-31,0,28)); icon.ZIndex=16 end
+  local badge=label(card,'Badge',item.Badge,UDim2.fromOffset(84,24),UDim2.new(1,-94,0,14),13); badge.TextColor3=Color3.fromRGB(137,67,112)
+  label(card,'ProductName',item.Name,UDim2.new(1,-24,0,34),UDim2.fromOffset(12,118),20)
+  label(card,'Description',item.Description,UDim2.new(1,-24,0,44),UDim2.fromOffset(12,151),14)
+  local price=label(card,'RobuxPrice',spec.Price..' R$',UDim2.new(.43,-12,0,38),UDim2.new(0,12,1,-46),19); price.TextXAlignment=Enum.TextXAlignment.Left
+  local purchase=Instance.new('TextButton'); purchase.Name='Purchase'; purchase.Text=''; purchase.BackgroundTransparency=1
+  purchase.Size=UDim2.new(.55,-12,0,38); purchase.Position=UDim2.new(.45,0,1,-46); purchase.ZIndex=16; purchase.Parent=card
+  local art=sprite(purchase,'Button',UDim2.fromScale(1,1),UDim2.new()); art.ZIndex=16
+  local buttonText=label(purchase,'PurchaseLabel','BUY',UDim2.fromScale(1,1),UDim2.new(),14); buttonText.ZIndex=17
+  local available=spec.Id~=0 and data.Durable and not (item.Key=='Luck' and data.Restricted)
+  purchase:SetAttribute('ProductId',spec.Id); purchase:SetAttribute('Purchasable',available==true); purchase.Active=available==true; purchase.AutoButtonColor=false
+  if not available then buttonText.Text='COMING SOON'; art.ImageTransparency=.35 end
+  purchase.Activated:Connect(function()
+   if not available or disposed then return end
+   callbacks.Click(); callbacks.Purchase(item.Key)
+  end)
+  if available then
+   purchase.MouseEnter:Connect(function() Tween:Create(art,TweenInfo.new(.12),{ImageColor3=Color3.fromRGB(255,237,246)}):Play() end)
+   purchase.MouseLeave:Connect(function() Tween:Create(art,TweenInfo.new(.12),{ImageColor3=Color3.new(1,1,1)}):Play() end)
+   task.spawn(function()
+    local ok,info=pcall(Market.GetProductInfoAsync,Market,spec.Id,item.Product and Enum.InfoType.Product or Enum.InfoType.GamePass)
+    if ok and not disposed then price.Text=tostring(info.PriceInRobux)..' R$' end
+   end)
+  end
+ end
+ local function layout()
+  if disposed then return end
+  local v=workspace.CurrentCamera.ViewportSize; local inset=game:GetService('GuiService'):GetGuiInset()
+  local w=math.max(230,math.min(940,v.X-24)); local h=math.max(250,math.min(660,v.Y-inset.Y-24))
+  root.Size=UDim2.fromOffset(w,h); local columns=w>=840 and 3 or w>=520 and 2 or 1
+  grid.FillDirectionMaxCells=columns; grid.CellSize=UDim2.fromOffset(math.floor((w-56-(columns-1)*12)/columns),248)
+  title.TextSize=w<450 and 22 or 26; foot.TextSize=w<450 and 11 or 13
+  root:SetAttribute('Columns',columns)
+ end
+ layout(); resizeConnection=workspace.CurrentCamera:GetPropertyChangedSignal('ViewportSize'):Connect(layout)
+ return {Root=root,Destroy=destroy}
+end
+return Shop
+]]></ProtectedString>
+				<string name="ScriptGuid">{AA0CC098-F3E6-478D-B702-63EB83B051D7}</string>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+				<bool name="DefinesCapabilities">false</bool>
+				<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+				<string name="Name">KawaiiShop</string>
+				<BinaryString name="SerializedOverrides"></BinaryString>
+				<int64 name="SourceAssetId">-1</int64>
+				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+				<UniqueId name="UniqueId">24be45843d2709660ae0e4c00000de99</UniqueId>
 			</Properties>
 		</Item>
 	</Item>

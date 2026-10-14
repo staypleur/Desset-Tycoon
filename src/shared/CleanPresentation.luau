@@ -65,6 +65,16 @@ local function roofCake(island,sources)
  cake:SetAttribute('SourceName','Happy Birthday Cake'); cake:SetAttribute('SourceCreator','Marko97_IT')
  local cakeCenter,cakeSize=bounds(cake); architecture.CafeMultiplierAnchor.CFrame=CFrame.new(center+Vector3.new(0,cakeCenter.Y+cakeSize.Y/2+5,0))
 end
+local function faceChestsIntoPlots(island)
+ for _,plot in ipairs(island.PlayerPlots:GetChildren()) do
+  local chest=plot.PersonalShopArea:FindFirstChild('NormalChest')
+  if chest and not chest:GetAttribute('FacingIntoPlot') then
+   local center=chest:GetBoundingBox().Position
+   chest:PivotTo(CFrame.new(center)*CFrame.Angles(0,math.pi,0)*CFrame.new(-center)*chest:GetPivot())
+   chest:SetAttribute('FacingIntoPlot',true)
+  end
+ end
+end
 function Presentation.Apply(island)
  for _,g in ipairs(island:GetDescendants()) do if g:IsA('BillboardGui') then
   local t=g:FindFirstChildWhichIsA('TextLabel',true); if t and t.Text:lower():find('welcome') then g:Destroy() end
@@ -84,6 +94,7 @@ function Presentation.Apply(island)
    local board=plot.PersonalShopArea:FindFirstChild('OwnerBoard'); local gui=board and board:FindFirstChildWhichIsA('SurfaceGui',true)
    if gui then bindOwner(gui.Parent,plot) end
   end
+  faceChestsIntoPlots(island)
   return
  end
  local skySource=sources and sources:FindFirstChild('CottonCandySky')
@@ -127,6 +138,7 @@ function Presentation.Apply(island)
  for n=1,6 do local a=(n-.5)*math.pi/3
   prop(sources[n%2==1 and 'FlowerPot' or 'PottedFlowers'],garden,'CafeFlowerPot'..n,CFrame.new(center+Vector3.new(math.sin(a)*58,.7,math.cos(a)*58)),3.8)
  end
+ faceChestsIntoPlots(island)
  island:SetAttribute('PresentationVersion',2); island:SetAttribute('MapVersion','15.0.0')
 end
 return Presentation

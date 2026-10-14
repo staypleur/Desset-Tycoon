@@ -6,6 +6,7 @@ local Config = {
 	PuddingCost = 5,
 	Capacity = 60,
 	PlateImageId = "rbxassetid://73464157423623",
+	KawaiiShopAtlasId = "rbxassetid://82678981874379",
 	CafeInterval = 2,
 	CafeMarketInterval = 30,
 	CafeMarketMinTenths = 5,

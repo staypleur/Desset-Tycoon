@@ -12,6 +12,7 @@ local Rules=require(RS:WaitForChild("DessertRules"))
 local Visuals=require(RS:WaitForChild("DessertVisuals"))
 local Style=require(RS:WaitForChild("DessertUI"))
 local Gauge=require(RS:WaitForChild("CircularGauge"))
+local ShopUI=require(RS:WaitForChild("KawaiiShop"))
 local remotes=RS:WaitForChild("DessertRemotes")
 local action=remotes:WaitForChild("Action"); local event=remotes:WaitForChild("Event")
 local colors={Cream=Color3.fromRGB(255,248,239),Pink=Color3.fromRGB(255,193,217),Lavender=Color3.fromRGB(215,199,249),Mint=Color3.fromRGB(184,233,212),Text=Color3.fromRGB(105,66,90)}
@@ -104,7 +105,7 @@ local function preview(parent,tier,shiny,size,pos)
 	table.insert(spinning,{Model=model,View=view})
 	return view
 end
-local show
+local show,kawaiiShop
 local function productButton(key,spec,y,isPass)
 	local b=button(scroll,(spec.Name or key).." | "..spec.Price.." R$",UDim2.new(1,-18,0,50),UDim2.fromOffset(6,y),function() request("Purchase",key) end,colors.Lavender)
 	if spec.Id==0 or not data.Durable or ((spec.Crate or key=="Luck") and data.Restricted) then
@@ -115,7 +116,22 @@ local function productButton(key,spec,y,isPass)
 	end) end
 end
 show=function(name)
-	if not data then return end; panelName=name; window.Visible=true; title.Text=name; scroll:ClearAllChildren(); spinning={}; giftLabel=nil
+	if not data then return end
+	if kawaiiShop then kawaiiShop.Destroy(); kawaiiShop=nil end
+	panelName=name; window.Visible=name~="Shop"; title.Text=name; scroll:ClearAllChildren(); spinning={}; giftLabel=nil
+	if name=="Shop" then
+		kawaiiShop=ShopUI.Open(screen,data,{
+			Click=function() if data.Settings.Effects then click:Play() end end,
+			Close=function() panelName=nil; kawaiiShop=nil end,
+			Purchase=function(key) request("Purchase",key) end,
+			Preview=function(parent,tier,size,pos)
+				local view=preview(parent,tier,false,size,pos)
+				view.CurrentCamera.CFrame=CFrame.lookAt(Vector3.new(0,2.6,-4.5),Vector3.new(0,1.2,0)); view.CurrentCamera.FieldOfView=35
+				return view
+			end,
+		})
+		return
+	end
 	if name=="Index" then
 		for tier=1,30 do for variant=0,1 do
 			local shiny=variant==1; local key=Rules.Key(tier,shiny); local owned=data.Index[key]
@@ -134,10 +150,6 @@ show=function(name)
 			end,colors.Lavender)
 		end
 		text(scroll,voiceStatus,UDim2.new(1,-18,0,54),UDim2.fromOffset(6,210)).TextSize=15
-	elseif name=="Shop" then
-		local y=0; for _,key in ipairs({"Boost12","Boost15","Boost2","Boost5","AutoMerge","Magnet","Luck"}) do productButton(key,Config.Passes[key],y,true); y+=60 end
-		productButton("HotTime",{Id=Config.Products.HotTime.Id,Price=19,Name="15-min 2x Cash Hot Time"},y,false)
-		text(scroll,"Production boosts use the highest owned multiplier. They do not stack.\nLuck: summons/normal crates 1% -> 2%; perk crates 10% -> 20% shiny.",UDim2.new(1,-18,0,90),UDim2.fromOffset(6,y+60))
 	elseif name=="Crates" then
 		giftLabel=text(scroll,giftText(),UDim2.new(1,-18,0,72),UDim2.fromOffset(6,0))
 		local y=80

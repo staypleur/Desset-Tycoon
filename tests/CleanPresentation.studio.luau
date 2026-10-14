@@ -28,7 +28,7 @@ for _,plot in ipairs(island.PlayerPlots:GetChildren()) do
 end
 local mapped={}
 for service,names in pairs({
- [game.ReplicatedStorage]={'DessertCatalog','TycoonPlotLayout','IslandLandscape','ClassicPlotStyle','TycoonConfig','DessertRules','DessertVisuals','ProductionPlot','CentralCafeLayout','DessertUI','ReferenceStyle','CafeMarket','CleanPresentation','CircularGauge'},
+ [game.ReplicatedStorage]={'DessertCatalog','TycoonPlotLayout','IslandLandscape','ClassicPlotStyle','TycoonConfig','DessertRules','DessertVisuals','ProductionPlot','CentralCafeLayout','DessertUI','ReferenceStyle','CafeMarket','CleanPresentation','CircularGauge','KawaiiShop'},
  [game.ServerScriptService]={'DessertIsland','PlotAllocator','DessertProduction','DessertGame','PlayerProfiles'},
  [game.StarterPlayer.StarterPlayerScripts]={'DessertClient'},
 }) do
@@ -42,5 +42,5 @@ for _,root in ipairs({workspace,game.ServerStorage}) do for _,s in ipairs(root:G
  for _,p in ipairs(game.Players:GetPlayers()) do if p.Character and s:IsDescendantOf(p.Character) then nativeCharacter=true end end
  if not nativeCharacter then assert(mapped[s], 'Unexpected decorative code: '..s:GetFullName()) end
 end end end
-assert(count==20)
-print('[CleanPresentationTest] PASS: one chest, collisions, owner lifecycle, free sources and 20 known game scripts')
+assert(count==21)
+print('[CleanPresentationTest] PASS: one chest, collisions, owner lifecycle, free sources and 21 known game scripts')

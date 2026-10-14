@@ -82,3 +82,11 @@ All five imported templates were inspected and contained zero scripts or package
 이번 새 소스는 무료 표시/제작자를 확인한 뒤 사용했습니다. 가져올 때 Script·LocalScript·ModuleScript·PackageLink·기존 상호작용·소리를 제거하는 검사를 통과시켰으며 해당 새 모델에서는 제거 대상 코드가 발견되지 않았습니다. 기존 맵, 건물 및 ServerStorage의 원본 템플릿도 검사했으며 외부 실행 코드는 없었습니다. 직접 작성한 게임 코드 20개와 Roblox가 플레이 중 생성하는 기본 캐릭터/채팅 코드는 유지합니다.
 
 v15의 은행·상점 건물은 충돌합니다. 각 구역의 상자는 하나만 남겼고 상점 옆 입구 반대쪽으로 옮겼습니다. 위 v12/v14 항목의 비충돌/두 상자/카페 사각 배율 UI 설명은 해당 버전의 기록입니다.
+
+## 핑크·크림 Kawaii 상점 UI
+
+- [GUI Kawaii Pack FREE](https://pocogamesco.itch.io/ui-user-interface-kawaii-pack), **PocoGamesCo**: 사용자가 앞의 StoreUI/Comet 후보를 제외하고 이 무료 팩의 핑크·크림 구성을 선택했습니다. 실제 무료 ZIP의 `Mega Panel Pack.png`에서 창 배경, 둥근 핑크 버튼, 그림 배경을 골라 사용했습니다. 완제품 Shop 화면은 유료 버전이며 가져오지 않았습니다. 8개 상품 카드·가격·스크롤·화면별 열 수와 구매 연결 코드는 직접 작성했습니다.
+- 제작자 라이선스는 상업/비상업 게임 사용과 수정을 허용하고 원본·수정 에셋의 재배포/재판매를 금지합니다. 다운로드 ZIP과 원본 PNG/PSD는 GitHub에 추가하지 않습니다. `.local-ui-review/`를 Git에서 제외했고 저장된 Roblox 장소/코드는 업로드한 이미지 ID만 참조합니다. 원본 그림의 저작권은 PocoGamesCo에 있습니다.
+- 업로드한 Decal ID **116058453183198**, 실제 이미지 Texture ID **82678981874379**. 3000×3000 원본을 변경 없이 업로드했고 Frame.ClipsDescendants와 정규화된 비율로 필요한 부분을 표시합니다. 이미지 파일을 직접 잘라 다시 만들지 않았습니다. 카드의 디저트 그림은 기존 프로젝트 모델을 ViewportFrame에서 표시하고, 기능 아이콘은 승인된 Laurel 소스를 재사용합니다.
+- 무료 ZIP은 PNG/PSD와 macOS 메타데이터만 포함했습니다. 실행 파일·Luau 스크립트를 실행하지 않았습니다. 상점 동작은 자체 `KawaiiShop` 코드와 기존 서버 구매 검증에 연결됩니다. 상품 ID 0에 대한 구매 잠금은 유지합니다.
+- 검토 후 제외: [StoreUI](https://devforum.roblox.com/t/free-storeui-an-animated-modern-gamepass-store-ui/632073), [Comet Shop UI 무료 그래픽](https://devforum.roblox.com/t/shop-ui-free-graphics-tutorial/2297542). 해당 후보 코드는 게임에 가져오지 않았습니다.

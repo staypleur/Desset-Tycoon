@@ -45,6 +45,9 @@
       },
       "CircularGauge": {
         "$path": "src/shared/CircularGauge.luau"
+      },
+      "KawaiiShop": {
+        "$path": "src/shared/KawaiiShop.luau"
       }
     },
     "ServerScriptService": {

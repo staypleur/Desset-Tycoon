@@ -41,6 +41,7 @@ Studio에서는 임시 세션 데이터로 테스트합니다. 게시된 서버�
 - `src/shared/CafeMarket.luau`: 서버 판매 배율의 30초 변경 규칙
 - `src/shared/CleanPresentation.luau`: 승인된 무료 케이크·하늘·나무·화분, 양면 주인 게시판, 충돌 및 한 개 상자
 - `src/shared/CircularGauge.luau`: 숫자만 표시하는 파스텔 원형 판매 배율 게이지
+- `src/shared/KawaiiShop.luau`: 승인된 무료 Kawaii 그림을 사용하는 핑크·크림 상품 카드 상점
 
 저장된 장소의 기본 생성기 `DessertIsland`와 이전 `DessertProduction`은 비활성화되어 있습니다. Rojo 프로젝트는 새 장소에서 네이티브 맵을 생성합니다. 무료 Creator Store 소품/원본 템플릿까지 포함된 완성 배치는 `.rbxlx`에 있습니다.
 
@@ -51,3 +52,5 @@ Studio에서는 임시 세션 데이터로 테스트합니다. 게시된 서버�
 Edit mode에서 `tests/CentralCafe.studio.luau`를 실행합니다. Play의 서버 Command Bar에서 `tests/DessertGame.studio.luau`를 실행하면 발판 구매, 병합, 생산, 수집, 중앙 투입과 2초 환전, R 지급, 업그레이드, 펫, 설정, 결제 잠금을 검증합니다. 이전 버전의 배치 테스트들은 해당 버전의 기록용입니다.
 
 v15 배치는 Play 서버의 `tests/CleanPresentation.studio.luau`, 화면은 Play 클라이언트의 `tests/MinimalHUD.studio.luau`로 검증합니다. HUD에는 돈·접시 위 수량·배수·도감·상점 및 상단 설정 아이콘이 남습니다. 상자는 상점 옆 실제 모델에서 열며, 카페 대기열 카드와 환영 문구는 제거했습니다. 승인된 무료 원본은 저장된 `.rbxlx`에 포함되어 있습니다. 템플릿 없이 새 Rojo 장소를 생성하면 추가 무료 장식 적용은 건너뜁니다.
+
+상점 창은 PocoGamesCo 무료 Kawaii 패널/버튼과 기존 디저트 3D 그림을 조합한 카드형 UI입니다. 8종 상품에 설명·가격·별도 구매 버튼이 있고 화면 크기에 따라 1~3열로 표시됩니다. 상점을 연 실제 Play 클라이언트에서 `tests/KawaiiShop.studio.luau`를 실행해 검증할 수 있습니다. 상자 앞면은 각 구역의 디저트 접시 방향을 향합니다.

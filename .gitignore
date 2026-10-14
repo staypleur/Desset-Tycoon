@@ -3,3 +3,4 @@
 *.rbxlx.lock
 *.autosave
 .DS_Store
+.local-ui-review/
