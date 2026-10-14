@@ -10,6 +10,7 @@ local Config=require(RS:WaitForChild("TycoonConfig"))
 local Catalog=require(RS:WaitForChild("DessertCatalog"))
 local Rules=require(RS:WaitForChild("DessertRules"))
 local Visuals=require(RS:WaitForChild("DessertVisuals"))
+local Style=require(RS:WaitForChild("DessertUI"))
 local remotes=RS:WaitForChild("DessertRemotes")
 local action=remotes:WaitForChild("Action"); local event=remotes:WaitForChild("Event")
 local colors={Cream=Color3.fromRGB(255,248,239),Pink=Color3.fromRGB(255,193,217),Lavender=Color3.fromRGB(215,199,249),Mint=Color3.fromRGB(184,233,212),Text=Color3.fromRGB(105,66,90)}
@@ -18,7 +19,7 @@ local gui=Instance.new("Frame"); gui.BackgroundTransparency=1; gui.Parent=screen
 local uiScale=Instance.new("UIScale"); uiScale.Parent=gui
 local function resize()
 	local viewport=workspace.CurrentCamera.ViewportSize
-	local scale=math.min(viewport.X/1000,viewport.Y/650,1)
+	local scale=math.min(viewport.X/800,viewport.Y/650,1)
 	uiScale.Scale=scale; gui.Size=UDim2.fromOffset(viewport.X/scale,math.max(1,viewport.Y-58)/scale)
 end
 resize(); workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(resize)
@@ -30,41 +31,44 @@ local function giftText()
 end
 local function corner(object,radius) local c=Instance.new("UICorner"); c.CornerRadius=UDim.new(0,radius or 16); c.Parent=object end
 local function text(parent,label,size,pos)
-	local t=Instance.new("TextLabel"); t.Size=size; t.Position=pos; t.Text=label; t.Font=Enum.Font.GothamBold
-	t.TextColor3=colors.Text; t.TextSize=18; t.TextWrapped=true; t.BackgroundTransparency=1; t.Parent=parent; return t
+	local t=Instance.new("TextLabel"); t.Size=size; t.Position=pos; t.Text=label; t.Font=Enum.Font.FredokaOne
+	t.TextColor3=colors.Text; t.TextSize=20; t.TextWrapped=true; t.BackgroundTransparency=1; t.ZIndex=parent.ZIndex+1; t.Parent=parent; return t
 end
 local click=Instance.new("Sound"); click.SoundId=Config.ClickSoundId; click.Volume=.3; click.Parent=SoundService
 local revealSound=Instance.new("Sound"); revealSound.SoundId=Config.DiscoverySoundId; revealSound.Volume=.3; revealSound.Parent=SoundService
 local music=Instance.new("Sound"); music.Name="DessertCafeMusic"; music.SoundId=Config.MusicId; music.Volume=.12; music.Looped=true; music.Parent=SoundService
 local function button(parent,label,size,pos,callback,color)
 	local b=Instance.new("TextButton"); b.Size=size; b.Position=pos; b.Text=label; b.Font=Enum.Font.GothamBold; b.TextSize=16
-	b.TextColor3=colors.Text; b.BackgroundColor3=color or colors.Pink; b.BorderSizePixel=0; b.Parent=parent; corner(b)
+	b.TextColor3=colors.Text; b.BackgroundColor3=color or colors.Pink; b.BorderSizePixel=0; b.ZIndex=parent.ZIndex+1; b.Parent=parent
+	local icon=Style.Icons[label] and label or label:find("Open") and "Crates" or label:find("Equipped") and "Check" or label:find("Equip") and "Cake" or "Sparkles"
+	Style.Button(b,icon)
 	b.Activated:Connect(function() if not data or data.Settings.Effects then click:Play() end; callback() end)
 	return b
 end
-local function box(label,size,pos,color)
-	local f=Instance.new("Frame"); f.Size=size; f.Position=pos; f.BackgroundColor3=color or colors.Cream; f.BorderSizePixel=0; f.Parent=gui; corner(f)
-	return text(f,label,UDim2.fromScale(1,1),UDim2.new()),f
+local function box(label,size,pos,color,icon)
+	local f=Instance.new("Frame"); f.Size=size; f.Position=pos; f.Parent=gui; Style.Card(f,color or colors.Cream,18)
+	Style.Icon(f,icon or "Sparkles",32,UDim2.new(0,10,.5,-16))
+	return text(f,label,UDim2.new(1,-56,1,-8),UDim2.fromOffset(48,4)),f
 end
 local function format(n)
 	if n>=1e12 then return string.format("%.2e",n) end
 	for _,v in ipairs({{1e9,"B"},{1e6,"M"},{1e3,"K"}}) do if n>=v[1] then return string.format("%.1f%s",n/v[1],v[2]) end end
 	return tostring(math.floor(n))
 end
-local cash=box("$25",UDim2.fromOffset(180,60),UDim2.new(0,18,1,-80),colors.Mint)
-local bag=box("Mini Desserts: 0",UDim2.fromOffset(260,60),UDim2.new(.5,-130,1,-80))
+local cash=box("$25",UDim2.fromOffset(180,60),UDim2.new(0,18,1,-80),colors.Mint,"Coins"); cash.Name="CashValue"; cash.TextSize=28
+local bag=box("Mini Desserts: 0",UDim2.fromOffset(260,60),UDim2.new(.5,-130,1,-80),nil,"Cake"); bag.Name="BagValue"
 local boost=box("1x Mini Desserts",UDim2.fromOffset(170,60),UDim2.new(1,-188,.5,-30),colors.Lavender)
-local cafeStatus=box("Cafe Queue: 0\n10% / 2s\nBank: $0",UDim2.fromOffset(170,100),UDim2.new(1,-188,.5,40),colors.Mint)
+local cafeStatus=box("Cafe Queue: 0\n10% / 2s\nBank: $0",UDim2.fromOffset(180,112),UDim2.new(1,-198,.5,40),colors.Mint,"Cafe"); cafeStatus.TextSize=16
 local function updateCafeHUD()
 	cafeStatus.Text="Cafe Queue: "..format(data.CafeQueue or 0).."\n"..string.format("%.0f%% / 2s",(data.CafeRate or .1)*100).."\nBank: $"..format(data.Pending)
 end
 local toast=box("Welcome to Dessert Island!",UDim2.fromOffset(440,40),UDim2.new(.5,-220,0,76))
 local window=Instance.new("Frame"); window.Name="Panel"; window.Size=UDim2.fromScale(.78,.72); window.Position=UDim2.fromScale(.11,.15)
-window.BackgroundColor3=colors.Cream; window.BorderSizePixel=0; window.Visible=false; window.Parent=gui; corner(window,24)
-local title=text(window,"",UDim2.new(1,-110,0,54),UDim2.fromOffset(18,0)); title.TextXAlignment=Enum.TextXAlignment.Left; title.TextSize=24
-button(window,"Close",UDim2.fromOffset(80,36),UDim2.new(1,-94,0,10),function() window.Visible=false; panelName=nil end)
+window.ZIndex=10; window.Visible=false; window.Parent=gui; Style.Card(window,colors.Cream,24)
+local title=text(window,"",UDim2.new(1,-140,0,54),UDim2.fromOffset(18,0)); title.TextXAlignment=Enum.TextXAlignment.Left; title.TextSize=24
+button(window,"Close",UDim2.fromOffset(100,36),UDim2.new(1,-114,0,10),function() window.Visible=false; panelName=nil end)
 local scroll=Instance.new("ScrollingFrame"); scroll.Size=UDim2.new(1,-24,1,-70); scroll.Position=UDim2.fromOffset(12,60)
-scroll.BackgroundTransparency=1; scroll.BorderSizePixel=0; scroll.ScrollBarThickness=6; scroll.AutomaticCanvasSize=Enum.AutomaticSize.Y; scroll.CanvasSize=UDim2.new(); scroll.Parent=window
+scroll.ZIndex=window.ZIndex+1; scroll.BackgroundTransparency=1; scroll.BorderSizePixel=0; scroll.ScrollBarThickness=6; scroll.ScrollBarImageColor3=colors.Text; scroll.AutomaticCanvasSize=Enum.AutomaticSize.Y; scroll.CanvasSize=UDim2.new(); scroll.Parent=window
 local function request(verb,arg)
 	local ok,result,message=pcall(action.InvokeServer,action,verb,arg)
 	if ok and result==false and message then toast.Text=message elseif not ok then toast.Text="Please try again" end
@@ -72,7 +76,7 @@ local function request(verb,arg)
 end
 local function preview(parent,tier,shiny,size,pos)
 	local view=Instance.new("ViewportFrame"); view.Size=size; view.Position=pos; view.BackgroundTransparency=1
-	view.Ambient=Color3.fromRGB(220,208,220); view.LightColor=Color3.fromRGB(255,247,233); view.Parent=parent
+	view.ZIndex=parent.ZIndex+1; view.Ambient=Color3.fromRGB(220,208,220); view.LightColor=Color3.fromRGB(255,247,233); view.Parent=parent
 	local world=Instance.new("WorldModel"); world.Parent=view
 	local model=Visuals.Build(tier,shiny); model.Parent=world
 	local camera=Instance.new("Camera"); camera.CFrame=CFrame.lookAt(Vector3.new(0,3.7,-8),Vector3.new(0,1.3,0)); camera.Parent=view; view.CurrentCamera=camera
@@ -96,7 +100,7 @@ show=function(name)
 			local shiny=variant==1; local key=Rules.Key(tier,shiny); local owned=data.Index[key]
 			local index=(tier-1)*2+variant; local row=math.floor(index/4); local column=index%4
 			local card=Instance.new("Frame"); card.Size=UDim2.new(.25,-12,0,190); card.Position=UDim2.new(column*.25,6,0,row*200)
-			card.BackgroundColor3=shiny and colors.Lavender or colors.Pink; card.BorderSizePixel=0; card.Parent=scroll; corner(card)
+			card.ZIndex=scroll.ZIndex+1; card.Parent=scroll; Style.Card(card,shiny and colors.Lavender or colors.Pink,18)
 			if owned then preview(card,tier,shiny,UDim2.new(1,0,0,112),UDim2.new()) else text(card,"?",UDim2.new(1,0,0,110),UDim2.new()) end
 			text(card,owned and ((shiny and "Shiny " or "")..Catalog[tier].Name) or "Undiscovered",UDim2.new(1,-8,0,34),UDim2.fromOffset(4,112))
 			if owned then button(card,data.Equipped==key and "Equipped" or "Equip",UDim2.new(1,-16,0,32),UDim2.fromOffset(8,152),function() request("Equip",key) end,colors.Mint) end
@@ -132,8 +136,8 @@ end
 button(gui,"Index",UDim2.fromOffset(118,54),UDim2.new(0,18,.5,-70),function() show("Index") end)
 button(gui,"Shop",UDim2.fromOffset(118,48),UDim2.new(0,18,.5,-8),function() show("Shop") end,colors.Mint)
 button(gui,"Crates",UDim2.fromOffset(118,48),UDim2.new(0,18,.5,48),function() show("Crates") end,colors.Lavender)
-button(gui,"Dessert Island",UDim2.fromOffset(150,40),UDim2.fromOffset(18,18),function() toast.Text="Deposit at the central cafe. Collect cash and upgrade conversion at your bank!" end)
-button(gui,"Settings",UDim2.fromOffset(100,40),UDim2.fromOffset(176,18),function() show("Settings") end,colors.Lavender)
+button(gui,"Dessert Island",UDim2.fromOffset(180,44),UDim2.fromOffset(18,18),function() toast.Text="Deposit at the central cafe. Collect cash and upgrade conversion at your bank!" end)
+button(gui,"Settings",UDim2.fromOffset(124,44),UDim2.fromOffset(210,18),function() show("Settings") end,colors.Lavender)
 local function applySettings()
 	if not data then return end
 	if data.Settings.Music then if not music.Playing then music:Play() end else music:Stop() end

@@ -44,3 +44,11 @@ All five imported templates were inspected and contained zero scripts or package
 - [Synty City Pack](https://create.roblox.com/store/asset/6933556508/Synty-City-Pack), Roblox 배포: 무료 팩의 `PolygonCity_Buildings_SM_Bld_Station_03`만 선택하여 Dessert Bank 건물로 재사용했습니다. 전체 도시 팩은 장소에 남기지 않았습니다. 원본 건물은 `ServerStorage.FreeBankTemplate`에 보존했습니다.
 - 가져온 건물의 스크립트, PackageLink, 기존 상호작용과 음원은 제거했습니다. 장식만 사용하며 게임 동작은 자체 서버 코드가 담당합니다. 복제 건물은 고정되고 충돌하지 않습니다. 네이티브 발판/카페는 돌기 표면, 무료 메시 건물은 원래 메시 형태와 질감을 유지합니다.
 - 중앙 카페, 둥근 문틀, 얼굴 없는 3단 지붕 케이크는 직접 구성했습니다. 기존 무료 벤치를 중앙에 여섯 개 복제하고 실제 Seat 두 개씩 추가했습니다. 개인 카페/전시장을 제거했으며 원본 템플릿은 보존했습니다.
+
+## v13 무료 아이콘과 파스텔 UI
+
+- [Laurel Icon Pack](https://github.com/CManReal/laurel), [Tabler Icons](https://tabler.io/icons): 무료 MIT 아이콘. 공개 `IconPackPlugin.rbxmx`의 Decal 데이터에서 필요한 이미지 ID만 추출했습니다. 플러그인을 설치하거나 외부 코드를 실행하지 않았습니다. MIT 저작권 고지와 라이선스를 `LAUREL-LICENSE.txt`에 포함했습니다.
+- 도감(book-2), 설정(settings), 상점(shopping-bag), 상자(gift), 디저트(cake), 돈(coins), 카페(coffee), 은행(building-bank), 업그레이드(arrow-up), 잠금/가능 상태(lock/check), 닫기(x), 반짝임(sparkles) 아이콘을 사용합니다. 이미지 ID는 `src/shared/DessertUI.luau`에 있습니다.
+- 카드·말풍선·크림 테두리·그림자·그라데이션·호버/클릭 애니메이션은 이 프로젝트에서 직접 구성했습니다. 글꼴은 Roblox 기본 FredokaOne입니다. 외부 완성형 UI 팩을 그대로 가져온 것은 아닙니다.
+- 검토한 [FREE Cartoony Roblox UI Pack](https://zxgly.itch.io/free-cartoony-roblox-ui-pack)은 색 변경 제한이 있고, Epic UI Pack은 유료 자료여서 사용하지 않았습니다. Kenney CC0 UI/아이콘도 검토했지만 Roblox에서 바로 사용하는 공개 이미지 ID가 있는 Laurel을 선택했습니다.
+- 상점·은행에 추가했던 간판과 상점 지붕의 SHOP 글자 메시를 제거했습니다. 기능을 설명하는 발판 말풍선과 E 프롬프트는 유지했습니다.

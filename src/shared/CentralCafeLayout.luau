@@ -29,6 +29,7 @@ end
 local function decoration(source,parent,name,cf,width,tint)
 	if not source then return nil end
 	local m=group(parent,name); source:Clone().Parent=m
+	for _,d in ipairs(m:GetDescendants()) do if d.Name:find("Alphabet_") then d:Destroy() end end
 	local box,size=m:GetBoundingBox()
 	m:ScaleTo(m:GetScale()*width/math.max(size.X,size.Z)); box,size=m:GetBoundingBox()
 	m:PivotTo(cf*CFrame.new(0,size.Y/2,0)*box:ToObjectSpace(m:GetPivot()))
@@ -44,7 +45,15 @@ local function decoration(source,parent,name,cf,width,tint)
 	m:SetAttribute("DecorationOnly",true); m:SetAttribute("SourceAssetId",source:GetAttribute("SourceAssetId"))
 	return m
 end
+function Layout.RemoveBuildingSigns(island)
+	for _,plot in ipairs(island.PlayerPlots:GetChildren()) do
+		local area=plot.PersonalShopArea
+		for _,d in ipairs(area:GetDescendants()) do if d.Name=="BuildingSign" or d.Name:find("Alphabet_") then d:Destroy() end end
+	end
+	island:SetAttribute("BuildingSignsRemoved",true)
+end
 function Layout.Apply(island)
+	Layout.RemoveBuildingSigns(island)
 	if island:GetAttribute("CentralCafeVersion")==1 then return end
 	local hub=island.CentralHub; local anchor=hub.CentralShop
 	local origin=anchor:GetPivot().Position; local center=Vector3.new(origin.X,0,origin.Z)
@@ -139,11 +148,6 @@ function Layout.Apply(island)
 		local store=decoration(game.ServerStorage:FindFirstChild("FreeShopTemplate"),area,"ShopBuilding",at(-40,.2,-50)*CFrame.Angles(0,math.pi,0),27,lavender)
 		if not bank then bank=group(area,"BankBuilding"); p(bank,"BankShell",Vector3.new(25,12,17),at(40,6.2,-50),mint) end
 		if not store then store=group(area,"ShopBuilding"); p(store,"ShopShell",Vector3.new(25,12,17),at(-40,6.2,-50),lavender) end
-		for _,v in ipairs({{40,"DESSERT BANK",mint},{-40,"SUGAR SHOP",lavender}}) do
-			local signPart=p(area,"BuildingSign",Vector3.new(15,2.5,.25),at(v[1],10,-40),v[3]); signPart.CanCollide=false
-			local g=Instance.new("SurfaceGui"); g.Face=Enum.NormalId.Back; g.PixelsPerStud=40; g.Parent=signPart
-			local t=Instance.new("TextLabel"); t.Size=UDim2.fromScale(1,1); t.BackgroundTransparency=1; t.Text=v[2]; t.Font=Enum.Font.GothamBold; t.TextColor3=cocoa; t.TextScaled=true; t.Parent=g
-		end
 		local decor=plot:FindFirstChild("CafeGardenDecor")
 		if decor then
 			remove(decor,{"BakeryTerrace","TeaPatio","PatioBorder","PastryDisplay","DisplayCake","CafePlanter","SoftHedge","PlanterFlowers"})

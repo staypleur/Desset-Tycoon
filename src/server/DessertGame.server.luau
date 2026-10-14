@@ -8,12 +8,14 @@ local Config=require(RS:WaitForChild("TycoonConfig"))
 local Rules=require(RS:WaitForChild("DessertRules"))
 local Visuals=require(RS:WaitForChild("DessertVisuals"))
 local Layout=require(RS:WaitForChild("ProductionPlot"))
+local UI=require(RS:WaitForChild("DessertUI"))
 local Profiles=require(script.Parent:WaitForChild("PlayerProfiles"))
 local island=workspace:WaitForChild("DessertJellyIsland",30)
 assert(island,"Dessert island missing")
 while island:GetAttribute("LayoutReady")==false do task.wait(.1) end
 Layout.Apply(island)
 require(RS:WaitForChild("CentralCafeLayout")).Apply(island)
+UI.ApplyWorld(island)
 local remotes=Instance.new("Folder"); remotes.Name="DessertRemotes"; remotes.Parent=RS
 local action=Instance.new("RemoteFunction"); action.Name="Action"; action.Parent=remotes
 local events=Instance.new("RemoteEvent"); events.Name="Event"; events.Parent=remotes
@@ -41,6 +43,12 @@ local function update(player,message)
 	if cash then cash.Value=p.Data.Cash end
 	local s=states[player:GetAttribute("PlotId")]
 	if s then
+		for _,count in ipairs({1,10,100,1000}) do
+			local pad=s.Plot.PurchaseButtons["Buy"..count]
+			UI.Pad(pad,p.Data.Cash,count*Config.PuddingCost)
+			pad.ActionSign:FindFirstChildOfClass("TextLabel").Text="BUY "..count.."\n$"..(count*Config.PuddingCost)
+		end
+		UI.Pad(s.Plot.PersonalShopArea.UpgradeConverter,p.Data.Cash,Rules.CafeUpgradeCost(p.Data),p.Data.CafeLevel>=Config.CafeMaxLevel)
 		s.Plot.PersonalShopArea.CollectIncome.ActionSign:FindFirstChildOfClass("TextLabel").Text="R | $"..string.format("%.0f",p.Data.Pending)
 		s.Plot.PersonalShopArea.UpgradeConverter.ActionSign:FindFirstChildOfClass("TextLabel").Text=p.Data.CafeLevel>=Config.CafeMaxLevel and "CONVERTER MAX | 100%" or string.format("UPGRADE | %.0f%% -> %.0f%%\n$%.0f",Rules.CafeRate(p.Data)*100,math.min(1,Rules.CafeRate(p.Data)+Config.CafeRateStep)*100,Rules.CafeUpgradeCost(p.Data))
 	end
@@ -197,7 +205,9 @@ for i=1,6 do
 	button(island.CentralHub.CratePads["Crate"..i],"Panel","Crates","Open crates",.5,true)
 	plot:GetAttributeChangedSignal("OwnerUserId"):Connect(function()
 		s.Models:ClearAllChildren(); s.Products:ClearAllChildren(); s.Pets={}; s.Drops={}
-		s.Owner=Players:GetPlayerByUserId(plot:GetAttribute("OwnerUserId") or 0); if s.Owner then render(s.Owner) end
+		s.Owner=Players:GetPlayerByUserId(plot:GetAttribute("OwnerUserId") or 0)
+		if s.Owner then render(s.Owner); update(s.Owner)
+		else for _,count in ipairs({1,10,100,1000}) do UI.Pad(plot.PurchaseButtons["Buy"..count],nil,count*Config.PuddingCost) end; UI.Pad(plot.PersonalShopArea.UpgradeConverter,nil,Config.CafeUpgradeBaseCost) end
 	end)
 end
 local function refreshPasses(player,p)

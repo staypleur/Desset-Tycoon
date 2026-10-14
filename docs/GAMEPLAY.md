@@ -1,4 +1,4 @@
-# Dessert Island v12
+# Dessert Island v13
 
 ## Rewards and economy
 
@@ -7,6 +7,7 @@
 - Every displayed dessert produces once per three seconds. Tier values are `3^(tier-1)`: Pudding 1, Custard 3, Strawberry Jelly 9. Nearby pickup adds to the bag; the owner's central cafe pad transfers whole units into their private conversion queue. No cash is credited at deposit. Every two seconds, `ceil(remaining queue * conversion rate)` units become pending bank cash. R transfers that pending cash to the wallet. Shiny does not add an unstated income bonus.
 - Conversion begins at 10%; bank upgrades add 5 percentage points each, capped at 100% (18 levels). First upgrade costs 25 wallet cash, doubling each level. Queue and level persist in the existing profile store; old profiles initialize them to zero. Processing runs while connected, pauses during saving and resumes on rejoin. A new empty queue waits a full two seconds before processing; repeat deposits join its current cycle. Hot time applies to batches processed while it is active. Client delivery/coin animations are cosmetic and cannot credit money.
 - Six plots are 128 by 120 studs, at radius 180, with straight 18-stud paths to the central plaza. One hollow cafe reserves `CentralHub.CentralDisplay` for the user's model; place its interior around CentralShop X/Z at floor height 0.85. Each bank has separate collect/upgrade pads. Shop interaction is a hold-E prompt (0.8s); paid products remain disabled until IDs exist. Cafe benches have real Seat instances.
+- Purchase and converter-upgrade pads display the owner's affordability: green when wallet cash meets the current price, red otherwise. The server refreshes them on state changes, including spending and collecting. Unowned plots and maxed upgrades use a neutral color. Price and check/lock icons accompany color; the underlying server cost/distance/ownership checks remain authoritative. Free Laurel/Tabler icons, original pastel cards, cream outlines, shadows and FredokaOne style the HUD and world bubbles. Building name boards and shop roof lettering are removed.
 - Buy 1/10/100/1000 costs five cash per pudding and always carries every complete triple. Normal and shiny desserts merge separately. M merges all available triples; tier 30 is the cap. Every discovered intermediate tier is recorded even when a bulk purchase immediately merges it onward.
 - Crate overflow remains in the owned inventory. At most 60 desserts are displayed and produce; merge to free plates.
 - One normal free credit every **18,000 seconds (5h)**. Premium receives **one normal plus one perk** at the same deadline. First gift is five hours after first profile creation. A missed offline deadline grants one gift on return, then starts a new five-hour cycle; it does not accumulate unlimited missed gifts.
@@ -32,6 +33,7 @@ Set the published experience's maximum player count to **6** in Creator Dashboar
 - Play server `tests/DessertGame.studio.luau`: buy/merge, three-second production, nearby pickup, bag/cafe/R sequence, distance validation, companion, settings and disabled purchases.
 - Production slopes were checked with downward raycasts in v11: outside edge higher than inside edge on all 60 side ramps. v12 widens those side ramps with the same slope height profile.
 - Historical v8/v10/v11 layout tests target earlier arrangements; use `tests/CentralCafe.studio.luau` for current layout and conversion rules.
+- `tests/DessertUI.studio.luau` in a fresh Play server checks affordability colors before/after spending, upgrade cost, bubble styling and building sign removal.
 
 The 30 dessert visuals are native procedural starter models with different dessert families, pastel colors and faces. They are replaceable templates, not a purchased 30-model art pack. English HUD, Index, Settings, Shop, Crates and discovery effects use native Roblox UI components; no external UI package is required.
 

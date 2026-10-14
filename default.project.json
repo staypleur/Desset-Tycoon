@@ -30,6 +30,9 @@
       },
       "CentralCafeLayout": {
         "$path": "src/shared/CentralCafeLayout.luau"
+      },
+      "DessertUI": {
+        "$path": "src/shared/DessertUI.luau"
       }
     },
     "ServerScriptService": {
