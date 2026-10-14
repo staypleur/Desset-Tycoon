@@ -38,7 +38,7 @@ end end
 assert(R.ShinyChance('Normal',false)==.01 and R.ShinyChance('Normal',true)==.02)
 assert(R.ShinyChance('Perk',false)==.1 and R.ShinyChance('Perk',true)==.2)
 for _,luck in ipairs({false,true}) do
- local d=R.New(0); local rng={NextNumber=function() return .015 end}
+ local d=R.New(0); d.Cash=5; local rng={NextNumber=function() return .015 end}
  assert(R.Buy(d,1,rng,luck,false))
  assert((d.Pets['1s'] or 0)==(luck and 1 or 0),'Displayed probability differs from purchase roll')
 end

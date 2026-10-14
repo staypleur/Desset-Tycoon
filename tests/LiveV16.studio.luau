@@ -26,7 +26,7 @@ task.wait(1); assert(call('State').Pending==0)
 task.wait(1.25); s=call('State'); assert(s.Pending==2 and s.CafeQueue==credit-2 and s.TotalCashEarned==2)
 assert(not call('Collect'),'Bank distance validation')
 r.CFrame=CFrame.new(plot.PersonalShopArea.CollectIncome.Position+Vector3.new(0,4,0)); assert(call('Collect'))
-s=call('State'); assert(s.Pending==0 and s.Cash==27 and s.PlaySeconds>10)
+s=call('State'); assert(s.Pending==0 and s.Cash==2 and s.PlaySeconds>10)
 local afk=call("State").AFKStored
 r.CFrame=CFrame.new(plot.DessertBaskets.AFKAnchor.Position+Vector3.new(0,2,0)); task.wait(.4)
 s=call("State"); assert(afk>0 and s.AFKStored==0 and s.Bag>=afk,"Owner proximity must collect AFK storage")

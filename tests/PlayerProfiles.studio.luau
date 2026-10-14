@@ -9,7 +9,9 @@ function store:UpdateAsync(_,callback)
 	if failAfterCommit then failAfterCommit=false; error("Simulated timeout after commit") end
 	return saved
 end
-local fakeGame={JobId="ProfileRegression",ReplicatedStorage=game.ReplicatedStorage}
+local rulesFolder=Instance.new('Folder'); rulesFolder.Parent=game.ReplicatedStorage
+for _,name in ipairs({'DessertRules','TycoonConfig'}) do game.ReplicatedStorage[name]:Clone().Parent=rulesFolder end
+local fakeGame={JobId="ProfileRegression",ReplicatedStorage=rulesFolder}
 function fakeGame:GetService(name)
 	if name=="DataStoreService" then return {GetDataStore=function() return store end} end
 	if name=="RunService" then return {IsStudio=function() return false end} end
@@ -27,7 +29,7 @@ local grants=0
 assert(Profiles.Receipt(profile,"first",function(d) grants+=1; d.PaidNormalTokens+=1 end))
 profile.Data.Cash+=10
 assert(Profiles.Receipt(profile,"first",function() error("Duplicate grant") end))
-assert(grants==1 and profile.Data.Cash==35 and profile.Data.PaidNormalTokens==1)
+assert(grants==1 and profile.Data.Cash==10 and profile.Data.PaidNormalTokens==1)
 assert(Profiles.Save(profile,true))
 profile=assert(Profiles.Load({UserId=999999999}))
 assert(profile.Data.NextGift==987654 and profile.Data.AFKSeconds==1234 and profile.Data.Receipts.first)
@@ -41,4 +43,5 @@ saved.Lock.Expires=0
 local rejoined=assert(Profiles.Load({UserId=999999999}))
 assert(rejoined.Data.PaidPerkTokens==1)
 assert(Profiles.Receipt(rejoined,"uncertain",function() error("Retry must not grant twice") end))
+rulesFolder:Destroy()
 print("[PlayerProfilesTest] PASS: timers persisted, duplicate receipts preserve progress, uncertain committed writes protected, rejoin/retry exactly once")

@@ -5,7 +5,7 @@ local INTERVAL = Config.GiftInterval
 function Rules.Key(tier, shiny) return tostring(tier)..(shiny and "s" or "n") end
 function Rules.Decode(key) return tonumber(key:sub(1,-2)), key:sub(-1)=="s" end
 function Rules.New(now)
-	return {Version=2, Cash=25, Bag=0, Pending=0, CafeQueue=0, CafeLevel=0, Pets={["1n"]=1}, Index={["1n"]=true},
+	return {Version=2, Cash=0, Bag=0, Pending=0, CafeQueue=0, CafeLevel=0, Pets={["1n"]=1}, Index={["1n"]=true},
 		TotalCashEarned=0,TotalMiniCollected=0,PlaySeconds=0,AFKStored=0,OfflineStored=0,LastSeen=now,
 		NormalTokens=0, PerkTokens=0, PaidNormalTokens=0, PaidPerkTokens=0, NextGift=now+INTERVAL, AFKSeconds=0,
 		Settings={Music=true, Effects=true, HideOthers=false}, Receipts={}, HotUntil=0}

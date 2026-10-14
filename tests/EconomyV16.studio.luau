@@ -13,7 +13,7 @@ for _,count in ipairs({10,100,1000}) do
  local units=0; for key,n in pairs(p.Pets) do local tier=R.Decode(key); units+=n*3^(tier-1); assert(tier==30 or n<3) end
  assert(units==count+1,'Bulk merge must conserve all logical desserts')
 end
-local full=R.New(0); full.Pets={['1n']=60}; local original=full.Cash
+local full=R.New(0); full.Cash=10000; full.Pets={['1n']=60}; local original=full.Cash
 assert(not R.Buy(full,1,rng,false) and full.Cash==original,'Full plates must reject without charging')
 d=R.New(0); d.Bag=100.5; d.Cash=60
 local amount,credit=R.Deposit(d,1.5); assert(amount==100.5 and credit==150.75 and d.Pending==0)

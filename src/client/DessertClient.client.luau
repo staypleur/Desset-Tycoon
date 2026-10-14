@@ -69,7 +69,7 @@ local function format(n)
 	for _,v in ipairs({{1e9,"B"},{1e6,"M"},{1e3,"K"}}) do if n>=v[1] then return string.format("%.1f%s",n/v[1],v[2]) end end
 	return math.abs(n-math.floor(n))>.00001 and string.format("%.1f",n) or tostring(math.floor(n))
 end
-local cash=box("$25",UDim2.fromOffset(180,60),UDim2.new(0,18,1,-80),colors.Mint,"Coins"); cash.Name="CashValue"; cash.TextSize=28
+local cash=box("$0",UDim2.fromOffset(180,60),UDim2.new(0,18,1,-80),colors.Mint,"Coins"); cash.Name="CashValue"; cash.TextSize=28
 local plate=Instance.new("ImageLabel"); plate.Name="MiniDessertPlate"; plate.BackgroundTransparency=1
 plate.Size=UDim2.fromOffset(112,112); plate.AnchorPoint=Vector2.new(.5,1); plate.Position=UDim2.new(.5,0,1,-12)
 plate.Image=Config.PlateImageId or ""; plate.ScaleType=Enum.ScaleType.Fit; plate.Parent=gui

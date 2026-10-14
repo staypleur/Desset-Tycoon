@@ -110,3 +110,8 @@ Reuse approved lamp/fence sources: 24 lamps point inward at their own road, 6 ce
 
 ## 2026-10-15 — Approved Kawaii cafe display
 - [Kawaii dessert display](https://create.roblox.com/store/asset/13702399035/Kawaii-dessert-display), R4C3x, verified free in Creator Store and selected by user after rejecting Lite Cafe sample. Source contains 663 anchored parts; 0 executable scripts/package links/interactions found. One 8-stud display in central cafe and two small source-based counter props; no repeated plot copies. Decorative collision/touch/query/shadows disabled. Original clean source stored in ServerStorage.FreeDesignSources.KawaiiDisplay.
+
+## 2026-10-15 — Full cafe decoration and pink stands
+- [Pink Plain cake stand](https://create.roblox.com/store/asset/8393777894/Pink-Plain-cake-stand), nNikoshimi: free Creator Store source, user approved after actual image review; 8 parts and no executable scripts/package links/foreign interactions found. Clean template in ServerStorage.FreeDesignSources.PinkCakeStand.
+- User reduced 24 stands to exactly 12. Three lightweight versions of approved Kawaii shelves replace repeated 50-97-part pastries with approved 3-14-part food models. Counter has 36 leveled food/drink props, three flower displays; total decorative part count 1,102. Decorative collisions/touch/query and shadows disabled. Coffee machine removed from map and generation.
+- Food models imported with roughly 20-degree display tilts are leveled as complete assemblies, retaining relative component transforms. A separate floating chocolate prototype near (23.24,44.85,-33.10) was moved from Workspace.Model to ServerStorage.DessertModelPrototypes.ChocolateCakePreview, preserving its construction.

@@ -98,7 +98,6 @@ function Style.Apply(island)
 	local marketAnchor=part(cafe,"CafeMultiplierAnchor",Vector3.new(.2,.2,.2),CFrame.new(center+Vector3.new(0,roofTop+5,0)),cream)
 	marketAnchor.Transparency=1; marketAnchor.CanCollide=false; marketAnchor.CanQuery=false
 	local sources=game.ServerStorage:FindFirstChild("FreeDesignSources")
-	prop(sources and sources:FindFirstChild("CoffeeMachine"),cafe,"FreeCoffeeMachine",CFrame.new(center+Vector3.new(20.8,4.95,8))*CFrame.Angles(0,-math.pi/2,0),5)
 	-- All of CentralDisplay's existing children remain reserved for the user's later model.
 	for i=1,6 do
 		local plot=island.PlayerPlots["Plot"..i]; local cf=plot:GetPivot(); local function at(x,y,z) return cf*CFrame.new(x,y,z) end

@@ -77,10 +77,15 @@ local function faceChestsIntoPlots(island)
 end
 local function polishCafe(island)
  local architecture=island.CentralHub.CentralShop.CafeArchitecture
- if not island:GetAttribute('CoffeeFacingCorrected') then
-  local machine=architecture:FindFirstChild('FreeCoffeeMachine')
-  if machine then machine:PivotTo(machine:GetPivot()*CFrame.Angles(0,-math.pi/2,0)) end
-  island:SetAttribute('CoffeeFacingCorrected',true)
+ local machine=architecture:FindFirstChild('FreeCoffeeMachine'); if machine then machine:Destroy() end
+ for _,plot in ipairs(island.PlayerPlots:GetChildren()) do
+  local bank=plot.PersonalShopArea.BankBuilding
+  if not bank:GetAttribute('FacingIntoPlot') then
+   local word=bank:FindFirstChild('RoofWord'); local wordCF=word and word:GetPivot()
+   local cf=bank:GetPivot(); bank:PivotTo(cf*CFrame.Angles(0,math.pi,0))
+   if word then word:PivotTo(wordCF) end
+   bank:SetAttribute('FacingIntoPlot',true)
+  end
  end
  if not island:GetAttribute('CafeCounterClosed') then
   local floor=architecture.CafeFloor; local center=Vector3.new(floor.Position.X,0,floor.Position.Z)
@@ -117,8 +122,6 @@ local function polishCafe(island)
    bench:PivotTo(bench:GetPivot()*CFrame.Angles(0,math.pi,0)); for seat,cf in pairs(seats) do seat.CFrame=cf end
   end
  end
- local machine=cafe:FindFirstChild('FreeCoffeeMachine')
- if machine then machine:PivotTo(machine:GetPivot()*CFrame.Angles(0,math.pi,0)) end
  local floor=cafe.CafeFloor
  local barrier=Instance.new('Part'); barrier.Name='CafeInteriorBarrier'
  barrier.Shape=Enum.PartType.Cylinder; barrier.Size=Vector3.new(18,56,56)
@@ -134,24 +137,67 @@ local function polishCafe(island)
  end
  island:SetAttribute('CafePolishVersion',3)
 end
-local function decorateCafe(island,sources)
- if island:GetAttribute('KawaiiCafeVersion')==2 then return end
- if island:GetAttribute('KawaiiCafeVersion')==1 then
-  local display=island.CentralHub.CentralShop.CafeArchitecture.ApprovedCafeDecor.KawaiiDessertDisplay
-  display:PivotTo(display:GetPivot()*CFrame.Angles(0,math.pi,0)); island:SetAttribute('KawaiiCafeVersion',2); return
+local function levelFood(model)
+ local reference,volume=nil,0
+ for _,p in ipairs(model:GetDescendants()) do if p:IsA('BasePart') then
+  local v=p.Size.X*p.Size.Y*p.Size.Z; if v>volume then reference=p; volume=v end
+ end end
+ if not reference then return end
+ local up=reference.CFrame.UpVector
+ for _,axis in ipairs({reference.CFrame.RightVector,reference.CFrame.LookVector}) do if math.abs(axis.Y)>math.abs(up.Y) then up=axis end end
+ if up.Y<0 then up=-up end
+ local axis=up:Cross(Vector3.yAxis)
+ if axis.Magnitude>.00001 then
+  local center=bounds(model)
+  model:PivotTo(CFrame.new(center)*CFrame.fromAxisAngle(axis.Unit,math.acos(math.clamp(up.Y,-1,1)))*CFrame.new(-center)*model:GetPivot())
  end
+ model:SetAttribute('UprightFood',true)
+end
+local function decorateCafe(island,sources)
  local source=sources:FindFirstChild('KawaiiDisplay'); if not source then return end
+ local stand=sources:FindFirstChild('PinkCakeStand'); local version=stand and 7 or 3
+ if island:GetAttribute('DenseCafeVersion')==version then return end
  local cafe=island.CentralHub.CentralShop.CafeArchitecture
  local floor=cafe.CafeFloor; local center=Vector3.new(floor.Position.X,0,floor.Position.Z)
+ local old=cafe:FindFirstChild('ApprovedCafeDecor'); if old then old:Destroy() end
  local decor=Instance.new('Model'); decor.Name='ApprovedCafeDecor'; decor.Parent=cafe
- prop(source,decor,'KawaiiDessertDisplay',CFrame.new(center+Vector3.new(0,.85,12))*CFrame.Angles(0,math.pi/2,0),8)
- for _,item in ipairs({{'Chocolate Boba Milk-Tea',-7,23,1.2},{'Pink Kitten Donut',-11,21,1.4}}) do
-  local model=source:FindFirstChild(item[1]); if model then
-   prop(model,decor,item[1],CFrame.new(center+Vector3.new(item[2],4.95,item[3])),item[4])
+ local function partCount(model)
+  local count=0; for _,p in ipairs(model:GetDescendants()) do if p:IsA('BasePart') then count+=1 end end; return count
+ end
+ -- Keep the approved shelf frame and lightweight foods; avoid cloning 50-97-part pastries.
+ local lite=source:Clone(); local foods={}
+ for _,item in ipairs(source:GetChildren()) do if item:IsA('Model') then
+  local count=partCount(item); if count>=3 and count<=14 then table.insert(foods,item) end
+ end end
+ table.sort(foods,function(a,b) local ac=a:GetBoundingBox().Position; local bc=b:GetBoundingBox().Position; return ac.Y==bc.Y and ac.Z<bc.Z or ac.Y<bc.Y end)
+ assert(#foods>0,'Approved lightweight desserts missing')
+ for n,item in ipairs(foods) do local clone=item:Clone(); levelFood(clone); clone:SetAttribute('SourceAssetId',13702399035); foods[n]=clone end
+ local replacements=0
+ for _,item in ipairs(lite:GetChildren()) do if item:IsA('Model') and partCount(item)>14 then
+  local pos,size,lo=bounds(item); item:Destroy(); replacements+=1
+  local simple=foods[(replacements-1)%#foods+1]
+  prop(simple,lite,'LitePastry'..replacements,CFrame.new(pos.X,lo.Y,pos.Z),math.max(size.X,size.Z))
+ elseif item:IsA('Model') then levelFood(item) end end
+ for n=0,2 do local angle=n*math.pi*2/3; local radial=Vector3.new(math.sin(angle),0,math.cos(angle))
+  local pos=center+radial*12+Vector3.new(0,.85,0)
+  prop(lite,decor,'KawaiiDessertDisplay'..n,CFrame.lookAt(pos,pos+radial)*CFrame.Angles(0,-math.pi/2,0),8)
+  prop(sources.PottedFlowers,decor,'CafeFlowers'..n,CFrame.new(center+radial*18+Vector3.new(0,.85,0)),5)
+ end
+ lite:Destroy()
+ -- Dense counters all around the cafe, visible from every player's route.
+ for n=0,11 do local angle=(n+.5)*math.pi/6; local radial=Vector3.new(math.sin(angle),0,math.cos(angle))
+  local pos=center+radial*24+Vector3.new(0,4.95,0); local cf=CFrame.lookAt(pos,pos+radial)
+  local height=0
+  if stand then local tray=prop(stand,decor,'PinkCakeStand'..n,cf,4.2); local _,size=bounds(tray); height=size.Y end
+  for k=0,2 do
+   local item=foods[(n*3+k)%#foods+1]
+   prop(item,decor,'CounterDessert'..n..'_'..k,cf*CFrame.new((k-1)*1.25,height,k==1 and .65 or -.25),k==1 and 1.05 or 1.2)
   end
  end
  for _,part in ipairs(decor:GetDescendants()) do if part:IsA('BasePart') then part.CastShadow=false; part.CanCollide=false; part.CanTouch=false; part.CanQuery=false end end
- island:SetAttribute('KawaiiCafeVersion',2)
+ for _,item in ipairs(foods) do item:Destroy() end
+ decor:SetAttribute('DecorativePartCount',partCount(decor))
+ island:SetAttribute('DenseCafeVersion',version)
 end
 function Presentation.Apply(island)
  for _,g in ipairs(island:GetDescendants()) do if g:IsA('BillboardGui') then
