@@ -13,6 +13,7 @@ local island=workspace:WaitForChild("DessertJellyIsland",30)
 assert(island,"Dessert island missing")
 while island:GetAttribute("LayoutReady")==false do task.wait(.1) end
 Layout.Apply(island)
+require(RS:WaitForChild("CentralCafeLayout")).Apply(island)
 local remotes=Instance.new("Folder"); remotes.Name="DessertRemotes"; remotes.Parent=RS
 local action=Instance.new("RemoteFunction"); action.Name="Action"; action.Parent=remotes
 local events=Instance.new("RemoteEvent"); events.Name="Event"; events.Parent=remotes
@@ -27,7 +28,8 @@ local function multiplier(p)
 end
 local function snapshot(player)
 	local p=profiles[player]; if not p then return nil end; local d=p.Data
-	return {Cash=d.Cash,Bag=d.Bag,Pending=d.Pending,Index=d.Index,Highest=Rules.Highest(d),
+	return {Cash=d.Cash,Bag=d.Bag,Pending=d.Pending,CafeQueue=d.CafeQueue,CafeLevel=d.CafeLevel,
+		CafeRate=Rules.CafeRate(d),CafeUpgradeCost=Rules.CafeUpgradeCost(d),Index=d.Index,Highest=Rules.Highest(d),
 		NormalTokens=d.NormalTokens,PerkTokens=d.PerkTokens,PaidNormalTokens=d.PaidNormalTokens,PaidPerkTokens=d.PaidPerkTokens,NextGift=d.NextGift,AFKSeconds=d.AFKSeconds,
 		Multiplier=multiplier(p),Luck=p.Passes.Luck==true,Settings=d.Settings,Equipped=d.Equipped,
 		Durable=p.Durable,Premium=p.Premium,Restricted=p.Restricted,HotUntil=d.HotUntil,
@@ -38,7 +40,10 @@ local function update(player,message)
 	local cash=player:FindFirstChild("leaderstats") and player.leaderstats:FindFirstChild("Cash")
 	if cash then cash.Value=p.Data.Cash end
 	local s=states[player:GetAttribute("PlotId")]
-	if s then s.Plot.PersonalShopArea.CollectIncome.ActionSign:FindFirstChildOfClass("TextLabel").Text="R | $"..string.format("%.0f",p.Data.Pending) end
+	if s then
+		s.Plot.PersonalShopArea.CollectIncome.ActionSign:FindFirstChildOfClass("TextLabel").Text="R | $"..string.format("%.0f",p.Data.Pending)
+		s.Plot.PersonalShopArea.UpgradeConverter.ActionSign:FindFirstChildOfClass("TextLabel").Text=p.Data.CafeLevel>=Config.CafeMaxLevel and "CONVERTER MAX | 100%" or string.format("UPGRADE | %.0f%% -> %.0f%%\n$%.0f",Rules.CafeRate(p.Data)*100,math.min(1,Rules.CafeRate(p.Data)+Config.CafeRateStep)*100,Rules.CafeUpgradeCost(p.Data))
+	end
 	events:FireClient(player,"State",snapshot(player),message)
 end
 local function discoveries(player,items)
@@ -64,7 +69,7 @@ local function emit(s,pet,now)
 	local p=profiles[s.Owner]; if not p or p.Busy then return end
 	local cf=s.Plot:GetPivot(); local pad=s.Plot.PetSpawnPads["PetPad"..pet.Slot]
 	local pos=cf:PointToObjectSpace(pad.Position); local z=pad:GetAttribute("DropLaneZ"); local lo=Layout.ChannelHeight(z)
-	local y=lo+(2.25-lo)*math.clamp((math.abs(pos.X)-4)/40,0,1)
+	local y=lo+(2.25-lo)*math.clamp((math.abs(pos.X)-4)/(s.Plot:GetAttribute("SideLaneWidth") or 40),0,1)
 	local points={pos+Vector3.new(0,.65,0),Vector3.new(pos.X,y+.6,z),Vector3.new(0,lo+.6,z),
 		Vector3.new(0,.8,-7),Vector3.new(rng:NextNumber(-4,4),.45,rng:NextNumber(-13,-9))}
 	local durations={}; for n=1,#points-1 do durations[n]=(points[n+1]-points[n]).Magnitude/9 end
@@ -118,10 +123,17 @@ local function perform(player,verb,arg)
 	elseif verb=="Merge" then
 		if not near(player,s.Plot.MergeBoard) then return false end
 		local found={}; Rules.Merge(d,found); render(player); discoveries(player,found); update(player,"Matching desserts merged")
-	elseif verb=="Sell" then
-		if not near(player,area.SellDesserts) then return false end
-		local amount=math.floor(d.Bag); d.Bag-=amount; d.Pending+=amount*(os.time()<d.HotUntil and Config.HotTimeMultiplier or 1)
-		update(player,"Sold "..amount.." mini desserts. Collect your cash at R.")
+	elseif verb=="Deposit" or verb=="Sell" then
+		local pad=island.CentralHub.DepositPads["Deposit"..player:GetAttribute("PlotId")]
+		if not near(player,pad) then return false end
+		local amount=Rules.Deposit(d)
+		-- Each owner's queue begins its own full two-second cycle after a deposit.
+		if amount>0 and not p.NextCafeTick then p.NextCafeTick=os.clock()+Config.CafeInterval end
+		if amount>0 then events:FireAllClients("CafeDelivery",pad.Position,island.CentralHub.CentralShop:GetPivot().Position) end
+		update(player,"Deposited "..amount.." mini desserts. Your cafe converts every 2 seconds.")
+	elseif verb=="Upgrade" then
+		if not near(player,area.UpgradeConverter) then return false end
+		local ok,message=Rules.UpgradeCafe(d); update(player,message or "Converter upgraded"); return ok
 	elseif verb=="Collect" then
 		if not near(player,area.CollectIncome) then return false end
 		d.Cash+=d.Pending; d.Pending=0; update(player,"Cash collected")
@@ -151,13 +163,13 @@ for i=1,6 do
 	local models=Instance.new("Folder"); models.Name="ActiveDesserts"; models.Parent=plot
 	local products=Instance.new("Folder"); products.Name="MovingDesserts"; products.Parent=plot
 	local s={Plot=plot,Models=models,Products=products,Pets={},Drops={}}; states[i]=s
-	local function button(pad,verb,arg,text)
-		pad.CanTouch=true
+	local function button(pad,verb,arg,text,hold,public)
+		pad.CanTouch=not hold
 		for _,old in ipairs(pad:GetChildren()) do if old:IsA("ProximityPrompt") then old:Destroy() end end
-		local prompt=Instance.new("ProximityPrompt"); prompt.ActionText=text; prompt.MaxActivationDistance=10; prompt.RequiresLineOfSight=false; prompt.Parent=pad
+		local prompt=Instance.new("ProximityPrompt"); prompt.ActionText=text; prompt.KeyboardKeyCode=Enum.KeyCode.E; prompt.HoldDuration=hold or 0; prompt.MaxActivationDistance=10; prompt.RequiresLineOfSight=false; prompt.Parent=pad
 		local pressed,latched={},{}
 		local function activate(player,fromTouch)
-			if player~=s.Owner or not near(player,pad) or not profiles[player] then return end
+			if (not public and player~=s.Owner) or not near(player,pad) or not profiles[player] then return end
 			if fromTouch and latched[player] then return end
 			if os.clock()-(pressed[player] or 0)<1 then return end; pressed[player]=os.clock()
 			if fromTouch then
@@ -174,14 +186,15 @@ for i=1,6 do
 			if verb=="Panel" then events:FireClient(player,"Panel",arg) else perform(player,verb,arg) end
 		end
 		prompt.Triggered:Connect(activate)
-		pad.Touched:Connect(function(hit) local c=hit:FindFirstAncestorOfClass("Model"); local player=c and Players:GetPlayerFromCharacter(c); if player then activate(player,true) end end)
+		if not hold then pad.Touched:Connect(function(hit) local c=hit:FindFirstAncestorOfClass("Model"); local player=c and Players:GetPlayerFromCharacter(c); if player then activate(player,true) end end) end
 	end
 	for _,count in ipairs({1,10,100,1000}) do button(plot.PurchaseButtons["Buy"..count],"Buy",count,"Buy "..count) end
 	button(plot.MergeBoard,"Merge",nil,"Merge matching desserts")
-	button(plot.PersonalShopArea.SellDesserts,"Sell",nil,"Sell mini desserts")
+	button(island.CentralHub.DepositPads["Deposit"..i],"Deposit",nil,"Deposit mini desserts")
 	button(plot.PersonalShopArea.CollectIncome,"Collect",nil,"Collect cash")
-	button(plot.PersonalShopArea.RobuxShop,"Panel","Shop","Open shop")
-	button(plot.PersonalShopArea.DessertCrate,"Panel","Crates","Open crates")
+	button(plot.PersonalShopArea.UpgradeConverter,"Upgrade",nil,"Upgrade converter")
+	button(plot.PersonalShopArea.RobuxShop,"Panel","Shop","Open shop",.8,true)
+	button(island.CentralHub.CratePads["Crate"..i],"Panel","Crates","Open crates",.5,true)
 	plot:GetAttributeChangedSignal("OwnerUserId"):Connect(function()
 		s.Models:ClearAllChildren(); s.Products:ClearAllChildren(); s.Pets={}; s.Drops={}
 		s.Owner=Players:GetPlayerByUserId(plot:GetAttribute("OwnerUserId") or 0); if s.Owner then render(s.Owner) end
@@ -198,6 +211,8 @@ local function join(player)
 	if player.Parent~=Players then Profiles.Save(p,true); return end
 	p.Passes={}; p.Restricted=true; p.Premium=player.MembershipType==Enum.MembershipType.Premium
 	p.LastActivity=os.clock(); profiles[player]=p
+	Rules.NormalizeCafe(p.Data)
+	if p.Data.CafeQueue>0 then p.NextCafeTick=os.clock()+Config.CafeInterval end
 	local stats=Instance.new("Folder"); stats.Name="leaderstats"; stats.Parent=player
 	local cash=Instance.new("NumberValue"); cash.Name="Cash"; cash.Parent=stats
 	player:GetAttributeChangedSignal("PlotId"):Connect(function() render(player); update(player) end)
@@ -249,7 +264,15 @@ Run.Heartbeat:Connect(function(dt)
 			if picked then update(s.Owner) end
 		end
 	end
-	for player,p in pairs(profiles) do local r=root(player); if p.Companion and r then p.Companion:PivotTo(r.CFrame*CFrame.new(-3,3+math.sin(now*2)*.3,0)) end end
+	for player,p in pairs(profiles) do
+		local r=root(player); if p.Companion and r then p.Companion:PivotTo(r.CFrame*CFrame.new(-3,3+math.sin(now*2)*.3,0)) end
+		if p.NextCafeTick and now>=p.NextCafeTick and not p.Busy and not p.Closing and not p.Faulted then
+			local units,cash=Rules.ConvertCafe(p.Data,os.time())
+			p.NextCafeTick=p.Data.CafeQueue>0 and now+Config.CafeInterval or nil
+			local s=stateFor(player)
+			if units>0 and s then events:FireAllClients("CafeCash",island.CentralHub.CentralShop:GetPivot().Position,s.Plot.PersonalShopArea.CollectIncome.Position,cash); update(player) end
+		end
+	end
 	if timer>=1 then local seconds=timer; timer=0
 		for player,p in pairs(profiles) do if not p.Busy and not p.Closing and not p.Faulted then
 			local r=root(player); if r and p.LastPosition and (r.Position-p.LastPosition).Magnitude>.5 then p.LastActivity=now end
@@ -269,4 +292,4 @@ Run.Heartbeat:Connect(function(dt)
 		end) end end
 	end
 end)
-print("[DessertGame] Ready: 3-second production, bag/cafe/R, merge, index, 5-hour gifts")
+print("[DessertGame] Ready: central cafe, 2-second queued conversion, bank upgrades, hold-E shop, 5-hour gifts")

@@ -27,6 +27,9 @@
       },
       "ProductionPlot": {
         "$path": "src/shared/ProductionPlot.luau"
+      },
+      "CentralCafeLayout": {
+        "$path": "src/shared/CentralCafeLayout.luau"
       }
     },
     "ServerScriptService": {

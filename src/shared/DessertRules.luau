@@ -5,9 +5,34 @@ local INTERVAL = Config.GiftInterval
 function Rules.Key(tier, shiny) return tostring(tier)..(shiny and "s" or "n") end
 function Rules.Decode(key) return tonumber(key:sub(1,-2)), key:sub(-1)=="s" end
 function Rules.New(now)
-	return {Version=1, Cash=25, Bag=0, Pending=0, Pets={["1n"]=1}, Index={["1n"]=true},
+	return {Version=2, Cash=25, Bag=0, Pending=0, CafeQueue=0, CafeLevel=0, Pets={["1n"]=1}, Index={["1n"]=true},
 		NormalTokens=0, PerkTokens=0, PaidNormalTokens=0, PaidPerkTokens=0, NextGift=now+INTERVAL, AFKSeconds=0,
 		Settings={Music=true, Effects=true, HideOthers=false}, Receipts={}, HotUntil=0}
+end
+function Rules.NormalizeCafe(data)
+	data.CafeQueue=math.max(0,data.CafeQueue or 0)
+	data.CafeLevel=math.clamp(math.floor(data.CafeLevel or 0),0,Config.CafeMaxLevel)
+	data.Version=2
+end
+function Rules.CafeRate(data) return math.min(1,Config.CafeBaseRate+data.CafeLevel*Config.CafeRateStep) end
+function Rules.CafeUpgradeCost(data) return Config.CafeUpgradeBaseCost*2^data.CafeLevel end
+function Rules.Deposit(data)
+	local amount=math.floor(data.Bag)
+	data.Bag-=amount; data.CafeQueue+=amount
+	return amount
+end
+function Rules.ConvertCafe(data,now)
+	local units=math.min(data.CafeQueue,math.ceil(data.CafeQueue*Rules.CafeRate(data)))
+	data.CafeQueue-=units
+	local cash=units*(now<data.HotUntil and Config.HotTimeMultiplier or 1)
+	data.Pending+=cash
+	return units,cash
+end
+function Rules.UpgradeCafe(data)
+	if data.CafeLevel>=Config.CafeMaxLevel then return false,"Converter is fully upgraded" end
+	local cost=Rules.CafeUpgradeCost(data)
+	if data.Cash<cost then return false,"Not enough cash for converter upgrade" end
+	data.Cash-=cost; data.CafeLevel+=1; return true
 end
 function Rules.Add(data,tier,shiny,count,discoveries)
 	local key=Rules.Key(tier,shiny)

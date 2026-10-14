@@ -54,6 +54,10 @@ end
 local cash=box("$25",UDim2.fromOffset(180,60),UDim2.new(0,18,1,-80),colors.Mint)
 local bag=box("Mini Desserts: 0",UDim2.fromOffset(260,60),UDim2.new(.5,-130,1,-80))
 local boost=box("1x Mini Desserts",UDim2.fromOffset(170,60),UDim2.new(1,-188,.5,-30),colors.Lavender)
+local cafeStatus=box("Cafe Queue: 0\n10% / 2s\nBank: $0",UDim2.fromOffset(170,100),UDim2.new(1,-188,.5,40),colors.Mint)
+local function updateCafeHUD()
+	cafeStatus.Text="Cafe Queue: "..format(data.CafeQueue or 0).."\n"..string.format("%.0f%% / 2s",(data.CafeRate or .1)*100).."\nBank: $"..format(data.Pending)
+end
 local toast=box("Welcome to Dessert Island!",UDim2.fromOffset(440,40),UDim2.new(.5,-220,0,76))
 local window=Instance.new("Frame"); window.Name="Panel"; window.Size=UDim2.fromScale(.78,.72); window.Position=UDim2.fromScale(.11,.15)
 window.BackgroundColor3=colors.Cream; window.BorderSizePixel=0; window.Visible=false; window.Parent=gui; corner(window,24)
@@ -128,7 +132,7 @@ end
 button(gui,"Index",UDim2.fromOffset(118,54),UDim2.new(0,18,.5,-70),function() show("Index") end)
 button(gui,"Shop",UDim2.fromOffset(118,48),UDim2.new(0,18,.5,-8),function() show("Shop") end,colors.Mint)
 button(gui,"Crates",UDim2.fromOffset(118,48),UDim2.new(0,18,.5,48),function() show("Crates") end,colors.Lavender)
-button(gui,"Dessert Island",UDim2.fromOffset(150,40),UDim2.fromOffset(18,18),function() toast.Text="Collect mini desserts, sell at your cafe, then collect cash at R!" end)
+button(gui,"Dessert Island",UDim2.fromOffset(150,40),UDim2.fromOffset(18,18),function() toast.Text="Deposit at the central cafe. Collect cash and upgrade conversion at your bank!" end)
 button(gui,"Settings",UDim2.fromOffset(100,40),UDim2.fromOffset(176,18),function() show("Settings") end,colors.Lavender)
 local function applySettings()
 	if not data then return end
@@ -161,6 +165,19 @@ local function reveal(item)
 		end; revealing=false
 	end)
 end
+local transfers={}
+local function transfer(kind,start,finish)
+	if data and not data.Settings.Effects then return end
+	if #transfers>=30 then return end
+	local model
+	if kind=="CafeDelivery" then model=Visuals.Build(1,false); model:ScaleTo(.4)
+	else
+		model=Instance.new("Model"); local coin=Instance.new("Part"); coin.Shape=Enum.PartType.Ball; coin.Size=Vector3.new(1.8,1.8,1.8); coin.Color=Color3.fromRGB(255,215,112); coin.Material=Enum.Material.Neon; coin.Parent=model
+	end
+	for _,part in ipairs(model:GetDescendants()) do if part:IsA("BasePart") then part.Anchored=true; part.CanCollide=false; part.CanTouch=false; part.CanQuery=false end end
+	model.Name="CafeTransferEffect"; model.Parent=workspace
+	table.insert(transfers,{Model=model,Start=start+Vector3.new(0,2,0),Finish=finish+Vector3.new(0,2,0),Time=os.clock(),Duration=kind=="CafeCash" and 1.8 or .8})
+end
 event.OnClientEvent:Connect(function(kind,value,message)
 	if kind=="State" then
 		local previousEquipped=data and data.Equipped
@@ -168,6 +185,7 @@ event.OnClientEvent:Connect(function(kind,value,message)
 		local previousNormal=data and data.NormalTokens
 		local previousPerk=data and data.PerkTokens
 		data=value; cash.Text="$"..format(data.Cash); bag.Text="Mini Desserts: "..format(data.Bag); boost.Text=data.Multiplier.."x Mini Desserts"
+		updateCafeHUD()
 		if message then toast.Text=message end; applySettings()
 		if giftLabel and giftLabel.Parent then giftLabel.Text=giftText() end
 		if panelName=="Index" and previousEquipped~=data.Equipped then show("Index") end
@@ -175,6 +193,7 @@ event.OnClientEvent:Connect(function(kind,value,message)
 	elseif kind=="Panel" then show(value)
 	elseif kind=="Discovery" then reveal(value)
 	elseif kind=="Crates" then for _,found in ipairs(value) do reveal(found) end
+	elseif kind=="CafeDelivery" or kind=="CafeCash" then transfer(kind,value,message)
 	end
 end)
 local lastActivity=0
@@ -183,11 +202,15 @@ Input.InputBegan:Connect(function()
 end)
 local visibilityTimer=0
 Run.RenderStepped:Connect(function(dt)
+	for n=#transfers,1,-1 do local v=transfers[n]; local alpha=math.clamp((os.clock()-v.Time)/v.Duration,0,1)
+		v.Model:PivotTo(CFrame.new(v.Start:Lerp(v.Finish,alpha)+Vector3.new(0,math.sin(alpha*math.pi)*8,0)))
+		if alpha>=1 then v.Model:Destroy(); table.remove(transfers,n) end
+	end
 	for n=#spinning,1,-1 do local v=spinning[n]; if not v.View.Parent then table.remove(spinning,n) else v.Model:PivotTo(CFrame.Angles(0,os.clock()*.5,0)) end end
 	visibilityTimer+=dt; if visibilityTimer>2 then visibilityTimer=0; applySettings() end
 end)
 task.spawn(function()
 	for _=1,30 do local state=request("State"); if type(state)=="table" then
-		data=state; cash.Text="$"..format(data.Cash); bag.Text="Mini Desserts: "..format(data.Bag); boost.Text=data.Multiplier.."x Mini Desserts"; applySettings(); break
+		data=state; cash.Text="$"..format(data.Cash); bag.Text="Mini Desserts: "..format(data.Bag); boost.Text=data.Multiplier.."x Mini Desserts"; updateCafeHUD(); applySettings(); break
 	end; task.wait(1) end
 end)

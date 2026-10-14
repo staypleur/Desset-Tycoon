@@ -6,7 +6,7 @@ local Workspace = game:GetService("Workspace")
 
 local CONFIG = {
 	PlotCount = 6,
-	Radius = 150, -- studs from CentralShop:GetPivot(), measured horizontally
+	Radius = 180, -- widened plots; the saved map's PlotRadius takes precedence
 	StartAngleDegrees = 0,
 	ModelWaitSeconds = 30,
 	CharacterWaitSeconds = 10,
@@ -39,6 +39,8 @@ repeat
 until false
 
 local center = shop:GetPivot().Position
+local island = Workspace:FindFirstChild("DessertJellyIsland")
+CONFIG.Radius = island and island:GetAttribute("PlotRadius") or CONFIG.Radius
 local plotOwners = {} -- [plotIndex] = Player; the authoritative server state
 local assigned = {} -- [Player] = plotIndex
 local connections = {} -- [Player] = CharacterAdded connection
@@ -47,7 +49,7 @@ local waiting = {} -- FIFO; extra players remain in the hub until a plot is free
 local function updateOwnerLabel(index, player)
 	local label = plots[index]:FindFirstChild("OwnerLabel", true)
 	if label and label:IsA("TextLabel") then
-		label.Text = player and (player.Name .. "'s Cafe") or "Available Cafe"
+		label.Text = player and (player.Name .. "'s Dessert Plot") or "Available Plot"
 	end
 end
 
