@@ -221,3 +221,10 @@ PASS: PlayerProfiles deterministic mock verifies persisted gift/AFK clocks, dupl
 - Found screenshot's floating chocolate cake as a standalone Workspace.Model near (23.24,44.85,-33.10); preserved it in ServerStorage.DessertModelPrototypes.ChocolateCakePreview, removed from live map without deleting its parts. Roof cake preserved.
 - PASS DenseCafe: exact stand/food counts, upright main food axes, clean noncolliding static decorations, repeat-safe generation, bank word preservation, viable zero-cash starter production and saved balances unchanged.
 - PASS ZeroStarterLive: authoritative State.Cash, leaderstats and HUD are all zero; free pudding indexed; machine absent; bank doors face the plot in actual play. Final saved XML verified 24 matching sources, 12 stands, 36 counter foods, preserved chocolate prototype, no foreign code/package links. Saved map 90,005,114 bytes.
+
+## 2026-10-15 — Optional companion and early converter upgrades
+- Clicking the equipped Index dessert toggles its saved selection to nil and destroys its companion model. Button changes Equip / Unequip; switching desserts replaces the companion. Indexed-dessert validation stays on the server. Plot producers are unaffected.
+- Converter costs now 20 * 4^level ($20, $80, $320, $1,280, $5,120), while capacity remains 3^level units/sec. First cost equals 60 seconds of starter pudding production at average 1x sale rate, before travel; cost grows faster than capacity. Existing levels and balances retained.
+- PASS CompanionBalance: toggle/switch/discovery validation, unchanged production, all 29 purchasable upgrades, insufficient funds and max-level guard. Used relative insufficient balance for high levels because floating-point spacing exceeds $1. PASS EconomyV16 conservation and converter regression.
+- PASS CompanionLive: real server action creates exactly one companion, second click clears selection and removes model, producer count unchanged, first upgrade $20. Native Index clicks verified Equip → Unequip → Equip. Temporary server test removed before saving.
+- Saved Studio with all 24 mapped scripts matching sources; initial six upgrade labels refreshed to $20.

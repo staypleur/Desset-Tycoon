@@ -15,10 +15,10 @@ for _,count in ipairs({10,100,1000}) do
 end
 local full=R.New(0); full.Cash=10000; full.Pets={['1n']=60}; local original=full.Cash
 assert(not R.Buy(full,1,rng,false) and full.Cash==original,'Full plates must reject without charging')
-d=R.New(0); d.Bag=100.5; d.Cash=60
+d=R.New(0); d.Bag=100.5; d.Cash=20
 local amount,credit=R.Deposit(d,1.5); assert(amount==100.5 and credit==150.75 and d.Pending==0)
 local units,cash=R.ConvertCafe(d,0); assert(units==2 and cash==2 and d.CafeQueue==148.75)
-assert(R.UpgradeCafe(d) and d.Cash==0 and R.CafeRate(d)==3 and R.CafeUpgradeCost(d)==180)
+assert(R.UpgradeCafe(d) and d.Cash==0 and R.CafeRate(d)==3 and R.CafeUpgradeCost(d)==80)
 assert(not R.UpgradeCafe(d)); local total=2
 for _=1,100 do local n=R.ConvertCafe(d,0); total+=n end
 assert(total==150.75 and d.CafeQueue==0 and d.Pending==150.75 and d.TotalCashEarned==150.75)

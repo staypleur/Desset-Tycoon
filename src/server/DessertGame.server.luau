@@ -114,10 +114,12 @@ local function perform(player,verb,arg)
 		update(player); return true
 	elseif verb=="Activity" then p.LastActivity=os.clock(); return true
 	elseif verb=="Equip" then
-		if type(arg)~="string" or not d.Index[arg] then return false end
-		d.Equipped=arg; if p.Companion then p.Companion:Destroy() end
-		local tier,shiny=Rules.Decode(arg); local m=Visuals.Build(tier,shiny); m:ScaleTo(.65)
-		m.Name="DessertCompanion"; m:SetAttribute("OwnerUserId",player.UserId); m.Parent=workspace; p.Companion=m
+		if not Rules.ToggleEquip(d,arg) then return false end
+		if p.Companion then p.Companion:Destroy(); p.Companion=nil end
+		if d.Equipped then
+			local tier,shiny=Rules.Decode(d.Equipped); local m=Visuals.Build(tier,shiny); m:ScaleTo(.65)
+			m.Name="DessertCompanion"; m:SetAttribute("OwnerUserId",player.UserId); m.Parent=workspace; p.Companion=m
+		end
 		update(player); return true
 	elseif verb=="Crate" then
 		if type(arg)~="table" or (arg.Kind~="Normal" and arg.Kind~="Perk") or (arg.Count~=1 and arg.Count~=10) then return false end

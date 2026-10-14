@@ -156,7 +156,7 @@ show=function(name)
 			card.LayoutOrder=index; card.ZIndex=scroll.ZIndex+1; card.Parent=scroll; Art.Apply(card,"Card")
 			if owned then preview(card,tier,shiny,UDim2.new(1,0,0,112),UDim2.new()) else text(card,"?",UDim2.new(1,0,0,110),UDim2.new()) end
 			text(card,owned and ((shiny and "Shiny " or "")..Catalog[tier].Name) or "Undiscovered",UDim2.new(1,-8,0,34),UDim2.fromOffset(4,112)).TextSize=14
-			if owned then button(card,data.Equipped==key and "Equipped" or "Equip",UDim2.new(1,-16,0,32),UDim2.fromOffset(8,152),function() request("Equip",key) end,colors.Mint) end
+			if owned then button(card,data.Equipped==key and "Unequip" or "Equip",UDim2.new(1,-16,0,32),UDim2.fromOffset(8,152),function() request("Equip",key) end,colors.Mint) end
 		end end
 	elseif name=="Settings" then
 		for n,item in ipairs({{"Music","Background Music"},{"Effects","Sound Effects"},{"HideOthers","Hide Other Players' Pets"}}) do

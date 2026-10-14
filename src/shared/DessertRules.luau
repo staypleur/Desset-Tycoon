@@ -38,7 +38,13 @@ function Rules.AccrueOffline(data,now,multiplier)
 end
 -- Capacity is queued units per SECOND; no percentage of the remaining queue.
 function Rules.CafeRate(data) return Config.CafeBaseRate*Config.CafeRateGrowth^data.CafeLevel end
-function Rules.CafeUpgradeCost(data) return Config.CafeUpgradeBaseCost*Config.CafeRateGrowth^data.CafeLevel end
+function Rules.CafeUpgradeCost(data) return Config.CafeUpgradeBaseCost*Config.CafeUpgradeCostGrowth^data.CafeLevel end
+-- Companion selection is independent of the producing desserts on the plot.
+function Rules.ToggleEquip(data,key)
+	if type(key)~="string" or not data.Index[key] then return false end
+	data.Equipped=data.Equipped~=key and key or nil
+	return true
+end
 function Rules.BuyCost(count) return Config.BuyCosts[count] end
 function Rules.Deposit(data,multiplier)
 	local amount=math.max(0,data.Bag)

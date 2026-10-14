@@ -351768,7 +351768,7 @@ AQ==]]></BinaryString>
 									<Y>0.300000012</Y>
 									<Z>7</Z>
 								</Vector3>
-								<BinaryString name="AttributesSerialize"><![CDATA[BAAAAAoAAABBZmZvcmRhYmxlAwAEAAAAQ29zdAYAAAAAAABOQAUAAABNYXhlZAMADQAAAFJv
+								<BinaryString name="AttributesSerialize"><![CDATA[BAAAAAoAAABBZmZvcmRhYmxlAwAEAAAAQ29zdAYAAAAAAAA0QAUAAABNYXhlZAMADQAAAFJv
 dW5kZWRCdXR0b24DAQ==]]></BinaryString>
 								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
 								<bool name="DefinesCapabilities">false</bool>
@@ -352000,7 +352000,7 @@ AQ==]]></BinaryString>
 										<int name="MaxVisibleGraphemes">-1</int>
 										<string name="OpenTypeFeatures"></string>
 										<bool name="RichText">false</bool>
-										<string name="Text">+2 / sec | $60</string>
+										<string name="Text">+2 / sec | $20</string>
 										<Color3 name="TextColor3">
 											<R>0.835294127</R>
 											<G>0.800000012</G>
@@ -556861,7 +556861,7 @@ AQ==]]></BinaryString>
 									<Y>0.300000012</Y>
 									<Z>7</Z>
 								</Vector3>
-								<BinaryString name="AttributesSerialize"><![CDATA[BAAAAAoAAABBZmZvcmRhYmxlAwAEAAAAQ29zdAYAAAAAAABOQAUAAABNYXhlZAMADQAAAFJv
+								<BinaryString name="AttributesSerialize"><![CDATA[BAAAAAoAAABBZmZvcmRhYmxlAwAEAAAAQ29zdAYAAAAAAAA0QAUAAABNYXhlZAMADQAAAFJv
 dW5kZWRCdXR0b24DAQ==]]></BinaryString>
 								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
 								<bool name="DefinesCapabilities">false</bool>
@@ -557093,7 +557093,7 @@ AQ==]]></BinaryString>
 										<int name="MaxVisibleGraphemes">-1</int>
 										<string name="OpenTypeFeatures"></string>
 										<bool name="RichText">false</bool>
-										<string name="Text">+2 / sec | $60</string>
+										<string name="Text">+2 / sec | $20</string>
 										<Color3 name="TextColor3">
 											<R>0.835294127</R>
 											<G>0.800000012</G>
@@ -769437,7 +769437,7 @@ AQ==]]></BinaryString>
 									<Y>0.300000012</Y>
 									<Z>7</Z>
 								</Vector3>
-								<BinaryString name="AttributesSerialize"><![CDATA[BAAAAAoAAABBZmZvcmRhYmxlAwAEAAAAQ29zdAYAAAAAAABOQAUAAABNYXhlZAMADQAAAFJv
+								<BinaryString name="AttributesSerialize"><![CDATA[BAAAAAoAAABBZmZvcmRhYmxlAwAEAAAAQ29zdAYAAAAAAAA0QAUAAABNYXhlZAMADQAAAFJv
 dW5kZWRCdXR0b24DAQ==]]></BinaryString>
 								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
 								<bool name="DefinesCapabilities">false</bool>
@@ -769669,7 +769669,7 @@ AQ==]]></BinaryString>
 										<int name="MaxVisibleGraphemes">-1</int>
 										<string name="OpenTypeFeatures"></string>
 										<bool name="RichText">false</bool>
-										<string name="Text">+2 / sec | $60</string>
+										<string name="Text">+2 / sec | $20</string>
 										<Color3 name="TextColor3">
 											<R>0.835294127</R>
 											<G>0.800000012</G>
@@ -974530,7 +974530,7 @@ AQ==]]></BinaryString>
 									<Y>0.300000012</Y>
 									<Z>7</Z>
 								</Vector3>
-								<BinaryString name="AttributesSerialize"><![CDATA[BAAAAAoAAABBZmZvcmRhYmxlAwAEAAAAQ29zdAYAAAAAAABOQAUAAABNYXhlZAMADQAAAFJv
+								<BinaryString name="AttributesSerialize"><![CDATA[BAAAAAoAAABBZmZvcmRhYmxlAwAEAAAAQ29zdAYAAAAAAAA0QAUAAABNYXhlZAMADQAAAFJv
 dW5kZWRCdXR0b24DAQ==]]></BinaryString>
 								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
 								<bool name="DefinesCapabilities">false</bool>
@@ -974762,7 +974762,7 @@ AQ==]]></BinaryString>
 										<int name="MaxVisibleGraphemes">-1</int>
 										<string name="OpenTypeFeatures"></string>
 										<bool name="RichText">false</bool>
-										<string name="Text">+2 / sec | $60</string>
+										<string name="Text">+2 / sec | $20</string>
 										<Color3 name="TextColor3">
 											<R>0.835294127</R>
 											<G>0.800000012</G>
@@ -1187106,7 +1187106,7 @@ AQ==]]></BinaryString>
 									<Y>0.300000012</Y>
 									<Z>7</Z>
 								</Vector3>
-								<BinaryString name="AttributesSerialize"><![CDATA[BAAAAAoAAABBZmZvcmRhYmxlAwAEAAAAQ29zdAYAAAAAAABOQAUAAABNYXhlZAMADQAAAFJv
+								<BinaryString name="AttributesSerialize"><![CDATA[BAAAAAoAAABBZmZvcmRhYmxlAwAEAAAAQ29zdAYAAAAAAAA0QAUAAABNYXhlZAMADQAAAFJv
 dW5kZWRCdXR0b24DAQ==]]></BinaryString>
 								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
 								<bool name="DefinesCapabilities">false</bool>
@@ -1187338,7 +1187338,7 @@ AQ==]]></BinaryString>
 										<int name="MaxVisibleGraphemes">-1</int>
 										<string name="OpenTypeFeatures"></string>
 										<bool name="RichText">false</bool>
-										<string name="Text">+2 / sec | $60</string>
+										<string name="Text">+2 / sec | $20</string>
 										<Color3 name="TextColor3">
 											<R>0.835294127</R>
 											<G>0.800000012</G>
@@ -1392199,7 +1392199,7 @@ AQ==]]></BinaryString>
 									<Y>0.300000012</Y>
 									<Z>7</Z>
 								</Vector3>
-								<BinaryString name="AttributesSerialize"><![CDATA[BAAAAAoAAABBZmZvcmRhYmxlAwAEAAAAQ29zdAYAAAAAAABOQAUAAABNYXhlZAMADQAAAFJv
+								<BinaryString name="AttributesSerialize"><![CDATA[BAAAAAoAAABBZmZvcmRhYmxlAwAEAAAAQ29zdAYAAAAAAAA0QAUAAABNYXhlZAMADQAAAFJv
 dW5kZWRCdXR0b24DAQ==]]></BinaryString>
 								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
 								<bool name="DefinesCapabilities">false</bool>
@@ -1392431,7 +1392431,7 @@ AQ==]]></BinaryString>
 										<int name="MaxVisibleGraphemes">-1</int>
 										<string name="OpenTypeFeatures"></string>
 										<bool name="RichText">false</bool>
-										<string name="Text">+2 / sec | $60</string>
+										<string name="Text">+2 / sec | $20</string>
 										<Color3 name="TextColor3">
 											<R>0.835294127</R>
 											<G>0.800000012</G>
@@ -1761443,7 +1761443,7 @@ show=function(name)
 			card.LayoutOrder=index; card.ZIndex=scroll.ZIndex+1; card.Parent=scroll; Art.Apply(card,"Card")
 			if owned then preview(card,tier,shiny,UDim2.new(1,0,0,112),UDim2.new()) else text(card,"?",UDim2.new(1,0,0,110),UDim2.new()) end
 			text(card,owned and ((shiny and "Shiny " or "")..Catalog[tier].Name) or "Undiscovered",UDim2.new(1,-8,0,34),UDim2.fromOffset(4,112)).TextSize=14
-			if owned then button(card,data.Equipped==key and "Equipped" or "Equip",UDim2.new(1,-16,0,32),UDim2.fromOffset(8,152),function() request("Equip",key) end,colors.Mint) end
+			if owned then button(card,data.Equipped==key and "Unequip" or "Equip",UDim2.new(1,-16,0,32),UDim2.fromOffset(8,152),function() request("Equip",key) end,colors.Mint) end
 		end end
 	elseif name=="Settings" then
 		for n,item in ipairs({{"Music","Background Music"},{"Effects","Sound Effects"},{"HideOthers","Hide Other Players' Pets"}}) do
@@ -1762398,7 +1762398,8 @@ local Config = {
 	CafeBaseRate = 1,
 	CafeRateGrowth = 3,
 	CafeMaxLevel = 29,
-	CafeUpgradeBaseCost = 60,
+	CafeUpgradeBaseCost = 20,
+	CafeUpgradeCostGrowth = 4,
 	HotTimeSeconds = 15 * 60,
 	HotTimeMultiplier = 2,
 	MusicId = "rbxassetid://88115288095261",
@@ -1762478,7 +1762479,13 @@ function Rules.AccrueOffline(data,now,multiplier)
 end
 -- Capacity is queued units per SECOND; no percentage of the remaining queue.
 function Rules.CafeRate(data) return Config.CafeBaseRate*Config.CafeRateGrowth^data.CafeLevel end
-function Rules.CafeUpgradeCost(data) return Config.CafeUpgradeBaseCost*Config.CafeRateGrowth^data.CafeLevel end
+function Rules.CafeUpgradeCost(data) return Config.CafeUpgradeBaseCost*Config.CafeUpgradeCostGrowth^data.CafeLevel end
+-- Companion selection is independent of the producing desserts on the plot.
+function Rules.ToggleEquip(data,key)
+	if type(key)~="string" or not data.Index[key] then return false end
+	data.Equipped=data.Equipped~=key and key or nil
+	return true
+end
 function Rules.BuyCost(count) return Config.BuyCosts[count] end
 function Rules.Deposit(data,multiplier)
 	local amount=math.max(0,data.Bag)
@@ -1764960,10 +1764967,12 @@ local function perform(player,verb,arg)
 &#9;&#9;update(player); return true
 &#9;elseif verb==&quot;Activity&quot; then p.LastActivity=os.clock(); return true
 &#9;elseif verb==&quot;Equip&quot; then
-&#9;&#9;if type(arg)~=&quot;string&quot; or not d.Index[arg] then return false end
-&#9;&#9;d.Equipped=arg; if p.Companion then p.Companion:Destroy() end
-&#9;&#9;local tier,shiny=Rules.Decode(arg); local m=Visuals.Build(tier,shiny); m:ScaleTo(.65)
-&#9;&#9;m.Name=&quot;DessertCompanion&quot;; m:SetAttribute(&quot;OwnerUserId&quot;,player.UserId); m.Parent=workspace; p.Companion=m
+&#9;&#9;if not Rules.ToggleEquip(d,arg) then return false end
+&#9;&#9;if p.Companion then p.Companion:Destroy(); p.Companion=nil end
+&#9;&#9;if d.Equipped then
+&#9;&#9;&#9;local tier,shiny=Rules.Decode(d.Equipped); local m=Visuals.Build(tier,shiny); m:ScaleTo(.65)
+&#9;&#9;&#9;m.Name=&quot;DessertCompanion&quot;; m:SetAttribute(&quot;OwnerUserId&quot;,player.UserId); m.Parent=workspace; p.Companion=m
+&#9;&#9;end
 &#9;&#9;update(player); return true
 &#9;elseif verb==&quot;Crate&quot; then
 &#9;&#9;if type(arg)~=&quot;table&quot; or (arg.Kind~=&quot;Normal&quot; and arg.Kind~=&quot;Perk&quot;) or (arg.Count~=1 and arg.Count~=10) then return false end
