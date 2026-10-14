@@ -75,6 +75,11 @@ plate.Image=Config.PlateImageId or ""; plate.ScaleType=Enum.ScaleType.Fit; plate
 local bag=text(plate,"0",UDim2.fromScale(.68,.5),UDim2.fromScale(.16,.32)); bag.Name="BagValue"; bag.TextScaled=true
 local numberLimit=Instance.new("UITextSizeConstraint"); numberLimit.MinTextSize=14; numberLimit.MaxTextSize=27; numberLimit.Parent=bag
 local boost=box("×1",UDim2.fromOffset(94,52),UDim2.new(1,-112,.5,-26),colors.Lavender)
+local shinyChance=box("Shiny 1%",UDim2.fromOffset(150,42),UDim2.new(1,-168,.5,-76),colors.Pink,"Sparkles")
+shinyChance.Name="ShinyChanceValue"; shinyChance.TextSize=16
+local function updateShinyChance()
+ shinyChance.Text=string.format("Shiny %.0f%%",100*(data.ShinyChance or Rules.ShinyChance("Normal",data.Luck)))
+end
 local cafeRateLabel,cafeGauge,marketIsland
 task.spawn(function()
 	marketIsland=workspace:WaitForChild("DessertJellyIsland",30); if not marketIsland then return end
@@ -171,7 +176,7 @@ show=function(name)
 		for _,kind in ipairs({"Normal","Perk"}) do
 			local tokens=kind=="Normal" and data.NormalTokens or data.PerkTokens
 			local paidTokens=kind=="Normal" and data.PaidNormalTokens or data.PaidPerkTokens
-			local odds=Rules.Odds(data.Highest,kind); local entries={}; local shiny=(kind=="Normal" and 1 or 10)*(data.Luck and 2 or 1)
+			local odds=Rules.Odds(data.Highest,kind); local entries={}; local shiny=100*Rules.ShinyChance(kind,data.Luck)
 			for tier=1,30 do if odds[tier] then
 				table.insert(entries,Catalog[tier].Name..": "..string.format("%.2f",odds[tier]*(1-shiny/100)).."% normal / "..string.format("%.2f",odds[tier]*shiny/100).."% shiny")
 			end end
@@ -249,7 +254,7 @@ event.OnClientEvent:Connect(function(kind,value,message)
 		local previousHighest=data and data.Highest
 		local previousNormal=data and data.NormalTokens
 		local previousPerk=data and data.PerkTokens
-		data=value; for key,label in pairs(statLabels) do local value=data[key] or 0; label.Text=key=="PlaySeconds" and string.format("%dh %02dm %02ds",math.floor(value/3600),math.floor(value/60)%60,math.floor(value)%60) or (key=="TotalCashEarned" and "$" or "")..format(value) end; cash.Text="$"..format(data.Cash); bag.Text=format(data.Bag); boost.Text="×"..data.Multiplier
+		data=value; updateShinyChance(); for key,label in pairs(statLabels) do local value=data[key] or 0; label.Text=key=="PlaySeconds" and string.format("%dh %02dm %02ds",math.floor(value/3600),math.floor(value/60)%60,math.floor(value)%60) or (key=="TotalCashEarned" and "$" or "")..format(value) end; cash.Text="$"..format(data.Cash); bag.Text=format(data.Bag); boost.Text="×"..data.Multiplier
 		applySettings()
 		if giftLabel and giftLabel.Parent then giftLabel.Text=giftText() end
 		if panelName=="Index" and previousEquipped~=data.Equipped then show("Index") end
@@ -298,6 +303,6 @@ Run.RenderStepped:Connect(function(dt)
 end)
 task.spawn(function()
 	for _=1,30 do local state=request("State"); if type(state)=="table" then
-		data=state; cash.Text="$"..format(data.Cash); bag.Text=format(data.Bag); boost.Text="×"..data.Multiplier; applySettings(); break
+		data=state; updateShinyChance(); cash.Text="$"..format(data.Cash); bag.Text=format(data.Bag); boost.Text="×"..data.Multiplier; applySettings(); break
 	end; task.wait(1) end
 end)

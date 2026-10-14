@@ -104,3 +104,6 @@ Review proof: `docs/previews/index-pastel-dream.png`, `pastel-ui-upload.png`, `i
 The user approved **basket**, **Glowziing**, free Creator Store asset **6132018569**: https://create.roblox.com/store/asset/6132018569/basket. Search and detail screenshots are in `docs/previews/free-basket-candidate.png`. Imported through editor GetObjects after approval; sanitization found zero foreign executable scripts/interactions. Original stored as ServerStorage.FreeDesignSources.OverflowBasket. Twelve placed copies are recolored pink, texture removed to get the requested true pastel color, widened/lowered, anchored and non-colliding. Counter labels and storage logic are ours. Baskets stay empty at the user’s latest request; stored amounts are represented only by English number labels.
 
 Basket visibility follows its own stored count: zero hides mesh and sign; positive shows the empty basket. Owner pickup hides it again.
+
+### v16.1 promenade refinement
+Reuse approved lamp/fence sources: 24 lamps point inward at their own road, 6 central fence sections with clear gaps, no road-side fences. Decoration count reduced from 66 to 30; lamp part and light shadows disabled. No new asset selected.

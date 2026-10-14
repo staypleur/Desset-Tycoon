@@ -85,13 +85,16 @@ function Rules.Highest(data)
 	for key,n in pairs(data.Pets) do if n>0 then local tier=Rules.Decode(key); highest=math.max(highest,tier) end end
 	return highest
 end
+function Rules.ShinyChance(kind,luck)
+ return (kind=="Perk" and .1 or .01)*(luck and 2 or 1)
+end
 function Rules.Buy(data,count,rng,luck,autoMerge)
 	if count~=1 and count~=10 and count~=100 and count~=1000 then return false,"Invalid quantity" end
 	local cost=Rules.BuyCost(count)
 	if data.Cash<cost then return false,"Not enough cash" end
 	local trial={Pets=table.clone(data.Pets), Index=table.clone(data.Index)}
 	local discoveries={}
-	for _=1,count do Rules.Add(trial,1,rng:NextNumber()<.01*(luck and 2 or 1),1,discoveries) end
+	for _=1,count do Rules.Add(trial,1,rng:NextNumber()<Rules.ShinyChance("Normal",luck),1,discoveries) end
 	if count>1 or autoMerge then Rules.Merge(trial,discoveries) end
 	if Rules.Count(trial)>Config.Capacity then return false,"Plates are full. Merge desserts first." end
 	data.Pets,data.Index=trial.Pets,trial.Index
@@ -113,7 +116,7 @@ function Rules.Roll(data,kind,rng,luck,discoveries)
 	for tier=1,30 do
 		sum+=odds[tier] or 0
 		if roll<sum then
-			local shiny=rng:NextNumber()<(kind=="Perk" and .1 or .01)*(luck and 2 or 1)
+			local shiny=rng:NextNumber()<Rules.ShinyChance(kind,luck)
 			Rules.Add(data,tier,shiny,1,discoveries)
 			return {Tier=tier,Shiny=shiny}
 		end

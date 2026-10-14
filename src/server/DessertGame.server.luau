@@ -46,7 +46,7 @@ local function snapshot(player)
 		AFKStored=d.AFKStored,OfflineStored=d.OfflineStored,TotalCashEarned=d.TotalCashEarned,TotalMiniCollected=d.TotalMiniCollected,PlaySeconds=d.PlaySeconds,
 		CafeRate=Rules.CafeRate(d),CafeUpgradeCost=Rules.CafeUpgradeCost(d),Index=d.Index,Highest=Rules.Highest(d),
 		NormalTokens=d.NormalTokens,PerkTokens=d.PerkTokens,PaidNormalTokens=d.PaidNormalTokens,PaidPerkTokens=d.PaidPerkTokens,NextGift=d.NextGift,AFKSeconds=d.AFKSeconds,
-		Multiplier=multiplier(p),Luck=p.Passes.Luck==true,Settings=d.Settings,Equipped=d.Equipped,
+		Multiplier=multiplier(p),Luck=p.Passes.Luck==true,ShinyChance=Rules.ShinyChance("Normal",p.Passes.Luck),Settings=d.Settings,Equipped=d.Equipped,
 		Durable=p.Durable,Premium=p.Premium,Restricted=p.Restricted,HotUntil=d.HotUntil,
 		Active=Rules.Count(d),PlotId=player:GetAttribute("PlotId"),ServerTime=os.time()}
 end

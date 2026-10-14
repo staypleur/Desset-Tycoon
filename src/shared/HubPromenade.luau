@@ -5,16 +5,16 @@ local function prop(source,parent,name,cf,height)
  local m=Instance.new('Model'); m.Name=name; source:Clone().Parent=m
  for _,d in ipairs(m:GetDescendants()) do
   assert(not d:IsA('LuaSourceContainer') and not d:IsA('PackageLink'),'Imported code found')
-  if d:IsA('BasePart') then d.Anchored=true; d.CanTouch=false; d.CanCollide=name=='Fence'; d.CanQuery=true end
+  if d:IsA('BasePart') then d.Anchored=true; d.CanTouch=false; d.CanCollide=name=='Fence'; d.CanQuery=name=='Fence'; d.CastShadow=name=='Fence' end
   if d:IsA('Beam') then d.Enabled=false end
-  if d:IsA('Light') then d.Color=Color3.fromRGB(255,230,196); d.Brightness=.4; d.Range=12 end
+  if d:IsA('Light') then d.Color=Color3.fromRGB(255,230,196); d.Brightness=.4; d.Range=12; d.Shadows=false end
  end
  local b,s=m:GetBoundingBox(); m:ScaleTo(m:GetScale()*height/s.Y); b,s=m:GetBoundingBox()
  m:PivotTo(cf*CFrame.new(0,s.Y/2,0)*b:ToObjectSpace(m:GetPivot()))
  m:SetAttribute('DecorationOnly',true); m.Parent=parent; return m
 end
 function Hub.Apply(island)
- if island:GetAttribute('PromenadeVersion')==1 then return end
+ if island:GetAttribute('PromenadeVersion')==2 then return end
  local assets=game.ServerStorage.FreeDesignSources
  local environment=game.ServerStorage.FreeEnvironmentAssets
  -- A single approved union replaces coplanar Center/Cross/corner base pieces.
@@ -36,6 +36,8 @@ function Hub.Apply(island)
  end
  local landscape=island:FindFirstChild('Landscape')
  if landscape then for _,p in ipairs(landscape:GetChildren()) do if p.Name=='PathEdging' then p:Destroy() end end end
+ -- Replace the earlier layout once; repeated startup must not add duplicates.
+ for _,child in ipairs(island:GetChildren()) do if child.Name=='HubPromenade' then child:Destroy() end end
  local area=Instance.new('Model'); area.Name='HubPromenade'; area.Parent=island
  local cafe=island.CentralHub.CentralShop.CafeArchitecture.CafeFloor.Position
  local center=Vector3.new(cafe.X,0,cafe.Z)
@@ -46,18 +48,16 @@ function Hub.Apply(island)
  for i=0,5 do
   local angle=i*math.pi/3
   for _,side in ipairs({-1,1}) do
-   -- Only the part of each path outside the plaza is fenced.
-   for n=1,2 do prop(assets.WhiteFence,area,'Fence',at(angle,89+(n-1)*14,side*12,.2),2.7):SetAttribute('SourceAssetId',4539718362) end
    for _,r in ipairs({91,111}) do
-    local lamp=prop(environment.StreetLamp,area,'StreetLamp',at(angle,r,side*15,.2),11)
+    -- The approved source's lamp head extends along +X. Turn both sides inward.
+    local lamp=prop(environment.StreetLamp,area,'StreetLamp',at(angle,r,side*15,.2)*CFrame.Angles(0,side==1 and math.pi or 0,0),11)
     lamp:SetAttribute('SourceAssetId',11146095708)
+    lamp:SetAttribute('PathIndex',i+1); lamp:SetAttribute('PathSide',side)
    end
   end
-  for n=1,3 do
-   local a=angle+math.rad(19+n*5.5)
-   prop(assets.WhiteFence,area,'Fence',at(a,78,0,.7)*CFrame.Angles(0,math.pi/2,0),2.7):SetAttribute('SourceAssetId',4539718362)
-  end
+  -- One 22-stud section per gap, rather than three at 7.5-stud spacing.
+  prop(assets.WhiteFence,area,'Fence',at(angle+math.pi/6,78,0,.7)*CFrame.Angles(0,math.pi/2,0),2.7):SetAttribute('SourceAssetId',4539718362)
  end
- island:SetAttribute('PromenadeVersion',1); island:SetAttribute('MapVersion','16.0.0')
+ island:SetAttribute('PromenadeVersion',2); island:SetAttribute('MapVersion','16.1.0')
 end
 return Hub

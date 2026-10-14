@@ -35,7 +35,7 @@ assert(R.AccrueOffline(offline,110,2)==0,'Clock going backwards must not subtrac
 local excess=R.New(0); excess.Pets={['1n']=60,['30n']=1}
 assert(R.ProductionPerSecond(excess)==20,'Hidden inventory must not earn offline production')
 local island=workspace.DessertJellyIsland
-assert(island:GetAttribute('PromenadeVersion')==1)
+assert(island:GetAttribute('PromenadeVersion')>=2)
 for _,pad in ipairs(island:GetDescendants()) do local base=pad:IsA('BasePart') and pad:FindFirstChild('ButtonBase')
  if base then assert(#base:GetChildren()==1 and base.SingleBase and base:GetAttribute('NoCoplanarOverlap')) end
 end
