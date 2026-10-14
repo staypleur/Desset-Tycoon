@@ -1,0 +1,272 @@
+local Players=game:GetService("Players")
+local RS=game:GetService("ReplicatedStorage")
+local Run=game:GetService("RunService")
+local Market=game:GetService("MarketplaceService")
+local Policy=game:GetService("PolicyService")
+local Tween=game:GetService("TweenService")
+local Config=require(RS:WaitForChild("TycoonConfig"))
+local Rules=require(RS:WaitForChild("DessertRules"))
+local Visuals=require(RS:WaitForChild("DessertVisuals"))
+local Layout=require(RS:WaitForChild("ProductionPlot"))
+local Profiles=require(script.Parent:WaitForChild("PlayerProfiles"))
+local island=workspace:WaitForChild("DessertJellyIsland",30)
+assert(island,"Dessert island missing")
+while island:GetAttribute("LayoutReady")==false do task.wait(.1) end
+Layout.Apply(island)
+local remotes=Instance.new("Folder"); remotes.Name="DessertRemotes"; remotes.Parent=RS
+local action=Instance.new("RemoteFunction"); action.Name="Action"; action.Parent=remotes
+local events=Instance.new("RemoteEvent"); events.Name="Event"; events.Parent=remotes
+local profiles,states={},{}
+local rng=Random.new()
+local function root(player)
+	local c=player.Character; local h=c and c:FindFirstChildOfClass("Humanoid")
+	return h and h.Health>0 and c:FindFirstChild("HumanoidRootPart") or nil
+end
+local function multiplier(p)
+	local m=1; for key,spec in pairs(Config.Passes) do if p.Passes[key] and spec.Multiplier then m=math.max(m,spec.Multiplier) end end; return m
+end
+local function snapshot(player)
+	local p=profiles[player]; if not p then return nil end; local d=p.Data
+	return {Cash=d.Cash,Bag=d.Bag,Pending=d.Pending,Index=d.Index,Highest=Rules.Highest(d),
+		NormalTokens=d.NormalTokens,PerkTokens=d.PerkTokens,PaidNormalTokens=d.PaidNormalTokens,PaidPerkTokens=d.PaidPerkTokens,NextGift=d.NextGift,AFKSeconds=d.AFKSeconds,
+		Multiplier=multiplier(p),Luck=p.Passes.Luck==true,Settings=d.Settings,Equipped=d.Equipped,
+		Durable=p.Durable,Premium=p.Premium,Restricted=p.Restricted,HotUntil=d.HotUntil,
+		Active=Rules.Count(d),PlotId=player:GetAttribute("PlotId"),ServerTime=os.time()}
+end
+local function update(player,message)
+	local p=profiles[player]; if not p then return end
+	local cash=player:FindFirstChild("leaderstats") and player.leaderstats:FindFirstChild("Cash")
+	if cash then cash.Value=p.Data.Cash end
+	local s=states[player:GetAttribute("PlotId")]
+	if s then s.Plot.PersonalShopArea.CollectIncome.ActionSign:FindFirstChildOfClass("TextLabel").Text="R | $"..string.format("%.0f",p.Data.Pending) end
+	events:FireClient(player,"State",snapshot(player),message)
+end
+local function discoveries(player,items)
+	for _,item in ipairs(items or {}) do events:FireClient(player,"Discovery",item) end
+end
+local function stateFor(player) return states[player:GetAttribute("PlotId")] end
+local function render(player)
+	local s=stateFor(player); local p=profiles[player]
+	if not s or not p or s.Plot:GetAttribute("OwnerUserId")~=player.UserId then return end
+	s.Models:ClearAllChildren(); s.Pets={}; s.Owner=player
+	local slot=0; local cf=s.Plot:GetPivot()
+	for tier=1,30 do for _,shiny in ipairs({false,true}) do
+		for _=1,math.min(p.Data.Pets[Rules.Key(tier,shiny)] or 0,60-slot) do
+			slot+=1; local pad=s.Plot.PetSpawnPads["PetPad"..slot]; local pos=cf:PointToObjectSpace(pad.Position)
+			local model=Visuals.Build(tier,shiny); model.Name="Dessert"..slot
+			model:SetAttribute("OwnerUserId",player.UserId); model.Parent=s.Models; model:PivotTo(cf*CFrame.new(pos+Vector3.new(0,.1,0)))
+			table.insert(s.Pets,{Tier=tier,Shiny=shiny,Slot=slot,Next=os.clock()+Config.ProductionInterval})
+		end
+	end end
+end
+local function near(player,pad) local r=root(player); return r and (r.Position-pad.Position).Magnitude<=14 end
+local function emit(s,pet,now)
+	local p=profiles[s.Owner]; if not p or p.Busy then return end
+	local cf=s.Plot:GetPivot(); local pad=s.Plot.PetSpawnPads["PetPad"..pet.Slot]
+	local pos=cf:PointToObjectSpace(pad.Position); local z=pad:GetAttribute("DropLaneZ"); local lo=Layout.ChannelHeight(z)
+	local y=lo+(2.25-lo)*math.clamp((math.abs(pos.X)-4)/40,0,1)
+	local points={pos+Vector3.new(0,.65,0),Vector3.new(pos.X,y+.6,z),Vector3.new(0,lo+.6,z),
+		Vector3.new(0,.8,-7),Vector3.new(rng:NextNumber(-4,4),.45,rng:NextNumber(-13,-9))}
+	local durations={}; for n=1,#points-1 do durations[n]=(points[n+1]-points[n]).Magnitude/9 end
+	local value=3^(pet.Tier-1)*multiplier(p)
+	if #s.Drops>=120 then s.Drops[#s.Drops].Value+=value; return end
+	local m=Visuals.Build(pet.Tier,pet.Shiny); m.Name="MiniDessert"; m:ScaleTo(.25)
+	m:SetAttribute("OwnerUserId",s.Owner.UserId); m.Parent=s.Products; m:PivotTo(cf*CFrame.new(points[1]))
+	table.insert(s.Drops,{Model=m,Points=points,Durations=durations,Start=now,Value=value,CF=cf})
+end
+local function perform(player,verb,arg)
+	local p=profiles[player]; local s=stateFor(player)
+	if not p or p.Busy or p.Closing or p.Faulted then return false,"Please wait" end
+	local d=p.Data
+	if verb=="State" then return snapshot(player) end
+	if verb=="Settings" then
+		if type(arg)~="table" then return false end
+		for _,key in ipairs({"Music","Effects","HideOthers"}) do if type(arg[key])=="boolean" then d.Settings[key]=arg[key] end end
+		update(player); return true
+	elseif verb=="Activity" then p.LastActivity=os.clock(); return true
+	elseif verb=="Equip" then
+		if type(arg)~="string" or not d.Index[arg] then return false end
+		d.Equipped=arg; if p.Companion then p.Companion:Destroy() end
+		local tier,shiny=Rules.Decode(arg); local m=Visuals.Build(tier,shiny); m:ScaleTo(.65)
+		m.Name="DessertCompanion"; m:SetAttribute("OwnerUserId",player.UserId); m.Parent=workspace; p.Companion=m
+		update(player); return true
+	elseif verb=="Crate" then
+		if type(arg)~="table" or (arg.Kind~="Normal" and arg.Kind~="Perk") or (arg.Count~=1 and arg.Count~=10) then return false end
+		local key=arg.Kind=="Perk" and "PerkTokens" or "NormalTokens"
+		local paidKey="Paid"..key; local paid=d[paidKey] or 0
+		if d[key]+(p.Restricted and 0 or paid)<arg.Count then return false,"Not enough available crate credits" end
+		local freeUsed=math.min(d[key],arg.Count); d[key]-=freeUsed; d[paidKey]=paid-(arg.Count-freeUsed)
+		local found={}; local results={}
+		for _=1,arg.Count do table.insert(results,Rules.Roll(d,arg.Kind,rng,p.Passes.Luck,found)) end
+		if p.Passes.AutoMerge then Rules.Merge(d,found) end
+		render(player); events:FireClient(player,"Crates",results); update(player); return true
+	elseif verb=="Purchase" then
+		if type(arg)~="string" then return false end
+		local product=Config.Products[arg]; local spec=product or Config.Passes[arg]
+		if not spec or spec.Id<=0 or not p.Durable then return false,"Coming soon: purchases are not configured" end
+		if (product and product.Crate or arg=="Luck") and p.Restricted then return false,"Unavailable in your region" end
+		if product then Market:PromptProductPurchase(player,spec.Id) else Market:PromptGamePassPurchase(player,spec.Id) end
+		return true
+	end
+	if not s or s.Owner~=player or s.Plot:GetAttribute("OwnerUserId")~=player.UserId then return false end
+	local area=s.Plot.PersonalShopArea
+	if verb=="Buy" then
+		if arg~=1 and arg~=10 and arg~=100 and arg~=1000 then return false end
+		if not near(player,s.Plot.PurchaseButtons["Buy"..arg]) then return false end
+		local ok,result=Rules.Buy(d,arg,rng,p.Passes.Luck)
+		if ok then render(player); discoveries(player,result); update(player,"Purchased "..arg.." puddings") else update(player,result) end; return ok
+	elseif verb=="Merge" then
+		if not near(player,s.Plot.MergeBoard) then return false end
+		local found={}; Rules.Merge(d,found); render(player); discoveries(player,found); update(player,"Matching desserts merged")
+	elseif verb=="Sell" then
+		if not near(player,area.SellDesserts) then return false end
+		local amount=math.floor(d.Bag); d.Bag-=amount; d.Pending+=amount*(os.time()<d.HotUntil and Config.HotTimeMultiplier or 1)
+		update(player,"Sold "..amount.." mini desserts. Collect your cash at R.")
+	elseif verb=="Collect" then
+		if not near(player,area.CollectIncome) then return false end
+		d.Cash+=d.Pending; d.Pending=0; update(player,"Cash collected")
+	else return false end
+	return true
+end
+action.OnServerInvoke=function(player,verb,arg)
+	local p=profiles[player]; if not p or type(verb)~="string" then return false end
+	-- Input pings and HUD reads must not consume the debounce for deliberate UI actions.
+	if verb=="Activity" then
+		if os.clock()-(p.LastInputSignal or 0)>=5 then p.LastInputSignal=os.clock(); p.LastActivity=os.clock() end
+		return true
+	elseif verb=="State" then
+		if os.clock()-(p.LastStateRead or 0)<.5 then return false end
+		p.LastStateRead=os.clock(); return snapshot(player)
+	end
+	if os.clock()-(p.LastAction or 0)<.2 then return false,"Please wait" end
+	p.LastAction=os.clock(); return perform(player,verb,arg)
+end
+if Run:IsStudio() then
+	local testAction=Instance.new("BindableFunction"); testAction.Name="StudioDessertAction"
+	testAction.OnInvoke=perform; testAction.Parent=script
+end
+for i=1,6 do
+	local plot=island.PlayerPlots["Plot"..i]
+	for _,name in ipairs({"ActiveDesserts","MovingDesserts"}) do local old=plot:FindFirstChild(name); if old then old:Destroy() end end
+	local models=Instance.new("Folder"); models.Name="ActiveDesserts"; models.Parent=plot
+	local products=Instance.new("Folder"); products.Name="MovingDesserts"; products.Parent=plot
+	local s={Plot=plot,Models=models,Products=products,Pets={},Drops={}}; states[i]=s
+	local function button(pad,verb,arg,text)
+		pad.CanTouch=true
+		for _,old in ipairs(pad:GetChildren()) do if old:IsA("ProximityPrompt") then old:Destroy() end end
+		local prompt=Instance.new("ProximityPrompt"); prompt.ActionText=text; prompt.MaxActivationDistance=10; prompt.RequiresLineOfSight=false; prompt.Parent=pad
+		local pressed,latched={},{}
+		local function activate(player,fromTouch)
+			if player~=s.Owner or not near(player,pad) or not profiles[player] then return end
+			if fromTouch and latched[player] then return end
+			if os.clock()-(pressed[player] or 0)<1 then return end; pressed[player]=os.clock()
+			if fromTouch then
+				latched[player]=true
+				task.spawn(function()
+					repeat task.wait(.25); local r=root(player)
+						local pos=r and pad.CFrame:PointToObjectSpace(r.Position)
+						if not pos or math.abs(pos.X)>pad.Size.X/2+2 or math.abs(pos.Z)>pad.Size.Z/2+2 then break end
+					until player.Parent~=Players
+					latched[player]=nil
+				end)
+			end
+			Tween:Create(pad,TweenInfo.new(.12,Enum.EasingStyle.Quad,Enum.EasingDirection.Out,0,true),{CFrame=pad.CFrame*CFrame.new(0,-.16,0)}):Play()
+			if verb=="Panel" then events:FireClient(player,"Panel",arg) else perform(player,verb,arg) end
+		end
+		prompt.Triggered:Connect(activate)
+		pad.Touched:Connect(function(hit) local c=hit:FindFirstAncestorOfClass("Model"); local player=c and Players:GetPlayerFromCharacter(c); if player then activate(player,true) end end)
+	end
+	for _,count in ipairs({1,10,100,1000}) do button(plot.PurchaseButtons["Buy"..count],"Buy",count,"Buy "..count) end
+	button(plot.MergeBoard,"Merge",nil,"Merge matching desserts")
+	button(plot.PersonalShopArea.SellDesserts,"Sell",nil,"Sell mini desserts")
+	button(plot.PersonalShopArea.CollectIncome,"Collect",nil,"Collect cash")
+	button(plot.PersonalShopArea.RobuxShop,"Panel","Shop","Open shop")
+	button(plot.PersonalShopArea.DessertCrate,"Panel","Crates","Open crates")
+	plot:GetAttributeChangedSignal("OwnerUserId"):Connect(function()
+		s.Models:ClearAllChildren(); s.Products:ClearAllChildren(); s.Pets={}; s.Drops={}
+		s.Owner=Players:GetPlayerByUserId(plot:GetAttribute("OwnerUserId") or 0); if s.Owner then render(s.Owner) end
+	end)
+end
+local function refreshPasses(player,p)
+	for key,spec in pairs(Config.Passes) do if spec.Id>0 then
+		local ok,owns=pcall(Market.UserOwnsGamePassAsync,Market,player.UserId,spec.Id); p.Passes[key]=ok and owns or false
+	end end
+	if p.Restricted then p.Passes.Luck=false end
+end
+local function join(player)
+	local p,message=Profiles.Load(player); if not p then player:Kick(message); return end
+	if player.Parent~=Players then Profiles.Save(p,true); return end
+	p.Passes={}; p.Restricted=true; p.Premium=player.MembershipType==Enum.MembershipType.Premium
+	p.LastActivity=os.clock(); profiles[player]=p
+	local stats=Instance.new("Folder"); stats.Name="leaderstats"; stats.Parent=player
+	local cash=Instance.new("NumberValue"); cash.Name="Cash"; cash.Parent=stats
+	player:GetAttributeChangedSignal("PlotId"):Connect(function() render(player); update(player) end)
+	if not Run:IsStudio() then local ok,info=pcall(Policy.GetPolicyInfoForPlayerAsync,Policy,player); p.Restricted=not ok or info.ArePaidRandomItemsRestricted~=false end
+	refreshPasses(player,p); Rules.Gift(p.Data,os.time(),p.Premium); render(player); update(player)
+	print("[DessertGame] Profile ready: "..(p.Durable and "saved" or "Studio session").."; gifts every 5h")
+end
+Players.PlayerAdded:Connect(join); for _,player in ipairs(Players:GetPlayers()) do task.spawn(join,player) end
+local function close(player)
+	local p=profiles[player]; if not p or p.Closing then return end; p.Closing=true
+	local deadline=os.clock()+15; while p.Busy and os.clock()<deadline do task.wait(.1) end
+	if not Profiles.Save(p,true) then warn("[DessertGame] Save failed on leave") end
+	if p.Companion then p.Companion:Destroy() end; profiles[player]=nil
+end
+Players.PlayerRemoving:Connect(close)
+game:BindToClose(function()
+	local count=0; for player in pairs(profiles) do count+=1; task.spawn(function() close(player); count-=1 end) end
+	local deadline=os.clock()+25; while count>0 and os.clock()<deadline do task.wait(.1) end
+end)
+Market.PromptGamePassPurchaseFinished:Connect(function(player) local p=profiles[player]; if p then refreshPasses(player,p); update(player) end end)
+Market.ProcessReceipt=function(receipt)
+	local player=Players:GetPlayerByUserId(receipt.PlayerId); local p=player and profiles[player]
+	if not p or p.Closing then return Enum.ProductPurchaseDecision.NotProcessedYet end
+	local spec; for _,product in pairs(Config.Products) do if product.Id>0 and product.Id==receipt.ProductId then spec=product end end
+	if not spec then return Enum.ProductPurchaseDecision.NotProcessedYet end
+	local granted=Profiles.Receipt(p,tostring(receipt.PurchaseId),function(d)
+		if spec.Crate then local key=spec.Crate=="Perk" and "PaidPerkTokens" or "PaidNormalTokens"; d[key]=(d[key] or 0)+spec.Count
+		else d.HotUntil=math.max(os.time(),d.HotUntil)+Config.HotTimeSeconds end
+	end)
+	if granted then update(player); return Enum.ProductPurchaseDecision.PurchaseGranted end
+	if p.Faulted then player:Kick("Purchase confirmation is pending. Please rejoin shortly.") end
+	return Enum.ProductPurchaseDecision.NotProcessedYet
+end
+local frameTime,timer,saveTimer=0,0,0
+Run.Heartbeat:Connect(function(dt)
+	frameTime+=dt; timer+=dt; saveTimer+=dt; if frameTime<.1 then return end; frameTime=0
+	local now=os.clock()
+	for _,s in ipairs(states) do local p=s.Owner and profiles[s.Owner]
+		if p and not p.Busy and not p.Closing and not p.Faulted then
+			for _,pet in ipairs(s.Pets) do if now>=pet.Next then emit(s,pet,now); pet.Next=now+Config.ProductionInterval end end
+			local r=root(s.Owner); local picked=false
+			for n=#s.Drops,1,-1 do
+				local drop=s.Drops[n]; local elapsed=now-drop.Start; local segment=1
+				while segment<=#drop.Durations and elapsed>=drop.Durations[segment] do elapsed-=drop.Durations[segment]; segment+=1 end
+				local pos=segment>#drop.Durations and drop.Points[#drop.Points] or drop.Points[segment]:Lerp(drop.Points[segment+1],elapsed/drop.Durations[segment])
+				drop.Model:PivotTo(drop.CF*CFrame.new(pos)*CFrame.Angles(0,now*2,segment>#drop.Durations and 0 or now*3))
+				if r and (r.Position-drop.Model:GetPivot().Position).Magnitude<=(p.Passes.Magnet and 25 or 6) then p.Data.Bag+=drop.Value; drop.Model:Destroy(); table.remove(s.Drops,n); picked=true end
+			end
+			if picked then update(s.Owner) end
+		end
+	end
+	for player,p in pairs(profiles) do local r=root(player); if p.Companion and r then p.Companion:PivotTo(r.CFrame*CFrame.new(-3,3+math.sin(now*2)*.3,0)) end end
+	if timer>=1 then local seconds=timer; timer=0
+		for player,p in pairs(profiles) do if not p.Busy and not p.Closing and not p.Faulted then
+			local r=root(player); if r and p.LastPosition and (r.Position-p.LastPosition).Magnitude>.5 then p.LastActivity=now end
+			p.LastPosition=r and r.Position; p.Premium=player.MembershipType==Enum.MembershipType.Premium
+			Rules.Gift(p.Data,os.time(),p.Premium)
+			-- Include idle time spent waiting for a save instead of losing busy-frame seconds.
+			local idleSeconds=math.max(0,now-math.max(p.LastAFKCheck or now,p.LastActivity+60))
+			p.LastAFKCheck=now
+			if r and idleSeconds>0 then Rules.AFK(p.Data,idleSeconds) end
+			if p.Passes.AutoMerge then local found={}; local before=Rules.Count(p.Data); Rules.Merge(p.Data,found); if before~=Rules.Count(p.Data) then render(player); discoveries(player,found) end end
+			update(player)
+		end end
+	end
+	if saveTimer>=60 then saveTimer=0
+		for player,p in pairs(profiles) do if not p.Closing and not p.Busy then task.spawn(function()
+			if not Profiles.Save(p,false) and player.Parent==Players then player:Kick("Your save connection was lost. Please rejoin.") end
+		end) end end
+	end
+end)
+print("[DessertGame] Ready: 3-second production, bag/cafe/R, merge, index, 5-hour gifts")

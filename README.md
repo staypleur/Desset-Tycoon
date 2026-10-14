@@ -1,108 +1,39 @@
 # Dessert & Jelly Island
 
-귀여운 파스텔 디저트 방치형 타이쿤의 첫 번째 맵입니다. 서버당 목표 인원은 **6명**입니다.
+Roblox 파스텔 디저트 방치형 타이쿤의 실행 가능한 v11 프로토타입입니다. 모든 게임 문구는 영어입니다.
 
-## 실행
+## Studio 실행
 
-1. `DessertIsland.rbxlx`를 Roblox Studio에서 엽니다.
-2. 저장된 파일에는 꾸민 맵과 `ServerScriptService.PlotAllocator`가 포함되어 있습니다. Play를 누르면 자동 구역 배정이 실행됩니다. 기존 `DessertIsland` 생성기는 편집된 맵을 보호하기 위해 비활성화했습니다.
-3. 별도 장소에서는 `src/server/DessertIsland.server.luau` 내용을 일반 **Script**에 붙여 넣고 ServerScriptService에 넣습니다. Workspace에서도 실행 가능합니다.
-4. 원래 기본 맵을 다시 생성하려면 Studio Command Bar에서 `loadstring(game.ServerScriptService.DessertIsland.Source)()`를 실행합니다. 이 작업은 편집된 섬을 기본 맵으로 교체하므로 별도 복사본에서 사용하세요.
+1. `DessertIsland.rbxlx`를 Roblox Studio에서 열고 Play를 누르세요.
+2. PlotAllocator가 CentralShop 위치를 기준으로 6개 구역을 배정합니다. 중앙의 CentralDisplay는 나중에 제공할 모델용으로 비워 두었습니다.
+3. 각 구역에는 개인 카페, 상점, 상자, R 수집 발판과 60개 원형 접시가 있습니다. 왼쪽/오른쪽 각각 5줄 × 6칸입니다. 바닥 96×120 studs, 섬 지름 460 studs입니다.
+4. Buy 1/10/100/1000은 푸딩을 구매하고 자동 병합합니다. 같은 일반/이로치 디저트 3개가 다음 단계 하나가 됩니다. M은 가능한 병합을 모두 실행합니다.
+5. 디저트는 3초마다 자신과 같은 미니 디저트를 만듭니다. 경사로 → 중앙 통로 → 앞쪽 접시에 모이며, 가까이 가면 가방에 수집됩니다. 카페에서 팔고 R에서 돈을 받으세요.
 
-Rojo의 `default.project.json`은 기본 자동 생성 맵과 구역 할당기를 구성합니다. Creator Store 소품까지 포함된 버전은 `DessertIsland.rbxlx`를 사용하세요.
+무료 상자는 5시간마다 일반 상자 1개, Premium은 같은 시점에 일반 1개와 특혜 1개를 받습니다. AFK 일반 상자는 별도로 누적 잠수 5시간마다 지급합니다. 첫 선물은 첫 접속 5시간 후이며 오프라인 중 지난 여러 주기를 무제한 누적하지 않습니다.
 
-## 맵 구성
+도감에는 일반/이로치 발견이 기록되고 펫을 장착할 수 있습니다. 새 디저트 발견 시 3D 모델과 하트/별 효과가 나타납니다. 설정에서 배경음, 효과음, 다른 플레이어 펫 표시를 바꿀 수 있습니다.
 
-- 민트 아이싱, 핑크/라벤더 케이크 층의 둥근 공중 섬
-- 중앙 스폰과 비어 있는 중앙 전시 공간, 개인 카페의 줄무늬 차양과 얼굴이 있는 대형 푸딩
-- 중앙에서 60도 간격으로 배치한 동일 크기의 6개 구역과 크림색 길
-- 각 구역은 70×70 studs이며 중앙 통로 양쪽에 생산 트레이 5개씩 배치했습니다. 트레이마다 디저트 자리 3개로 총 30칸입니다.
-- 입구에 구매 버튼과 합성 보드(슬롯 3개)가 있습니다. 가까이서 ProximityPrompt로 구매·합성·수익 수집을 실행합니다.
-- 중앙 카페의 원래 모습(대형 푸딩 포함)을 각 구역 입구에 하나씩 배치했습니다. 카페는 중앙을 등지고 생산 구역을 바라보며, 구매·합성·수익·상자 발판은 카페 주변에 모았습니다. 옆쪽 입구로 카페를 돌아 들어갑니다.
-- 솜사탕 나무 24그루, 마시멜로 덤불, 설탕 꽃, 구름
-- 오후 2시 조명, 약한 블러/색 보정/블룸, 따뜻한 반짝임과 하트 장식
-- 투명한 섬 가장자리 안전벽
-- 무료 Creator Store 꽃 모델 48개, 개인 카페 소유자 표지판 (벤치 템플릿은 보관)
-- 무료 벚꽃 나무 12그루와 확장된 원형 섬(지름 348 studs)
-- 무료 하트 케이크 모델 전시 장식 6개
-- 구역별 낮은 공급 컨베이어 10줄과 중앙 컨베이어 1줄, 생산 바닥과 이동용 다리
-- 모든 게임 표시 문구 및 디저트 이름은 영어입니다.
+## 현재 결제·저장 상태
 
-## 자동 구역 배정 시스템
+아직 상품 ID가 없으므로 `TycoonConfig`의 모든 ID는 0이며 실제 Robux 구매는 UI와 서버 모두 잠겨 있습니다. 요청한 가격과 구매 처리는 준비되어 있습니다. ID 등록 후 UI는 실제 지역별 가격을 조회합니다.
 
-`src/server/PlotAllocator.server.luau` 하나를 일반 Script로 ServerScriptService에 넣으세요. 새 맵을 만들지 않고 **기존 모델**을 사용합니다.
+Studio에서는 임시 세션 데이터로 테스트합니다. 게시된 서버에는 DataStore 세션 잠금/자동 저장/종료 저장과 영수증 중복 방지가 구현되어 있지만, 실제 게시 환경 및 결제 검증은 ID 등록 이후 필요합니다. 게시 경험의 최대 인원은 Creator Dashboard에서 6명으로 설정하세요. 추가 Studio 인원은 빈 구역이 생길 때까지 대기합니다.
 
-- Workspace 하위 어디에나 고유한 `CentralShop` Model과 `Plot1`~`Plot6` Model이 있으면 작동합니다.
-- 서버 시작 시 `CentralShop:GetPivot().Position`의 X/Z를 중심으로 반경 150 studs, 60도 간격으로 배치합니다. 각 구역의 기존 높이는 보존합니다. `PrimaryPart` 또는 모델 pivot을 바닥 중심으로 맞추세요.
-- 입장 시 빈 구역 하나를 서버에서 예약하며, 중복 배정하지 않습니다.
-- `PlotSpawn` BasePart, 없으면 `Entrance` BasePart로 캐릭터를 이동합니다. 리스폰 때도 같은 구역으로 이동합니다.
-- 퇴장 시 소유자 속성과 연결을 해제합니다. 7명 이상 입장하면 초과 인원은 중앙에서 기다리며, 빈 구역이 생기면 입장 순서대로 배정합니다.
-- `player:GetAttribute("PlotId")`와 `plot:GetAttribute("OwnerUserId")`로 다른 서버 게임 로직에 연결합니다. 실제 생산/합성 권한도 서버에서 검증해야 합니다.
-- `OwnerLabel` TextLabel이 있으면 소유자 표시를 갱신합니다.
-- 모델 누락은 최대 30초 기다린 뒤 오류를 표시합니다. 중복 이름은 즉시 오류로 처리합니다.
+## 코드
 
-상점 이동은 **편집 모드에서 이동 후 새 서버를 시작**할 때 반영됩니다. 진행 중인 서버에서 실시간으로 구역을 계속 움직이지 않습니다. 할당은 서버 세션 동안 유지되며 재접속 시 같은 구역 번호를 보장하지 않습니다.
+- `src/server/DessertGame.server.luau`: 권한 검증, 생산·수집·판매·돈, 상자, 결제 처리
+- `src/server/PlayerProfiles.luau`: 저장과 세션 잠금, 영수증 기록
+- `src/client/DessertClient.client.luau`: 영어 HUD, 도감, 설정, 상점, 상자, 발견 연출
+- `src/shared/TycoonConfig.luau`: 5시간 지급 주기, 3초 생산 주기, 가격, 상품 ID, 음원
+- `src/shared/DessertRules.luau`: 병합, 확률, 지급과 AFK 누적 규칙
+- `src/shared/DessertVisuals.luau`: 교체 가능한 30단계 기본 디저트 모델과 이로치
+- `src/shared/ProductionPlot.luau`: 원형 접시, 생산 경사로, 카페 앞 발판 배치
 
-`tests/PlotAllocator.studio.luau`는 임시 모델과 모의 플레이어로 중심 좌표 이동, 높이 유지, 6명 배정, 초과 대기, 반환/재배정, 중복 입장, 캐릭터 이동/리스폰을 검증합니다.
+저장된 장소의 기본 생성기 `DessertIsland`와 이전 `DessertProduction`은 비활성화되어 있습니다. Rojo 프로젝트는 새 장소에서 네이티브 맵을 생성합니다. 무료 Creator Store 소품/원본 템플릿까지 포함된 완성 배치는 `.rbxlx`에 있습니다.
 
-## 게임플레이 연결 지점
+세부 지급·확률·저장 규칙과 한계는 [GAMEPLAY](docs/GAMEPLAY.md), 무료 에셋과 음원 출처는 [ASSETS](docs/ASSETS.md), 변경 이력은 [WORKLOG](docs/WORKLOG.md)를 참고하세요.
 
-`Workspace.DessertJellyIsland.PlayerPlots.Plot1`부터 `Plot6`까지 존재합니다.
+## 검증
 
-| 오브젝트/속성 | 용도 |
-| --- | --- |
-| PlotId / OwnerUserId | 구역 번호와 현재 소유자 (0이면 비어 있음) |
-| PetSpawnPads.PetPad1–60 / SlotIndex / DropLaneZ | 디저트 위치 및 생산 상품 공급 경로 |
-| MergeBoard / RequiredCount = 3 | 동일 단계 3개를 다음 단계 1개로 합성 |
-| ProductionBeds.LeftMeadow / RightMeadow | 중앙 컨베이어 양옆의 넓은 민트색 디저트 필드 |
-| PurchaseButtons.Buy1 / Buy5 / Buy25 / Buy100 | 구매 요청 수량; 가격/돈/남은 칸 검증 후 전체 수량 구매 |
-| PersonalShopArea.DessertCafe | 각 구역 입구의 전체 카페, PlotId 속성으로 구역 식별 |
-| PersonalShopArea.CollectIncome / DessertCrate | 수익 수집 / 향후 랜덤 상자 자리 (상자는 GameplayConnected=false) |
-| Conveyors.Collector / PendingCash | 벨트 도착 상품의 수익이 쌓이는 수집함 |
-| ActiveDesserts / MovingDesserts | 플레이 모드의 생산 디저트와 이동 중인 상품 |
-| CentralHub.CentralShop.CenterAnchor | 원형 배치 기준점을 유지하는 투명 Part; 이동 시 다음 서버에서 반영 |
-| CentralHub.CentralDisplay | 나중에 제공할 중앙 모델을 넣을 빈 Model; 기준점과 독립적 |
-
-현재는 **맵·구역 배정·세션 생산 루프**를 구현했습니다. 입장 시 푸딩 1개와 $25를 지급합니다. 디저트는 5초마다 미니 상품을 생산하고, 상품은 필드를 가로질러 굴러온 뒤 낮은 중앙 벨트 → 카페 앞 수집함으로 이동합니다. 도착 때만 수익을 추가하며 수집 시 Cash로 옮깁니다. 수집함과 카페 옆 Collect Earnings 발판 모두 이용할 수 있습니다.
-
-푸딩 가격은 개당 $5이며 구역 최대 수용량은 60개입니다. 1/5/25/100개 버튼은 돈과 빈칸이 충분할 때만 전체 구매를 처리합니다. 100개 구매는 현재 60칸 수용량에서 실행되지 않습니다. 합성은 가장 낮은 단계부터 같은 단계 3개를 찾아 1개로 올립니다. 단계별 상품 가치는 `2^(Tier-1)`이며 임시 밸런스입니다.
-
-소유자·캐릭터 거리·재실행 간격은 서버에서 검사합니다. 퇴장/구역 반환 시 디저트와 이동 상품을 정리해 다음 소유자에게 이전 수익이 넘어가지 않습니다. 돈·디저트는 서버 세션에서만 유지되며 재접속 시 초기화합니다. 랜덤 상자, 영구 저장, 오프라인 수익은 아직 구현하지 않았습니다.
-
-## 디저트 30단계
-
-`ReplicatedStorage.DessertCatalog` (`src/shared/DessertCatalog.luau`)에 요청한 순서를 저장했습니다. 푸딩을 1단계로 계산하므로 30단계 페르페 용의 푸딩 환산량은 `3^29 = 68,630,377,364,883`입니다. 세 마리를 하나로 합성하면 보관 개수가 줄어들므로 이 환산량만큼 물리적인 칸을 만들 필요는 없습니다. 실제 획득/생산 속도는 별도 밸런싱이 필요합니다.
-
-게임 표시 이름은 Pudding부터 Parfait Dragon까지 영어입니다. 현재 디저트 외형은 귀여운 푸딩 모양을 공통 사용하고 단계마다 색과 이름을 변경합니다. 30종 각각의 고유 외형은 아직 만들지 않았습니다. 기본 생성기(Rojo)와 저장된 장소 모두 `ReplicatedStorage.TycoonPlotLayout`을 사용해 같은 96×120 구역을 만듭니다. 저장된 장소에는 무료 나무 등 추가 장식이 있습니다.
-
-## 서버 최대 인원
-
-구역 6개와 서버 인원 제한은 별도 설정입니다. 게시한 경험의 Creator Dashboard에서 해당 Place의 최대 플레이어 수를 **6**으로 설정하고 저장하세요. 맵 Script는 서버 정원을 변경하지 않습니다.
-
-## 유지 관리
-
-비활성화된 기본 생성기는 `DessertJellyIsland`를 교체합니다. 구역 할당기는 모델을 삭제하거나 맵을 재생성하지 않습니다. `tools/DecorateInStudio.luau`는 무료 모델을 먼저 가져온 다음 편집 모드에서 한 번 실행하는 꾸미기 도구입니다. 런타임 Script로 넣지 마세요.
-
-무료 모델 출처 및 적용 내역: `docs/ASSETS.md`.
-
-`tools/RestyleProductionPlotsInStudio.luau`는 저장된 확장 맵을 이미지 참고 배치로 바꾼 편집용 도구입니다. Play를 정지한 뒤 Command Bar에서 실행하며, 저장된 장소에는 이미 적용되어 있습니다. 기본 생성기와 별개입니다.
-
-`tools/AddPersonalShopsInStudio.luau`는 생산 줄 간격을 조정하고 개인 가게 6개를 추가한 후 구역 경계 및 생산 구역과의 분리를 검증합니다. 저장된 장소에는 이미 적용되어 있습니다.
-
-최신 배치는 `tools/SimplifyPlotsInStudio.luau`로 바꾼 버전입니다. 96×120의 단일 바닥, 한쪽 18×18 합성 보드(3×3), 두 개의 넓은 민트 필드와 폭 8의 단일 컨베이어를 사용합니다. 디저트는 한쪽당 6줄×5칸, 좌우 총 60개의 보이는 받침대에 배치됩니다. 입구 카페는 중앙을 등지고, 구역 반경은 150, 섬 지름은 460입니다. 원래 카페 소스는 `ServerStorage.CentralCafeTemplate`에 보관합니다. 벨트를 가리던 장식 마스코트는 `ServerStorage.DecorativeMascots`로 옮겼습니다.
-
-`tests/CleanPlotLayout.studio.luau`는 새 구역 크기·구역 겹침·섬 경계·카페·합성 보드·60개 받침대·영어 문구를 검사합니다. `tests/FreshCleanPlots.studio.luau`는 빈 구역 생성과 기존 카페 템플릿 재사용을 검사합니다. 이전 EntranceCafeLayout/ConveyorLayout 테스트는 과거 배치용입니다. `tests/DessertProduction.studio.luau`는 임시 구역과 모의 플레이어로 구매, 소유권/거리/돈/칸 제한, 합성, 상품 도착, 수집, 중복 수집 방지, 소유자 변경 정리를 검사합니다. 테스트는 편집 모드 Command Bar에서 실행하며 런타임 Script로 넣지 마세요.
-
-디자인은 독자적인 디저트 테마이며 다른 게임의 모델/이미지를 복사하지 않습니다.
-
-## 조경과 지형 (v9)
-
-`ReplicatedStorage.IslandLandscape`는 넓은 바닥 재질, 구역 사이 언덕 정원, 카페 테라스와 소품을 추가합니다. `tools/LandscapeIslandInStudio.luau`는 저장된 맵에 이미 적용했습니다. `tests/IslandLandscape.studio.luau`는 장식의 스크립트·충돌 여부와 구매/합성/펫 위치를 가리지 않는지 검사합니다.
-
-기본 생성기는 같은 지형 재질과 언덕을 만듭니다. 전체 무료 에셋 장식은 `DessertIsland.rbxlx`의 ServerStorage 템플릿을 포함하므로 저장된 장소를 사용하세요. 소품은 장식용이며 좌석·진열장은 추가 게임 기능을 제공하지 않습니다.
-
-## Classic Baseplate와 60개 디저트 자리 (v10)
-
-지면·길·구매/합성 발판은 Classic Baseplate처럼 Plastic 재질과 Studs 표면을 사용합니다. 색상과 카페·정원 장식은 유지합니다. 각 구역에는 왼쪽 6줄×5칸, 오른쪽 6줄×5칸의 받침대가 있습니다. 칸은 5.5×5.5 studs이고 좌우 방향 간격은 7.8, 앞뒤 간격은 9.2 studs입니다. 중앙 컨베이어는 그대로 유지하며 바깥쪽 꽃·잔디 장식을 이동했습니다.
-
-`ClassicPlotStyle`과 `tools/ClassicPlotsInStudio.luau`에 표면 변경을 기록했습니다. `TycoonPlotLayout.BuildDessertSlots`를 새 맵 생성기와 편집 도구가 공통 사용합니다. 생산 스크립트는 실제 배치 수를 수용량으로 사용합니다. 통합 테스트는 60개 전체 배치와 61개째 구매 거절까지 검증합니다. 100개 일괄 구매는 60칸 제한 때문에 여전히 불가능합니다.
+Edit mode에서 `tests/DessertRules.studio.luau`, `tests/ProductionPlot.studio.luau`, `tests/IslandLandscape.studio.luau`를 실행합니다. Play의 서버 Command Bar에서 `tests/DessertGame.studio.luau`를 실행하면 발판 구매, 병합, 생산, 수집, 판매, R 지급, 펫, 설정, 결제 잠금을 검증합니다. 이전 버전의 테스트들은 해당 버전의 기록용입니다.

@@ -255,6 +255,7 @@ bloom.Intensity, bloom.Size, bloom.Threshold = 0.12, 20, 1.4
 PlotLayout.Apply(map)
 Landscape.Apply(map)
 ClassicStyle.Apply(map)
+require(game.ReplicatedStorage.ProductionPlot).Apply(map)
 map:SetAttribute("LayoutReady", true)
 assert(#plots:GetChildren() == 6)
 print("[DessertIsland] Built six clean tycoon plots; map v10.0.0")

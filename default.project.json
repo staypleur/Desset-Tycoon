@@ -15,6 +15,18 @@
       },
       "ClassicPlotStyle": {
         "$path": "src/shared/ClassicPlotStyle.luau"
+      },
+      "TycoonConfig": {
+        "$path": "src/shared/TycoonConfig.luau"
+      },
+      "DessertRules": {
+        "$path": "src/shared/DessertRules.luau"
+      },
+      "DessertVisuals": {
+        "$path": "src/shared/DessertVisuals.luau"
+      },
+      "ProductionPlot": {
+        "$path": "src/shared/ProductionPlot.luau"
       }
     },
     "ServerScriptService": {
@@ -26,7 +38,25 @@
         "$path": "src/server/PlotAllocator.server.luau"
       },
       "DessertProduction": {
-        "$path": "src/server/DessertProduction.server.luau"
+        "$path": "src/server/DessertProduction.server.luau",
+        "$properties": {
+          "Disabled": true
+        }
+      },
+      "DessertGame": {
+        "$path": "src/server/DessertGame.server.luau"
+      },
+      "PlayerProfiles": {
+        "$path": "src/server/PlayerProfiles.luau"
+      }
+    },
+    "StarterPlayer": {
+      "$className": "StarterPlayer",
+      "StarterPlayerScripts": {
+        "DessertClient": {
+          "$path": "src/client/DessertClient.client.luau"
+        },
+        "$className": "StarterPlayerScripts"
       }
     }
   }

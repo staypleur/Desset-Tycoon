@@ -1,0 +1,86 @@
+-- Pure server rules. Quantities are logical counts; a Buy 1000 never builds 1000 models.
+local Rules = {}
+local Config=require(script.Parent.TycoonConfig)
+local INTERVAL = Config.GiftInterval
+function Rules.Key(tier, shiny) return tostring(tier)..(shiny and "s" or "n") end
+function Rules.Decode(key) return tonumber(key:sub(1,-2)), key:sub(-1)=="s" end
+function Rules.New(now)
+	return {Version=1, Cash=25, Bag=0, Pending=0, Pets={["1n"]=1}, Index={["1n"]=true},
+		NormalTokens=0, PerkTokens=0, PaidNormalTokens=0, PaidPerkTokens=0, NextGift=now+INTERVAL, AFKSeconds=0,
+		Settings={Music=true, Effects=true, HideOthers=false}, Receipts={}, HotUntil=0}
+end
+function Rules.Add(data,tier,shiny,count,discoveries)
+	local key=Rules.Key(tier,shiny)
+	data.Pets[key]=(data.Pets[key] or 0)+(count or 1)
+	if not data.Index[key] then
+		data.Index[key]=true
+		if discoveries then table.insert(discoveries,{Tier=tier,Shiny=shiny}) end
+	end
+end
+function Rules.Merge(data,discoveries)
+	for tier=1,29 do for _,shiny in ipairs({false,true}) do
+		local key=Rules.Key(tier,shiny)
+		local count=data.Pets[key] or 0
+		local nextCount=math.floor(count/3)
+		data.Pets[key]=count%3
+		if nextCount>0 then Rules.Add(data,tier+1,shiny,nextCount,discoveries) end
+	end end
+end
+function Rules.Count(data)
+	local count=0; for _,n in pairs(data.Pets) do count+=n end; return count
+end
+function Rules.Highest(data)
+	local highest=1
+	for key,n in pairs(data.Pets) do if n>0 then local tier=Rules.Decode(key); highest=math.max(highest,tier) end end
+	return highest
+end
+function Rules.Buy(data,count,rng,luck)
+	if count~=1 and count~=10 and count~=100 and count~=1000 then return false,"Invalid quantity" end
+	if data.Cash<count*Config.PuddingCost then return false,"Not enough cash" end
+	local trial={Pets=table.clone(data.Pets), Index=table.clone(data.Index)}
+	local discoveries={}
+	for _=1,count do Rules.Add(trial,1,rng:NextNumber()<.01*(luck and 2 or 1),1,discoveries) end
+	Rules.Merge(trial,discoveries)
+	if Rules.Count(trial)>Config.Capacity then return false,"Plates are full. Merge desserts first." end
+	data.Pets,data.Index=trial.Pets,trial.Index
+	data.Cash-=count*Config.PuddingCost
+	return true,discoveries
+end
+function Rules.Odds(highest,kind)
+	local offsets=kind=="Perk" and {3,2,1,0} or {4,3,2,1}
+	local weights=kind=="Perk" and {40,30,20,10} or {70,20,9,1}
+	local odds={}
+	for i,offset in ipairs(offsets) do
+		local tier=math.max(1,highest-offset); odds[tier]=(odds[tier] or 0)+weights[i]
+	end
+	return odds
+end
+function Rules.Roll(data,kind,rng,luck,discoveries)
+	local roll=rng:NextNumber()*100; local sum=0
+	local odds=Rules.Odds(Rules.Highest(data),kind)
+	for tier=1,30 do
+		sum+=odds[tier] or 0
+		if roll<sum then
+			local shiny=rng:NextNumber()<(kind=="Perk" and .1 or .01)*(luck and 2 or 1)
+			Rules.Add(data,tier,shiny,1,discoveries)
+			return {Tier=tier,Shiny=shiny}
+		end
+	end
+end
+-- A missed offline interval does not accumulate unlimited gifts. Start the next 5h cycle now.
+-- Both Premium and normal rewards share ONE deadline and are delivered atomically.
+function Rules.Gift(data,now,premium)
+	if now<data.NextGift then return false end
+	data.NormalTokens+=1
+	if premium then data.PerkTokens+=1 end
+	data.NextGift=now+INTERVAL
+	return true
+end
+function Rules.AFK(data,seconds)
+	data.AFKSeconds+=seconds
+	local earned=math.floor(data.AFKSeconds/Config.AFKInterval)
+	data.AFKSeconds%=Config.AFKInterval
+	data.NormalTokens+=earned
+	return earned
+end
+return Rules

@@ -1,6 +1,6 @@
--- English display names; the order preserves the original thirty-tier design.
+-- English display names; the first three tiers follow the latest economy specification.
 local names = {
-	"Pudding", "Jelly", "Custard", "Brownie", "Cookie", "Donut", "Egg Tart", "Cream Puff",
+	"Pudding", "Custard", "Strawberry Jelly", "Brownie", "Cookie", "Donut", "Egg Tart", "Cream Puff",
 	"Macaron", "Salt Bread", "Cake", "Financier", "Canele", "Madeleine", "Souffle",
 	"Parfait", "Roll Cake", "Crepe", "Shaved Ice", "Eclair", "Tiramisu", "Mont Blanc",
 	"Panna Cotta", "Mille-Feuille", "Handmade Candy", "Pastel Potion", "Royal Tea Pudding",
