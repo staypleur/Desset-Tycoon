@@ -88,6 +88,16 @@ local function execute()
 	-- Insufficient capacity must preserve cash and pets.
 	trigger(plot.PurchaseButtons.Buy100,owner)
 	assert(#plot.ActiveDesserts:GetChildren()==1 and owner.leaderstats.Cash.Value==15+pending,"Capacity check")
+	for _=1,10000 do now+=.1; heartbeat:Fire(.1) end
+	trigger(plot.Conveyors.Collector,owner)
+	trigger(plot.PurchaseButtons.Buy25,owner)
+	trigger(plot.PurchaseButtons.Buy25,owner)
+	trigger(plot.PurchaseButtons.Buy5,owner)
+	for _=1,4 do trigger(plot.PurchaseButtons.Buy1,owner) end
+	assert(#plot.ActiveDesserts:GetChildren()==60 and plot.ActiveDesserts:FindFirstChild("Dessert60"),"All sixty slots must be usable")
+	local fullCash=owner.leaderstats.Cash.Value
+	trigger(plot.PurchaseButtons.Buy1,owner)
+	assert(#plot.ActiveDesserts:GetChildren()==60 and owner.leaderstats.Cash.Value==fullCash,"Slot sixty-one must reject without charging")
 	plot:SetAttribute("OwnerUserId",0)
 	task.wait()
 	assert(#plot.ActiveDesserts:GetChildren()==0 and #plot.MovingDesserts:GetChildren()==0,"Owner release cleanup")

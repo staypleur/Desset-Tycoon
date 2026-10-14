@@ -22,7 +22,7 @@ local ok,err=xpcall(function()
 	for _,plot in ipairs(fixture.PlayerPlots:GetChildren()) do
 		assert(plot.PlotFloor.Size==Vector3.new(96,1,120))
 		assert(plot.PersonalShopArea.DessertCafe.CafeBuilding)
-		assert(#plot.PetSpawnPads:GetChildren()==30)
+		assert(#plot.PetSpawnPads:GetChildren()==60)
 	end
 end,debug.traceback)
 fixture:Destroy(); storage:Destroy()

@@ -97,3 +97,10 @@
 - Studio visual inspection and LandscapeTest/CleanPlotTest/DessertProduction integration tests passed. Props are anchored and non-blocking, and do not cover pet markers, purchase pads or merge-board centers. Economy retains session-only behavior.
 
 Actual Play also confirmed successful plot assignment/spawn on the landscaped forecourt, visible garden props and the English game labels.
+
+## 2026-10-14 — Classic Baseplate surface and sixty dessert pedestals (v10)
+
+- Interpreted "class baseplate" as Studio Classic Baseplate, whose template is visible on the Studio home screen. Applied native Plastic/Studs surfaces to ground, paths, cafe terraces, plot borders and gameplay pads while preserving pastel colors and imported props.
+- Each of six plots has six rows by five columns on the left and the same on the right: 60 visible pedestals, 360 total. Reused existing 96x120 floors and central conveyors. Pedestal centers are 7.8 studs apart across and 9.2 along the field. Moved edge foliage outward to keep the last column clear.
+- Shared BuildDessertSlots is used for both fresh generation and edit-mode migration. Economy capacity is derived from real slot count, not the old hardcoded 30. Raised product travel height over the new pedestals; merge tier count remains 30.
+- PASS: exact left/right 6x5 geometry, visible Studs surfaces, cafe/plot bounds, landscape clearance and session economy integration. Filled all 60 positions in the mocked economy, rejected a 61st purchase without charging, and verified owner cleanup. No live-player data changed during tests.

@@ -52,7 +52,7 @@ Rojo의 `default.project.json`은 기본 자동 생성 맵과 구역 할당기�
 | 오브젝트/속성 | 용도 |
 | --- | --- |
 | PlotId / OwnerUserId | 구역 번호와 현재 소유자 (0이면 비어 있음) |
-| PetSpawnPads.PetPad1–30 / SlotIndex / DropLaneZ | 디저트 위치 및 생산 상품 공급 경로 |
+| PetSpawnPads.PetPad1–60 / SlotIndex / DropLaneZ | 디저트 위치 및 생산 상품 공급 경로 |
 | MergeBoard / RequiredCount = 3 | 동일 단계 3개를 다음 단계 1개로 합성 |
 | ProductionBeds.LeftMeadow / RightMeadow | 중앙 컨베이어 양옆의 넓은 민트색 디저트 필드 |
 | PurchaseButtons.Buy1 / Buy5 / Buy25 / Buy100 | 구매 요청 수량; 가격/돈/남은 칸 검증 후 전체 수량 구매 |
@@ -65,7 +65,7 @@ Rojo의 `default.project.json`은 기본 자동 생성 맵과 구역 할당기�
 
 현재는 **맵·구역 배정·세션 생산 루프**를 구현했습니다. 입장 시 푸딩 1개와 $25를 지급합니다. 디저트는 5초마다 미니 상품을 생산하고, 상품은 필드를 가로질러 굴러온 뒤 낮은 중앙 벨트 → 카페 앞 수집함으로 이동합니다. 도착 때만 수익을 추가하며 수집 시 Cash로 옮깁니다. 수집함과 카페 옆 Collect Earnings 발판 모두 이용할 수 있습니다.
 
-푸딩 가격은 개당 $5이며 구역 최대 수용량은 30개입니다. 1/5/25/100개 버튼은 돈과 빈칸이 충분할 때만 전체 구매를 처리합니다. 100개 구매는 현재 30칸 수용량에서 실행되지 않습니다. 합성은 가장 낮은 단계부터 같은 단계 3개를 찾아 1개로 올립니다. 단계별 상품 가치는 `2^(Tier-1)`이며 임시 밸런스입니다.
+푸딩 가격은 개당 $5이며 구역 최대 수용량은 60개입니다. 1/5/25/100개 버튼은 돈과 빈칸이 충분할 때만 전체 구매를 처리합니다. 100개 구매는 현재 60칸 수용량에서 실행되지 않습니다. 합성은 가장 낮은 단계부터 같은 단계 3개를 찾아 1개로 올립니다. 단계별 상품 가치는 `2^(Tier-1)`이며 임시 밸런스입니다.
 
 소유자·캐릭터 거리·재실행 간격은 서버에서 검사합니다. 퇴장/구역 반환 시 디저트와 이동 상품을 정리해 다음 소유자에게 이전 수익이 넘어가지 않습니다. 돈·디저트는 서버 세션에서만 유지되며 재접속 시 초기화합니다. 랜덤 상자, 영구 저장, 오프라인 수익은 아직 구현하지 않았습니다.
 
@@ -89,9 +89,9 @@ Rojo의 `default.project.json`은 기본 자동 생성 맵과 구역 할당기�
 
 `tools/AddPersonalShopsInStudio.luau`는 생산 줄 간격을 조정하고 개인 가게 6개를 추가한 후 구역 경계 및 생산 구역과의 분리를 검증합니다. 저장된 장소에는 이미 적용되어 있습니다.
 
-최신 배치는 `tools/SimplifyPlotsInStudio.luau`로 바꾼 버전입니다. 96×120의 단일 바닥, 한쪽 18×18 합성 보드(3×3), 두 개의 넓은 민트 필드와 폭 8의 단일 컨베이어를 사용합니다. 펫 간격은 11~12 studs이며 배치 마커는 보이지 않습니다. 입구 카페는 중앙을 등지고, 구역 반경은 150, 섬 지름은 460입니다. 원래 카페 소스는 `ServerStorage.CentralCafeTemplate`에 보관합니다. 벨트를 가리던 장식 마스코트는 `ServerStorage.DecorativeMascots`로 옮겼습니다.
+최신 배치는 `tools/SimplifyPlotsInStudio.luau`로 바꾼 버전입니다. 96×120의 단일 바닥, 한쪽 18×18 합성 보드(3×3), 두 개의 넓은 민트 필드와 폭 8의 단일 컨베이어를 사용합니다. 디저트는 한쪽당 6줄×5칸, 좌우 총 60개의 보이는 받침대에 배치됩니다. 입구 카페는 중앙을 등지고, 구역 반경은 150, 섬 지름은 460입니다. 원래 카페 소스는 `ServerStorage.CentralCafeTemplate`에 보관합니다. 벨트를 가리던 장식 마스코트는 `ServerStorage.DecorativeMascots`로 옮겼습니다.
 
-`tests/CleanPlotLayout.studio.luau`는 새 구역 크기·구역 겹침·섬 경계·카페·합성 보드·보이지 않는 마커·영어 문구를 검사합니다. `tests/FreshCleanPlots.studio.luau`는 빈 구역 생성과 기존 카페 템플릿 재사용을 검사합니다. 이전 EntranceCafeLayout/ConveyorLayout 테스트는 과거 배치용입니다. `tests/DessertProduction.studio.luau`는 임시 구역과 모의 플레이어로 구매, 소유권/거리/돈/칸 제한, 합성, 상품 도착, 수집, 중복 수집 방지, 소유자 변경 정리를 검사합니다. 테스트는 편집 모드 Command Bar에서 실행하며 런타임 Script로 넣지 마세요.
+`tests/CleanPlotLayout.studio.luau`는 새 구역 크기·구역 겹침·섬 경계·카페·합성 보드·60개 받침대·영어 문구를 검사합니다. `tests/FreshCleanPlots.studio.luau`는 빈 구역 생성과 기존 카페 템플릿 재사용을 검사합니다. 이전 EntranceCafeLayout/ConveyorLayout 테스트는 과거 배치용입니다. `tests/DessertProduction.studio.luau`는 임시 구역과 모의 플레이어로 구매, 소유권/거리/돈/칸 제한, 합성, 상품 도착, 수집, 중복 수집 방지, 소유자 변경 정리를 검사합니다. 테스트는 편집 모드 Command Bar에서 실행하며 런타임 Script로 넣지 마세요.
 
 디자인은 독자적인 디저트 테마이며 다른 게임의 모델/이미지를 복사하지 않습니다.
 
@@ -100,3 +100,9 @@ Rojo의 `default.project.json`은 기본 자동 생성 맵과 구역 할당기�
 `ReplicatedStorage.IslandLandscape`는 넓은 바닥 재질, 구역 사이 언덕 정원, 카페 테라스와 소품을 추가합니다. `tools/LandscapeIslandInStudio.luau`는 저장된 맵에 이미 적용했습니다. `tests/IslandLandscape.studio.luau`는 장식의 스크립트·충돌 여부와 구매/합성/펫 위치를 가리지 않는지 검사합니다.
 
 기본 생성기는 같은 지형 재질과 언덕을 만듭니다. 전체 무료 에셋 장식은 `DessertIsland.rbxlx`의 ServerStorage 템플릿을 포함하므로 저장된 장소를 사용하세요. 소품은 장식용이며 좌석·진열장은 추가 게임 기능을 제공하지 않습니다.
+
+## Classic Baseplate와 60개 디저트 자리 (v10)
+
+지면·길·구매/합성 발판은 Classic Baseplate처럼 Plastic 재질과 Studs 표면을 사용합니다. 색상과 카페·정원 장식은 유지합니다. 각 구역에는 왼쪽 6줄×5칸, 오른쪽 6줄×5칸의 받침대가 있습니다. 칸은 5.5×5.5 studs이고 좌우 방향 간격은 7.8, 앞뒤 간격은 9.2 studs입니다. 중앙 컨베이어는 그대로 유지하며 바깥쪽 꽃·잔디 장식을 이동했습니다.
+
+`ClassicPlotStyle`과 `tools/ClassicPlotsInStudio.luau`에 표면 변경을 기록했습니다. `TycoonPlotLayout.BuildDessertSlots`를 새 맵 생성기와 편집 도구가 공통 사용합니다. 생산 스크립트는 실제 배치 수를 수용량으로 사용합니다. 통합 테스트는 60개 전체 배치와 61개째 구매 거절까지 검증합니다. 100개 일괄 구매는 60칸 제한 때문에 여전히 불가능합니다.

@@ -112,10 +112,10 @@ function Landscape.Apply(island)
 		for _,x in ipairs({-43,43}) do
 			place(asset("StreetLamp"),decor,"WarmCafeLamp",at(x,.15,-22),10,function(p) solidTint(p,lavender); p.Material=Enum.Material.Metal end)
 			for _,z in ipairs({4,26,50}) do
-				place(storage:FindFirstChild("FreeFlowerTemplate"),decor,"FlowerBorder",at(x,2.27,z),4)
+				place(storage:FindFirstChild("FreeFlowerTemplate"),decor,"FlowerBorder",at(x<0 and -46 or 46,2.27,z),4)
 			end
 			for _,z in ipairs({10,20,35,45}) do
-				place(grassMesh,decor,"GrassTuft",at(x,2.25,z),2.7,function(p) solidTint(p,Color3.fromRGB(139,185,149)) end)
+				place(grassMesh,decor,"GrassTuft",at(x<0 and -46 or 46,2.25,z),2.7,function(p) solidTint(p,Color3.fromRGB(139,185,149)) end)
 			end
 		end
 		local display=place(asset("DisplayCase"),decor,"PastryDisplay",at(12,.15,-24),7,function(p)

@@ -38,7 +38,7 @@ local function spawnPet(state,tier)
 	local used={}
 	for _,pet in ipairs(state.pets) do used[pet.slot]=true end
 	local slot
-	for n=1,30 do if not used[n] then slot=n; break end end
+	for n=1,state.capacity do if not used[n] then slot=n; break end end
 	if not slot then return false end
 	local pad=state.plot.PetSpawnPads["PetPad"..slot]
 	local cf=pad.CFrame
@@ -120,7 +120,7 @@ local function emit(state,pet,now)
 	local durations={.55,math.abs(pos.X)/7,(laneZ+1)/7}
 	if island:GetAttribute("CleanPlotLayoutVersion") then
 		local collectorZ=state.plot:GetAttribute("CollectorZ") or -20
-		points={Vector3.new(pos.X,3.2,laneZ),Vector3.new(0,3.2,laneZ),Vector3.new(0,1.2,laneZ),Vector3.new(0,1.2,collectorZ)}
+		points={Vector3.new(pos.X,pos.Y+.95,laneZ),Vector3.new(0,pos.Y+.95,laneZ),Vector3.new(0,1.2,laneZ),Vector3.new(0,1.2,collectorZ)}
 		durations={math.abs(pos.X)/7,.55,(laneZ-collectorZ)/7}
 	end
 	local product=Instance.new("Model")
@@ -139,7 +139,7 @@ for i=1,6 do
 	models.Name,models.Parent="ActiveDesserts",plot
 	local products=Instance.new("Folder")
 	products.Name,products.Parent="MovingDesserts",plot
-	local state={plot=plot,models=models,products=products,pets={},pending=0,cash=25,generation=0,collection=plot.Conveyors.Collector.CollectorSign.CollectionLabel}
+	local state={plot=plot,models=models,products=products,pets={},capacity=#plot.PetSpawnPads:GetChildren(),pending=0,cash=25,generation=0,collection=plot.Conveyors.Collector.CollectorSign.CollectionLabel}
 	local gui=Instance.new("BillboardGui")
 	gui.Name,gui.Size,gui.StudsOffset,gui.MaxDistance="ProductionStatus",UDim2.new(18,0,1,0),Vector3.new(0,5,0),35
 	gui.Parent=plot.MergeBoard
@@ -151,7 +151,7 @@ for i=1,6 do
 	table.insert(states,state)
 	for _,count in ipairs({1,5,25,100}) do
 		prompt(state,plot.PurchaseButtons["Buy"..count],"Buy "..count.." ($"..tostring(count*5)..")",function()
-			if #state.pets+count>30 then notify(state,"Not enough space. Merge desserts first."); return end
+			if #state.pets+count>state.capacity then notify(state,"Not enough space. Merge desserts first."); return end
 			if state.cash<count*5 then notify(state,"Not enough cash. Collect your earnings."); return end
 			state.cash-=count*5
 			for _=1,count do spawnPet(state,1) end

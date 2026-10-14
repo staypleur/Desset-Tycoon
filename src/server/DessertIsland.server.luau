@@ -3,6 +3,7 @@
 local Lighting = game:GetService("Lighting")
 local Workspace = game:GetService("Workspace")
 local PlotLayout = require(game.ReplicatedStorage:WaitForChild("TycoonPlotLayout"))
+local ClassicStyle = require(game.ReplicatedStorage:WaitForChild("ClassicPlotStyle"))
 local Landscape = require(game.ReplicatedStorage:WaitForChild("IslandLandscape"))
 
 local CONFIG = { PlotCount = 6, PlotRadius = 150, IslandRadius = 174, Seed = 31415 }
@@ -253,6 +254,7 @@ bloom.Intensity, bloom.Size, bloom.Threshold = 0.12, 20, 1.4
 -- Build the same spacious bases as the saved place, without temporary grid parts.
 PlotLayout.Apply(map)
 Landscape.Apply(map)
+ClassicStyle.Apply(map)
 map:SetAttribute("LayoutReady", true)
 assert(#plots:GetChildren() == 6)
-print("[DessertIsland] Built six clean tycoon plots; map v9.0.0")
+print("[DessertIsland] Built six clean tycoon plots; map v10.0.0")

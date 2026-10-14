@@ -1,5 +1,5 @@
 -- Shared by the fresh map generator and the edit-mode layout migration.
--- Thirty invisible placement markers are gameplay data, not visible floor tiles.
+-- Sixty visible dessert positions: six rows by five columns on each side.
 local Layout = { Radius = 150, Width = 96, Depth = 120, IslandDiameter = 460 }
 local pink = Color3.fromRGB(255,193,218)
 local lavender = Color3.fromRGB(211,198,248)
@@ -26,6 +26,30 @@ local function label(p,name,text,width)
 	t.Name,t.Size,t.BackgroundTransparency,t.TextScaled="CollectionLabel",UDim2.fromScale(1,1),1,true
 	t.Text,t.Font,t.TextColor3=text,Enum.Font.GothamBold,cocoa; t.Parent=gui
 	return gui
+end
+function Layout.BuildDessertSlots(plot)
+	local cf=plot:GetPivot()
+	local pads=plot:FindFirstChild("PetSpawnPads") or model(plot,"PetSpawnPads")
+	pads:ClearAllChildren()
+	local old=plot:FindFirstChild("PetPadFrames")
+	if old then old:Destroy() end
+	local frames=model(plot,"PetPadFrames")
+	for sideIndex,side in ipairs({-1,1}) do
+		for row=1,6 do for column=1,5 do
+			local slot=(sideIndex-1)*30+(row-1)*5+column
+			local x=side*(8+(column-1)*7.8)
+			local z=4+(row-1)*9.2
+			local frame=part(frames,"PadFrame"..slot,Vector3.new(6,.24,6),cf*CFrame.new(x,2.37,z),Color3.fromRGB(181,169,190))
+			local pad=part(pads,"PetPad"..slot,Vector3.new(5.5,.12,5.5),cf*CFrame.new(x,2.55,z),mint)
+			pad.TopSurface,frame.TopSurface=Enum.SurfaceType.Studs,Enum.SurfaceType.Studs
+			pad:SetAttribute("SlotIndex",slot)
+			pad:SetAttribute("PlotId",plot:GetAttribute("PlotId"))
+			pad:SetAttribute("Side",side<0 and "Left" or "Right")
+			pad:SetAttribute("Row",row); pad:SetAttribute("Column",column)
+			pad:SetAttribute("DropLaneZ",z)
+		end end
+	end
+	plot:SetAttribute("DessertCapacity",60)
 end
 function Layout.Apply(island)
 	assert(not island:GetAttribute("CleanPlotLayoutVersion"),"Clean layout already applied")
@@ -90,7 +114,7 @@ function Layout.Apply(island)
 		for _,child in ipairs(area:GetChildren()) do if child~=cafe then child:Destroy() end end
 		local function at(x,y,z) return cf*CFrame.new(x,y,z) end
 		local function p(parent,name,size,x,y,z,color,solid) return part(parent,name,size,at(x,y,z),color,solid) end
-		-- One uninterrupted smooth base, four low edge trims, no stud/grid floor.
+		-- One uninterrupted base and four low edge trims. ClassicPlotStyle finishes its surface.
 		local floor=p(plot,"PlotFloor",Vector3.new(96,1,120),0,-.35,0,cream)
 		plot.PrimaryPart=floor
 		-- Keep the pivot at the original gameplay origin rather than the floor's center.
@@ -115,20 +139,13 @@ function Layout.Apply(island)
 		label(p(area,"CollectIncome",Vector3.new(9,.3,6),-25,.3,-47,mint),"IncomeSign","Collect Earnings",9)
 		local crate=p(area,"DessertCrate",Vector3.new(9,.3,6),25,.3,-47,pink)
 		crate:SetAttribute("GameplayConnected",false); label(crate,"CrateSign","Dessert Crate - Coming Soon",10)
-		-- Two broad meadows, with no visible rows or individual pet pads.
+		-- Two broad meadows, each holding six rows of five dessert pedestals.
 		local beds=model(plot,"ProductionBeds")
 		for _,side in ipairs({-1,1}) do
 			p(beds,side<0 and "LeftMeadow" or "RightMeadow",Vector3.new(40,2,56),side*24,1.25,27,mint)
 			p(beds,"MeadowStep",Vector3.new(40,1,3),side*24,.65,-2,cream)
 		end
-		local pads=model(plot,"PetSpawnPads")
-		for slot=1,30 do
-			local row=math.ceil(slot/6); local column=(slot-1)%6+1
-			local x=({-36,-24,-12,12,24,36})[column]; local z=4+(row-1)*11
-			local pad=p(pads,"PetPad"..slot,Vector3.new(1,.1,1),x,2.32,z,mint,false)
-			pad.Transparency,pad.CanQuery=1,false
-			pad:SetAttribute("SlotIndex",slot); pad:SetAttribute("PlotId",i); pad:SetAttribute("DropLaneZ",z)
-		end
+		Layout.BuildDessertSlots(plot)
 		local belts=model(plot,"Conveyors")
 		local main=p(belts,"MainBelt",Vector3.new(8,.25,74),0,.4,18,Color3.fromRGB(175,159,188))
 		main:SetAttribute("FlowDirection","TowardCafe")

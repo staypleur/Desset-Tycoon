@@ -12,6 +12,9 @@
       },
       "IslandLandscape": {
         "$path": "src/shared/IslandLandscape.luau"
+      },
+      "ClassicPlotStyle": {
+        "$path": "src/shared/ClassicPlotStyle.luau"
       }
     },
     "ServerScriptService": {
