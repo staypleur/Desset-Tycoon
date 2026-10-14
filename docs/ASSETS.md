@@ -52,3 +52,19 @@ All five imported templates were inspected and contained zero scripts or package
 - 카드·말풍선·크림 테두리·그림자·그라데이션·호버/클릭 애니메이션은 이 프로젝트에서 직접 구성했습니다. 글꼴은 Roblox 기본 FredokaOne입니다. 외부 완성형 UI 팩을 그대로 가져온 것은 아닙니다.
 - 검토한 [FREE Cartoony Roblox UI Pack](https://zxgly.itch.io/free-cartoony-roblox-ui-pack)은 색 변경 제한이 있고, Epic UI Pack은 유료 자료여서 사용하지 않았습니다. Kenney CC0 UI/아이콘도 검토했지만 Roblox에서 바로 사용하는 공개 이미지 ID가 있는 Laurel을 선택했습니다.
 - 상점·은행에 추가했던 간판과 상점 지붕의 SHOP 글자 메시를 제거했습니다. 기능을 설명하는 발판 말풍선과 E 프롬프트는 유지했습니다.
+
+## v14 승인된 무료 디자인 소스
+
+사용자에게 썸네일을 보여 준 후 아래 소스를 승인받았습니다. 다음 UI·맵·소품 요청도 무료 소스를 먼저 검색하고, 새 후보 이미지를 보여 주고 선택받습니다. 적합한 무료 모델이 없을 때는 직접 제작 전 확인합니다.
+
+- [White Picket Fence](https://create.roblox.com/store/asset/4539718362), visionpsyche7: 구역 테두리의 흰 울타리. 중앙 입구는 비워 두었습니다.
+- [Pink Sky Skybox](https://create.roblox.com/store/asset/107689530722174), BlockadeLabs: 승인된 분홍 하늘/산 배경.
+- [Tycoon Button Pack](https://create.roblox.com/store/asset/12528362526), goalmwo: `Head` UnionOperation만 선택해 둥근 발판 위쪽을 구성했습니다. 크기·색상·재질을 변경하고 자체 서버 동작/작은 두 줄 문구를 붙였습니다. 어두운 받침은 네이티브 파트입니다. [제작자 게시물](https://devforum.roblox.com/t/tycoon-map-and-assets/2188535/1000)
+- [Coffee Machine](https://create.roblox.com/store/asset/12520208389), Ashbashthesmash: 사용자가 대체 후보 A를 선택했습니다. 카페 카운터 소품이며 원본 작동 스크립트는 사용하지 않습니다.
+- [treasure chest](https://create.roblox.com/store/asset/8600350858), peter_gamer2022: 일반/특혜 상점 옆 상자. 가져온 메시 이름은 `PolygonDungeon_Props_SM_Prop_Chest_03`입니다. 특혜 상자 복제본 색을 라벤더로 변경했습니다.
+- [Alphabet](https://create.roblox.com/store/asset/4455779753), Xndependence / 원작 umaku_naritai: SHOP/BANK 지붕 글자를 입체 Union으로 배치했습니다. 해당 다운로드에서 이름으로 찾을 수 없는 K는 같은 크기의 네이티브 막대로 보완했습니다.
+- [Hapy UI Pack](https://www.shopdehapy.com/ui-pack): 제작자가 FREE로 제공하는 UI v1에서 공개 이미지 ID만 사용했습니다. 흰 상태 바, 도감 가방, 상점 그림, 닫기 아이콘, 창/도감 카드 이미지입니다. 외부 UI 코드와 플러그인을 실행하지 않았습니다. Hapy 소스에 MIT 라이선스를 적용하지 않으며, MIT 고지는 기존 Laurel 아이콘에만 해당합니다.
+
+새 Creator Store 원본은 `ServerStorage.FreeDesignSources`에 보관합니다. 가져온 코드, PackageLink, 프롬프트, ClickDetector, 소리는 제거하고 장식만 사용합니다. 게임 동작은 자체 서버 코드로 처리합니다. 거절한 첫 상자/에스프레소 머신은 맵에 사용하지 않았고 조사용 머신도 제거했습니다. 무료 완제품 원형 카페를 찾지 못해 별도 승인을 받고 사진을 참고한 원형 카운터/상부 링/40개 펜던트 조명을 직접 제작했습니다.
+
+카페 판매 배율 UI는 승인된 Hapy 상태 바 이미지를 재사용하며, 계정 음성 UI는 Roblox 기본 컨트롤입니다. 유료 소스/플러그인은 구매하지 않았습니다.

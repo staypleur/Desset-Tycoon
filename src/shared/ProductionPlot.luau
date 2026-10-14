@@ -23,7 +23,7 @@ local function sign(p,text)
 	local t=Instance.new("TextLabel"); t.Size=UDim2.fromScale(1,1); t.BackgroundTransparency=1
 	t.Text=text; t.TextColor3=Color3.fromRGB(101,64,89); t.Font=Enum.Font.GothamBold; t.TextScaled=true; t.Parent=g
 end
-function Layout.ChannelHeight(z) return .3+math.clamp((z+7)/62,0,1)*.65 end
+function Layout.ChannelHeight(z,rise) return .3+math.clamp((z+7)/62,0,1)*(.65+(rise or 0)) end
 function Layout.Apply(island)
 	if island:GetAttribute("ProductionPlotVersion")==1 then return end
 	for i=1,6 do

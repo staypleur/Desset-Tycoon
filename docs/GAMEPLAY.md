@@ -40,3 +40,9 @@ The 30 dessert visuals are native procedural starter models with different desse
 Client regression check: `tests/DessertClient.studio.luau` verifies immediate settings after an activity ping and hiding/restoring another companion while plot floors stay visible.
 
 Storage mock: `tests/PlayerProfiles.studio.luau` checks clock persistence, idempotent grants and a timeout after commit. An uncertain receipt disconnects the player and prevents stale profile saves; rejoin may wait for the old session lease (up to three minutes), then Roblox retries the pending receipt. This mock does not replace published-experience validation.
+
+## Cafe sale market / voice readiness (v14)
+
+The server changes a shared cafe rate every 30 seconds, uniformly selecting a different tenth-step value from 0.5 through 1.5. The cake billboard shows the current rate and countdown using replicated attributes and synchronized server time. On a valid owner deposit, the entire bag (including fractions) is emptied and `bag * current rate` is added to that owner's CafeQueue. The credited queue is locked; future rate changes cannot change existing queued units. Conversion still runs every 2 seconds and bank upgrades still affect its rate. Fractional units and cash are retained, with one decimal displayed for small values. Hot time remains a separate multiplier at conversion.
+
+VoiceChatService is configured for Roblox's default proximity voice using the Audio API. The game does not force microphone activation or bypass Roblox eligibility/consent. The Settings panel reports local voice availability. This local file currently has universe/place IDs 0, so live voice requires a published experience, the Communication voice setting and eligible opted-in accounts. No live voice call was tested.

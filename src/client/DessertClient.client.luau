@@ -21,10 +21,17 @@ local function resize()
 	local viewport=workspace.CurrentCamera.ViewportSize
 	local scale=math.min(viewport.X/800,viewport.Y/650,1)
 	uiScale.Scale=scale; gui.Size=UDim2.fromOffset(viewport.X/scale,math.max(1,viewport.Y-58)/scale)
+	Style.ResizeWorld(workspace,viewport.X)
 end
 resize(); workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(resize)
 local data,panelName,spinning=nil,nil,{}
 local giftLabel
+local voiceStatus="Voice Chat: checking availability..."
+task.spawn(function()
+	local ok,enabled=pcall(function() return game:GetService("VoiceChatService"):IsVoiceEnabledForUserIdAsync(player.UserId) end)
+	voiceStatus=ok and enabled and "Voice Chat: use Roblox microphone controls" or "Voice Chat: unavailable for this account or experience"
+	screen:SetAttribute("VoiceEligible",ok and enabled or false)
+end)
 local function giftText()
 	local left=math.max(0,data.NextGift-data.ServerTime)
 	return string.format("Next free gift: %02d:%02d:%02d | AFK: %ds / 5h\nPremium: normal + perk together every 5h",math.floor(left/3600),math.floor(left/60)%60,left%60,math.floor(data.AFKSeconds))
@@ -47,13 +54,14 @@ local function button(parent,label,size,pos,callback,color)
 end
 local function box(label,size,pos,color,icon)
 	local f=Instance.new("Frame"); f.Size=size; f.Position=pos; f.Parent=gui; Style.Card(f,color or colors.Cream,18)
+	if size.Y.Offset<=60 then Style.Art(f,"Stats") end
 	Style.Icon(f,icon or "Sparkles",32,UDim2.new(0,10,.5,-16))
 	return text(f,label,UDim2.new(1,-56,1,-8),UDim2.fromOffset(48,4)),f
 end
 local function format(n)
 	if n>=1e12 then return string.format("%.2e",n) end
 	for _,v in ipairs({{1e9,"B"},{1e6,"M"},{1e3,"K"}}) do if n>=v[1] then return string.format("%.1f%s",n/v[1],v[2]) end end
-	return tostring(math.floor(n))
+	return math.abs(n-math.floor(n))>.00001 and string.format("%.1f",n) or tostring(math.floor(n))
 end
 local cash=box("$25",UDim2.fromOffset(180,60),UDim2.new(0,18,1,-80),colors.Mint,"Coins"); cash.Name="CashValue"; cash.TextSize=28
 local bag=box("Mini Desserts: 0",UDim2.fromOffset(260,60),UDim2.new(.5,-130,1,-80),nil,"Cake"); bag.Name="BagValue"
@@ -62,9 +70,25 @@ local cafeStatus=box("Cafe Queue: 0\n10% / 2s\nBank: $0",UDim2.fromOffset(180,11
 local function updateCafeHUD()
 	cafeStatus.Text="Cafe Queue: "..format(data.CafeQueue or 0).."\n"..string.format("%.0f%% / 2s",(data.CafeRate or .1)*100).."\nBank: $"..format(data.Pending)
 end
-local toast=box("Welcome to Dessert Island!",UDim2.fromOffset(440,40),UDim2.new(.5,-220,0,76))
+local toast=box("Welcome to Dessert Island!",UDim2.fromOffset(440,40),UDim2.new(.5,-220,1,-136))
+local cafeRateLabel,cafeCountdown,marketIsland
+task.spawn(function()
+	marketIsland=workspace:WaitForChild("DessertJellyIsland",30); if not marketIsland then return end
+	local hub=marketIsland:WaitForChild("CentralHub"); local shop=hub:WaitForChild("CentralShop")
+	local architecture=shop:WaitForChild("CafeArchitecture"); local anchor=architecture:WaitForChild("CafeMultiplierAnchor",30)
+	if not anchor then return end
+	local board=Instance.new("BillboardGui"); board.Name="CafeMarketSign"
+	local function fitMarket() local scale=math.clamp(workspace.CurrentCamera.ViewportSize.X/1280,.65,1); board.Size=UDim2.fromOffset(240*scale,110*scale) end
+	fitMarket(); workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(fitMarket)
+	board.Adornee=anchor; board.MaxDistance=250; board.AlwaysOnTop=false; board.Parent=screen
+	local frame=Instance.new("Frame"); frame.Size=UDim2.fromScale(1,1); frame.BackgroundTransparency=1; frame.Parent=board; Style.Art(frame,"Stats")
+	local header=text(frame,"CAFE SALE RATE",UDim2.fromScale(1,.23),UDim2.fromScale(0,.08)); header.TextScaled=true
+	cafeRateLabel=text(frame,"1.0x",UDim2.fromScale(1,.4),UDim2.fromScale(0,.29)); cafeRateLabel.Font=Enum.Font.GothamBlack; cafeRateLabel.TextScaled=true
+	cafeCountdown=text(frame,"Changes in 30s",UDim2.fromScale(1,.23),UDim2.fromScale(0,.69)); cafeCountdown.TextScaled=true
+end)
 local window=Instance.new("Frame"); window.Name="Panel"; window.Size=UDim2.fromScale(.78,.72); window.Position=UDim2.fromScale(.11,.15)
 window.ZIndex=10; window.Visible=false; window.Parent=gui; Style.Card(window,colors.Cream,24)
+Style.Art(window,"Window")
 local title=text(window,"",UDim2.new(1,-140,0,54),UDim2.fromOffset(18,0)); title.TextXAlignment=Enum.TextXAlignment.Left; title.TextSize=24
 button(window,"Close",UDim2.fromOffset(100,36),UDim2.new(1,-114,0,10),function() window.Visible=false; panelName=nil end)
 local scroll=Instance.new("ScrollingFrame"); scroll.Size=UDim2.new(1,-24,1,-70); scroll.Position=UDim2.fromOffset(12,60)
@@ -101,6 +125,7 @@ show=function(name)
 			local index=(tier-1)*2+variant; local row=math.floor(index/4); local column=index%4
 			local card=Instance.new("Frame"); card.Size=UDim2.new(.25,-12,0,190); card.Position=UDim2.new(column*.25,6,0,row*200)
 			card.ZIndex=scroll.ZIndex+1; card.Parent=scroll; Style.Card(card,shiny and colors.Lavender or colors.Pink,18)
+			Style.Art(card,"Inventory")
 			if owned then preview(card,tier,shiny,UDim2.new(1,0,0,112),UDim2.new()) else text(card,"?",UDim2.new(1,0,0,110),UDim2.new()) end
 			text(card,owned and ((shiny and "Shiny " or "")..Catalog[tier].Name) or "Undiscovered",UDim2.new(1,-8,0,34),UDim2.fromOffset(4,112))
 			if owned then button(card,data.Equipped==key and "Equipped" or "Equip",UDim2.new(1,-16,0,32),UDim2.fromOffset(8,152),function() request("Equip",key) end,colors.Mint) end
@@ -111,6 +136,7 @@ show=function(name)
 				local settings=table.clone(data.Settings); settings[item[1]]=not settings[item[1]]; request("Settings",settings); task.delay(.3,function() show("Settings") end)
 			end,colors.Lavender)
 		end
+		text(scroll,voiceStatus,UDim2.new(1,-18,0,54),UDim2.fromOffset(6,210)).TextSize=15
 	elseif name=="Shop" then
 		local y=0; for _,key in ipairs({"Boost12","Boost15","Boost2","Boost5","AutoMerge","Magnet","Luck"}) do productButton(key,Config.Passes[key],y,true); y+=60 end
 		productButton("HotTime",{Id=Config.Products.HotTime.Id,Price=19,Name="15-min 2x Cash Hot Time"},y,false)
@@ -206,6 +232,12 @@ Input.InputBegan:Connect(function()
 end)
 local visibilityTimer=0
 Run.RenderStepped:Connect(function(dt)
+	if cafeRateLabel and marketIsland then
+		local rate=marketIsland:GetAttribute("CafeSaleMultiplier") or 1
+		local remaining=math.max(0,math.ceil((marketIsland:GetAttribute("CafeNextSaleChange") or workspace:GetServerTimeNow())-workspace:GetServerTimeNow()))
+		cafeRateLabel.Text=string.format("%.1fx",rate); cafeRateLabel.TextColor3=rate>=1 and Color3.fromRGB(58,143,90) or Color3.fromRGB(200,82,100)
+		cafeCountdown.Text="Changes in "..remaining.."s"
+	end
 	for n=#transfers,1,-1 do local v=transfers[n]; local alpha=math.clamp((os.clock()-v.Time)/v.Duration,0,1)
 		v.Model:PivotTo(CFrame.new(v.Start:Lerp(v.Finish,alpha)+Vector3.new(0,math.sin(alpha*math.pi)*8,0)))
 		if alpha>=1 then v.Model:Destroy(); table.remove(transfers,n) end

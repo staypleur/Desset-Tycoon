@@ -34,7 +34,7 @@ move(plot.PersonalShopArea.CollectIncome); assert(call("Collect"))
 state=call("State"); assert(state.Cash>15 and state.Pending==0)
 assert(not call("Upgrade"),"Upgrade from collection pad must reject distance")
 -- Production continues while we gather enough cash for the first upgrade.
-move(plot.Conveyors.Collector); task.wait(35)
+move(plot.Conveyors.Collector); task.wait(80)
 player.Character:PivotTo(CFrame.new(deposit.Position+Vector3.new(0,4,0))); call("Deposit")
 task.wait(12); move(plot.PersonalShopArea.CollectIncome); call("Collect")
 local beforeUpgrade=call("State"); assert(beforeUpgrade.Cash>=25)

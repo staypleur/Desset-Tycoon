@@ -33,6 +33,12 @@
       },
       "DessertUI": {
         "$path": "src/shared/DessertUI.luau"
+      },
+      "ReferenceStyle": {
+        "$path": "src/shared/ReferenceStyle.luau"
+      },
+      "CafeMarket": {
+        "$path": "src/shared/CafeMarket.luau"
       }
     },
     "ServerScriptService": {
@@ -63,6 +69,13 @@
           "$path": "src/client/DessertClient.client.luau"
         },
         "$className": "StarterPlayerScripts"
+      }
+    },
+    "VoiceChatService": {
+      "$className": "VoiceChatService",
+      "$properties": {
+        "EnableDefaultVoice": true,
+        "UseAudioApi": "Enabled"
       }
     }
   }

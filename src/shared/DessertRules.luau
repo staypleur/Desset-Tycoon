@@ -16,10 +16,11 @@ function Rules.NormalizeCafe(data)
 end
 function Rules.CafeRate(data) return math.min(1,Config.CafeBaseRate+data.CafeLevel*Config.CafeRateStep) end
 function Rules.CafeUpgradeCost(data) return Config.CafeUpgradeBaseCost*2^data.CafeLevel end
-function Rules.Deposit(data)
-	local amount=math.floor(data.Bag)
-	data.Bag-=amount; data.CafeQueue+=amount
-	return amount
+function Rules.Deposit(data,multiplier)
+	local amount=math.max(0,data.Bag)
+	local credited=amount*(multiplier or 1)
+	data.Bag=0; data.CafeQueue+=credited
+	return amount,credited
 end
 function Rules.ConvertCafe(data,now)
 	local units=math.min(data.CafeQueue,math.ceil(data.CafeQueue*Rules.CafeRate(data)))

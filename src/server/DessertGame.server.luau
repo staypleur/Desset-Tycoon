@@ -9,18 +9,27 @@ local Rules=require(RS:WaitForChild("DessertRules"))
 local Visuals=require(RS:WaitForChild("DessertVisuals"))
 local Layout=require(RS:WaitForChild("ProductionPlot"))
 local UI=require(RS:WaitForChild("DessertUI"))
+local CafeMarket=require(RS:WaitForChild("CafeMarket"))
 local Profiles=require(script.Parent:WaitForChild("PlayerProfiles"))
 local island=workspace:WaitForChild("DessertJellyIsland",30)
 assert(island,"Dessert island missing")
 while island:GetAttribute("LayoutReady")==false do task.wait(.1) end
 Layout.Apply(island)
 require(RS:WaitForChild("CentralCafeLayout")).Apply(island)
+require(RS:WaitForChild("ReferenceStyle")).Apply(island)
 UI.ApplyWorld(island)
 local remotes=Instance.new("Folder"); remotes.Name="DessertRemotes"; remotes.Parent=RS
 local action=Instance.new("RemoteFunction"); action.Name="Action"; action.Parent=remotes
 local events=Instance.new("RemoteEvent"); events.Name="Event"; events.Parent=remotes
 local profiles,states={},{}
 local rng=Random.new()
+local market=CafeMarket.New(workspace:GetServerTimeNow(),rng)
+local function refreshMarket()
+	CafeMarket.Update(market,workspace:GetServerTimeNow(),rng)
+	island:SetAttribute("CafeSaleMultiplier",CafeMarket.Multiplier(market))
+	island:SetAttribute("CafeNextSaleChange",market.NextChange)
+end
+refreshMarket()
 local function root(player)
 	local c=player.Character; local h=c and c:FindFirstChildOfClass("Humanoid")
 	return h and h.Health>0 and c:FindFirstChild("HumanoidRootPart") or nil
@@ -46,11 +55,11 @@ local function update(player,message)
 		for _,count in ipairs({1,10,100,1000}) do
 			local pad=s.Plot.PurchaseButtons["Buy"..count]
 			UI.Pad(pad,p.Data.Cash,count*Config.PuddingCost)
-			pad.ActionSign:FindFirstChildOfClass("TextLabel").Text="BUY "..count.."\n$"..(count*Config.PuddingCost)
+			UI.Label(pad,"Buy "..count,"$"..UI.Format(count*Config.PuddingCost),pad.Color)
 		end
 		UI.Pad(s.Plot.PersonalShopArea.UpgradeConverter,p.Data.Cash,Rules.CafeUpgradeCost(p.Data),p.Data.CafeLevel>=Config.CafeMaxLevel)
-		s.Plot.PersonalShopArea.CollectIncome.ActionSign:FindFirstChildOfClass("TextLabel").Text="R | $"..string.format("%.0f",p.Data.Pending)
-		s.Plot.PersonalShopArea.UpgradeConverter.ActionSign:FindFirstChildOfClass("TextLabel").Text=p.Data.CafeLevel>=Config.CafeMaxLevel and "CONVERTER MAX | 100%" or string.format("UPGRADE | %.0f%% -> %.0f%%\n$%.0f",Rules.CafeRate(p.Data)*100,math.min(1,Rules.CafeRate(p.Data)+Config.CafeRateStep)*100,Rules.CafeUpgradeCost(p.Data))
+		UI.Label(s.Plot.PersonalShopArea.CollectIncome,"Collect Cash","$"..UI.Format(p.Data.Pending),UI.Green)
+		UI.Label(s.Plot.PersonalShopArea.UpgradeConverter,"Convert Faster",p.Data.CafeLevel>=Config.CafeMaxLevel and "Max | 100%" or string.format("$%s | %.0f%%",UI.Format(Rules.CafeUpgradeCost(p.Data)),math.min(1,Rules.CafeRate(p.Data)+Config.CafeRateStep)*100),s.Plot.PersonalShopArea.UpgradeConverter.Color)
 	end
 	events:FireClient(player,"State",snapshot(player),message)
 end
@@ -76,8 +85,9 @@ local function near(player,pad) local r=root(player); return r and (r.Position-p
 local function emit(s,pet,now)
 	local p=profiles[s.Owner]; if not p or p.Busy then return end
 	local cf=s.Plot:GetPivot(); local pad=s.Plot.PetSpawnPads["PetPad"..pet.Slot]
-	local pos=cf:PointToObjectSpace(pad.Position); local z=pad:GetAttribute("DropLaneZ"); local lo=Layout.ChannelHeight(z)
-	local y=lo+(2.25-lo)*math.clamp((math.abs(pos.X)-4)/(s.Plot:GetAttribute("SideLaneWidth") or 40),0,1)
+	local pos=cf:PointToObjectSpace(pad.Position); local z=pad:GetAttribute("DropLaneZ"); local lo=Layout.ChannelHeight(z,s.Plot:GetAttribute("FieldRise"))
+	local high=pad:GetAttribute("ShelfHeight") or 2.25
+	local y=lo+(high-lo)*math.clamp((math.abs(pos.X)-4)/(s.Plot:GetAttribute("SideLaneWidth") or 40),0,1)
 	local points={pos+Vector3.new(0,.65,0),Vector3.new(pos.X,y+.6,z),Vector3.new(0,lo+.6,z),
 		Vector3.new(0,.8,-7),Vector3.new(rng:NextNumber(-4,4),.45,rng:NextNumber(-13,-9))}
 	local durations={}; for n=1,#points-1 do durations[n]=(points[n+1]-points[n]).Magnitude/9 end
@@ -134,11 +144,12 @@ local function perform(player,verb,arg)
 	elseif verb=="Deposit" or verb=="Sell" then
 		local pad=island.CentralHub.DepositPads["Deposit"..player:GetAttribute("PlotId")]
 		if not near(player,pad) then return false end
-		local amount=Rules.Deposit(d)
+		refreshMarket()
+		local amount,credited=Rules.Deposit(d,CafeMarket.Multiplier(market))
 		-- Each owner's queue begins its own full two-second cycle after a deposit.
 		if amount>0 and not p.NextCafeTick then p.NextCafeTick=os.clock()+Config.CafeInterval end
 		if amount>0 then events:FireAllClients("CafeDelivery",pad.Position,island.CentralHub.CentralShop:GetPivot().Position) end
-		update(player,"Deposited "..amount.." mini desserts. Your cafe converts every 2 seconds.")
+		update(player,string.format("Deposited %s at %.1fx: %s queued",UI.Format(amount),CafeMarket.Multiplier(market),UI.Format(credited)))
 	elseif verb=="Upgrade" then
 		if not near(player,area.UpgradeConverter) then return false end
 		local ok,message=Rules.UpgradeCafe(d); update(player,message or "Converter upgraded"); return ok
@@ -174,7 +185,10 @@ for i=1,6 do
 	local function button(pad,verb,arg,text,hold,public)
 		pad.CanTouch=not hold
 		for _,old in ipairs(pad:GetChildren()) do if old:IsA("ProximityPrompt") then old:Destroy() end end
-		local prompt=Instance.new("ProximityPrompt"); prompt.ActionText=text; prompt.KeyboardKeyCode=Enum.KeyCode.E; prompt.HoldDuration=hold or 0; prompt.MaxActivationDistance=10; prompt.RequiresLineOfSight=false; prompt.Parent=pad
+		local prompt
+		if hold then
+			prompt=Instance.new("ProximityPrompt"); prompt.ActionText=text; prompt.KeyboardKeyCode=Enum.KeyCode.E; prompt.HoldDuration=hold; prompt.MaxActivationDistance=10; prompt.RequiresLineOfSight=false; prompt.Parent=pad
+		end
 		local pressed,latched={},{}
 		local function activate(player,fromTouch)
 			if (not public and player~=s.Owner) or not near(player,pad) or not profiles[player] then return end
@@ -193,7 +207,7 @@ for i=1,6 do
 			Tween:Create(pad,TweenInfo.new(.12,Enum.EasingStyle.Quad,Enum.EasingDirection.Out,0,true),{CFrame=pad.CFrame*CFrame.new(0,-.16,0)}):Play()
 			if verb=="Panel" then events:FireClient(player,"Panel",arg) else perform(player,verb,arg) end
 		end
-		prompt.Triggered:Connect(activate)
+		if prompt then prompt.Triggered:Connect(activate) end
 		if not hold then pad.Touched:Connect(function(hit) local c=hit:FindFirstAncestorOfClass("Model"); local player=c and Players:GetPlayerFromCharacter(c); if player then activate(player,true) end end) end
 	end
 	for _,count in ipairs({1,10,100,1000}) do button(plot.PurchaseButtons["Buy"..count],"Buy",count,"Buy "..count) end
@@ -260,6 +274,7 @@ local frameTime,timer,saveTimer=0,0,0
 Run.Heartbeat:Connect(function(dt)
 	frameTime+=dt; timer+=dt; saveTimer+=dt; if frameTime<.1 then return end; frameTime=0
 	local now=os.clock()
+	if workspace:GetServerTimeNow()>=market.NextChange then refreshMarket() end
 	for _,s in ipairs(states) do local p=s.Owner and profiles[s.Owner]
 		if p and not p.Busy and not p.Closing and not p.Faulted then
 			for _,pet in ipairs(s.Pets) do if now>=pet.Next then emit(s,pet,now); pet.Next=now+Config.ProductionInterval end end

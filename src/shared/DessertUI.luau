@@ -7,8 +7,14 @@ UI.Icons={Coins="rbxassetid://74778137045475",Index="rbxassetid://82382233309285
 	Sparkles="rbxassetid://74659718515937",Bank="rbxassetid://110036223487911",
 	Cafe="rbxassetid://84687926049338",Close="rbxassetid://119058583962559",
 	Upgrade="rbxassetid://119889402592837",Check="rbxassetid://129170135048823",Lock="rbxassetid://128255973855104"}
-UI.Green=Color3.fromRGB(108,218,147)
-UI.Red=Color3.fromRGB(245,123,139)
+-- Approved Hapy UI v1 free artwork; names below match the visible art, rather
+-- than relying on inconsistent names in the source pack.
+UI.Hapy={Stats="rbxassetid://17136126657",Index="rbxassetid://17136645041",
+	Shop="rbxassetid://17136790643",Close="rbxassetid://17136872736",
+	Window="rbxassetid://17136988296",Inventory="rbxassetid://17137717840"}
+UI.Icons.Index=UI.Hapy.Index; UI.Icons.Shop=UI.Hapy.Shop; UI.Icons.Close=UI.Hapy.Close
+UI.Green=Color3.fromRGB(156,235,81)
+UI.Red=Color3.fromRGB(243,91,113)
 UI.Idle=Color3.fromRGB(213,204,221)
 UI.Ink=Color3.fromRGB(104,64,90)
 local function corner(object,radius)
@@ -28,7 +34,14 @@ function UI.Card(object,color,radius)
 end
 function UI.Icon(parent,key,size,pos)
 	local image=Instance.new("ImageLabel"); image.Name="Icon"; image.BackgroundTransparency=1; image.Image=UI.Icons[key] or UI.Icons.Cake
-	image.ImageColor3=UI.Ink; image.Size=UDim2.fromOffset(size,size); image.Position=pos; image.ZIndex=parent.ZIndex+1; image.Parent=parent; return image
+	image.ImageColor3=UI.Hapy[key] and Color3.new(1,1,1) or UI.Ink; image.Size=UDim2.fromOffset(size,size); image.Position=pos; image.ZIndex=parent.ZIndex+1; image.Parent=parent; return image
+end
+function UI.Art(parent,key)
+	local art=Instance.new("ImageLabel"); art.Name="HapyArtwork"; art.Image=assert(UI.Hapy[key]); art.BackgroundTransparency=1
+	art.Size=UDim2.fromScale(1,1); art.ScaleType=Enum.ScaleType.Stretch; art.ZIndex=parent.ZIndex; art.Parent=parent
+	parent.BackgroundTransparency=1
+	local stroke=parent:FindFirstChild("CreamOutline"); if stroke then stroke.Enabled=false end
+	return art
 end
 function UI.Button(b,key)
 	UI.Card(b,b.BackgroundColor3,16); b.Font=Enum.Font.FredokaOne; b.TextWrapped=true; b.TextXAlignment=Enum.TextXAlignment.Left
@@ -42,31 +55,58 @@ function UI.Button(b,key)
 	b.Activated:Connect(function() scale.Scale=.96; tween:Create(scale,TweenInfo.new(.22,Enum.EasingStyle.Back),{Scale=1}):Play() end)
 end
 function UI.Billboard(g)
-	if g:GetAttribute("DessertStyled") then return end
+	if g:GetAttribute("DessertLabelVersion")==2 then return end
 	local label=g:FindFirstChildOfClass("TextLabel"); if not label then return end
-	g:SetAttribute("DessertStyled",true); g.MaxDistance=65; g.AlwaysOnTop=false
-	g.Size=UDim2.fromOffset(label.Name=="OwnerLabel" and 250 or 190,label.Name=="OwnerLabel" and 54 or 64)
-	local card=Instance.new("Frame"); card.Name="BubbleCard"; card.Size=UDim2.new(1,-8,1,-8); card.Position=UDim2.fromOffset(4,0); card.Parent=g
-	UI.Card(card,Color3.fromRGB(255,247,236),16)
-	local key=label.Name=="OwnerLabel" and "Cake" or (g.Parent.Name:find("Buy") and "Coins" or g.Parent.Name=="UpgradeConverter" and "Upgrade" or g.Parent.Name=="CollectIncome" and "Bank" or g.Parent.Name=="RobuxShop" and "Shop" or g.Parent.Name:find("Crate") and "Crates" or "Cake")
-	UI.Icon(card,key,28,UDim2.new(0,8,.5,-14))
-	label.Font=Enum.Font.FredokaOne; label.TextColor3=UI.Ink; label.TextScaled=true; label.BackgroundTransparency=1
-	label.Position=UDim2.fromOffset(44,4); label.Size=UDim2.new(1,-56,1,-16); label.ZIndex=5
-	local limit=Instance.new("UITextSizeConstraint"); limit.MaxTextSize=21; limit.MinTextSize=11; limit.Parent=label
+	for _,child in ipairs(g:GetChildren()) do if child~=label then child:Destroy() end end
+	label:ClearAllChildren(); g:SetAttribute("DessertLabelVersion",2); g.MaxDistance=45; g.AlwaysOnTop=false
+	g.Size=UDim2.fromOffset(label.Name=="OwnerLabel" and 170 or 138,label.Name=="OwnerLabel" and 28 or 48)
+	g.StudsOffset=Vector3.new(0,2.5,0)
+	label.Font=Enum.Font.GothamBold; label.TextColor3=Color3.fromRGB(255,253,246); label.TextScaled=true; label.BackgroundTransparency=1
+	label.Position=UDim2.new(); label.Size=UDim2.fromScale(1,1); label.ZIndex=2
+	local outline=Instance.new("UIStroke"); outline.Color=Color3.fromRGB(42,31,43); outline.Thickness=2; outline.Parent=label
+	local limit=Instance.new("UITextSizeConstraint"); limit.MaxTextSize=18; limit.MinTextSize=10; limit.Parent=label
+	local price=label:Clone(); price.Name="PriceLabel"; price.Text=""; price.Font=Enum.Font.GothamBlack; price.TextColor3=UI.Green; price.Parent=g
+	local caption,detail=label.Text:match("([^\n]*)\n?(.*)"); UI.Label(g.Parent,caption,detail)
+end
+function UI.Label(pad,caption,detail,color)
+	local g=pad:FindFirstChild("ActionSign"); if not g then return end
+	local label=g:FindFirstChildOfClass("TextLabel"); local price=g:FindFirstChild("PriceLabel")
+	if not label or not price then return end
+	label.Text=caption; price.Text=detail or ""; price.TextColor3=color or UI.Green
+	label.Size=UDim2.fromScale(1,price.Text~="" and .46 or 1)
+	price.Position=UDim2.fromScale(0,.46); price.Size=UDim2.fromScale(1,.54)
+end
+function UI.Format(n)
+	for _,unit in ipairs({{1e12,"T"},{1e9,"B"},{1e6,"M"},{1e3,"K"}}) do if n>=unit[1] then return string.format("%.1f%s",n/unit[1],unit[2]) end end
+	return math.abs(n-math.floor(n))>.00001 and string.format("%.1f",n) or string.format("%.0f",n)
+end
+function UI.ResizeWorld(root,viewportWidth)
+	local scale=math.clamp(viewportWidth/1280,.65,1)
+	for _,g in ipairs(root:GetDescendants()) do if g:IsA("BillboardGui") and g:GetAttribute("DessertLabelVersion")==2 then
+		local label=g:FindFirstChild("OwnerLabel"); g.Size=UDim2.fromOffset((label and 170 or 138)*scale,(label and 28 or 48)*scale)
+	end end
 end
 function UI.Pad(pad,cash,cost,maxed)
 	local affordable=cash~=nil and cash>=cost and not maxed
 	pad:SetAttribute("Cost",cost); pad:SetAttribute("Affordable",affordable); pad:SetAttribute("Maxed",maxed==true)
 	pad.Color=maxed and UI.Idle or cash==nil and UI.Idle or affordable and UI.Green or UI.Red
-	local g=pad:FindFirstChild("ActionSign"); local card=g and g:FindFirstChild("BubbleCard")
-	if card then card.BackgroundColor3=pad.Color; local icon=card:FindFirstChild("Icon"); if icon then icon.Image=UI.Icons[affordable and "Check" or "Lock"] end end
+	local top=pad:FindFirstChild("ButtonTop")
+	if top then for _,p in ipairs(top:GetDescendants()) do if p:IsA("BasePart") then p.Color=pad.Color; p.Material=Enum.Material.Neon end end end
+	local g=pad:FindFirstChild("ActionSign"); local price=g and g:FindFirstChild("PriceLabel")
+	if price then price.TextColor3=pad.Color end
 end
 function UI.ApplyWorld(island)
 	for _,d in ipairs(island:GetDescendants()) do if d:IsA("BillboardGui") then UI.Billboard(d) end end
 	for _,plot in ipairs(island.PlayerPlots:GetChildren()) do
-		for _,pad in ipairs(plot.PurchaseButtons:GetChildren()) do local count=tonumber(pad.Name:match("Buy(%d+)")); if count then UI.Pad(pad,nil,count*require(script.Parent.TycoonConfig).PuddingCost) end end
+		for _,pad in ipairs(plot.PurchaseButtons:GetChildren()) do local count=tonumber(pad.Name:match("Buy(%d+)")); if count then
+			local cost=count*require(script.Parent.TycoonConfig).PuddingCost; UI.Pad(pad,nil,cost); UI.Label(pad,"Buy "..count,"$"..UI.Format(cost),UI.Idle)
+		end end
 		UI.Pad(plot.PersonalShopArea.UpgradeConverter,nil,require(script.Parent.TycoonConfig).CafeUpgradeBaseCost)
+		UI.Label(plot.PersonalShopArea.UpgradeConverter,"Convert Faster","$25 | 15%",UI.Idle)
+		UI.Label(plot.PersonalShopArea.CollectIncome,"Collect Cash","$0",UI.Green)
+		UI.Label(plot.PersonalShopArea.RobuxShop,"Shop","Hold E",Color3.fromRGB(255,231,169))
+		UI.Label(plot.MergeBoard,"Merge","")
 	end
-	island:SetAttribute("UIStyleVersion",1); island:SetAttribute("MapVersion","13.0.0")
+	island:SetAttribute("UIStyleVersion",2); island:SetAttribute("MapVersion","14.0.0")
 end
 return UI
