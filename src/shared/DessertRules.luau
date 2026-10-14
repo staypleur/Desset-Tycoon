@@ -8,7 +8,7 @@ function Rules.New(now)
 	return {Version=2, Cash=0, Bag=0, Pending=0, CafeQueue=0, CafeLevel=0, Pets={["1n"]=1}, Index={["1n"]=true},
 		TotalCashEarned=0,TotalMiniCollected=0,PlaySeconds=0,AFKStored=0,OfflineStored=0,LastSeen=now,
 		NormalTokens=0, PerkTokens=0, PaidNormalTokens=0, PaidPerkTokens=0, NextGift=now+INTERVAL, AFKSeconds=0,
-		Settings={Music=true, Effects=true, HideOthers=false}, Receipts={}, HotUntil=0}
+		Settings={Music=true, Effects=true, MusicVolume=.4, EffectsVolume=.5, HideOthers=false}, Receipts={}, HotUntil=0}
 end
 function Rules.NormalizeCafe(data)
 	data.CafeQueue=math.max(0,data.CafeQueue or 0)
@@ -17,9 +17,38 @@ function Rules.NormalizeCafe(data)
 	data.TotalCashEarned=math.max(0,data.TotalCashEarned or 0)
 	data.TotalMiniCollected=math.max(0,data.TotalMiniCollected or 0)
 	data.PlaySeconds=math.max(0,data.PlaySeconds or 0)
+	data.AFKSeconds=math.max(0,data.AFKSeconds or 0)
 	data.AFKStored=math.max(0,data.AFKStored or 0)
 	data.OfflineStored=math.max(0,data.OfflineStored or 0)
 	data.LastSeen=data.LastSeen or os.time()
+	Rules.NormalizeSettings(data)
+end
+local function validVolume(value)
+	return type(value)=="number" and value==value and value>-math.huge and value<math.huge
+end
+function Rules.NormalizeSettings(data)
+	local settings=type(data.Settings)=="table" and data.Settings or {}
+	for key,default in pairs({Music=.4,Effects=.5}) do
+		local volume=settings[key.."Volume"]
+		settings[key.."Volume"]=validVolume(volume) and math.clamp(volume,0,1) or (settings[key]==false and 0 or default)
+		settings[key]=settings[key.."Volume"]>0
+	end
+	settings.HideOthers=settings.HideOthers==true
+	data.Settings=settings
+end
+function Rules.UpdateSettings(data,changes)
+	if type(changes)~="table" then return false end
+	Rules.NormalizeSettings(data)
+	for key,default in pairs({Music=.4,Effects=.5}) do
+		local volume=changes[key.."Volume"]
+		if validVolume(volume) then data.Settings[key.."Volume"]=math.clamp(volume,0,1)
+		elseif volume==nil and type(changes[key])=="boolean" then
+			data.Settings[key.."Volume"]=changes[key] and math.max(data.Settings[key.."Volume"],default) or 0
+		end
+		data.Settings[key]=data.Settings[key.."Volume"]>0
+	end
+	if type(changes.HideOthers)=="boolean" then data.Settings.HideOthers=changes.HideOthers end
+	return true
 end
 -- Use exactly the same 60-slot ordering as the displayed producer models.
 function Rules.ProductionPerSecond(data)
@@ -91,16 +120,38 @@ function Rules.Highest(data)
 	for key,n in pairs(data.Pets) do if n>0 then local tier=Rules.Decode(key); highest=math.max(highest,tier) end end
 	return highest
 end
-function Rules.ShinyChance(kind,luck)
- return (kind=="Perk" and .1 or .01)*(luck and 2 or 1)
+function Rules.ShinyChance(kind,luck,friendBonus)
+ local multiplier=type(luck)=="number" and luck or (luck and 2 or 1)
+ return math.clamp((kind=="Perk" and .1 or .01)*multiplier+(friendBonus or 0),0,1)
 end
-function Rules.Buy(data,count,rng,luck,autoMerge)
+function Rules.FriendBonus(premium,friends)
+	local bonus=0
+	for _,friendPremium in ipairs(friends) do bonus=math.max(bonus,(premium or friendPremium) and .05 or .03) end
+	return bonus
+end
+function Rules.NextPass(passes,group)
+	local tiers=group=="Production" and Config.ProductionTiers or group=="Speed" and Config.SpeedTiers or Config.LuckTiers
+	for _,key in ipairs(tiers) do if not passes[key] then return key end end
+end
+function Rules.PassMultiplier(passes,group)
+	local value=1
+	if group=="Production" or group=="Luck" or group=="Speed" then
+		local tiers=group=="Production" and Config.ProductionTiers or group=="Speed" and Config.SpeedTiers or Config.LuckTiers
+		for _,key in ipairs(tiers) do if not passes[key] then break end; value=Config.Passes[key].Multiplier end
+	else for key,spec in pairs(Config.Passes) do if passes[key] and spec.Group==group then value=math.max(value,spec.Multiplier) end end end
+	return value
+end
+function Rules.CanBuyPass(passes,key)
+	local spec=Config.Passes[key]
+	return spec~=nil and not passes[key] and ((spec.Group~="Production" and spec.Group~="Luck" and spec.Group~="Speed") or Rules.NextPass(passes,spec.Group)==key)
+end
+function Rules.Buy(data,count,rng,luck,autoMerge,friendBonus)
 	if count~=1 and count~=10 and count~=100 and count~=1000 then return false,"Invalid quantity" end
 	local cost=Rules.BuyCost(count)
 	if data.Cash<cost then return false,"Not enough cash" end
 	local trial={Pets=table.clone(data.Pets), Index=table.clone(data.Index)}
 	local discoveries={}
-	for _=1,count do Rules.Add(trial,1,rng:NextNumber()<Rules.ShinyChance("Normal",luck),1,discoveries) end
+	for _=1,count do Rules.Add(trial,1,rng:NextNumber()<Rules.ShinyChance("Normal",luck,friendBonus),1,discoveries) end
 	if count>1 or autoMerge then Rules.Merge(trial,discoveries) end
 	if Rules.Count(trial)>Config.Capacity then return false,"Plates are full. Merge desserts first." end
 	data.Pets,data.Index=trial.Pets,trial.Index
@@ -109,20 +160,22 @@ function Rules.Buy(data,count,rng,luck,autoMerge)
 end
 function Rules.Odds(highest,kind)
 	local offsets=kind=="Perk" and {3,2,1,0} or {4,3,2,1}
-	local weights=kind=="Perk" and {40,30,20,10} or {70,20,9,1}
+	local weights={40,30,20,10}
 	local odds={}
 	for i,offset in ipairs(offsets) do
-		local tier=math.max(1,highest-offset); odds[tier]=(odds[tier] or 0)+weights[i]
+		local cap=math.max(1,highest-offset)
+		for tier=1,cap do odds[tier]=(odds[tier] or 0)+weights[i]/cap end
 	end
 	return odds
 end
-function Rules.Roll(data,kind,rng,luck,discoveries)
+function Rules.Roll(data,kind,rng,luck,discoveries,friendBonus)
 	local roll=rng:NextNumber()*100; local sum=0
-	local odds=Rules.Odds(Rules.Highest(data),kind)
-	for tier=1,30 do
+	local highest=Rules.Highest(data); local lastTier=kind=="Perk" and highest or math.max(1,highest-1)
+	local odds=Rules.Odds(highest,kind)
+	for tier=1,lastTier do
 		sum+=odds[tier] or 0
-		if roll<sum then
-			local shiny=rng:NextNumber()<Rules.ShinyChance(kind,luck)
+		if roll<sum or tier==lastTier then
+			local shiny=rng:NextNumber()<Rules.ShinyChance(kind,luck,friendBonus)
 			Rules.Add(data,tier,shiny,1,discoveries)
 			return {Tier=tier,Shiny=shiny}
 		end
@@ -137,11 +190,12 @@ function Rules.Gift(data,now,premium)
 	data.NextGift=now+INTERVAL
 	return true
 end
-function Rules.AFK(data,seconds)
+function Rules.AFK(data,seconds,premium)
 	data.AFKSeconds+=seconds
 	local earned=math.floor(data.AFKSeconds/Config.AFKInterval)
 	data.AFKSeconds%=Config.AFKInterval
 	data.NormalTokens+=earned
+	if premium then data.PerkTokens+=earned end
 	return earned
 end
 return Rules

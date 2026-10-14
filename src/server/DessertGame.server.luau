@@ -25,6 +25,17 @@ local remotes=Instance.new("Folder"); remotes.Name="DessertRemotes"; remotes.Par
 local action=Instance.new("RemoteFunction"); action.Name="Action"; action.Parent=remotes
 local events=Instance.new("RemoteEvent"); events.Name="Event"; events.Parent=remotes
 local profiles,states={},{}
+local friendPairs={}
+local function pairKey(a,b) return tostring(math.min(a.UserId,b.UserId))..":"..tostring(math.max(a.UserId,b.UserId)) end
+local function friendBonus(player,p)
+	local bonus=0
+	for other,q in pairs(profiles) do
+		if other~=player and not q.Closing and friendPairs[pairKey(player,other)] then
+			bonus=math.max(bonus,Rules.FriendBonus(p.Premium,{q.Premium}))
+		end
+	end
+	return bonus
+end
 local rng=Random.new()
 local market=CafeMarket.New(workspace:GetServerTimeNow(),rng)
 local function refreshMarket()
@@ -38,7 +49,7 @@ local function root(player)
 	return h and h.Health>0 and c:FindFirstChild("HumanoidRootPart") or nil
 end
 local function multiplier(p)
-	local m=1; for key,spec in pairs(Config.Passes) do if p.Passes[key] and spec.Multiplier then m=math.max(m,spec.Multiplier) end end; return m
+	return Rules.PassMultiplier(p.Passes,"Production")
 end
 local function snapshot(player)
 	local p=profiles[player]; if not p then return nil end; local d=p.Data
@@ -46,7 +57,7 @@ local function snapshot(player)
 		AFKStored=d.AFKStored,OfflineStored=d.OfflineStored,TotalCashEarned=d.TotalCashEarned,TotalMiniCollected=d.TotalMiniCollected,PlaySeconds=d.PlaySeconds,
 		CafeRate=Rules.CafeRate(d),CafeUpgradeCost=Rules.CafeUpgradeCost(d),Index=d.Index,Highest=Rules.Highest(d),
 		NormalTokens=d.NormalTokens,PerkTokens=d.PerkTokens,PaidNormalTokens=d.PaidNormalTokens,PaidPerkTokens=d.PaidPerkTokens,NextGift=d.NextGift,AFKSeconds=d.AFKSeconds,
-		Multiplier=multiplier(p),Luck=p.Passes.Luck==true,ShinyChance=Rules.ShinyChance("Normal",p.Passes.Luck),Settings=d.Settings,Equipped=d.Equipped,
+		Multiplier=multiplier(p),Luck=Rules.PassMultiplier(p.Passes,"Luck"),FriendBonus=friendBonus(player,p),ShinyChance=Rules.ShinyChance("Normal",Rules.PassMultiplier(p.Passes,"Luck"),friendBonus(player,p)),OwnedPasses=table.clone(p.Passes),Settings=d.Settings,Equipped=d.Equipped,
 		Durable=p.Durable,Premium=p.Premium,Restricted=p.Restricted,HotUntil=d.HotUntil,
 		Active=Rules.Count(d),PlotId=player:GetAttribute("PlotId"),ServerTime=os.time()}
 end
@@ -90,6 +101,8 @@ end
 local function near(player,pad) local r=root(player); return r and (r.Position-pad.Position).Magnitude<=14 end
 local function emit(s,pet,now)
 	local p=profiles[s.Owner]; if not p or p.Busy then return end
+	local value=3^(pet.Tier-1)*multiplier(p)
+	if p.Passes.DessertMagnet then p.Data.Bag+=value; p.Data.TotalMiniCollected+=value; return end
 	local cf=s.Plot:GetPivot(); local pad=s.Plot.PetSpawnPads["PetPad"..pet.Slot]
 	local pos=cf:PointToObjectSpace(pad.Position); local z=pad:GetAttribute("DropLaneZ"); local lo=Layout.ChannelHeight(z,s.Plot:GetAttribute("FieldRise"))
 	local high=pad:GetAttribute("ShelfHeight") or 2.25
@@ -97,7 +110,6 @@ local function emit(s,pet,now)
 	local points={pos+Vector3.new(0,.65,0),Vector3.new(pos.X,y+.6,z),Vector3.new(0,lo+.6,z),
 		Vector3.new(0,.8,-7),Vector3.new(rng:NextNumber(-4,4),.45,rng:NextNumber(-13,-9))}
 	local durations={}; for n=1,#points-1 do durations[n]=(points[n+1]-points[n]).Magnitude/9 end
-	local value=3^(pet.Tier-1)*multiplier(p)
 	if #s.Drops>=Config.MaxDrops then p.Data.AFKStored+=value; return end
 	local m=Visuals.Build(pet.Tier,pet.Shiny); m.Name="MiniDessert"; m:ScaleTo(.25)
 	m:SetAttribute("OwnerUserId",s.Owner.UserId); m.Parent=s.Products; m:PivotTo(cf*CFrame.new(points[1]))
@@ -109,8 +121,7 @@ local function perform(player,verb,arg)
 	local d=p.Data
 	if verb=="State" then return snapshot(player) end
 	if verb=="Settings" then
-		if type(arg)~="table" then return false end
-		for _,key in ipairs({"Music","Effects","HideOthers"}) do if type(arg[key])=="boolean" then d.Settings[key]=arg[key] end end
+		if not Rules.UpdateSettings(d,arg) then return false end
 		update(player); return true
 	elseif verb=="Activity" then p.LastActivity=os.clock(); return true
 	elseif verb=="Equip" then
@@ -128,14 +139,15 @@ local function perform(player,verb,arg)
 		if d[key]+(p.Restricted and 0 or paid)<arg.Count then return false,"Not enough available crate credits" end
 		local freeUsed=math.min(d[key],arg.Count); d[key]-=freeUsed; d[paidKey]=paid-(arg.Count-freeUsed)
 		local found={}; local results={}
-		for _=1,arg.Count do table.insert(results,Rules.Roll(d,arg.Kind,rng,p.Passes.Luck,found)) end
+		for _=1,arg.Count do table.insert(results,Rules.Roll(d,arg.Kind,rng,Rules.PassMultiplier(p.Passes,"Luck"),found,friendBonus(player,p))) end
 		if p.Passes.AutoMerge then Rules.Merge(d,found) end
 		render(player); events:FireClient(player,"Crates",results); update(player); return true
 	elseif verb=="Purchase" then
 		if type(arg)~="string" then return false end
 		local product=Config.Products[arg]; local spec=product or Config.Passes[arg]
 		if not spec or spec.Id<=0 or not p.Durable then return false,"Coming soon: purchases are not configured" end
-		if (product and product.Crate or arg=="Luck") and p.Restricted then return false,"Unavailable in your region" end
+		if not product and not Rules.CanBuyPass(p.Passes,arg) then return false,"Unlock the previous upgrade first" end
+		if (product and product.Crate or spec.Group=="Luck") and p.Restricted then return false,"Unavailable in your region" end
 		if product then Market:PromptProductPurchase(player,spec.Id) else Market:PromptGamePassPurchase(player,spec.Id) end
 		return true
 	end
@@ -144,7 +156,7 @@ local function perform(player,verb,arg)
 	if verb=="Buy" then
 		if arg~=1 and arg~=10 and arg~=100 and arg~=1000 then return false end
 		if not near(player,s.Plot.PurchaseButtons["Buy"..arg]) then return false end
-		local ok,result=Rules.Buy(d,arg,rng,p.Passes.Luck,p.Passes.AutoMerge)
+		local ok,result=Rules.Buy(d,arg,rng,Rules.PassMultiplier(p.Passes,"Luck"),p.Passes.AutoMerge,friendBonus(player,p))
 		if ok then render(player); discoveries(player,result); update(player,"Purchased "..arg.." puddings") else update(player,result) end; return ok
 	elseif verb=="Merge" then
 		if not near(player,s.Plot.MergeBoard) then return false end
@@ -236,19 +248,32 @@ local function refreshPasses(player,p)
 	for key,spec in pairs(Config.Passes) do if spec.Id>0 then
 		local ok,owns=pcall(Market.UserOwnsGamePassAsync,Market,player.UserId,spec.Id); p.Passes[key]=ok and owns or false
 	end end
-	if p.Restricted then p.Passes.Luck=false end
+	if p.Restricted then for _,key in ipairs(Config.LuckTiers) do p.Passes[key]=false end end
+	local humanoid=player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+	if humanoid then humanoid.WalkSpeed=16*Rules.PassMultiplier(p.Passes,"Speed") end
 end
 local function join(player)
  local arrival=os.time()
  local p,message=Profiles.Load(player); if not p then player:Kick(message); return end
  if player.Parent~=Players then Profiles.Save(p,true,true); return end
  p.Passes={}; p.Restricted=true; p.Premium=player.MembershipType==Enum.MembershipType.Premium
+ player.CharacterAdded:Connect(function(character)
+  local humanoid=character:WaitForChild("Humanoid",10)
+  if humanoid then humanoid.WalkSpeed=16*Rules.PassMultiplier(p.Passes,"Speed") end
+ end)
  Rules.NormalizeCafe(p.Data)
  if not Run:IsStudio() then local ok,info=pcall(Policy.GetPolicyInfoForPlayerAsync,Policy,player); p.Restricted=not ok or info.ArePaidRandomItemsRestricted~=false end
  refreshPasses(player,p)
  Rules.AccrueOffline(p.Data,arrival,multiplier(p))
  if player.Parent~=Players then Profiles.Save(p,true,true); return end
  p.LastActivity=os.clock(); p.LastPlayCheck=os.clock(); profiles[player]=p
+ -- Query each joining player's pairs once; cached relationships never yield in the game loop.
+ task.spawn(function()
+  for other,q in pairs(profiles) do if other~=player and not q.Closing then
+   local ok,friends=pcall(player.IsFriendsWithAsync,player,other.UserId)
+   friendPairs[pairKey(player,other)]=ok and friends==true
+  end end
+ end)
  if p.Data.CafeQueue>0 then p.NextCafeTick=os.clock()+Config.CafeInterval end
  local stats=Instance.new("Folder"); stats.Name="leaderstats"; stats.Parent=player
  local cash=Instance.new("NumberValue"); cash.Name="Cash"; cash.Parent=stats
@@ -260,7 +285,8 @@ Players.PlayerAdded:Connect(join); for _,player in ipairs(Players:GetPlayers()) 
 local function close(player)
 	local p=profiles[player]; if not p or p.Closing then return end; p.Closing=true
 	local deadline=os.clock()+15; while p.Busy and os.clock()<deadline do task.wait(.1) end
-	p.Data.PlaySeconds+=math.max(0,os.clock()-(p.LastPlayCheck or os.clock())); p.LastPlayCheck=os.clock()
+	local elapsed=math.max(0,os.clock()-(p.LastPlayCheck or os.clock()))
+	p.Data.PlaySeconds+=elapsed; Rules.AFK(p.Data,elapsed,p.Premium); p.LastPlayCheck=os.clock()
 	if not Profiles.Save(p,true) then warn("[DessertGame] Save failed on leave") end
 	if p.Companion then p.Companion:Destroy() end; profiles[player]=nil
 end
@@ -296,9 +322,9 @@ Run.Heartbeat:Connect(function(dt)
 			end end
 			s.Plot:SetAttribute("UncollectedDrops",#s.Drops)
 			local r=root(s.Owner); local picked=false
-			if r then for _,item in ipairs({{"AFKAnchor","AFKStored"},{"OfflineAnchor","OfflineStored"}}) do
+			if r or p.Passes.DessertMagnet then for _,item in ipairs({{"AFKAnchor","AFKStored"},{"OfflineAnchor","OfflineStored"}}) do
 				local baskets=s.Plot:FindFirstChild("DessertBaskets"); local anchor=baskets and baskets:FindFirstChild(item[1])
-				if anchor and p.Data[item[2]]>0 and (r.Position-anchor.Position).Magnitude<=6 then
+				if anchor and p.Data[item[2]]>0 and (p.Passes.DessertMagnet or (r and (r.Position-anchor.Position).Magnitude<=6)) then
 					local amount=p.Data[item[2]]; p.Data[item[2]]=0; p.Data.Bag+=amount; p.Data.TotalMiniCollected+=amount; picked=true
 				end
 			end end
@@ -307,12 +333,13 @@ Run.Heartbeat:Connect(function(dt)
 				while segment<=#drop.Durations and elapsed>=drop.Durations[segment] do elapsed-=drop.Durations[segment]; segment+=1 end
 				local pos=segment>#drop.Durations and drop.Points[#drop.Points] or drop.Points[segment]:Lerp(drop.Points[segment+1],elapsed/drop.Durations[segment])
 				drop.Model:PivotTo(drop.CF*CFrame.new(pos)*CFrame.Angles(0,now*2,segment>#drop.Durations and 0 or now*3))
-				if r and (r.Position-drop.Model:GetPivot().Position).Magnitude<=(p.Passes.Magnet and 25 or 6) then p.Data.Bag+=drop.Value; p.Data.TotalMiniCollected+=drop.Value; drop.Model:Destroy(); table.remove(s.Drops,n); picked=true end
+				if p.Passes.DessertMagnet or (r and (r.Position-drop.Model:GetPivot().Position).Magnitude<=6) then p.Data.Bag+=drop.Value; p.Data.TotalMiniCollected+=drop.Value; drop.Model:Destroy(); table.remove(s.Drops,n); picked=true end
 			end
 			if picked then update(s.Owner) end
 		end
 	end
 	for player,p in pairs(profiles) do
+		if p.Passes.MoneyMagnet and not p.Busy and not p.Closing and not p.Faulted and p.Data.Pending>0 then p.Data.Cash+=p.Data.Pending; p.Data.Pending=0; update(player) end
 		local r=root(player); if p.Companion and r then p.Companion:PivotTo(r.CFrame*CFrame.new(-3,3+math.sin(now*2)*.3,0)) end
 		if p.NextCafeTick and now>=p.NextCafeTick and not p.Busy and not p.Closing and not p.Faulted then
 			local units,cash=Rules.ConvertCafe(p.Data,os.time())
@@ -327,10 +354,8 @@ Run.Heartbeat:Connect(function(dt)
 			p.LastPosition=r and r.Position; p.Premium=player.MembershipType==Enum.MembershipType.Premium
 			Rules.Gift(p.Data,os.time(),p.Premium)
 			-- Include idle time spent waiting for a save instead of losing busy-frame seconds.
-			p.Data.PlaySeconds+=math.max(0,now-(p.LastPlayCheck or now)); p.LastPlayCheck=now
-			local idleSeconds=math.max(0,now-math.max(p.LastAFKCheck or now,p.LastActivity+60))
-			p.LastAFKCheck=now
-			if r and idleSeconds>0 then Rules.AFK(p.Data,idleSeconds) end
+			local connectedSeconds=math.max(0,now-(p.LastPlayCheck or now))
+			p.Data.PlaySeconds+=connectedSeconds; Rules.AFK(p.Data,connectedSeconds,p.Premium); p.LastPlayCheck=now
 			if p.Passes.AutoMerge then local found={}; local before=Rules.Count(p.Data); Rules.Merge(p.Data,found); if before~=Rules.Count(p.Data) then render(player); discoveries(player,found) end end
 			update(player)
 		end end

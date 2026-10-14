@@ -228,3 +228,11 @@ PASS: PlayerProfiles deterministic mock verifies persisted gift/AFK clocks, dupl
 - PASS CompanionBalance: toggle/switch/discovery validation, unchanged production, all 29 purchasable upgrades, insufficient funds and max-level guard. Used relative insufficient balance for high levels because floating-point spacing exceeds $1. PASS EconomyV16 conservation and converter regression.
 - PASS CompanionLive: real server action creates exactly one companion, second click clears selection and removes model, producer count unchanged, first upgrade $20. Native Index clicks verified Equip → Unequip → Equip. Temporary server test removed before saving.
 - Saved Studio with all 24 mapped scripts matching sources; initial six upgrade labels refreshed to $20.
+
+## 2026-10-15 — Supplied art, shop progression, audio and crate layout
+- Applied all 23 user PNGs through two 256-cell atlases, including multiplier arrows. Next-tier-only Mini Desserts, Shiny Rate and Move Speed cards; separate dessert/money magnets; English Robux prices and prefix $ cash. Product IDs remain 0.
+- Server gates all three upgrade sequences, applies global shiny multiplier plus non-stacking friend bonus, allows duplicate shinies, uses uniform tier buckets, saves cumulative 3h connected rewards and preserves 5h gifts/Premium benefits. Magnet collection preserves owner economy and avoids unnecessary moving models.
+- Selected Smooth Focus Rain Melody and added independent persisted 0–100% music/effects sliders. Native microphone icon controls eligible local AudioDeviceInput mute state; Studio shows unavailable. Actual published voice remains unverified.
+- Normal/Perk crates share a centered row; each has Details directly below its art, Open 1 left and Open 10 right, with Robux price underneath. Details expand on demand.
+- Edit-mode AudioSettings/UserShopRules/EconomyV16/PlayerProfiles passed; 25 sources compile. Live AudioLive/native volume drag, all 23 rendered art/next-tier cards, pet visibility optimization, centered crate layout and actual Details click passed. No real purchases or publication.
+- Proof: docs/previews/user-ui-shop.jpg, user-ui-crates.jpg, user-ui-upload.png.

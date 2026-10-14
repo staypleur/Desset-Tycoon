@@ -248,9 +248,9 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 		<Item class="Camera" referent="RBX1619F03E19AA45DD9F9D70421D691A23">
 			<Properties>
 				<CoordinateFrame name="CFrame">
-					<X>0</X>
-					<Y>13.6499996</Y>
-					<Z>44.25</Z>
+					<X>25.9826603</X>
+					<Y>111.395325</Y>
+					<Z>349.428894</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>-0</R02>
@@ -266,9 +266,9 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>0</X>
-					<Y>11.2191763</Y>
-					<Z>24.3982735</Z>
+					<X>25.9826603</X>
+					<Y>108.9645</Y>
+					<Z>329.577179</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -1761301,6 +1761301,7 @@ local Style=require(RS:WaitForChild("DessertUI"))
 local Gauge=require(RS:WaitForChild("CircularGauge"))
 local Art=require(RS:WaitForChild("PastelArt"))
 local ShopUI=require(RS:WaitForChild("KawaiiShop"))
+local UserArt=require(RS:WaitForChild("UserArt"))
 local remotes=RS:WaitForChild("DessertRemotes")
 local action=remotes:WaitForChild("Action"); local event=remotes:WaitForChild("Event")
 local colors={Cream=Color3.fromRGB(255,248,239),Pink=Color3.fromRGB(255,193,217),Lavender=Color3.fromRGB(215,199,249),Mint=Color3.fromRGB(184,233,212),Text=Color3.fromRGB(105,66,90)}
@@ -1761320,23 +1761321,44 @@ local statLabels={}
 local indexGrid
 local crateDetails={}
 local voiceStatus="Voice Chat: checking availability..."
+local voiceEligible=false
+local refreshVoice
 task.spawn(function()
 	local ok,enabled=pcall(function() return game:GetService("VoiceChatService"):IsVoiceEnabledForUserIdAsync(player.UserId) end)
 	voiceStatus=Run:IsStudio() and "Voice Chat: test in a published voice-enabled experience" or ok and enabled and "Voice Chat: use Roblox microphone controls" or "Voice Chat: unavailable for this account or experience"
 	screen:SetAttribute("VoiceEligible",ok and enabled or false)
+	voiceEligible=ok and enabled or false
+	if refreshVoice then refreshVoice() end
 end)
 local function giftText()
 	local left=math.max(0,data.NextGift-data.ServerTime)
-	return string.format("Next free gift: %02d:%02d:%02d | AFK: %ds / 5h\nPremium: normal + perk together every 5h",math.floor(left/3600),math.floor(left/60)%60,left%60,math.floor(data.AFKSeconds))
+	return string.format("Free gift  %02d:%02d:%02d\nPlay reward  %02d:%02d / 3h",math.floor(left/3600),math.floor(left/60)%60,left%60,math.floor(data.AFKSeconds/3600),math.floor(data.AFKSeconds/60)%60)
 end
 local function corner(object,radius) local c=Instance.new("UICorner"); c.CornerRadius=UDim.new(0,radius or 16); c.Parent=object end
 local function text(parent,label,size,pos)
 	local t=Instance.new("TextLabel"); t.Size=size; t.Position=pos; t.Text=label; t.Font=Enum.Font.FredokaOne
 	t.TextColor3=colors.Text; t.TextSize=20; t.TextWrapped=true; t.BackgroundTransparency=1; t.ZIndex=parent.ZIndex+1; t.Parent=parent; return t
 end
-local click=Instance.new("Sound"); click.SoundId=Config.ClickSoundId; click.Volume=.3; click.Parent=SoundService
-local revealSound=Instance.new("Sound"); revealSound.SoundId=Config.DiscoverySoundId; revealSound.Volume=.3; revealSound.Parent=SoundService
+local click=Instance.new("Sound"); click.Name="DessertClick"; click.SoundId=Config.ClickSoundId; click.Volume=.3; click.Parent=SoundService
+local revealSound=Instance.new("Sound"); revealSound.Name="DessertDiscovery"; revealSound.SoundId=Config.DiscoverySoundId; revealSound.Volume=.3; revealSound.Parent=SoundService
 local music=Instance.new("Sound"); music.Name="DessertCafeMusic"; music.SoundId=Config.MusicId; music.Volume=.12; music.Looped=true; music.Parent=SoundService
+local audioDraft,volumeControls={},{}
+local draggingVolume
+local function volumeValue(key)
+	return audioDraft[key] or (data and data.Settings[key.."Volume"]) or (key=="Music" and .4 or .5)
+end
+local function applyAudio()
+	music.Volume=.3*volumeValue("Music")
+	click.Volume=.6*volumeValue("Effects"); revealSound.Volume=click.Volume
+	if music.Volume>0 then
+		if not music.Playing then if music.TimePosition>0 then music:Resume() else music:Play() end end
+	elseif music.Playing then music:Pause() end
+	for key,control in pairs(volumeControls) do
+		local value=volumeValue(key)
+		control.Fill.Size=UDim2.fromScale(value,1); control.Knob.Position=UDim2.fromScale(value,.5)
+		control.Label.Text=string.format("%d%%",math.floor(value*100+.5))
+	end
+end
 local function button(parent,label,size,pos,callback,color,shortcut)
 	local b=Instance.new("TextButton"); b.Size=size; b.Position=pos; b.Text=label; b.Font=Enum.Font.GothamBold; b.TextSize=16
 	b.TextColor3=colors.Text; b.BackgroundColor3=color or colors.Pink; b.BorderSizePixel=0; b.ZIndex=parent.ZIndex+1; b.Parent=parent
@@ -1761362,11 +1761384,12 @@ plate.Size=UDim2.fromOffset(112,112); plate.AnchorPoint=Vector2.new(.5,1); plate
 plate.Image=Config.PlateImageId or ""; plate.ScaleType=Enum.ScaleType.Fit; plate.Parent=gui
 local bag=text(plate,"0",UDim2.fromScale(.68,.5),UDim2.fromScale(.16,.32)); bag.Name="BagValue"; bag.TextScaled=true
 local numberLimit=Instance.new("UITextSizeConstraint"); numberLimit.MinTextSize=14; numberLimit.MaxTextSize=27; numberLimit.Parent=bag
-local boost=box("×1",UDim2.fromOffset(150,48),UDim2.new(1,-168,1,-68),colors.Lavender)
+local boost=box("×1",UDim2.fromOffset(150,48),UDim2.new(1,-168,1,-68),colors.Lavender,"Multiplier")
 local shinyChance=box("Shiny 1%",UDim2.fromOffset(150,48),UDim2.new(1,-168,1,-124),colors.Pink,"Sparkles")
 shinyChance.Name="ShinyChanceValue"; shinyChance.TextSize=16; boost.TextSize=16
 local function updateShinyChance()
- shinyChance.Text=string.format("Shiny %.0f%%",100*(data.ShinyChance or Rules.ShinyChance("Normal",data.Luck)))
+ local percent=100*(data.ShinyChance or Rules.ShinyChance("Normal",data.Luck,data.FriendBonus))
+ shinyChance.Text="Shiny "..string.format(percent%1<.00001 and "%.0f%%" or "%.1f%%",percent)
 end
 local cafeRateLabel,cafeGauge,marketIsland
 task.spawn(function()
@@ -1761391,6 +1761414,67 @@ local function request(verb,arg)
 	if not ok then warn("[DessertHUD] Action unavailable") end
 	return ok and result
 end
+local pendingAudioSave,audioSaving={},false
+local function setVolume(key,value,save)
+	audioDraft[key]=math.floor(math.clamp(value,0,1)*100+.5)/100
+	applyAudio()
+	if save then
+		pendingAudioSave[key]=audioDraft[key]
+		if audioSaving then return end
+		audioSaving=true
+		task.spawn(function()
+			while next(pendingAudioSave) do
+				task.wait(.25) -- Coalesce +/- taps; never send a remote every drag frame.
+				local sent=pendingAudioSave; pendingAudioSave={}; local changes={}
+				for channel,value in pairs(sent) do changes[channel.."Volume"]=value end
+				local ok=request("Settings",changes)
+				if not ok then task.wait(.25); ok=request("Settings",changes) end
+				for channel,value in pairs(sent) do
+					if ok then data.Settings[channel.."Volume"]=value; data.Settings[channel]=value>0 end
+					if audioDraft[channel]==value and not pendingAudioSave[channel] and (not draggingVolume or draggingVolume.Key~=channel) then audioDraft[channel]=nil end
+				end
+				applyAudio()
+			end
+			audioSaving=false
+		end)
+	end
+end
+local function volumeSlider(key,label,y)
+	local card=Instance.new("Frame"); card.Name=key.."VolumeControl"; card.Size=UDim2.new(1,-18,0,118)
+	card.Position=UDim2.fromOffset(6,y); card.ZIndex=scroll.ZIndex+1; card.Parent=scroll; Art.Apply(card,"Card")
+	text(card,label,UDim2.new(1,-112,0,38),UDim2.fromOffset(16,10)).TextSize=20
+	local percent=text(card,"",UDim2.fromOffset(64,38),UDim2.new(1,-80,0,10)); percent.TextSize=20
+	local track=Instance.new("TextButton"); track.Name="VolumeTrack"; track.Text=""; track.AutoButtonColor=false
+	track.BackgroundColor3=colors.Lavender; track.BorderSizePixel=0; track.Size=UDim2.new(1,-144,0,14)
+	track.Position=UDim2.fromOffset(72,73); track.ZIndex=card.ZIndex+2; track.Parent=card; corner(track,7)
+	local fill=Instance.new("Frame"); fill.Name="VolumeFill"; fill.BackgroundColor3=colors.Pink; fill.BorderSizePixel=0
+	fill.ZIndex=track.ZIndex+1; fill.Parent=track; corner(fill,7)
+	local knob=Instance.new("TextButton"); knob.Name="VolumeKnob"; knob.Text=""; knob.Size=UDim2.fromOffset(26,26)
+	knob.AnchorPoint=Vector2.new(.5,.5); knob.BackgroundColor3=colors.Cream; knob.ZIndex=track.ZIndex+2; knob.Parent=track; corner(knob,13)
+	local outline=Instance.new("UIStroke"); outline.Color=colors.Text; outline.Thickness=2; outline.Parent=knob
+	volumeControls[key]={Fill=fill,Knob=knob,Label=percent}
+	button(card,"−",UDim2.fromOffset(38,38),UDim2.fromOffset(18,61),function() setVolume(key,volumeValue(key)-.05,true) end)
+	button(card,"+",UDim2.fromOffset(38,38),UDim2.new(1,-56,0,61),function() setVolume(key,volumeValue(key)+.05,true) end)
+	local function start(input)
+		if input.UserInputType~=Enum.UserInputType.MouseButton1 and input.UserInputType~=Enum.UserInputType.Touch then return end
+		draggingVolume={Key=key,Track=track,Input=input}; scroll.ScrollingEnabled=false
+		setVolume(key,(input.Position.X-track.AbsolutePosition.X)/math.max(1,track.AbsoluteSize.X),false)
+	end
+	track.InputBegan:Connect(start); knob.InputBegan:Connect(start)
+	applyAudio()
+end
+Input.InputChanged:Connect(function(input)
+	local drag=draggingVolume
+	if drag and (input==drag.Input or (drag.Input.UserInputType==Enum.UserInputType.MouseButton1 and input.UserInputType==Enum.UserInputType.MouseMovement)) then
+		setVolume(drag.Key,(input.Position.X-drag.Track.AbsolutePosition.X)/math.max(1,drag.Track.AbsoluteSize.X),false)
+	end
+end)
+Input.InputEnded:Connect(function(input)
+	local drag=draggingVolume
+	if drag and (input==drag.Input or (drag.Input.UserInputType==Enum.UserInputType.MouseButton1 and input.UserInputType==Enum.UserInputType.MouseButton1)) then
+		draggingVolume=nil; scroll.ScrollingEnabled=true; setVolume(drag.Key,volumeValue(drag.Key),true)
+	end
+end)
 local function preview(parent,tier,shiny,size,pos)
 	local view=Instance.new("ViewportFrame"); view.Size=size; view.Position=pos; view.BackgroundTransparency=1
 	view.ZIndex=parent.ZIndex+1; view.Ambient=Color3.fromRGB(220,208,220); view.LightColor=Color3.fromRGB(255,247,233); view.Parent=parent
@@ -1761408,17 +1761492,10 @@ local function fitPanel()
  if indexGrid then local cols=w>=800 and 4 or w>=600 and 3 or w>=400 and 2 or 1; indexGrid.FillDirectionMaxCells=cols; indexGrid.CellSize=UDim2.fromOffset(math.floor((w-42-(cols-1)*12)/cols),190) end
 end
 workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(fitPanel)
-local function productButton(key,spec,y,isPass)
-	local b=button(scroll,(spec.Name or key).." | "..spec.Price.." R$",UDim2.new(1,-18,0,50),UDim2.fromOffset(6,y),function() request("Purchase",key) end,colors.Lavender)
-	if spec.Id==0 or not data.Durable or ((spec.Crate or key=="Luck") and data.Restricted) then
-		b.Text=(spec.Name or key).." | "..spec.Price.." R$ | Coming Soon"; b.AutoButtonColor=false; b.Active=false
-	else task.spawn(function()
-		local ok,info=pcall(Market.GetProductInfoAsync,Market,spec.Id,isPass and Enum.InfoType.GamePass or Enum.InfoType.Product)
-		if ok and b.Parent then b.Text=(spec.Name or key).." | "..tostring(info.PriceInRobux).." R$" end
-	end) end
-end
 show=function(name)
 	if not data then return end
+	if draggingVolume then local key=draggingVolume.Key; draggingVolume=nil; setVolume(key,volumeValue(key),true) end
+	volumeControls={}; scroll.ScrollingEnabled=true
 	if kawaiiShop then kawaiiShop.Destroy(); kawaiiShop=nil end
 	panelName=name; window.Visible=name~="Shop"; title.Text=name; scroll:ClearAllChildren(); spinning={}; giftLabel=nil; statLabels={}; indexGrid=nil
 	if name=="Shop" then
@@ -1761446,12 +1761523,12 @@ show=function(name)
 			if owned then button(card,data.Equipped==key and "Unequip" or "Equip",UDim2.new(1,-16,0,32),UDim2.fromOffset(8,152),function() request("Equip",key) end,colors.Mint) end
 		end end
 	elseif name=="Settings" then
-		for n,item in ipairs({{"Music","Background Music"},{"Effects","Sound Effects"},{"HideOthers","Hide Other Players' Pets"}}) do
-			button(scroll,item[2]..": "..(data.Settings[item[1]] and "ON" or "OFF"),UDim2.new(1,-18,0,54),UDim2.fromOffset(6,(n-1)*66),function()
-				local settings=table.clone(data.Settings); settings[item[1]]=not settings[item[1]]; request("Settings",settings); task.delay(.3,function() show("Settings") end)
-			end,colors.Lavender)
-		end
-		text(scroll,voiceStatus,UDim2.new(1,-18,0,54),UDim2.fromOffset(6,210)).TextSize=15
+		volumeSlider("Music","Background Music",0)
+		volumeSlider("Effects","Sound Effects",130)
+		button(scroll,"Hide Other Players' Pets: "..(data.Settings.HideOthers and "ON" or "OFF"),UDim2.new(1,-18,0,54),UDim2.fromOffset(6,260),function()
+			request("Settings",{HideOthers=not data.Settings.HideOthers}); task.delay(.3,function() if panelName=="Settings" then show("Settings") end end)
+		end,colors.Lavender)
+		text(scroll,voiceStatus,UDim2.new(1,-18,0,54),UDim2.fromOffset(6,326)).TextSize=15
 	elseif name=="Stats" then
 		for n,item in ipairs({{"TotalCashEarned","Total Cash Earned"},{"TotalMiniCollected","Mini Desserts Collected"},{"PlaySeconds","Total Play Time"}}) do
 			local card=Instance.new("Frame"); card.Size=UDim2.new(1,-32,0,108); card.Position=UDim2.fromOffset(16,(n-1)*126); card.ZIndex=scroll.ZIndex+1; card.Parent=scroll; Art.Apply(card,"Card")
@@ -1761460,21 +1761537,43 @@ show=function(name)
 		end
 	elseif name=="Crates" then
 		giftLabel=text(scroll,giftText(),UDim2.new(1,-18,0,72),UDim2.fromOffset(6,0))
-		local y=80
-		for _,kind in ipairs({"Normal","Perk"}) do
-			local tokens=kind=="Normal" and data.NormalTokens or data.PerkTokens
-			local paidTokens=kind=="Normal" and data.PaidNormalTokens or data.PaidPerkTokens
-			local odds=Rules.Odds(data.Highest,kind); local entries={}; local shiny=100*Rules.ShinyChance(kind,data.Luck)
-			for tier=1,30 do if odds[tier] then
-				table.insert(entries,Catalog[tier].Name..": "..string.format("%.2f",odds[tier]*(1-shiny/100)).."% normal / "..string.format("%.2f",odds[tier]*shiny/100).."% shiny")
-			end end
-			text(scroll,kind.." Crates | Free: "..tokens.." | Purchased: "..(paidTokens or 0),UDim2.new(1,-18,0,40),UDim2.fromOffset(6,y)); y+=44
-			button(scroll,"Details",UDim2.fromOffset(132,36),UDim2.fromOffset(6,y),function() crateDetails[kind]=not crateDetails[kind]; show("Crates") end,colors.Cream); y+=44
-			if crateDetails[kind] then text(scroll,table.concat(entries,"\n"),UDim2.new(1,-18,0,130),UDim2.fromOffset(6,y)); y+=140 end
-			for n,count in ipairs({1,10}) do
-				button(scroll,"Open "..count.." credits",UDim2.new(.5,-12,0,40),UDim2.new((n-1)*.5,6,0,y),function() request("Crate",{Kind=kind,Count=count}); task.delay(.3,function() show("Crates") end) end,colors.Mint)
-			end; y+=50
-			for _,count in ipairs({1,10}) do productButton(kind..count,Config.Products[kind..count],y,false); y+=58 end
+		local choices=Instance.new("Frame"); choices.Name="CrateChoices"; choices.BackgroundTransparency=1
+		choices.AnchorPoint=Vector2.new(.5,0); choices.Position=UDim2.new(.5,0,0,80)
+		choices.Size=UDim2.new(1,-16,0,0); choices.AutomaticSize=Enum.AutomaticSize.Y; choices.ZIndex=scroll.ZIndex+1; choices.Parent=scroll
+		local limit=Instance.new("UISizeConstraint"); limit.MaxSize=Vector2.new(680,10000); limit.Parent=choices
+		for index,kind in ipairs({"Normal","Perk"}) do
+			local card=Instance.new("Frame"); card.Name=kind.."CrateChoice"; card.Size=UDim2.new(.5,-8,0,338)
+			card.Position=UDim2.new((index-1)*.5,index==1 and 0 or 8,0,0); card.ZIndex=choices.ZIndex+1; card.Parent=choices; Art.Apply(card,"Card")
+			text(card,kind.." Crate",UDim2.new(1,-16,0,32),UDim2.fromOffset(8,8)).TextSize=20
+			local picture=UserArt.Create(card,kind.."Crate",UDim2.new(1,-24,0,136),UDim2.fromOffset(12,42))
+			local details=button(card,"Details",UDim2.new(.7,0,0,34),UDim2.new(.15,0,0,180),function()
+				local open=not crateDetails[kind]; crateDetails={}; crateDetails[kind]=open; show("Crates")
+			end,colors.Cream); details.Name="DetailsButton"
+			local free=kind=="Normal" and data.NormalTokens or data.PerkTokens
+			local paid=(kind=="Normal" and data.PaidNormalTokens or data.PaidPerkTokens) or 0
+			local credits=free+(data.Restricted and 0 or paid)
+			for column,count in ipairs({1,10}) do
+				local key=kind..count; local spec=Config.Products[key]
+				local hasCredits=credits>=count
+				local purchasable=spec.Id>0 and data.Durable and not data.Restricted
+				local x=(column-1)*.5
+				local open=button(card,"Open "..count,UDim2.new(.5,-16,0,42),UDim2.new(x,8,0,224),function()
+					if hasCredits then request("Crate",{Kind=kind,Count=count}) elseif purchasable then request("Purchase",key) end
+				end,colors.Mint); open.Name="Open"..count; open.Active=hasCredits or purchasable; open.AutoButtonColor=false
+				open:SetAttribute("Purchasable",purchasable==true); open:SetAttribute("Quantity",count)
+				local price=text(card,hasCredits and (free>=count and "FREE" or "Credits") or spec.Price.." Robux",UDim2.new(.5,-16,0,28),UDim2.new(x,8,0,269)); price.TextSize=15
+				if purchasable and not hasCredits then task.spawn(function()
+					local ok,info=pcall(Market.GetProductInfoAsync,Market,spec.Id,Enum.InfoType.Product)
+					if ok and price.Parent then price.Text=tostring(info.PriceInRobux).." Robux" end
+				end) end
+			end
+			text(card,"Free "..free.."  |  Paid "..paid,UDim2.new(1,-12,0,28),UDim2.fromOffset(6,300)).TextSize=13
+			if crateDetails[kind] then
+				local odds=Rules.Odds(data.Highest,kind); local entries={}; local shiny=Rules.ShinyChance(kind,data.Luck,data.FriendBonus)
+				for tier=1,30 do if odds[tier] then table.insert(entries,Catalog[tier].Name..": "..string.format("%.2f%% normal / %.2f%% shiny",odds[tier]*(1-shiny),odds[tier]*shiny)) end end
+				local detail=text(choices,kind.." Details\n"..table.concat(entries,"\n"),UDim2.new(1,-12,0,0),UDim2.fromOffset(6,350))
+				detail.TextSize=14; detail.AutomaticSize=Enum.AutomaticSize.Y
+			end
 		end
 	end
  fitPanel()
@@ -1761483,21 +1761582,72 @@ end
 button(gui,"Index",UDim2.fromOffset(118,54),UDim2.new(0,18,.5,-70),function() show("Index") end,colors.Pink,true)
 button(gui,"Shop",UDim2.fromOffset(118,48),UDim2.new(0,18,.5,-8),function() show("Shop") end,colors.Mint,true)
 local topbar=Instance.new("ScreenGui"); topbar.Name="DessertTopbar"; topbar.IgnoreGuiInset=true; topbar.ResetOnSpawn=false; topbar.Parent=screen.Parent
+local microphone=Instance.new("ImageButton"); microphone.Name="MicrophoneButton"; microphone.Size=UDim2.fromOffset(56,56)
+microphone.BackgroundColor3=Color3.fromRGB(35,36,40); microphone.Parent=topbar; corner(microphone,28)
+microphone.Image="rbxasset://textures/ui/VoiceChat/MicLight/Muted.png"
+local voiceHint=Instance.new("Frame"); voiceHint.Name="MicrophoneStatus"; voiceHint.Size=UDim2.fromOffset(290,60)
+voiceHint.BackgroundColor3=colors.Cream; voiceHint.ZIndex=20; voiceHint.Visible=false; voiceHint.Parent=topbar; corner(voiceHint,14)
+local voiceHintText=text(voiceHint,voiceStatus,UDim2.new(1,-20,1,-12),UDim2.fromOffset(10,6)); voiceHintText.TextSize=14
+local voiceInput,voiceConnection
+refreshVoice=function()
+	local available=not Run:IsStudio() and voiceEligible and voiceInput and voiceInput.Parent and voiceInput.Player==player
+	local muted=not available or voiceInput.Muted
+	microphone.Image="rbxasset://textures/ui/VoiceChat/MicLight/"..(muted and "Muted.png" or "Unmuted0.png")
+	microphone.ImageTransparency=available and 0 or .4
+	microphone:SetAttribute("VoiceAvailable",available and true or false); microphone:SetAttribute("Muted",muted and true or false)
+	voiceHintText.Text=available and (muted and "Microphone muted" or "Microphone on") or voiceStatus
+end
+local function bindVoiceInput()
+	if voiceConnection then voiceConnection:Disconnect(); voiceConnection=nil end
+	voiceInput=player:FindFirstChildWhichIsA("AudioDeviceInput",true)
+	if voiceInput then voiceConnection=voiceInput:GetPropertyChangedSignal("Muted"):Connect(refreshVoice) end
+	refreshVoice()
+end
+player.DescendantAdded:Connect(function(child) if child:IsA("AudioDeviceInput") then bindVoiceInput() end end)
+player.DescendantRemoving:Connect(function(child)
+	if child==voiceInput then voiceInput=nil; if voiceConnection then voiceConnection:Disconnect(); voiceConnection=nil end; refreshVoice() end
+end)
+microphone.Activated:Connect(function()
+	if microphone:GetAttribute("VoiceAvailable") then
+		local ok=pcall(function() voiceInput.Muted=not voiceInput.Muted end)
+		if not ok then voiceStatus="Voice Chat: microphone unavailable" end
+		refreshVoice()
+	end
+	voiceHint.Visible=true; task.delay(3,function() voiceHint.Visible=false end)
+end)
+microphone.MouseEnter:Connect(function() voiceHint.Visible=true end)
+microphone.MouseLeave:Connect(function() voiceHint.Visible=false end)
+bindVoiceInput()
 local settings=Instance.new("ImageButton"); settings.Name="SettingsButton"; settings.Size=UDim2.fromOffset(56,56)
 settings.Image=Style.Icons.Settings; settings.ImageColor3=Color3.fromRGB(255,240,245); settings.BackgroundColor3=Color3.fromRGB(35,36,40); settings.Parent=topbar; corner(settings,28)
 local statsButton=Instance.new("ImageButton"); statsButton.Name="StatsButton"; statsButton.Size=UDim2.fromOffset(56,56); statsButton.Image="rbxthumb://type=AvatarHeadShot&id="..player.UserId.."&w=150&h=150"; statsButton.BackgroundColor3=Color3.fromRGB(35,36,40); statsButton.Parent=topbar; corner(statsButton,28)
 statsButton.Activated:Connect(function() show("Stats") end)
 local function positionSettings()
 	local inset=game:GetService("GuiService").TopbarInset
-	settings.Position=UDim2.fromOffset(inset.Min.X+8,inset.Min.Y+math.max(8,(inset.Height-56)/2))
-	statsButton.Position=settings.Position+UDim2.fromOffset(64,0)
+	local width=workspace.CurrentCamera.ViewportSize.X
+	local size=math.clamp(math.floor((width-inset.Min.X-32)/3),24,56)
+	for _,b in ipairs({microphone,settings,statsButton}) do b.Size=UDim2.fromOffset(size,size) end
+	microphone.Position=UDim2.fromOffset(inset.Min.X+8,inset.Min.Y+math.max(8,(inset.Height-size)/2))
+	settings.Position=microphone.Position+UDim2.fromOffset(size+8,0)
+	statsButton.Position=settings.Position+UDim2.fromOffset(size+8,0)
+	voiceHint.Position=UDim2.fromOffset(math.max(0,math.min(microphone.Position.X.Offset,width-298)),microphone.Position.Y.Offset+size+8)
 end
 positionSettings(); game:GetService("GuiService"):GetPropertyChangedSignal("TopbarInset"):Connect(positionSettings)
+workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(positionSettings)
 settings.Activated:Connect(function() if not data or data.Settings.Effects then click:Play() end; show("Settings") end)
-local function applySettings()
+local lastHideOthers
+local function applySettings(forceVisibility)
 	if not data then return end
-	if data.Settings.Music then if not music.Playing then music:Play() end else music:Stop() end
-	for _,model in ipairs(workspace:GetDescendants()) do
+	applyAudio()
+	if not forceVisibility and lastHideOthers==data.Settings.HideOthers then return end
+	lastHideOthers=data.Settings.HideOthers
+	local models={}
+	local island=workspace:FindFirstChild("DessertJellyIsland"); local plots=island and island:FindFirstChild("PlayerPlots")
+	if plots then for _,plot in ipairs(plots:GetChildren()) do for _,name in ipairs({"ActiveDesserts","MovingDesserts"}) do
+		local folder=plot:FindFirstChild(name); if folder then for _,model in ipairs(folder:GetChildren()) do table.insert(models,model) end end
+	end end end
+	for _,model in ipairs(workspace:GetChildren()) do if model.Name=="DessertCompanion" then table.insert(models,model) end end
+	for _,model in ipairs(models) do
 		local owner=model:IsA("Model") and model:GetAttribute("OwnerUserId")
 		local pet=model.Parent and (model.Parent.Name=="ActiveDesserts" or model.Parent.Name=="MovingDesserts" or model.Name=="DessertCompanion")
 		if pet and owner and owner~=0 and owner~=player.UserId then for _,p in ipairs(model:GetDescendants()) do
@@ -1761527,7 +1761677,6 @@ local function reveal(item)
 end
 local transfers={}
 local function transfer(kind,start,finish)
-	if data and not data.Settings.Effects then return end
 	if #transfers>=30 then return end
 	local model
 	if kind=="CafeDelivery" then model=Visuals.Build(1,false); model:ScaleTo(.4)
@@ -1761544,11 +1761693,18 @@ event.OnClientEvent:Connect(function(kind,value,message)
 		local previousHighest=data and data.Highest
 		local previousNormal=data and data.NormalTokens
 		local previousPerk=data and data.PerkTokens
+		local previousPaidNormal=data and data.PaidNormalTokens
+		local previousPaidPerk=data and data.PaidPerkTokens
+		local previousChance=data and data.ShinyChance
+		local previousPasses=data and data.OwnedPasses or {}
 		data=value; updateShinyChance(); for key,label in pairs(statLabels) do local value=data[key] or 0; label.Text=key=="PlaySeconds" and string.format("%dh %02dm %02ds",math.floor(value/3600),math.floor(value/60)%60,math.floor(value)%60) or (key=="TotalCashEarned" and "$" or "")..format(value) end; cash.Text="$"..format(data.Cash); bag.Text=format(data.Bag); boost.Text="×"..data.Multiplier
 		applySettings()
 		if giftLabel and giftLabel.Parent then giftLabel.Text=giftText() end
 		if panelName=="Index" and previousEquipped~=data.Equipped then show("Index") end
-		if panelName=="Crates" and (previousHighest~=data.Highest or previousNormal~=data.NormalTokens or previousPerk~=data.PerkTokens) then show("Crates") end
+		if panelName=="Crates" and (previousHighest~=data.Highest or previousNormal~=data.NormalTokens or previousPerk~=data.PerkTokens or previousPaidNormal~=data.PaidNormalTokens or previousPaidPerk~=data.PaidPerkTokens or previousChance~=data.ShinyChance) then show("Crates") end
+		if panelName=="Shop" then
+			for key in pairs(Config.Passes) do if previousPasses[key]~=data.OwnedPasses[key] then show("Shop"); break end end
+		end
 	elseif kind=="Panel" then show(value)
 	elseif kind=="Discovery" then reveal(value)
 	elseif kind=="Crates" then for _,found in ipairs(value) do reveal(found) end
@@ -1761589,7 +1761745,7 @@ Run.RenderStepped:Connect(function(dt)
 		if alpha>=1 then v.Model:Destroy(); table.remove(transfers,n) end
 	end
 	for n=#spinning,1,-1 do local v=spinning[n]; if not v.View.Parent then table.remove(spinning,n) else v.Model:PivotTo(CFrame.Angles(0,os.clock()*.5,0)) end end
-	visibilityTimer+=dt; if visibilityTimer>2 then visibilityTimer=0; applySettings() end
+	visibilityTimer+=dt; if visibilityTimer>2 then visibilityTimer=0; applySettings(true) end
 end)
 task.spawn(function()
 	for _=1,30 do local state=request("State"); if type(state)=="table" then
@@ -1762379,7 +1762535,7 @@ return Style
 				<ProtectedString name="Source"><![CDATA[-- Configure real IDs only after creating products in this experience's Creator Dashboard.
 local Config = {
 	GiftInterval = 5 * 60 * 60,
-	AFKInterval = 5 * 60 * 60,
+	AFKInterval = 3 * 60 * 60, -- Saved cumulative connected time.
 	ProductionInterval = 3,
 	PuddingCost = 5,
 	BuyCosts = {[1]=5, [10]=48, [100]=450, [1000]=4000},
@@ -1762391,6 +1762547,10 @@ local Config = {
 	PlateImageId = "rbxassetid://73464157423623",
 	PastelAtlasId = "rbxassetid://127272710931588",
 	KawaiiShopAtlasId = "rbxassetid://82678981874379",
+	UserAtlasIds = {"rbxassetid://96453748274402", "rbxassetid://107649080804389"},
+	ProductionTiers = {"Boost12","Boost15","Boost2","Boost3","Boost4","Boost5"},
+	LuckTiers = {"Luck12","Luck15","Luck2"},
+	SpeedTiers = {"Speed12","Speed15","Speed2","Speed3"},
 	CafeInterval = 2,
 	CafeMarketInterval = 30,
 	CafeMarketMinTenths = 5,
@@ -1762402,24 +1762562,33 @@ local Config = {
 	CafeUpgradeCostGrowth = 4,
 	HotTimeSeconds = 15 * 60,
 	HotTimeMultiplier = 2,
-	MusicId = "rbxassetid://88115288095261",
+	MusicId = "rbxassetid://73635875504187", -- Approved Smooth Focus Rain Melody / DistrokidOfficial.
 	ClickSoundId = "rbxasset://sounds/volume_slider.ogg",
 	DiscoverySoundId = "rbxassetid://158050602",
 	Products = {
 		Normal1 = {Id=0, Price=9, Count=1, Crate="Normal"},
-		Normal10 = {Id=0, Price=79, Count=10, Crate="Normal"},
+		Normal10 = {Id=0, Price=69, Count=10, Crate="Normal"},
 		Perk1 = {Id=0, Price=29, Count=1, Crate="Perk"},
-		Perk10 = {Id=0, Price=229, Count=10, Crate="Perk"},
+		Perk10 = {Id=0, Price=269, Count=10, Crate="Perk"},
 		HotTime = {Id=0, Price=19},
 	},
 	Passes = {
-		Boost12 = {Id=0, Price=9, Multiplier=1.2, Name="1.2x Mini Desserts"},
-		Boost15 = {Id=0, Price=49, Multiplier=1.5, Name="1.5x Mini Desserts"},
-		Boost2 = {Id=0, Price=149, Multiplier=2, Name="2x Mini Desserts"},
-		Boost5 = {Id=0, Price=499, Multiplier=5, Name="5x Mini Desserts"},
+		Boost12 = {Id=0, Price=9, Multiplier=1.2, Group="Production", Name="Mini Desserts"},
+		Boost15 = {Id=0, Price=39, Multiplier=1.5, Group="Production", Name="Mini Desserts"},
+		Boost2 = {Id=0, Price=89, Multiplier=2, Group="Production", Name="Mini Desserts"},
+		Boost3 = {Id=0, Price=169, Multiplier=3, Group="Production", Name="Mini Desserts"},
+		Boost4 = {Id=0, Price=279, Multiplier=4, Group="Production", Name="Mini Desserts"},
+		Boost5 = {Id=0, Price=429, Multiplier=5, Group="Production", Name="Mini Desserts"},
 		AutoMerge = {Id=0, Price=299, Name="Auto Merge"},
-		Magnet = {Id=0, Price=99, Name="Magnet"},
-		Luck = {Id=0, Price=399, Name="2x Shiny Chance"},
+		DessertMagnet = {Id=0, Price=199, Name="Dessert Magnet"},
+		MoneyMagnet = {Id=0, Price=199, Name="Money Magnet"},
+		Luck12 = {Id=0, Price=39, Multiplier=1.2, Group="Luck", Name="Shiny Rate"},
+		Luck15 = {Id=0, Price=89, Multiplier=1.5, Group="Luck", Name="Shiny Rate"},
+		Luck2 = {Id=0, Price=189, Multiplier=2, Group="Luck", Name="Shiny Rate"},
+		Speed12 = {Id=0, Price=5, Multiplier=1.2, Group="Speed", Name="Move Speed"},
+		Speed15 = {Id=0, Price=15, Multiplier=1.5, Group="Speed", Name="Move Speed"},
+		Speed2 = {Id=0, Price=28, Multiplier=2, Group="Speed", Name="Move Speed"},
+		Speed3 = {Id=0, Price=49, Multiplier=3, Group="Speed", Name="Move Speed"},
 	},
 }
 return Config
@@ -1762449,7 +1762618,7 @@ function Rules.New(now)
 	return {Version=2, Cash=0, Bag=0, Pending=0, CafeQueue=0, CafeLevel=0, Pets={["1n"]=1}, Index={["1n"]=true},
 		TotalCashEarned=0,TotalMiniCollected=0,PlaySeconds=0,AFKStored=0,OfflineStored=0,LastSeen=now,
 		NormalTokens=0, PerkTokens=0, PaidNormalTokens=0, PaidPerkTokens=0, NextGift=now+INTERVAL, AFKSeconds=0,
-		Settings={Music=true, Effects=true, HideOthers=false}, Receipts={}, HotUntil=0}
+		Settings={Music=true, Effects=true, MusicVolume=.4, EffectsVolume=.5, HideOthers=false}, Receipts={}, HotUntil=0}
 end
 function Rules.NormalizeCafe(data)
 	data.CafeQueue=math.max(0,data.CafeQueue or 0)
@@ -1762458,9 +1762627,38 @@ function Rules.NormalizeCafe(data)
 	data.TotalCashEarned=math.max(0,data.TotalCashEarned or 0)
 	data.TotalMiniCollected=math.max(0,data.TotalMiniCollected or 0)
 	data.PlaySeconds=math.max(0,data.PlaySeconds or 0)
+	data.AFKSeconds=math.max(0,data.AFKSeconds or 0)
 	data.AFKStored=math.max(0,data.AFKStored or 0)
 	data.OfflineStored=math.max(0,data.OfflineStored or 0)
 	data.LastSeen=data.LastSeen or os.time()
+	Rules.NormalizeSettings(data)
+end
+local function validVolume(value)
+	return type(value)=="number" and value==value and value>-math.huge and value<math.huge
+end
+function Rules.NormalizeSettings(data)
+	local settings=type(data.Settings)=="table" and data.Settings or {}
+	for key,default in pairs({Music=.4,Effects=.5}) do
+		local volume=settings[key.."Volume"]
+		settings[key.."Volume"]=validVolume(volume) and math.clamp(volume,0,1) or (settings[key]==false and 0 or default)
+		settings[key]=settings[key.."Volume"]>0
+	end
+	settings.HideOthers=settings.HideOthers==true
+	data.Settings=settings
+end
+function Rules.UpdateSettings(data,changes)
+	if type(changes)~="table" then return false end
+	Rules.NormalizeSettings(data)
+	for key,default in pairs({Music=.4,Effects=.5}) do
+		local volume=changes[key.."Volume"]
+		if validVolume(volume) then data.Settings[key.."Volume"]=math.clamp(volume,0,1)
+		elseif volume==nil and type(changes[key])=="boolean" then
+			data.Settings[key.."Volume"]=changes[key] and math.max(data.Settings[key.."Volume"],default) or 0
+		end
+		data.Settings[key]=data.Settings[key.."Volume"]>0
+	end
+	if type(changes.HideOthers)=="boolean" then data.Settings.HideOthers=changes.HideOthers end
+	return true
 end
 -- Use exactly the same 60-slot ordering as the displayed producer models.
 function Rules.ProductionPerSecond(data)
@@ -1762532,16 +1762730,38 @@ function Rules.Highest(data)
 	for key,n in pairs(data.Pets) do if n>0 then local tier=Rules.Decode(key); highest=math.max(highest,tier) end end
 	return highest
 end
-function Rules.ShinyChance(kind,luck)
- return (kind=="Perk" and .1 or .01)*(luck and 2 or 1)
+function Rules.ShinyChance(kind,luck,friendBonus)
+ local multiplier=type(luck)=="number" and luck or (luck and 2 or 1)
+ return math.clamp((kind=="Perk" and .1 or .01)*multiplier+(friendBonus or 0),0,1)
 end
-function Rules.Buy(data,count,rng,luck,autoMerge)
+function Rules.FriendBonus(premium,friends)
+	local bonus=0
+	for _,friendPremium in ipairs(friends) do bonus=math.max(bonus,(premium or friendPremium) and .05 or .03) end
+	return bonus
+end
+function Rules.NextPass(passes,group)
+	local tiers=group=="Production" and Config.ProductionTiers or group=="Speed" and Config.SpeedTiers or Config.LuckTiers
+	for _,key in ipairs(tiers) do if not passes[key] then return key end end
+end
+function Rules.PassMultiplier(passes,group)
+	local value=1
+	if group=="Production" or group=="Luck" or group=="Speed" then
+		local tiers=group=="Production" and Config.ProductionTiers or group=="Speed" and Config.SpeedTiers or Config.LuckTiers
+		for _,key in ipairs(tiers) do if not passes[key] then break end; value=Config.Passes[key].Multiplier end
+	else for key,spec in pairs(Config.Passes) do if passes[key] and spec.Group==group then value=math.max(value,spec.Multiplier) end end end
+	return value
+end
+function Rules.CanBuyPass(passes,key)
+	local spec=Config.Passes[key]
+	return spec~=nil and not passes[key] and ((spec.Group~="Production" and spec.Group~="Luck" and spec.Group~="Speed") or Rules.NextPass(passes,spec.Group)==key)
+end
+function Rules.Buy(data,count,rng,luck,autoMerge,friendBonus)
 	if count~=1 and count~=10 and count~=100 and count~=1000 then return false,"Invalid quantity" end
 	local cost=Rules.BuyCost(count)
 	if data.Cash<cost then return false,"Not enough cash" end
 	local trial={Pets=table.clone(data.Pets), Index=table.clone(data.Index)}
 	local discoveries={}
-	for _=1,count do Rules.Add(trial,1,rng:NextNumber()<Rules.ShinyChance("Normal",luck),1,discoveries) end
+	for _=1,count do Rules.Add(trial,1,rng:NextNumber()<Rules.ShinyChance("Normal",luck,friendBonus),1,discoveries) end
 	if count>1 or autoMerge then Rules.Merge(trial,discoveries) end
 	if Rules.Count(trial)>Config.Capacity then return false,"Plates are full. Merge desserts first." end
 	data.Pets,data.Index=trial.Pets,trial.Index
@@ -1762550,20 +1762770,22 @@ function Rules.Buy(data,count,rng,luck,autoMerge)
 end
 function Rules.Odds(highest,kind)
 	local offsets=kind=="Perk" and {3,2,1,0} or {4,3,2,1}
-	local weights=kind=="Perk" and {40,30,20,10} or {70,20,9,1}
+	local weights={40,30,20,10}
 	local odds={}
 	for i,offset in ipairs(offsets) do
-		local tier=math.max(1,highest-offset); odds[tier]=(odds[tier] or 0)+weights[i]
+		local cap=math.max(1,highest-offset)
+		for tier=1,cap do odds[tier]=(odds[tier] or 0)+weights[i]/cap end
 	end
 	return odds
 end
-function Rules.Roll(data,kind,rng,luck,discoveries)
+function Rules.Roll(data,kind,rng,luck,discoveries,friendBonus)
 	local roll=rng:NextNumber()*100; local sum=0
-	local odds=Rules.Odds(Rules.Highest(data),kind)
-	for tier=1,30 do
+	local highest=Rules.Highest(data); local lastTier=kind=="Perk" and highest or math.max(1,highest-1)
+	local odds=Rules.Odds(highest,kind)
+	for tier=1,lastTier do
 		sum+=odds[tier] or 0
-		if roll<sum then
-			local shiny=rng:NextNumber()<Rules.ShinyChance(kind,luck)
+		if roll<sum or tier==lastTier then
+			local shiny=rng:NextNumber()<Rules.ShinyChance(kind,luck,friendBonus)
 			Rules.Add(data,tier,shiny,1,discoveries)
 			return {Tier=tier,Shiny=shiny}
 		end
@@ -1762578,11 +1762800,12 @@ function Rules.Gift(data,now,premium)
 	data.NextGift=now+INTERVAL
 	return true
 end
-function Rules.AFK(data,seconds)
+function Rules.AFK(data,seconds,premium)
 	data.AFKSeconds+=seconds
 	local earned=math.floor(data.AFKSeconds/Config.AFKInterval)
 	data.AFKSeconds%=Config.AFKInterval
 	data.NormalTokens+=earned
+	if premium then data.PerkTokens+=earned end
 	return earned
 end
 return Rules
@@ -1762996,6 +1763219,7 @@ return Layout
 				<ProtectedString name="Source"><![CDATA[-- Original pastel components with free Laurel / Tabler MIT icons.
 -- Attribution and MIT notice: docs/LAUREL-LICENSE.txt, docs/ASSETS.md.
 local UI={}
+local UserArt=require(script.Parent.UserArt)
 UI.Icons={Coins="rbxassetid://74778137045475",Index="rbxassetid://82382233309285",
 	Settings="rbxassetid://123802788977158",Shop="rbxassetid://136213874647182",
 	Crates="rbxassetid://123119869662551",Cake="rbxassetid://127893549827766",
@@ -1763028,6 +1763252,8 @@ function UI.Card(object,color,radius)
 	object.ZIndex=shadow.ZIndex+1
 end
 function UI.Icon(parent,key,size,pos)
+	local custom={Coins="CashIcon",Index="IndexIcon",Shop="ShopIcon",Crates="NormalCrate",Sparkles="ShinyIcon",Multiplier="MultiplierIcon"}
+	if custom[key] then return UserArt.Create(parent,custom[key],UDim2.fromOffset(size,size),pos) end
 	local image=Instance.new("ImageLabel"); image.Name="Icon"; image.BackgroundTransparency=1; image.Image=UI.Icons[key] or UI.Icons.Cake
 	image.ImageColor3=UI.Hapy[key] and Color3.new(1,1,1) or UI.Ink; image.Size=UDim2.fromOffset(size,size); image.Position=pos; image.ZIndex=parent.ZIndex+1; image.Parent=parent; return image
 end
@@ -1763733,18 +1763959,22 @@ local Market=game:GetService('MarketplaceService')
 local Tween=game:GetService('TweenService')
 local Config=require(script.Parent.TycoonConfig)
 local Style=require(script.Parent.DessertUI)
+local UserArt=require(script.Parent.UserArt)
+local Rules=require(script.Parent.DessertRules)
 local ink=Color3.fromRGB(105,62,88)
 local cream=Color3.fromRGB(255,242,233)
-local products={
- {Key='Boost12',Name='1.2x Production',Description='Collect 20% more mini desserts.',Tier=1,Badge='1.2x'},
- {Key='Boost15',Name='1.5x Production',Description='Collect 50% more mini desserts.',Tier=2,Badge='1.5x'},
- {Key='Boost2',Name='2x Production',Description='Collect twice as many mini desserts.',Tier=3,Badge='2x'},
- {Key='Boost5',Name='5x Production',Description='Collect five times as many mini desserts.',Tier=5,Badge='5x'},
- {Key='AutoMerge',Name='Auto Merge',Description='Automatically merge matching desserts.',Icon='Cake',Badge='AUTO'},
- {Key='Magnet',Name='Magnet',Description='Collect mini desserts from farther away.',Icon='Sparkles',Badge='PICKUP'},
- {Key='Luck',Name='Shiny Luck',Description='Double your shiny dessert chance.',Icon='Sparkles',Badge='2x LUCK'},
- {Key='HotTime',Name='Cash Hot Time',Description='Double cash conversion for 15 minutes.',Icon='Coins',Badge='15 MIN',Product=true},
-}
+local function productsFor(data)
+ local owned=data.OwnedPasses or {}; local items={}
+ for _,group in ipairs({'Production','Luck','Speed'}) do
+  local key=Rules.NextPass(owned,group)
+  if key then table.insert(items,{Key=key}) else
+   local tiers=group=='Production' and Config.ProductionTiers or group=='Speed' and Config.SpeedTiers or Config.LuckTiers
+   table.insert(items,{Key=tiers[#tiers]})
+  end
+ end
+ for _,key in ipairs({'AutoMerge','DessertMagnet','MoneyMagnet'}) do table.insert(items,{Key=key}) end
+ return items
+end
 local function label(parent,name,value,size,pos,fontSize)
  local t=Instance.new('TextLabel'); t.Name=name; t.BackgroundTransparency=1; t.Text=value; t.TextColor3=ink
  t.Font=Enum.Font.FredokaOne; t.TextSize=fontSize; t.TextWrapped=true; t.Size=size; t.Position=pos; t.ZIndex=parent.ZIndex+2; t.Parent=parent
@@ -1763774,7 +1764004,7 @@ function Shop.Open(parent,data,callbacks)
  scrolling.ScrollBarImageColor3=Color3.fromRGB(225,140,182); scrolling.AutomaticCanvasSize=Enum.AutomaticSize.Y; scrolling.CanvasSize=UDim2.new(); scrolling.ZIndex=12; scrolling.Parent=root
  local grid=Instance.new('UIGridLayout'); grid.CellPadding=UDim2.fromOffset(12,12); grid.SortOrder=Enum.SortOrder.LayoutOrder; grid.Parent=scrolling
  local padding=Instance.new('UIPadding'); padding.PaddingRight=UDim.new(0,8); padding.PaddingBottom=UDim.new(0,10); padding.Parent=scrolling
- local foot=label(root,'BoostRule','Production boosts use your highest multiplier.',UDim2.new(1,-52,0,26),UDim2.new(0,26,1,-34),13)
+ local foot=label(root,'BoostRule','∞ Permanent',UDim2.new(1,-52,0,26),UDim2.new(0,26,1,-34),13)
  local disposed=false; local resizeConnection
  local function destroy()
   if disposed then return end; disposed=true
@@ -1763782,25 +1764012,23 @@ function Shop.Open(parent,data,callbacks)
   root:Destroy(); backdrop:Destroy()
  end
  close.Activated:Connect(function() callbacks.Click(); destroy(); callbacks.Close() end)
- for n,item in ipairs(products) do
+ for n,item in ipairs(productsFor(data)) do
   local spec=item.Product and Config.Products[item.Key] or Config.Passes[item.Key]
   local card=Instance.new('Frame'); card.Name=item.Key; card.LayoutOrder=n; card.BackgroundColor3=cream; card.BorderSizePixel=0; card.ZIndex=13; card.Parent=scrolling
   local curve=Instance.new('UICorner'); curve.CornerRadius=UDim.new(0,18); curve.Parent=card
   local border=Instance.new('UIStroke'); border.Color=Color3.fromRGB(246,192,208); border.Thickness=2; border.Parent=card
-  local picture=sprite(card,'Picture',UDim2.new(1,-24,0,102),UDim2.fromOffset(12,10)); picture.ImageTransparency=.2
-  if item.Tier then callbacks.Preview(card,item.Tier,UDim2.new(1,-24,0,105),UDim2.fromOffset(12,8))
-  else local icon=Style.Icon(card,item.Icon,62,UDim2.new(.5,-31,0,28)); icon.ZIndex=16 end
-  local badge=label(card,'Badge',item.Badge,UDim2.fromOffset(84,24),UDim2.new(1,-94,0,14),13); badge.TextColor3=Color3.fromRGB(137,67,112)
-  label(card,'ProductName',item.Name,UDim2.new(1,-24,0,34),UDim2.fromOffset(12,118),20)
-  label(card,'Description',item.Description,UDim2.new(1,-24,0,44),UDim2.fromOffset(12,151),14)
-  local price=label(card,'RobuxPrice',spec.Price..' R$',UDim2.new(.43,-12,0,38),UDim2.new(0,12,1,-46),19); price.TextXAlignment=Enum.TextXAlignment.Left
+  UserArt.Create(card,item.Key,UDim2.new(1,-24,0,150),UDim2.fromOffset(12,10))
+  label(card,'ProductName',spec.Name,UDim2.new(1,-24,0,34),UDim2.fromOffset(12,162),18)
+  local badge=label(card,'Badge','∞',UDim2.fromOffset(30,24),UDim2.new(1,-40,0,12),20)
+  local price=label(card,'RobuxPrice',spec.Price..' Robux',UDim2.new(.43,-12,0,38),UDim2.new(0,12,1,-46),19); price.TextXAlignment=Enum.TextXAlignment.Left
   local purchase=Instance.new('TextButton'); purchase.Name='Purchase'; purchase.Text=''; purchase.BackgroundTransparency=1
   purchase.Size=UDim2.new(.55,-12,0,38); purchase.Position=UDim2.new(.45,0,1,-46); purchase.ZIndex=16; purchase.Parent=card
   local art=sprite(purchase,'Button',UDim2.fromScale(1,1),UDim2.new()); art.ZIndex=16
   local buttonText=label(purchase,'PurchaseLabel','BUY',UDim2.fromScale(1,1),UDim2.new(),14); buttonText.ZIndex=17
-  local available=spec.Id~=0 and data.Durable and not (item.Key=='Luck' and data.Restricted)
+  local owned=data.OwnedPasses or {}
+  local available=spec.Id~=0 and data.Durable and Rules.CanBuyPass(owned,item.Key) and not (spec.Group=='Luck' and data.Restricted)
   purchase:SetAttribute('ProductId',spec.Id); purchase:SetAttribute('Purchasable',available==true); purchase.Active=available==true; purchase.AutoButtonColor=false
-  if not available then buttonText.Text='COMING SOON'; art.ImageTransparency=.35 end
+  if not available then buttonText.Text=owned[item.Key] and 'OWNED' or 'LOCKED'; art.ImageTransparency=.35 end
   purchase.Activated:Connect(function()
    if not available or disposed then return end
    callbacks.Click(); callbacks.Purchase(item.Key)
@@ -1763810,7 +1764038,7 @@ function Shop.Open(parent,data,callbacks)
    purchase.MouseLeave:Connect(function() Tween:Create(art,TweenInfo.new(.12),{ImageColor3=Color3.new(1,1,1)}):Play() end)
    task.spawn(function()
     local ok,info=pcall(Market.GetProductInfoAsync,Market,spec.Id,item.Product and Enum.InfoType.Product or Enum.InfoType.GamePass)
-    if ok and not disposed then price.Text=tostring(info.PriceInRobux)..' R$' end
+    if ok and not disposed then price.Text=tostring(info.PriceInRobux)..' Robux' end
    end)
   end
  end
@@ -1763819,7 +1764047,12 @@ function Shop.Open(parent,data,callbacks)
   local v=workspace.CurrentCamera.ViewportSize; local inset=game:GetService('GuiService'):GetGuiInset()
   local w=math.max(230,math.min(940,v.X-24)); local h=math.max(250,math.min(660,v.Y-inset.Y-24))
   root.Size=UDim2.fromOffset(w,h); local columns=w>=840 and 3 or w>=520 and 2 or 1
-  grid.FillDirectionMaxCells=columns; grid.CellSize=UDim2.fromOffset(math.floor((w-56-(columns-1)*12)/columns),248)
+  local height=math.clamp(math.floor((h-148)/2),194,248)
+  grid.FillDirectionMaxCells=columns; grid.CellSize=UDim2.fromOffset(math.floor((w-56-(columns-1)*12)/columns),height)
+  for _,card in ipairs(scrolling:GetChildren()) do if card:IsA('Frame') then
+   card['UserArt'..card.Name].Size=UDim2.new(1,-24,0,height-98)
+   card.ProductName.Position=UDim2.fromOffset(12,height-84)
+  end end
   title.TextSize=w<450 and 22 or 26; foot.TextSize=w<450 and 11 or 13
   root:SetAttribute('Columns',columns)
  end
@@ -1764072,6 +1764305,58 @@ return Baskets
 				<int64 name="SourceAssetId">-1</int64>
 				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 				<UniqueId name="UniqueId">24be45843d2709660ae0e4c0000118ba</UniqueId>
+			</Properties>
+		</Item>
+		<Item class="ModuleScript" referent="RBX3F0DC1A36C3542229D2228BA2EF27DD8">
+			<Properties>
+				<Content name="LinkedSource"><null></null></Content>
+				<ProtectedString name="Source"><![CDATA[-- User-supplied UI, packed without design changes. Source mapping: assets/ui/manifest.json.
+local Art={}
+local Config=require(script.Parent.TycoonConfig)
+local rects={
+	MultiplierIcon={2,0,512},
+	Boost12={1,0,0},
+	Boost15={1,256,0},
+	Boost2={1,512,0},
+	Boost3={1,768,0},
+	Boost4={1,0,256},
+	Boost5={1,256,256},
+	AutoMerge={1,512,256},
+	MoneyMagnet={1,768,256},
+	DessertMagnet={1,0,512},
+	Luck12={1,256,512},
+	Luck15={1,512,512},
+	Luck2={1,768,512},
+	Speed12={1,0,768},
+	Speed15={1,256,768},
+	Speed3={1,512,768},
+	Speed2={1,768,768},
+	NormalCrate={2,0,0},
+	ShinyIcon={2,256,0},
+	CashIcon={2,512,0},
+	IndexIcon={2,0,256},
+	ShopIcon={2,256,256},
+	PerkCrate={2,512,256},
+}
+function Art.Create(parent,key,size,pos)
+ local r=assert(rects[key],"Unknown user icon"); local image=Instance.new("ImageLabel")
+ image.Name="UserArt"..key; image.BackgroundTransparency=1; image.Image=Config.UserAtlasIds[r[1]]
+ image.ImageRectOffset=Vector2.new(r[2],r[3]); image.ImageRectSize=Vector2.new(256,256); image.ScaleType=Enum.ScaleType.Fit
+ image.Size=size or UDim2.fromScale(1,1); image.Position=pos or UDim2.new(); image.ZIndex=parent.ZIndex+1; image.Parent=parent
+ image:SetAttribute("UserIcon",key); return image
+end
+return Art
+]]></ProtectedString>
+				<string name="ScriptGuid">{F290D239-3477-4760-9B3E-B5DF1860A9E9}</string>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+				<bool name="DefinesCapabilities">false</bool>
+				<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+				<string name="Name">UserArt</string>
+				<BinaryString name="SerializedOverrides"></BinaryString>
+				<int64 name="SourceAssetId">-1</int64>
+				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+				<UniqueId name="UniqueId">24be45843d2709660ae0e4c00001c457</UniqueId>
 			</Properties>
 		</Item>
 	</Item>
@@ -1764878,6 +1765163,17 @@ local remotes=Instance.new(&quot;Folder&quot;); remotes.Name=&quot;DessertRemote
 local action=Instance.new(&quot;RemoteFunction&quot;); action.Name=&quot;Action&quot;; action.Parent=remotes
 local events=Instance.new(&quot;RemoteEvent&quot;); events.Name=&quot;Event&quot;; events.Parent=remotes
 local profiles,states={},{}
+local friendPairs={}
+local function pairKey(a,b) return tostring(math.min(a.UserId,b.UserId))..&quot;:&quot;..tostring(math.max(a.UserId,b.UserId)) end
+local function friendBonus(player,p)
+&#9;local bonus=0
+&#9;for other,q in pairs(profiles) do
+&#9;&#9;if other~=player and not q.Closing and friendPairs[pairKey(player,other)] then
+&#9;&#9;&#9;bonus=math.max(bonus,Rules.FriendBonus(p.Premium,{q.Premium}))
+&#9;&#9;end
+&#9;end
+&#9;return bonus
+end
 local rng=Random.new()
 local market=CafeMarket.New(workspace:GetServerTimeNow(),rng)
 local function refreshMarket()
@@ -1764891,7 +1765187,7 @@ local function root(player)
 &#9;return h and h.Health&gt;0 and c:FindFirstChild(&quot;HumanoidRootPart&quot;) or nil
 end
 local function multiplier(p)
-&#9;local m=1; for key,spec in pairs(Config.Passes) do if p.Passes[key] and spec.Multiplier then m=math.max(m,spec.Multiplier) end end; return m
+&#9;return Rules.PassMultiplier(p.Passes,&quot;Production&quot;)
 end
 local function snapshot(player)
 &#9;local p=profiles[player]; if not p then return nil end; local d=p.Data
@@ -1764899,7 +1765195,7 @@ local function snapshot(player)
 &#9;&#9;AFKStored=d.AFKStored,OfflineStored=d.OfflineStored,TotalCashEarned=d.TotalCashEarned,TotalMiniCollected=d.TotalMiniCollected,PlaySeconds=d.PlaySeconds,
 &#9;&#9;CafeRate=Rules.CafeRate(d),CafeUpgradeCost=Rules.CafeUpgradeCost(d),Index=d.Index,Highest=Rules.Highest(d),
 &#9;&#9;NormalTokens=d.NormalTokens,PerkTokens=d.PerkTokens,PaidNormalTokens=d.PaidNormalTokens,PaidPerkTokens=d.PaidPerkTokens,NextGift=d.NextGift,AFKSeconds=d.AFKSeconds,
-&#9;&#9;Multiplier=multiplier(p),Luck=p.Passes.Luck==true,ShinyChance=Rules.ShinyChance(&quot;Normal&quot;,p.Passes.Luck),Settings=d.Settings,Equipped=d.Equipped,
+&#9;&#9;Multiplier=multiplier(p),Luck=Rules.PassMultiplier(p.Passes,&quot;Luck&quot;),FriendBonus=friendBonus(player,p),ShinyChance=Rules.ShinyChance(&quot;Normal&quot;,Rules.PassMultiplier(p.Passes,&quot;Luck&quot;),friendBonus(player,p)),OwnedPasses=table.clone(p.Passes),Settings=d.Settings,Equipped=d.Equipped,
 &#9;&#9;Durable=p.Durable,Premium=p.Premium,Restricted=p.Restricted,HotUntil=d.HotUntil,
 &#9;&#9;Active=Rules.Count(d),PlotId=player:GetAttribute(&quot;PlotId&quot;),ServerTime=os.time()}
 end
@@ -1764943,6 +1765239,8 @@ end
 local function near(player,pad) local r=root(player); return r and (r.Position-pad.Position).Magnitude&lt;=14 end
 local function emit(s,pet,now)
 &#9;local p=profiles[s.Owner]; if not p or p.Busy then return end
+&#9;local value=3^(pet.Tier-1)*multiplier(p)
+&#9;if p.Passes.DessertMagnet then p.Data.Bag+=value; p.Data.TotalMiniCollected+=value; return end
 &#9;local cf=s.Plot:GetPivot(); local pad=s.Plot.PetSpawnPads[&quot;PetPad&quot;..pet.Slot]
 &#9;local pos=cf:PointToObjectSpace(pad.Position); local z=pad:GetAttribute(&quot;DropLaneZ&quot;); local lo=Layout.ChannelHeight(z,s.Plot:GetAttribute(&quot;FieldRise&quot;))
 &#9;local high=pad:GetAttribute(&quot;ShelfHeight&quot;) or 2.25
@@ -1764950,7 +1765248,6 @@ local function emit(s,pet,now)
 &#9;local points={pos+Vector3.new(0,.65,0),Vector3.new(pos.X,y+.6,z),Vector3.new(0,lo+.6,z),
 &#9;&#9;Vector3.new(0,.8,-7),Vector3.new(rng:NextNumber(-4,4),.45,rng:NextNumber(-13,-9))}
 &#9;local durations={}; for n=1,#points-1 do durations[n]=(points[n+1]-points[n]).Magnitude/9 end
-&#9;local value=3^(pet.Tier-1)*multiplier(p)
 &#9;if #s.Drops&gt;=Config.MaxDrops then p.Data.AFKStored+=value; return end
 &#9;local m=Visuals.Build(pet.Tier,pet.Shiny); m.Name=&quot;MiniDessert&quot;; m:ScaleTo(.25)
 &#9;m:SetAttribute(&quot;OwnerUserId&quot;,s.Owner.UserId); m.Parent=s.Products; m:PivotTo(cf*CFrame.new(points[1]))
@@ -1764962,8 +1765259,7 @@ local function perform(player,verb,arg)
 &#9;local d=p.Data
 &#9;if verb==&quot;State&quot; then return snapshot(player) end
 &#9;if verb==&quot;Settings&quot; then
-&#9;&#9;if type(arg)~=&quot;table&quot; then return false end
-&#9;&#9;for _,key in ipairs({&quot;Music&quot;,&quot;Effects&quot;,&quot;HideOthers&quot;}) do if type(arg[key])==&quot;boolean&quot; then d.Settings[key]=arg[key] end end
+&#9;&#9;if not Rules.UpdateSettings(d,arg) then return false end
 &#9;&#9;update(player); return true
 &#9;elseif verb==&quot;Activity&quot; then p.LastActivity=os.clock(); return true
 &#9;elseif verb==&quot;Equip&quot; then
@@ -1764981,14 +1765277,15 @@ local function perform(player,verb,arg)
 &#9;&#9;if d[key]+(p.Restricted and 0 or paid)&lt;arg.Count then return false,&quot;Not enough available crate credits&quot; end
 &#9;&#9;local freeUsed=math.min(d[key],arg.Count); d[key]-=freeUsed; d[paidKey]=paid-(arg.Count-freeUsed)
 &#9;&#9;local found={}; local results={}
-&#9;&#9;for _=1,arg.Count do table.insert(results,Rules.Roll(d,arg.Kind,rng,p.Passes.Luck,found)) end
+&#9;&#9;for _=1,arg.Count do table.insert(results,Rules.Roll(d,arg.Kind,rng,Rules.PassMultiplier(p.Passes,&quot;Luck&quot;),found,friendBonus(player,p))) end
 &#9;&#9;if p.Passes.AutoMerge then Rules.Merge(d,found) end
 &#9;&#9;render(player); events:FireClient(player,&quot;Crates&quot;,results); update(player); return true
 &#9;elseif verb==&quot;Purchase&quot; then
 &#9;&#9;if type(arg)~=&quot;string&quot; then return false end
 &#9;&#9;local product=Config.Products[arg]; local spec=product or Config.Passes[arg]
 &#9;&#9;if not spec or spec.Id&lt;=0 or not p.Durable then return false,&quot;Coming soon: purchases are not configured&quot; end
-&#9;&#9;if (product and product.Crate or arg==&quot;Luck&quot;) and p.Restricted then return false,&quot;Unavailable in your region&quot; end
+&#9;&#9;if not product and not Rules.CanBuyPass(p.Passes,arg) then return false,&quot;Unlock the previous upgrade first&quot; end
+&#9;&#9;if (product and product.Crate or spec.Group==&quot;Luck&quot;) and p.Restricted then return false,&quot;Unavailable in your region&quot; end
 &#9;&#9;if product then Market:PromptProductPurchase(player,spec.Id) else Market:PromptGamePassPurchase(player,spec.Id) end
 &#9;&#9;return true
 &#9;end
@@ -1764997,7 +1765294,7 @@ local function perform(player,verb,arg)
 &#9;if verb==&quot;Buy&quot; then
 &#9;&#9;if arg~=1 and arg~=10 and arg~=100 and arg~=1000 then return false end
 &#9;&#9;if not near(player,s.Plot.PurchaseButtons[&quot;Buy&quot;..arg]) then return false end
-&#9;&#9;local ok,result=Rules.Buy(d,arg,rng,p.Passes.Luck,p.Passes.AutoMerge)
+&#9;&#9;local ok,result=Rules.Buy(d,arg,rng,Rules.PassMultiplier(p.Passes,&quot;Luck&quot;),p.Passes.AutoMerge,friendBonus(player,p))
 &#9;&#9;if ok then render(player); discoveries(player,result); update(player,&quot;Purchased &quot;..arg..&quot; puddings&quot;) else update(player,result) end; return ok
 &#9;elseif verb==&quot;Merge&quot; then
 &#9;&#9;if not near(player,s.Plot.MergeBoard) then return false end
@@ -1765089,19 +1765386,32 @@ local function refreshPasses(player,p)
 &#9;for key,spec in pairs(Config.Passes) do if spec.Id&gt;0 then
 &#9;&#9;local ok,owns=pcall(Market.UserOwnsGamePassAsync,Market,player.UserId,spec.Id); p.Passes[key]=ok and owns or false
 &#9;end end
-&#9;if p.Restricted then p.Passes.Luck=false end
+&#9;if p.Restricted then for _,key in ipairs(Config.LuckTiers) do p.Passes[key]=false end end
+&#9;local humanoid=player.Character and player.Character:FindFirstChildOfClass(&quot;Humanoid&quot;)
+&#9;if humanoid then humanoid.WalkSpeed=16*Rules.PassMultiplier(p.Passes,&quot;Speed&quot;) end
 end
 local function join(player)
  local arrival=os.time()
  local p,message=Profiles.Load(player); if not p then player:Kick(message); return end
  if player.Parent~=Players then Profiles.Save(p,true,true); return end
  p.Passes={}; p.Restricted=true; p.Premium=player.MembershipType==Enum.MembershipType.Premium
+ player.CharacterAdded:Connect(function(character)
+  local humanoid=character:WaitForChild(&quot;Humanoid&quot;,10)
+  if humanoid then humanoid.WalkSpeed=16*Rules.PassMultiplier(p.Passes,&quot;Speed&quot;) end
+ end)
  Rules.NormalizeCafe(p.Data)
  if not Run:IsStudio() then local ok,info=pcall(Policy.GetPolicyInfoForPlayerAsync,Policy,player); p.Restricted=not ok or info.ArePaidRandomItemsRestricted~=false end
  refreshPasses(player,p)
  Rules.AccrueOffline(p.Data,arrival,multiplier(p))
  if player.Parent~=Players then Profiles.Save(p,true,true); return end
  p.LastActivity=os.clock(); p.LastPlayCheck=os.clock(); profiles[player]=p
+ -- Query each joining player&apos;s pairs once; cached relationships never yield in the game loop.
+ task.spawn(function()
+  for other,q in pairs(profiles) do if other~=player and not q.Closing then
+   local ok,friends=pcall(player.IsFriendsWithAsync,player,other.UserId)
+   friendPairs[pairKey(player,other)]=ok and friends==true
+  end end
+ end)
  if p.Data.CafeQueue&gt;0 then p.NextCafeTick=os.clock()+Config.CafeInterval end
  local stats=Instance.new(&quot;Folder&quot;); stats.Name=&quot;leaderstats&quot;; stats.Parent=player
  local cash=Instance.new(&quot;NumberValue&quot;); cash.Name=&quot;Cash&quot;; cash.Parent=stats
@@ -1765113,7 +1765423,8 @@ Players.PlayerAdded:Connect(join); for _,player in ipairs(Players:GetPlayers()) 
 local function close(player)
 &#9;local p=profiles[player]; if not p or p.Closing then return end; p.Closing=true
 &#9;local deadline=os.clock()+15; while p.Busy and os.clock()&lt;deadline do task.wait(.1) end
-&#9;p.Data.PlaySeconds+=math.max(0,os.clock()-(p.LastPlayCheck or os.clock())); p.LastPlayCheck=os.clock()
+&#9;local elapsed=math.max(0,os.clock()-(p.LastPlayCheck or os.clock()))
+&#9;p.Data.PlaySeconds+=elapsed; Rules.AFK(p.Data,elapsed,p.Premium); p.LastPlayCheck=os.clock()
 &#9;if not Profiles.Save(p,true) then warn(&quot;[DessertGame] Save failed on leave&quot;) end
 &#9;if p.Companion then p.Companion:Destroy() end; profiles[player]=nil
 end
@@ -1765149,9 +1765460,9 @@ Run.Heartbeat:Connect(function(dt)
 &#9;&#9;&#9;end end
 &#9;&#9;&#9;s.Plot:SetAttribute(&quot;UncollectedDrops&quot;,#s.Drops)
 &#9;&#9;&#9;local r=root(s.Owner); local picked=false
-&#9;&#9;&#9;if r then for _,item in ipairs({{&quot;AFKAnchor&quot;,&quot;AFKStored&quot;},{&quot;OfflineAnchor&quot;,&quot;OfflineStored&quot;}}) do
+&#9;&#9;&#9;if r or p.Passes.DessertMagnet then for _,item in ipairs({{&quot;AFKAnchor&quot;,&quot;AFKStored&quot;},{&quot;OfflineAnchor&quot;,&quot;OfflineStored&quot;}}) do
 &#9;&#9;&#9;&#9;local baskets=s.Plot:FindFirstChild(&quot;DessertBaskets&quot;); local anchor=baskets and baskets:FindFirstChild(item[1])
-&#9;&#9;&#9;&#9;if anchor and p.Data[item[2]]&gt;0 and (r.Position-anchor.Position).Magnitude&lt;=6 then
+&#9;&#9;&#9;&#9;if anchor and p.Data[item[2]]&gt;0 and (p.Passes.DessertMagnet or (r and (r.Position-anchor.Position).Magnitude&lt;=6)) then
 &#9;&#9;&#9;&#9;&#9;local amount=p.Data[item[2]]; p.Data[item[2]]=0; p.Data.Bag+=amount; p.Data.TotalMiniCollected+=amount; picked=true
 &#9;&#9;&#9;&#9;end
 &#9;&#9;&#9;end end
@@ -1765160,12 +1765471,13 @@ Run.Heartbeat:Connect(function(dt)
 &#9;&#9;&#9;&#9;while segment&lt;=#drop.Durations and elapsed&gt;=drop.Durations[segment] do elapsed-=drop.Durations[segment]; segment+=1 end
 &#9;&#9;&#9;&#9;local pos=segment&gt;#drop.Durations and drop.Points[#drop.Points] or drop.Points[segment]:Lerp(drop.Points[segment+1],elapsed/drop.Durations[segment])
 &#9;&#9;&#9;&#9;drop.Model:PivotTo(drop.CF*CFrame.new(pos)*CFrame.Angles(0,now*2,segment&gt;#drop.Durations and 0 or now*3))
-&#9;&#9;&#9;&#9;if r and (r.Position-drop.Model:GetPivot().Position).Magnitude&lt;=(p.Passes.Magnet and 25 or 6) then p.Data.Bag+=drop.Value; p.Data.TotalMiniCollected+=drop.Value; drop.Model:Destroy(); table.remove(s.Drops,n); picked=true end
+&#9;&#9;&#9;&#9;if p.Passes.DessertMagnet or (r and (r.Position-drop.Model:GetPivot().Position).Magnitude&lt;=6) then p.Data.Bag+=drop.Value; p.Data.TotalMiniCollected+=drop.Value; drop.Model:Destroy(); table.remove(s.Drops,n); picked=true end
 &#9;&#9;&#9;end
 &#9;&#9;&#9;if picked then update(s.Owner) end
 &#9;&#9;end
 &#9;end
 &#9;for player,p in pairs(profiles) do
+&#9;&#9;if p.Passes.MoneyMagnet and not p.Busy and not p.Closing and not p.Faulted and p.Data.Pending&gt;0 then p.Data.Cash+=p.Data.Pending; p.Data.Pending=0; update(player) end
 &#9;&#9;local r=root(player); if p.Companion and r then p.Companion:PivotTo(r.CFrame*CFrame.new(-3,3+math.sin(now*2)*.3,0)) end
 &#9;&#9;if p.NextCafeTick and now&gt;=p.NextCafeTick and not p.Busy and not p.Closing and not p.Faulted then
 &#9;&#9;&#9;local units,cash=Rules.ConvertCafe(p.Data,os.time())
@@ -1765180,10 +1765492,8 @@ Run.Heartbeat:Connect(function(dt)
 &#9;&#9;&#9;p.LastPosition=r and r.Position; p.Premium=player.MembershipType==Enum.MembershipType.Premium
 &#9;&#9;&#9;Rules.Gift(p.Data,os.time(),p.Premium)
 &#9;&#9;&#9;-- Include idle time spent waiting for a save instead of losing busy-frame seconds.
-&#9;&#9;&#9;p.Data.PlaySeconds+=math.max(0,now-(p.LastPlayCheck or now)); p.LastPlayCheck=now
-&#9;&#9;&#9;local idleSeconds=math.max(0,now-math.max(p.LastAFKCheck or now,p.LastActivity+60))
-&#9;&#9;&#9;p.LastAFKCheck=now
-&#9;&#9;&#9;if r and idleSeconds&gt;0 then Rules.AFK(p.Data,idleSeconds) end
+&#9;&#9;&#9;local connectedSeconds=math.max(0,now-(p.LastPlayCheck or now))
+&#9;&#9;&#9;p.Data.PlaySeconds+=connectedSeconds; Rules.AFK(p.Data,connectedSeconds,p.Premium); p.LastPlayCheck=now
 &#9;&#9;&#9;if p.Passes.AutoMerge then local found={}; local before=Rules.Count(p.Data); Rules.Merge(p.Data,found); if before~=Rules.Count(p.Data) then render(player); discoveries(player,found) end end
 &#9;&#9;&#9;update(player)
 &#9;&#9;end end

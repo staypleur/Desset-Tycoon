@@ -1,0 +1,23 @@
+-- Fresh edit-mode rules; no production saves or purchases.
+local f=Instance.new("Folder"); f.Name="AudioSettingsRegression"; f.Parent=game.ReplicatedStorage
+for _,name in ipairs({"TycoonConfig","DessertRules"}) do game.ReplicatedStorage[name]:Clone().Parent=f end
+local R=require(f.DessertRules); local C=require(f.TycoonConfig)
+local d=R.New(0)
+assert(d.Settings.MusicVolume==.4 and d.Settings.EffectsVolume==.5)
+local old={Settings={Music=false,Effects=true,HideOthers=true}}; R.NormalizeSettings(old)
+assert(old.Settings.MusicVolume==0 and old.Settings.EffectsVolume==.5 and old.Settings.HideOthers)
+R.UpdateSettings(old,{MusicVolume=.27,EffectsVolume=.81})
+assert(old.Settings.MusicVolume==.27 and old.Settings.EffectsVolume==.81 and old.Settings.HideOthers)
+R.UpdateSettings(old,{MusicVolume=-1,EffectsVolume=3})
+assert(old.Settings.MusicVolume==0 and old.Settings.EffectsVolume==1)
+R.UpdateSettings(old,{MusicVolume=0/0,EffectsVolume=math.huge,HideOthers="false"})
+assert(old.Settings.MusicVolume==0 and old.Settings.EffectsVolume==1 and old.Settings.HideOthers)
+R.UpdateSettings(old,{MusicVolume=.1,EffectsVolume=.2}); R.UpdateSettings(old,{MusicVolume="1",EffectsVolume={}})
+assert(old.Settings.MusicVolume==.1 and old.Settings.EffectsVolume==.2)
+R.UpdateSettings(old,{Music=false}); assert(old.Settings.MusicVolume==0 and old.Settings.EffectsVolume==.2)
+R.UpdateSettings(old,{Music=true}); assert(old.Settings.MusicVolume==.4)
+local restored=game:GetService("HttpService"):JSONDecode(game:GetService("HttpService"):JSONEncode(old))
+R.NormalizeSettings(restored); assert(restored.Settings.EffectsVolume==.2 and restored.Settings.MusicVolume==.4)
+assert(not R.UpdateSettings(d,nil) and C.MusicId=="rbxassetid://73635875504187")
+f:Destroy()
+print("[AudioSettings] PASS: old mute migration, independent volumes, clamping, malformed/NaN/infinite rejection, partial updates, JSON persistence, approved music")

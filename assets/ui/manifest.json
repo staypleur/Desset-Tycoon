@@ -1,0 +1,186 @@
+{
+  "Boost12": {
+    "Atlas": 1,
+    "X": 0,
+    "Y": 0,
+    "Size": 256,
+    "Source": "codex-clipboard-b58bee47-7777-4ac1-b659-580db139df8d.png",
+    "Sha256": "905d99ea931d82e056743008acba3a62411bcdb70a77c5b61a89f09c37f66c12"
+  },
+  "Boost15": {
+    "Atlas": 1,
+    "X": 256,
+    "Y": 0,
+    "Size": 256,
+    "Source": "codex-clipboard-79f0f597-d56e-4f45-84d2-da8a19112460.png",
+    "Sha256": "48fa91c1ecc7d42fa91302d36fa32f0ab96ffb7dcab8cae4c67b0e141addb92e"
+  },
+  "Boost2": {
+    "Atlas": 1,
+    "X": 512,
+    "Y": 0,
+    "Size": 256,
+    "Source": "codex-clipboard-844b53b7-ce28-4f46-9d11-bc51ce9a8e45.png",
+    "Sha256": "f55fcf5b6e8bc396e67360af2f2b4ba3c6b10fe808dd2fe730b837d38cc161e8"
+  },
+  "Boost3": {
+    "Atlas": 1,
+    "X": 768,
+    "Y": 0,
+    "Size": 256,
+    "Source": "codex-clipboard-26746089-1d36-442c-818c-9f7a32990fa9.png",
+    "Sha256": "b0b25e6831b785a708fbcb88937aa297d2a4f9ffb9b547ad40719ebbe5a25a85"
+  },
+  "Boost4": {
+    "Atlas": 1,
+    "X": 0,
+    "Y": 256,
+    "Size": 256,
+    "Source": "codex-clipboard-f08bd630-cb11-45d5-befe-8c4bd1df9574.png",
+    "Sha256": "4eb20bb21ec9651384a5d07faa0ba6312419813630eccc346aad38521c33b1e0"
+  },
+  "Boost5": {
+    "Atlas": 1,
+    "X": 256,
+    "Y": 256,
+    "Size": 256,
+    "Source": "codex-clipboard-036f5f51-0bee-4330-ada2-dc923c7414e6.png",
+    "Sha256": "c1a653966e547c9ac0755983bd37b6521fd7ace4d732fbe9ef18a027053827b8"
+  },
+  "AutoMerge": {
+    "Atlas": 1,
+    "X": 512,
+    "Y": 256,
+    "Size": 256,
+    "Source": "codex-clipboard-13b21038-228c-4798-967b-0e8f9a1fc83e.png",
+    "Sha256": "505352f04b9287e03e25d318caf4f15be2c59c7430a66d3a1e4ad2c1801f52cc"
+  },
+  "MoneyMagnet": {
+    "Atlas": 1,
+    "X": 768,
+    "Y": 256,
+    "Size": 256,
+    "Source": "codex-clipboard-d8db6768-e144-4e78-a311-159e51ff0d26.png",
+    "Sha256": "357fd3a74adc48db60a81975b58aa33b916ccdf3ef19f47cf840d004ec27b73c"
+  },
+  "DessertMagnet": {
+    "Atlas": 1,
+    "X": 0,
+    "Y": 512,
+    "Size": 256,
+    "Source": "codex-clipboard-7980811e-3c4f-4654-a264-67d4326aa8d6.png",
+    "Sha256": "aeb43739f49edac4cf1dc9787210fa295d787974f727e438e206d7a78e567b55"
+  },
+  "Luck12": {
+    "Atlas": 1,
+    "X": 256,
+    "Y": 512,
+    "Size": 256,
+    "Source": "codex-clipboard-98f27586-a768-473a-9328-aaabd36274dd.png",
+    "Sha256": "0d0aedcdd1d7da0de30587bb9ffce5085315438684c60637684681c46c01a04d"
+  },
+  "Luck15": {
+    "Atlas": 1,
+    "X": 512,
+    "Y": 512,
+    "Size": 256,
+    "Source": "codex-clipboard-dbd1fb70-1288-45a5-afa7-c08e08479aa4.png",
+    "Sha256": "d337cd1771e1fd27c9722042776239cba75b162ca8e368171819e7334378ebef"
+  },
+  "Luck2": {
+    "Atlas": 1,
+    "X": 768,
+    "Y": 512,
+    "Size": 256,
+    "Source": "codex-clipboard-a706d116-039e-41c3-9c18-19cdf2023c9d.png",
+    "Sha256": "449767b45162fcd3804d94b45ae20e2631bf4c2483fa7f9227899fad7b9b6699"
+  },
+  "Speed12": {
+    "Atlas": 1,
+    "X": 0,
+    "Y": 768,
+    "Size": 256,
+    "Source": "codex-clipboard-78f73444-66d6-40ae-a5df-9a4a4cfdcf77.png",
+    "Sha256": "e52f2269fec2b66a4a6f51b4da4cc0805f6b5d51f454dcc1110acfac615fe1cb"
+  },
+  "Speed15": {
+    "Atlas": 1,
+    "X": 256,
+    "Y": 768,
+    "Size": 256,
+    "Source": "codex-clipboard-1a5100e3-6a68-43e3-9ac5-576ffdee897a.png",
+    "Sha256": "fde1af5af20063f5e014b27fc0a7b70b5047686cc2aebc67c3f820415da312b6"
+  },
+  "Speed3": {
+    "Atlas": 1,
+    "X": 512,
+    "Y": 768,
+    "Size": 256,
+    "Source": "codex-clipboard-e1d4e7c9-4e2f-4113-bfce-fe7ee5cf5a5e.png",
+    "Sha256": "8089aa548f768c6723cbd5bb394a8faf7ccd95b7823e867464bd8f83153f4537"
+  },
+  "Speed2": {
+    "Atlas": 1,
+    "X": 768,
+    "Y": 768,
+    "Size": 256,
+    "Source": "codex-clipboard-813b3d16-f26f-4596-8473-6bc054e2bfe4.png",
+    "Sha256": "bd33392dc368a89bc3735f65e46445ac4696b648c3757cab7b65656847e343ec"
+  },
+  "NormalCrate": {
+    "Atlas": 2,
+    "X": 0,
+    "Y": 0,
+    "Size": 256,
+    "Source": "codex-clipboard-7a8dcbe5-84eb-44ab-bb5b-eac4067e15a1.png",
+    "Sha256": "c8386bde6747d5edc5cca976550c1ba28a5458ba9b844fd13e6b62268070f8a4"
+  },
+  "ShinyIcon": {
+    "Atlas": 2,
+    "X": 256,
+    "Y": 0,
+    "Size": 256,
+    "Source": "codex-clipboard-14806f17-2227-408e-a5a5-7b743114db55.png",
+    "Sha256": "3359c5963c65e70e4900bc7e84199f079618a24f36dbfb4013a24661f92d5e19"
+  },
+  "CashIcon": {
+    "Atlas": 2,
+    "X": 512,
+    "Y": 0,
+    "Size": 256,
+    "Source": "codex-clipboard-393c9191-dfd5-4356-a91c-99a5f2e8b330.png",
+    "Sha256": "fa3219f9a9ddc31c29975a5d2f324f4edff5f16127a087bb3096344e1b0507d4"
+  },
+  "IndexIcon": {
+    "Atlas": 2,
+    "X": 0,
+    "Y": 256,
+    "Size": 256,
+    "Source": "codex-clipboard-e6385ab7-2884-44fb-aeda-8972a7b66b4c.png",
+    "Sha256": "774f590633062124d7590298b5071f0de32d7a3824b77b8825d1b7f57244376d"
+  },
+  "ShopIcon": {
+    "Atlas": 2,
+    "X": 256,
+    "Y": 256,
+    "Size": 256,
+    "Source": "codex-clipboard-ad7e0e46-4baf-4ab3-a860-bbf6d1a6666e.png",
+    "Sha256": "4b57f7b6687000e8030feb8dced494c9a8025fc441c90128b5039f9722dd4771"
+  },
+  "PerkCrate": {
+    "Atlas": 2,
+    "X": 512,
+    "Y": 256,
+    "Size": 256,
+    "Source": "codex-clipboard-fdca323e-d10b-452c-a6e3-e91b74cfd1c6.png",
+    "Sha256": "07029896eeaf6280356afd9b9a350b8a00aff17e5917335e1fe188755ef88e39"
+  },
+  "MultiplierIcon": {
+    "Atlas": 2,
+    "X": 0,
+    "Y": 512,
+    "Size": 256,
+    "Source": "codex-clipboard-a332ad27-a05e-441e-9c22-111271079715.png",
+    "Sha256": "ea5833a4d3bc9d943c66ce30a7e4c8d891493c2c197fd27e58098a5162eca2e6"
+  }
+}

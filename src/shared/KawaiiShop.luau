@@ -6,18 +6,22 @@ local Market=game:GetService('MarketplaceService')
 local Tween=game:GetService('TweenService')
 local Config=require(script.Parent.TycoonConfig)
 local Style=require(script.Parent.DessertUI)
+local UserArt=require(script.Parent.UserArt)
+local Rules=require(script.Parent.DessertRules)
 local ink=Color3.fromRGB(105,62,88)
 local cream=Color3.fromRGB(255,242,233)
-local products={
- {Key='Boost12',Name='1.2x Production',Description='Collect 20% more mini desserts.',Tier=1,Badge='1.2x'},
- {Key='Boost15',Name='1.5x Production',Description='Collect 50% more mini desserts.',Tier=2,Badge='1.5x'},
- {Key='Boost2',Name='2x Production',Description='Collect twice as many mini desserts.',Tier=3,Badge='2x'},
- {Key='Boost5',Name='5x Production',Description='Collect five times as many mini desserts.',Tier=5,Badge='5x'},
- {Key='AutoMerge',Name='Auto Merge',Description='Automatically merge matching desserts.',Icon='Cake',Badge='AUTO'},
- {Key='Magnet',Name='Magnet',Description='Collect mini desserts from farther away.',Icon='Sparkles',Badge='PICKUP'},
- {Key='Luck',Name='Shiny Luck',Description='Double your shiny dessert chance.',Icon='Sparkles',Badge='2x LUCK'},
- {Key='HotTime',Name='Cash Hot Time',Description='Double cash conversion for 15 minutes.',Icon='Coins',Badge='15 MIN',Product=true},
-}
+local function productsFor(data)
+ local owned=data.OwnedPasses or {}; local items={}
+ for _,group in ipairs({'Production','Luck','Speed'}) do
+  local key=Rules.NextPass(owned,group)
+  if key then table.insert(items,{Key=key}) else
+   local tiers=group=='Production' and Config.ProductionTiers or group=='Speed' and Config.SpeedTiers or Config.LuckTiers
+   table.insert(items,{Key=tiers[#tiers]})
+  end
+ end
+ for _,key in ipairs({'AutoMerge','DessertMagnet','MoneyMagnet'}) do table.insert(items,{Key=key}) end
+ return items
+end
 local function label(parent,name,value,size,pos,fontSize)
  local t=Instance.new('TextLabel'); t.Name=name; t.BackgroundTransparency=1; t.Text=value; t.TextColor3=ink
  t.Font=Enum.Font.FredokaOne; t.TextSize=fontSize; t.TextWrapped=true; t.Size=size; t.Position=pos; t.ZIndex=parent.ZIndex+2; t.Parent=parent
@@ -47,7 +51,7 @@ function Shop.Open(parent,data,callbacks)
  scrolling.ScrollBarImageColor3=Color3.fromRGB(225,140,182); scrolling.AutomaticCanvasSize=Enum.AutomaticSize.Y; scrolling.CanvasSize=UDim2.new(); scrolling.ZIndex=12; scrolling.Parent=root
  local grid=Instance.new('UIGridLayout'); grid.CellPadding=UDim2.fromOffset(12,12); grid.SortOrder=Enum.SortOrder.LayoutOrder; grid.Parent=scrolling
  local padding=Instance.new('UIPadding'); padding.PaddingRight=UDim.new(0,8); padding.PaddingBottom=UDim.new(0,10); padding.Parent=scrolling
- local foot=label(root,'BoostRule','Production boosts use your highest multiplier.',UDim2.new(1,-52,0,26),UDim2.new(0,26,1,-34),13)
+ local foot=label(root,'BoostRule','∞ Permanent',UDim2.new(1,-52,0,26),UDim2.new(0,26,1,-34),13)
  local disposed=false; local resizeConnection
  local function destroy()
   if disposed then return end; disposed=true
@@ -55,25 +59,23 @@ function Shop.Open(parent,data,callbacks)
   root:Destroy(); backdrop:Destroy()
  end
  close.Activated:Connect(function() callbacks.Click(); destroy(); callbacks.Close() end)
- for n,item in ipairs(products) do
+ for n,item in ipairs(productsFor(data)) do
   local spec=item.Product and Config.Products[item.Key] or Config.Passes[item.Key]
   local card=Instance.new('Frame'); card.Name=item.Key; card.LayoutOrder=n; card.BackgroundColor3=cream; card.BorderSizePixel=0; card.ZIndex=13; card.Parent=scrolling
   local curve=Instance.new('UICorner'); curve.CornerRadius=UDim.new(0,18); curve.Parent=card
   local border=Instance.new('UIStroke'); border.Color=Color3.fromRGB(246,192,208); border.Thickness=2; border.Parent=card
-  local picture=sprite(card,'Picture',UDim2.new(1,-24,0,102),UDim2.fromOffset(12,10)); picture.ImageTransparency=.2
-  if item.Tier then callbacks.Preview(card,item.Tier,UDim2.new(1,-24,0,105),UDim2.fromOffset(12,8))
-  else local icon=Style.Icon(card,item.Icon,62,UDim2.new(.5,-31,0,28)); icon.ZIndex=16 end
-  local badge=label(card,'Badge',item.Badge,UDim2.fromOffset(84,24),UDim2.new(1,-94,0,14),13); badge.TextColor3=Color3.fromRGB(137,67,112)
-  label(card,'ProductName',item.Name,UDim2.new(1,-24,0,34),UDim2.fromOffset(12,118),20)
-  label(card,'Description',item.Description,UDim2.new(1,-24,0,44),UDim2.fromOffset(12,151),14)
-  local price=label(card,'RobuxPrice',spec.Price..' R$',UDim2.new(.43,-12,0,38),UDim2.new(0,12,1,-46),19); price.TextXAlignment=Enum.TextXAlignment.Left
+  UserArt.Create(card,item.Key,UDim2.new(1,-24,0,150),UDim2.fromOffset(12,10))
+  label(card,'ProductName',spec.Name,UDim2.new(1,-24,0,34),UDim2.fromOffset(12,162),18)
+  local badge=label(card,'Badge','∞',UDim2.fromOffset(30,24),UDim2.new(1,-40,0,12),20)
+  local price=label(card,'RobuxPrice',spec.Price..' Robux',UDim2.new(.43,-12,0,38),UDim2.new(0,12,1,-46),19); price.TextXAlignment=Enum.TextXAlignment.Left
   local purchase=Instance.new('TextButton'); purchase.Name='Purchase'; purchase.Text=''; purchase.BackgroundTransparency=1
   purchase.Size=UDim2.new(.55,-12,0,38); purchase.Position=UDim2.new(.45,0,1,-46); purchase.ZIndex=16; purchase.Parent=card
   local art=sprite(purchase,'Button',UDim2.fromScale(1,1),UDim2.new()); art.ZIndex=16
   local buttonText=label(purchase,'PurchaseLabel','BUY',UDim2.fromScale(1,1),UDim2.new(),14); buttonText.ZIndex=17
-  local available=spec.Id~=0 and data.Durable and not (item.Key=='Luck' and data.Restricted)
+  local owned=data.OwnedPasses or {}
+  local available=spec.Id~=0 and data.Durable and Rules.CanBuyPass(owned,item.Key) and not (spec.Group=='Luck' and data.Restricted)
   purchase:SetAttribute('ProductId',spec.Id); purchase:SetAttribute('Purchasable',available==true); purchase.Active=available==true; purchase.AutoButtonColor=false
-  if not available then buttonText.Text='COMING SOON'; art.ImageTransparency=.35 end
+  if not available then buttonText.Text=owned[item.Key] and 'OWNED' or 'LOCKED'; art.ImageTransparency=.35 end
   purchase.Activated:Connect(function()
    if not available or disposed then return end
    callbacks.Click(); callbacks.Purchase(item.Key)
@@ -83,7 +85,7 @@ function Shop.Open(parent,data,callbacks)
    purchase.MouseLeave:Connect(function() Tween:Create(art,TweenInfo.new(.12),{ImageColor3=Color3.new(1,1,1)}):Play() end)
    task.spawn(function()
     local ok,info=pcall(Market.GetProductInfoAsync,Market,spec.Id,item.Product and Enum.InfoType.Product or Enum.InfoType.GamePass)
-    if ok and not disposed then price.Text=tostring(info.PriceInRobux)..' R$' end
+    if ok and not disposed then price.Text=tostring(info.PriceInRobux)..' Robux' end
    end)
   end
  end
@@ -92,7 +94,12 @@ function Shop.Open(parent,data,callbacks)
   local v=workspace.CurrentCamera.ViewportSize; local inset=game:GetService('GuiService'):GetGuiInset()
   local w=math.max(230,math.min(940,v.X-24)); local h=math.max(250,math.min(660,v.Y-inset.Y-24))
   root.Size=UDim2.fromOffset(w,h); local columns=w>=840 and 3 or w>=520 and 2 or 1
-  grid.FillDirectionMaxCells=columns; grid.CellSize=UDim2.fromOffset(math.floor((w-56-(columns-1)*12)/columns),248)
+  local height=math.clamp(math.floor((h-148)/2),194,248)
+  grid.FillDirectionMaxCells=columns; grid.CellSize=UDim2.fromOffset(math.floor((w-56-(columns-1)*12)/columns),height)
+  for _,card in ipairs(scrolling:GetChildren()) do if card:IsA('Frame') then
+   card['UserArt'..card.Name].Size=UDim2.new(1,-24,0,height-98)
+   card.ProductName.Position=UDim2.fromOffset(12,height-84)
+  end end
   title.TextSize=w<450 and 22 or 26; foot.TextSize=w<450 and 11 or 13
   root:SetAttribute('Columns',columns)
  end

@@ -57,6 +57,9 @@
       },
       "DessertBaskets": {
         "$path": "src/shared/DessertBaskets.luau"
+      },
+      "UserArt": {
+        "$path": "src/shared/UserArt.luau"
       }
     },
     "ServerScriptService": {

@@ -1,6 +1,7 @@
 -- Original pastel components with free Laurel / Tabler MIT icons.
 -- Attribution and MIT notice: docs/LAUREL-LICENSE.txt, docs/ASSETS.md.
 local UI={}
+local UserArt=require(script.Parent.UserArt)
 UI.Icons={Coins="rbxassetid://74778137045475",Index="rbxassetid://82382233309285",
 	Settings="rbxassetid://123802788977158",Shop="rbxassetid://136213874647182",
 	Crates="rbxassetid://123119869662551",Cake="rbxassetid://127893549827766",
@@ -33,6 +34,8 @@ function UI.Card(object,color,radius)
 	object.ZIndex=shadow.ZIndex+1
 end
 function UI.Icon(parent,key,size,pos)
+	local custom={Coins="CashIcon",Index="IndexIcon",Shop="ShopIcon",Crates="NormalCrate",Sparkles="ShinyIcon",Multiplier="MultiplierIcon"}
+	if custom[key] then return UserArt.Create(parent,custom[key],UDim2.fromOffset(size,size),pos) end
 	local image=Instance.new("ImageLabel"); image.Name="Icon"; image.BackgroundTransparency=1; image.Image=UI.Icons[key] or UI.Icons.Cake
 	image.ImageColor3=UI.Hapy[key] and Color3.new(1,1,1) or UI.Ink; image.Size=UDim2.fromOffset(size,size); image.Position=pos; image.ZIndex=parent.ZIndex+1; image.Parent=parent; return image
 end
