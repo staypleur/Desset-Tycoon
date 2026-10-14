@@ -1,0 +1,16 @@
+{
+  "Source": "User-supplied Meshy AI chef",
+  "OriginalRig": "Meshy_AI_dessert_cafe_chef_rig_biped_Meshy_Merged_Animations.fbx",
+  "OriginalTexture": "Meshy_AI_dessert_cafe_chef_rig_biped_texture_0.png",
+  "Files": {
+    "chef.fbx": "0f127d6ebc95d1b6b387b163ab1e7e860e4f8fb7fd0fe93614c5be036e21ef2e",
+    "chef-color.png": "b07e98c4d5c4251048d7d8eb8d666fd91050a68fea5f6bb2499d403f87559299"
+  },
+  "TriangleCount": 3165,
+  "Bones": 22,
+  "HeightStuds": 5.8,
+  "MeshId": 124893487789324,
+  "ColorMapId": 81596257819395,
+  "WalkingAnimationId": 79831780716711,
+  "Changes": "Uniform scaling, foot-center pivot, emissive strength 0, anchored non-colliding decoration; original mesh, skinning and colors retained"
+}

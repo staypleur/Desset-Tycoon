@@ -236,3 +236,8 @@ PASS: PlayerProfiles deterministic mock verifies persisted gift/AFK clocks, dupl
 - Normal/Perk crates share a centered row; each has Details directly below its art, Open 1 left and Open 10 right, with Robux price underneath. Details expand on demand.
 - Edit-mode AudioSettings/UserShopRules/EconomyV16/PlayerProfiles passed; 25 sources compile. Live AudioLive/native volume drag, all 23 rendered art/next-tier cards, pet visibility optimization, centered crate layout and actual Details click passed. No real purchases or publication.
 - Proof: docs/previews/user-ui-shop.jpg, user-ui-crates.jpg, user-ui-upload.png.
+
+## 2026-10-15 — Walking central cafe chef
+- Imported the user-provided Meshy biped chef and Walking animation. Preserved mesh/texture/skinning, scaled height to 5.8 studs, corrected foot-center pivot and disabled unintended emissive glow. Stored a clean template and one interior chef.
+- Added CafeChefNavigation and CafeChef server walker: 187 connected safe nodes built from actual non-queryable props, interior radius 20, cached routing, one anchored mesh, no humanoid physics/economy hooks. Walks at 3.2 studs/sec, turns only when heading changes and pauses briefly at destinations.
+- Live regression confirms imported bone deformation, continued movement, correct height/boundary/non-collision. Navigation regression validates every edge and 40 routes against actual decor. Source/place audit and GitHub save follow. Proof: docs/previews/cafe-chef-live.jpg.

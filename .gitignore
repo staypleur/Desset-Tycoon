@@ -4,3 +4,5 @@
 *.autosave
 .DS_Store
 .local-ui-review/
+
+assets/chef/chef.fbm/

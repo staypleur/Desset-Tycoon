@@ -60,6 +60,9 @@
       },
       "UserArt": {
         "$path": "src/shared/UserArt.luau"
+      },
+      "CafeChefNavigation": {
+        "$path": "src/shared/CafeChefNavigation.luau"
       }
     },
     "ServerScriptService": {
@@ -81,6 +84,9 @@
       },
       "PlayerProfiles": {
         "$path": "src/server/PlayerProfiles.luau"
+      },
+      "CafeChef": {
+        "$path": "src/server/CafeChef.server.luau"
       }
     },
     "StarterPlayer": {
