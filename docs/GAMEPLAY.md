@@ -64,3 +64,5 @@ Normal saves and receipt writes record server LastSeen. On successful profile lo
 Baskets and their labels are hidden when their stored count is zero. Each appears independently when AFK/offline earnings exist. Owner proximity collection empties its counter and hides it again; the mesh remains empty.
 
 The right HUD displays Shiny purchase chance above the production multiplier: 1% normally, 2% with the active luck entitlement. Crate windows retain their separate 1%/10% chances, doubled by luck.
+
+Bank pads are named Collect Cash and Upgrade. The Shiny and production multiplier cards share a size at the lower right. Crate odds are absent from the default view; Details discloses exact paid random outcomes before purchase. The central cafe has a closed counter and invisible collision barrier; its interior remains decorative.

@@ -31,6 +31,7 @@ local data,panelName,spinning=nil,nil,{}
 local giftLabel
 local statLabels={}
 local indexGrid
+local crateDetails={}
 local voiceStatus="Voice Chat: checking availability..."
 task.spawn(function()
 	local ok,enabled=pcall(function() return game:GetService("VoiceChatService"):IsVoiceEnabledForUserIdAsync(player.UserId) end)
@@ -74,9 +75,9 @@ plate.Size=UDim2.fromOffset(112,112); plate.AnchorPoint=Vector2.new(.5,1); plate
 plate.Image=Config.PlateImageId or ""; plate.ScaleType=Enum.ScaleType.Fit; plate.Parent=gui
 local bag=text(plate,"0",UDim2.fromScale(.68,.5),UDim2.fromScale(.16,.32)); bag.Name="BagValue"; bag.TextScaled=true
 local numberLimit=Instance.new("UITextSizeConstraint"); numberLimit.MinTextSize=14; numberLimit.MaxTextSize=27; numberLimit.Parent=bag
-local boost=box("×1",UDim2.fromOffset(94,52),UDim2.new(1,-112,.5,-26),colors.Lavender)
-local shinyChance=box("Shiny 1%",UDim2.fromOffset(150,42),UDim2.new(1,-168,.5,-76),colors.Pink,"Sparkles")
-shinyChance.Name="ShinyChanceValue"; shinyChance.TextSize=16
+local boost=box("×1",UDim2.fromOffset(150,48),UDim2.new(1,-168,1,-68),colors.Lavender)
+local shinyChance=box("Shiny 1%",UDim2.fromOffset(150,48),UDim2.new(1,-168,1,-124),colors.Pink,"Sparkles")
+shinyChance.Name="ShinyChanceValue"; shinyChance.TextSize=16; boost.TextSize=16
 local function updateShinyChance()
  shinyChance.Text=string.format("Shiny %.0f%%",100*(data.ShinyChance or Rules.ShinyChance("Normal",data.Luck)))
 end
@@ -180,7 +181,9 @@ show=function(name)
 			for tier=1,30 do if odds[tier] then
 				table.insert(entries,Catalog[tier].Name..": "..string.format("%.2f",odds[tier]*(1-shiny/100)).."% normal / "..string.format("%.2f",odds[tier]*shiny/100).."% shiny")
 			end end
-			text(scroll,kind.." Crates | Free: "..tokens.." | Purchased: "..(paidTokens or 0).."\n"..table.concat(entries,"\n"),UDim2.new(1,-18,0,130),UDim2.fromOffset(6,y)); y+=140
+			text(scroll,kind.." Crates | Free: "..tokens.." | Purchased: "..(paidTokens or 0),UDim2.new(1,-18,0,40),UDim2.fromOffset(6,y)); y+=44
+			button(scroll,"Details",UDim2.fromOffset(132,36),UDim2.fromOffset(6,y),function() crateDetails[kind]=not crateDetails[kind]; show("Crates") end,colors.Cream); y+=44
+			if crateDetails[kind] then text(scroll,table.concat(entries,"\n"),UDim2.new(1,-18,0,130),UDim2.fromOffset(6,y)); y+=140 end
 			for n,count in ipairs({1,10}) do
 				button(scroll,"Open "..count.." credits",UDim2.new(.5,-12,0,40),UDim2.new((n-1)*.5,6,0,y),function() request("Crate",{Kind=kind,Count=count}); task.delay(.3,function() show("Crates") end) end,colors.Mint)
 			end; y+=50

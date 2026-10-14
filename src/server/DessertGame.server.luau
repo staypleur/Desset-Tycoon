@@ -64,8 +64,8 @@ local function update(player,message)
 		local baskets=s.Plot:FindFirstChild("DessertBaskets")
 		if baskets then require(RS.DessertBaskets).Refresh(s.Plot,p.Data.AFKStored,p.Data.OfflineStored) end
 		UI.Pad(s.Plot.PersonalShopArea.UpgradeConverter,p.Data.Cash,Rules.CafeUpgradeCost(p.Data),p.Data.CafeLevel>=Config.CafeMaxLevel)
-		UI.Label(s.Plot.PersonalShopArea.CollectIncome,"$"..UI.Format(p.Data.Pending),"$"..UI.Format(Rules.CafeRate(p.Data)*(os.time()<p.Data.HotUntil and Config.HotTimeMultiplier or 1)).." / sec",UI.Green)
-		UI.Label(s.Plot.PersonalShopArea.UpgradeConverter,p.Data.CafeLevel>=Config.CafeMaxLevel and "MAX" or "+"..UI.Format(Rules.CafeRate(p.Data)*(Config.CafeRateGrowth-1)).." / sec",p.Data.CafeLevel>=Config.CafeMaxLevel and "" or "$"..UI.Format(Rules.CafeUpgradeCost(p.Data)),s.Plot.PersonalShopArea.UpgradeConverter.Color)
+		UI.Label(s.Plot.PersonalShopArea.CollectIncome,"Collect Cash","$"..UI.Format(p.Data.Pending).." | $"..UI.Format(Rules.CafeRate(p.Data)*(os.time()<p.Data.HotUntil and Config.HotTimeMultiplier or 1)).." / sec",UI.Green)
+		UI.Label(s.Plot.PersonalShopArea.UpgradeConverter,"Upgrade",p.Data.CafeLevel>=Config.CafeMaxLevel and "MAX" or "+"..UI.Format(Rules.CafeRate(p.Data)*(Config.CafeRateGrowth-1)).." / sec | $"..UI.Format(Rules.CafeUpgradeCost(p.Data)),s.Plot.PersonalShopArea.UpgradeConverter.Color)
 	end
 	events:FireClient(player,"State",snapshot(player),message)
 end

@@ -107,3 +107,6 @@ Basket visibility follows its own stored count: zero hides mesh and sign; positi
 
 ### v16.1 promenade refinement
 Reuse approved lamp/fence sources: 24 lamps point inward at their own road, 6 central fence sections with clear gaps, no road-side fences. Decoration count reduced from 66 to 30; lamp part and light shadows disabled. No new asset selected.
+
+## 2026-10-15 — Approved Kawaii cafe display
+- [Kawaii dessert display](https://create.roblox.com/store/asset/13702399035/Kawaii-dessert-display), R4C3x, verified free in Creator Store and selected by user after rejecting Lite Cafe sample. Source contains 663 anchored parts; 0 executable scripts/package links/interactions found. One 8-stud display in central cafe and two small source-based counter props; no repeated plot copies. Decorative collision/touch/query/shadows disabled. Original clean source stored in ServerStorage.FreeDesignSources.KawaiiDisplay.

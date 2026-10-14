@@ -75,6 +75,84 @@ local function faceChestsIntoPlots(island)
   end
  end
 end
+local function polishCafe(island)
+ local architecture=island.CentralHub.CentralShop.CafeArchitecture
+ if not island:GetAttribute('CoffeeFacingCorrected') then
+  local machine=architecture:FindFirstChild('FreeCoffeeMachine')
+  if machine then machine:PivotTo(machine:GetPivot()*CFrame.Angles(0,-math.pi/2,0)) end
+  island:SetAttribute('CoffeeFacingCorrected',true)
+ end
+ if not island:GetAttribute('CafeCounterClosed') then
+  local floor=architecture.CafeFloor; local center=Vector3.new(floor.Position.X,0,floor.Position.Z)
+  for _,spec in ipairs({{'CircularCounter',24,2.7},{'CounterTop',24,4.65}}) do
+   local ring=architecture[spec[1]]; local template=ring:FindFirstChildWhichIsA('BasePart')
+   for n=31,33 do local angle=n*math.pi/32; local radial=Vector3.new(math.sin(angle),0,math.cos(angle))
+    local segment=template:Clone(); segment.CFrame=CFrame.lookAt(center+radial*spec[2]+Vector3.new(0,spec[3],0),center+radial*(spec[2]+1)+Vector3.new(0,spec[3],0)); segment.Parent=ring
+   end
+  end
+  island:SetAttribute('CafeCounterClosed',true)
+ end
+ if island:GetAttribute('CafePolishVersion')==3 then return end
+ if island:GetAttribute('CafePolishVersion')==2 then
+  for _,bench in ipairs(island.CentralHub.CafeSeating:GetChildren()) do if bench:IsA('Model') then
+   local seats={}; for _,s in ipairs(bench:GetDescendants()) do if s:IsA('Seat') then seats[s]=s.CFrame end end
+   bench:PivotTo(bench:GetPivot()*CFrame.Angles(0,math.pi,0)); for s,cf in pairs(seats) do s.CFrame=cf end
+  end end
+  island:SetAttribute('CafePolishVersion',3); return
+ end
+ if island:GetAttribute('CafePolishVersion')==1 then
+  for _,bench in ipairs(island.CentralHub.CafeSeating:GetChildren()) do if bench:IsA('Model') then
+   local seats={}; for _,s in ipairs(bench:GetDescendants()) do if s:IsA('Seat') then seats[s]=s.CFrame end end
+   for s,cf in pairs(seats) do s.CFrame=cf+Vector3.new(0,.8,0) end
+  end end
+  island:SetAttribute('CafePolishVersion',3); return
+ end
+ local hub=island.CentralHub; local cafe=hub.CentralShop.CafeArchitecture
+ for _,bench in ipairs(hub.CafeSeating:GetChildren()) do
+  if bench:IsA('Model') then
+   local seats={}
+   for _,seat in ipairs(bench:GetDescendants()) do if seat:IsA('Seat') then
+    seats[seat]=seat.CFrame*CFrame.new(0,.8,-.55)
+   end end
+   bench:PivotTo(bench:GetPivot()*CFrame.Angles(0,math.pi,0)); for seat,cf in pairs(seats) do seat.CFrame=cf end
+  end
+ end
+ local machine=cafe:FindFirstChild('FreeCoffeeMachine')
+ if machine then machine:PivotTo(machine:GetPivot()*CFrame.Angles(0,math.pi,0)) end
+ local floor=cafe.CafeFloor
+ local barrier=Instance.new('Part'); barrier.Name='CafeInteriorBarrier'
+ barrier.Shape=Enum.PartType.Cylinder; barrier.Size=Vector3.new(18,56,56)
+ barrier.CFrame=CFrame.new(floor.Position.X,9.6,floor.Position.Z)*CFrame.Angles(0,0,math.pi/2)
+ barrier.Anchored=true; barrier.Transparency=1; barrier.CanCollide=true; barrier.CanTouch=false; barrier.CastShadow=false; barrier.Parent=cafe
+ for _,plot in ipairs(island.PlayerPlots:GetChildren()) do
+  local cf=plot:GetPivot(); local spawn=plot.PlotSpawn
+  spawn.Size=Vector3.new(18,.1,12); spawn.CFrame=cf*CFrame.new(0,.2,-54)
+  plot.Entrance.Transparency=1; plot.Entrance.CanCollide=false; plot.Entrance.CanTouch=false; plot.Entrance.CanQuery=false
+  local trim=plot.FrontTrim; trim.Size=Vector3.new(54,trim.Size.Y,trim.Size.Z)
+  trim.CFrame=cf*CFrame.new(-36,.27,-59.5)
+  local right=trim:Clone(); right.Name='FrontTrimRight'; right.CFrame=cf*CFrame.new(36,.27,-59.5); right.Parent=plot
+ end
+ island:SetAttribute('CafePolishVersion',3)
+end
+local function decorateCafe(island,sources)
+ if island:GetAttribute('KawaiiCafeVersion')==2 then return end
+ if island:GetAttribute('KawaiiCafeVersion')==1 then
+  local display=island.CentralHub.CentralShop.CafeArchitecture.ApprovedCafeDecor.KawaiiDessertDisplay
+  display:PivotTo(display:GetPivot()*CFrame.Angles(0,math.pi,0)); island:SetAttribute('KawaiiCafeVersion',2); return
+ end
+ local source=sources:FindFirstChild('KawaiiDisplay'); if not source then return end
+ local cafe=island.CentralHub.CentralShop.CafeArchitecture
+ local floor=cafe.CafeFloor; local center=Vector3.new(floor.Position.X,0,floor.Position.Z)
+ local decor=Instance.new('Model'); decor.Name='ApprovedCafeDecor'; decor.Parent=cafe
+ prop(source,decor,'KawaiiDessertDisplay',CFrame.new(center+Vector3.new(0,.85,12))*CFrame.Angles(0,math.pi/2,0),8)
+ for _,item in ipairs({{'Chocolate Boba Milk-Tea',-7,23,1.2},{'Pink Kitten Donut',-11,21,1.4}}) do
+  local model=source:FindFirstChild(item[1]); if model then
+   prop(model,decor,item[1],CFrame.new(center+Vector3.new(item[2],4.95,item[3])),item[4])
+  end
+ end
+ for _,part in ipairs(decor:GetDescendants()) do if part:IsA('BasePart') then part.CastShadow=false; part.CanCollide=false; part.CanTouch=false; part.CanQuery=false end end
+ island:SetAttribute('KawaiiCafeVersion',2)
+end
 function Presentation.Apply(island)
  for _,g in ipairs(island:GetDescendants()) do if g:IsA('BillboardGui') then
   local t=g:FindFirstChildWhichIsA('TextLabel',true); if t and t.Text:lower():find('welcome') then g:Destroy() end
@@ -95,6 +173,8 @@ function Presentation.Apply(island)
    if gui then bindOwner(gui.Parent,plot) end
   end
   faceChestsIntoPlots(island)
+  polishCafe(island)
+  decorateCafe(island,sources)
   return
  end
  local skySource=sources and sources:FindFirstChild('CottonCandySky')
@@ -139,6 +219,8 @@ function Presentation.Apply(island)
   prop(sources[n%2==1 and 'FlowerPot' or 'PottedFlowers'],garden,'CafeFlowerPot'..n,CFrame.new(center+Vector3.new(math.sin(a)*58,.7,math.cos(a)*58)),3.8)
  end
  faceChestsIntoPlots(island)
+ polishCafe(island)
+ decorateCafe(island,sources)
  island:SetAttribute('PresentationVersion',2); island:SetAttribute('MapVersion','15.0.0')
 end
 return Presentation

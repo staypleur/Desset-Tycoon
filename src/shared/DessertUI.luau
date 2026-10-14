@@ -102,8 +102,8 @@ function UI.ApplyWorld(island)
 			local cost=require(script.Parent.DessertRules).BuyCost(count); UI.Pad(pad,nil,cost); UI.Label(pad,"Buy "..count,"$"..UI.Format(cost),UI.Idle)
 		end end
 		UI.Pad(plot.PersonalShopArea.UpgradeConverter,nil,require(script.Parent.TycoonConfig).CafeUpgradeBaseCost)
-		UI.Label(plot.PersonalShopArea.UpgradeConverter,"+2 / sec","$60",UI.Idle)
-		UI.Label(plot.PersonalShopArea.CollectIncome,"$0","$1 / sec",UI.Green)
+		UI.Label(plot.PersonalShopArea.UpgradeConverter,"Upgrade","+2 / sec | $60",UI.Idle)
+		UI.Label(plot.PersonalShopArea.CollectIncome,"Collect Cash","$0 | $1 / sec",UI.Green)
 		UI.Label(plot.PersonalShopArea.RobuxShop,"Shop","Hold E",Color3.fromRGB(255,231,169))
 		UI.Label(plot.MergeBoard,"Merge","")
 	end
