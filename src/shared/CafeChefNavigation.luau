@@ -1,9 +1,11 @@
 -- Build a small static navigation graph from the actual cafe props, including non-queryable decor.
-local Nav={Step=2,Radius=20,Clearance=1.7}
+local Nav={Step=2,Radius=20}
 local function key(x,z) return x..":"..z end
 function Nav.Build(cafe,chef)
  local floor=cafe.CafeArchitecture.CafeFloor
  local center=Vector3.new(floor.Position.X,floor.Position.Y+floor.Size.X/2,floor.Position.Z)
+ local size=chef.PrimaryPart.Size
+ local clearance=math.max(size.X,size.Z)/2+.2
  local obstacles={}
  for _,p in ipairs(cafe:GetDescendants()) do
   if p:IsA("BasePart") and not p:IsDescendantOf(chef) and p~=floor and p.Name~="CafeInteriorBarrier" then
@@ -13,7 +15,7 @@ function Nav.Build(cafe,chef)
     lo=Vector3.new(math.min(lo.X,v.X),math.min(lo.Y,v.Y),math.min(lo.Z,v.Z))
     hi=Vector3.new(math.max(hi.X,v.X),math.max(hi.Y,v.Y),math.max(hi.Z,v.Z))
    end end end
-   if hi.Y>center.Y+.3 and lo.Y<center.Y+5.8 and lo.X<center.X+23 and hi.X>center.X-23 and lo.Z<center.Z+23 and hi.Z>center.Z-23 then
+   if hi.Y>center.Y+.3 and lo.Y<center.Y+size.Y and lo.X<center.X+23 and hi.X>center.X-23 and lo.Z<center.Z+23 and hi.Z>center.Z-23 then
     table.insert(obstacles,{Min=lo,Max=hi})
    end
   end
@@ -22,7 +24,7 @@ function Nav.Build(cafe,chef)
  function graph.Clear(pos)
   if Vector3.new(pos.X-center.X,0,pos.Z-center.Z).Magnitude>Nav.Radius then return false end
   for _,o in ipairs(obstacles) do
-   if pos.X>o.Min.X-Nav.Clearance and pos.X<o.Max.X+Nav.Clearance and pos.Z>o.Min.Z-Nav.Clearance and pos.Z<o.Max.Z+Nav.Clearance then return false end
+   if pos.X>o.Min.X-clearance and pos.X<o.Max.X+clearance and pos.Z>o.Min.Z-clearance and pos.Z<o.Max.Z+clearance then return false end
   end
   return true
  end

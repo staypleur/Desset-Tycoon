@@ -8,9 +8,11 @@
   },
   "TriangleCount": 3165,
   "Bones": 22,
-  "HeightStuds": 5.8,
+  "HeightStuds": 8,
   "MeshId": 124893487789324,
   "ColorMapId": 81596257819395,
   "WalkingAnimationId": 79831780716711,
-  "Changes": "Uniform scaling, foot-center pivot, emissive strength 0, anchored non-colliding decoration; original mesh, skinning and colors retained"
+  "Changes": "Uniform scaling, foot-center pivot, emissive strength 0, anchored non-colliding decoration; original mesh, skinning and colors retained",
+  "WalkSpeed": 6,
+  "WalkAnimationSpeed": 1.15
 }

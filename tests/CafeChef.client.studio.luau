@@ -13,6 +13,7 @@ assert(seen,"Walking animation must deform imported bones")
 local center=workspace.DessertJellyIsland.CentralHub.CentralShop.CafeArchitecture.CafeFloor.Position
 local p=chef:GetPivot().Position
 assert(Vector3.new(p.X-center.X,0,p.Z-center.Z).Magnitude<=20.01)
-assert(math.abs(chef.PrimaryPart.Size.Y-5.8)<.001)
+assert(math.abs(chef.PrimaryPart.Size.Y-8)<.001)
+assert(chef:GetAttribute("WalkSpeed")==6)
 assert(chef.PrimaryPart.Anchored and not chef.PrimaryPart.CanCollide and not chef.PrimaryPart.CanTouch)
 print("[CafeChefClient] PASS: walking bone deformation, continuing movement, cafe boundary, player-sized anchored mesh")

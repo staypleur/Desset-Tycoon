@@ -241,3 +241,7 @@ PASS: PlayerProfiles deterministic mock verifies persisted gift/AFK clocks, dupl
 - Imported the user-provided Meshy biped chef and Walking animation. Preserved mesh/texture/skinning, scaled height to 5.8 studs, corrected foot-center pivot and disabled unintended emissive glow. Stored a clean template and one interior chef.
 - Added CafeChefNavigation and CafeChef server walker: 187 connected safe nodes built from actual non-queryable props, interior radius 20, cached routing, one anchored mesh, no humanoid physics/economy hooks. Walks at 3.2 studs/sec, turns only when heading changes and pauses briefly at destinations.
 - Live regression confirms imported bone deformation, continued movement, correct height/boundary/non-collision. Navigation regression validates every edge and 40 routes against actual decor. Source/place audit and GitHub save follow. Proof: docs/previews/cafe-chef-live.jpg.
+
+## 2026-10-15 — Larger and quicker cafe chef
+- User found the chef too small/slow: increased height from 5.8 to 8 studs (+38%) and movement speed from 3.2 to 6 studs/sec (+88%). Updated both live model and clean template, sped up walking clip to 1.15, shortened heading turns to 0.12s.
+- Navigation clearance/height now derive from the actual scaled mesh. Revalidated all edges and 40 routes against cafe props, plus live movement/bone deformation.

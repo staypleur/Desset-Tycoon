@@ -26,12 +26,12 @@ if animation then
  if ok then track=result;track.Looped=true;track.Priority=Enum.AnimationPriority.Movement else warn("[CafeChef] Walking clip failed",result) end
 end
 local rng=Random.new()
-local speed=chef:GetAttribute("WalkSpeed") or 3.2
+local speed=chef:GetAttribute("WalkSpeed") or 6
 local function move(target)
  local foot=chef:GetPivot();local destination=target.Position
  local facing=CFrame.lookAt(foot.Position,destination)
  if foot.LookVector:Dot(facing.LookVector)<.995 then
-  local turn=Tween:Create(mesh,TweenInfo.new(.18),{CFrame=facing*mesh.PivotOffset:Inverse()})
+  local turn=Tween:Create(mesh,TweenInfo.new(.12),{CFrame=facing*mesh.PivotOffset:Inverse()})
   turn:Play();turn.Completed:Wait()
  end
  local distance=(destination-foot.Position).Magnitude
@@ -45,7 +45,7 @@ while chef.Parent do
  local route=Nav.Route(current,destination)
  if #route>0 then
   chef:SetAttribute("Walking",true)
-  if track then track:Play(.2,1,.85) end
+  if track then track:Play(.2,1,chef:GetAttribute("WalkAnimationSpeed") or 1.15) end
   for _,node in ipairs(route) do if not chef.Parent then break end;move(node) end
   if track then track:Stop(.25) end
   chef:SetAttribute("Walking",false)

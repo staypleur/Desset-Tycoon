@@ -340652,7 +340652,7 @@ aWtvc2hpbWk=]]></BinaryString>
 							<token name="LevelOfDetail">0</token>
 							<CoordinateFrame name="ModelMeshCFrame">
 								<X>-6</X>
-								<Y>0.849999249</Y>
+								<Y>0.849999487</Y>
 								<Z>11.25</Z>
 								<R00>1</R00>
 								<R01>0</R01>
@@ -340673,12 +340673,12 @@ aWtvc2hpbWk=]]></BinaryString>
 							<token name="ModelStreamingMode">0</token>
 							<bool name="NeedsPivotMigration">false</bool>
 							<Ref name="PrimaryPart">RBXD1CED2E09D4C45599B4798BFDD75256F</Ref>
-							<float name="ScaleFactor">0.0341176502</float>
+							<float name="ScaleFactor">0.0470588282</float>
 							<SharedString name="SlimHash">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 							<OptionalCoordinateFrame name="WorldPivotData">
 								<CFrame>
 									<X>-6</X>
-									<Y>0.849999964</Y>
+									<Y>0.850000143</Y>
 									<Z>11.25</Z>
 									<R00>1</R00>
 									<R01>0</R01>
@@ -340691,9 +340691,10 @@ aWtvc2hpbWk=]]></BinaryString>
 									<R22>1</R22>
 								</CFrame>
 							</OptionalCoordinateFrame>
-							<BinaryString name="AttributesSerialize"><![CDATA[BQAAAA4AAABSQlhfUmVpbXBvcnRJZAIkAAAAM2FlZDNlODctZGJjNy00N2Q5LWFmYmMtNzM3
+							<BinaryString name="AttributesSerialize"><![CDATA[BgAAAA4AAABSQlhfUmVpbXBvcnRJZAIkAAAAM2FlZDNlODctZGJjNy00N2Q5LWFmYmMtNzM3
 ZGFjZDc0NDQwDQAAAFRyaWFuZ2xlQ291bnQGAAAAAAC6qEAMAAAAVXNlclByb3ZpZGVkAwEP
-AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryString>
+AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCEgAAAFdhbGtBbmltYXRpb25TcGVlZAZmZmZm
+ZmbyPwkAAABXYWxrU3BlZWQGAAAAAAAAGEA=]]></BinaryString>
 							<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
 							<bool name="DefinesCapabilities">false</bool>
 							<UniqueId name="HistoryId">24be45843d2709660ae0e4c00001eccd</UniqueId>
@@ -340755,7 +340756,7 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 								<token name="BottomSurfaceInput">0</token>
 								<CoordinateFrame name="CFrame">
 									<X>-6</X>
-									<Y>3.75000024</Y>
+									<Y>4.85000038</Y>
 									<Z>11.25</Z>
 									<R00>1</R00>
 									<R01>0</R01>
@@ -340792,7 +340793,7 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 								<string name="MaterialVariantSerialized"></string>
 								<CoordinateFrame name="PivotOffset">
 									<X>0</X>
-									<Y>-2.9000001</Y>
+									<Y>-4.00000048</Y>
 									<Z>0</Z>
 									<R00>1</R00>
 									<R01>0</R01>
@@ -340826,9 +340827,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 									<Z>0</Z>
 								</Vector3>
 								<Vector3 name="size">
-									<X>3.18554521</X>
-									<Y>5.80000019</Y>
-									<Z>2.8940556</Z>
+									<X>4.39385557</X>
+									<Y>8.00000095</Y>
+									<Z>3.99180079</Z>
 								</Vector3>
 								<BinaryString name="AttributesSerialize"></BinaryString>
 								<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
@@ -340878,9 +340879,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 							<Item class="Bone" referent="RBX6F3D6A8EF0954D33907A89D371A835FD">
 								<Properties>
 									<CoordinateFrame name="CFrame">
-										<X>-0.0124545535</X>
-										<Y>-1.06857991</Y>
-										<Z>-0.676655352</Z>
+										<X>-0.0171786956</X>
+										<Y>-1.47390342</Y>
+										<Z>-0.933317721</Z>
 										<R00>0.999995232</R00>
 										<R01>0.00158428971</R01>
 										<R02>0.00265311659</R02>
@@ -340905,9 +340906,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 								<Item class="Bone" referent="RBX2C6E99B9EE1E4342AFCA6926EE2721F1">
 									<Properties>
 										<CoordinateFrame name="CFrame">
-											<X>-0.373671889</X>
-											<Y>-0.179381609</Y>
-											<Z>-0.0785422847</Z>
+											<X>-0.51540947</X>
+											<Y>-0.247422934</Y>
+											<Z>-0.108334191</Z>
 											<R00>0.961186886</R00>
 											<R01>-0.188207865</R01>
 											<R02>-0.201736897</R02>
@@ -340932,9 +340933,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 									<Item class="Bone" referent="RBX00BC769681084DA6A69EA5A9AAE92FD2">
 										<Properties>
 											<CoordinateFrame name="CFrame">
-												<X>-3.05848994e-06</X>
-												<Y>0.794093847</Y>
-												<Z>-3.51400968e-06</Z>
+												<X>-4.21860659e-06</X>
+												<Y>1.09530199</Y>
+												<Z>-4.84691009e-06</Z>
 												<R00>0.969524562</R00>
 												<R01>0.150967151</R01>
 												<R02>0.192954019</R02>
@@ -340959,9 +340960,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 										<Item class="Bone" referent="RBX17B49B81E93B4C8CBEDA590F9B75F18D">
 											<Properties>
 												<CoordinateFrame name="CFrame">
-													<X>1.95222754e-07</X>
-													<Y>0.544149935</Y>
-													<Z>1.8871533e-06</Z>
+													<X>2.69272789e-07</X>
+													<Y>0.750551641</Y>
+													<Z>2.6029702e-06</Z>
 													<R00>0.982788324</R00>
 													<R01>0.181322426</R01>
 													<R02>0.0353473425</R02>
@@ -340986,9 +340987,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 											<Item class="Bone" referent="RBX147C71074F06469DBDCCD6FEE61DE10D">
 												<Properties>
 													<CoordinateFrame name="CFrame">
-														<X>-7.80891014e-07</X>
-														<Y>0.365602642</Y>
-														<Z>-7.80891014e-07</Z>
+														<X>-1.07709116e-06</X>
+														<Y>0.504279494</Y>
+														<Z>-1.07709116e-06</Z>
 														<R00>0.998552382</R00>
 														<R01>0.0296860132</R01>
 														<R02>0.0448543727</R02>
@@ -341017,9 +341018,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 								<Item class="Bone" referent="RBX86F4E4BD326742CEBD340B4BD34B17E4">
 									<Properties>
 										<CoordinateFrame name="CFrame">
-											<X>0.374456763</X>
-											<Y>-0.177836746</Y>
-											<Z>-0.0772240758</Z>
+											<X>0.516492128</X>
+											<Y>-0.245292053</Y>
+											<Z>-0.106515974</Z>
 											<R00>0.959548593</R00>
 											<R01>0.193428531</R01>
 											<R02>0.204577357</R02>
@@ -341044,9 +341045,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 									<Item class="Bone" referent="RBXFE8D394406BF44F99C92FBFCE6DE2884">
 										<Properties>
 											<CoordinateFrame name="CFrame">
-												<X>-7.15816782e-07</X>
-												<Y>0.793901682</Y>
-												<Z>2.92834147e-06</Z>
+												<X>-9.87333465e-07</X>
+												<Y>1.09503686</Y>
+												<Z>4.03909189e-06</Z>
 												<R00>0.960393846</R00>
 												<R01>-0.17136541</R01>
 												<R02>-0.21972166</R02>
@@ -341071,9 +341072,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 										<Item class="Bone" referent="RBX0051D26BC8084C7482529ECC1AB6947B">
 											<Properties>
 												<CoordinateFrame name="CFrame">
-													<X>-2.34267304e-06</X>
-													<Y>0.544412553</Y>
-													<Z>1.4967078e-06</Z>
+													<X>-3.23127324e-06</X>
+													<Y>0.750913918</Y>
+													<Z>2.06442451e-06</Z>
 													<R00>0.994254768</R00>
 													<R01>-0.102426745</R01>
 													<R02>-0.0310846157</R02>
@@ -341098,9 +341099,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 											<Item class="Bone" referent="RBXB2A6CB5CD8BF4B15A0A929E50D3FCB26">
 												<Properties>
 													<CoordinateFrame name="CFrame">
-														<X>-2.60297014e-07</X>
-														<Y>0.362941682</Y>
-														<Z>-7.48353898e-07</Z>
+														<X>-3.59030366e-07</X>
+														<Y>0.500609219</Y>
+														<Z>-1.03221225e-06</Z>
 														<R00>0.999302506</R00>
 														<R01>-0.0206942018</R01>
 														<R02>-0.0310843904</R02>
@@ -341129,9 +341130,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 								<Item class="Bone" referent="RBX6EDA8EFBF8E14CE992DDB177E18175DF">
 									<Properties>
 										<CoordinateFrame name="CFrame">
-											<X>-0.000784724311</X>
-											<Y>0.234457329</Y>
-											<Z>0.155768827</Z>
+											<X>-0.00108237844</X>
+											<Y>0.323389411</Y>
+											<Z>0.214853555</Z>
 											<R00>0.999995232</R00>
 											<R01>-0.00278778211</R01>
 											<R02>-0.00133306975</R02>
@@ -341157,8 +341158,8 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 										<Properties>
 											<CoordinateFrame name="CFrame">
 												<X>0</X>
-												<Y>0.281480372</Y>
-												<Z>-6.50742535e-08</Z>
+												<Y>0.388248801</Y>
+												<Z>-8.97575916e-08</Z>
 												<R00>1</R00>
 												<R01>2.80480119e-08</R01>
 												<R02>-7.28999527e-09</R02>
@@ -341184,8 +341185,8 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 											<Properties>
 												<CoordinateFrame name="CFrame">
 													<X>0</X>
-													<Y>0.281483382</Y>
-													<Z>6.50742535e-08</Z>
+													<Y>0.388252974</Y>
+													<Z>8.97575916e-08</Z>
 													<R00>0.999579251</R00>
 													<R01>0.0164958965</R01>
 													<R02>-0.0238616038</R02>
@@ -341210,9 +341211,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 											<Item class="Bone" referent="RBX953A97A81C5142B7B11A8451ED32A544">
 												<Properties>
 													<CoordinateFrame name="CFrame">
-														<X>-0.148351625</X>
-														<Y>0.0752932504</Y>
-														<Z>0.025142869</Z>
+														<X>-0.204622939</X>
+														<Y>0.103852764</Y>
+														<Z>0.0346798189</Z>
 														<R00>-0.0968738124</R00>
 														<R01>-0.995010614</R01>
 														<R02>-0.0238613877</R02>
@@ -341237,9 +341238,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 												<Item class="Bone" referent="RBX14835875B1A84696AD27AAB3EEF3A34D">
 													<Properties>
 														<CoordinateFrame name="CFrame">
-															<X>-1.30148507e-07</X>
-															<Y>0.592515171</Y>
-															<Z>7.80891014e-07</Z>
+															<X>-1.79515183e-07</X>
+															<Y>0.817262352</Y>
+															<Z>1.07709116e-06</Z>
 															<R00>0.634659171</R00>
 															<R01>-0.220889404</R01>
 															<R02>0.740550995</R02>
@@ -341264,9 +341265,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 													<Item class="Bone" referent="RBX067144A9E7CE407E93EB203E8C3CE4E8">
 														<Properties>
 															<CoordinateFrame name="CFrame">
-																<X>-1.43163356e-06</X>
-																<Y>0.524705768</Y>
-																<Z>3.9044553e-06</Z>
+																<X>-1.97466693e-06</X>
+																<Y>0.723732114</Y>
+																<Z>5.38545601e-06</Z>
 																<R00>0.951278806</R00>
 																<R01>0.28478381</R01>
 																<R02>0.118182048</R02>
@@ -341291,9 +341292,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 														<Item class="Bone" referent="RBX8CFDF7ED94C74576B4CA7C3A53F43D65">
 															<Properties>
 																<CoordinateFrame name="CFrame">
-																	<X>-4.03460353e-06</X>
-																	<Y>0.500557303</Y>
-																	<Z>-3.25371275e-06</Z>
+																	<X>-5.56497071e-06</X>
+																	<Y>0.690423906</Y>
+																	<Z>-4.48787978e-06</Z>
 																	<R00>0.187873527</R00>
 																	<R01>0.854882658</R01>
 																	<R02>0.48361057</R02>
@@ -341322,9 +341323,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 											<Item class="Bone" referent="RBX5B4A083E7795476CA14E4F5D22A5E324">
 												<Properties>
 													<CoordinateFrame name="CFrame">
-														<X>0.151218429</X>
-														<Y>0.103599772</Y>
-														<Z>0.00903959479</Z>
+														<X>0.208577141</X>
+														<Y>0.142896235</Y>
+														<Z>0.0124684069</Z>
 														<R00>-0.0611770265</R00>
 														<R01>0.997841716</R01>
 														<R02>-0.0238617919</R02>
@@ -341349,9 +341350,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 												<Item class="Bone" referent="RBX017C37649CFC4C9C971C9CC996AB567F">
 													<Properties>
 														<CoordinateFrame name="CFrame">
-															<X>8.45965303e-07</X>
-															<Y>0.612422645</Y>
-															<Z>1.04118806e-06</Z>
+															<X>1.16684873e-06</X>
+															<Y>0.8447209</Y>
+															<Z>1.43612147e-06</Z>
 															<R00>0.592096508</R00>
 															<R01>0.228754133</R01>
 															<R02>-0.772718191</R02>
@@ -341376,9 +341377,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 													<Item class="Bone" referent="RBXD13767EFB4D8439BA20CE52EC82FD7B4">
 														<Properties>
 															<CoordinateFrame name="CFrame">
-																<X>3.38386121e-06</X>
-																<Y>0.51722151</Y>
-																<Z>2.86326713e-06</Z>
+																<X>4.66739493e-06</X>
+																<Y>0.713409007</Y>
+																<Z>3.94933386e-06</Z>
 																<R00>0.961013675</R00>
 																<R01>-0.261764765</R01>
 																<R02>-0.0890621915</R02>
@@ -341403,9 +341404,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 														<Item class="Bone" referent="RBX93370FFD51B840D78CA4B3399FDB8A72">
 															<Properties>
 																<CoordinateFrame name="CFrame">
-																	<X>-2.08237611e-06</X>
-																	<Y>0.520723045</Y>
-																	<Z>2.34267304e-06</Z>
+																	<X>-2.87224293e-06</X>
+																	<Y>0.718238711</Y>
+																	<Z>3.23127324e-06</Z>
 																	<R00>0.268995136</R00>
 																	<R01>-0.879209697</R01>
 																	<R02>-0.393232763</R02>
@@ -341434,9 +341435,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 											<Item class="Bone" referent="RBXACF5F0E2614340F89C45DD9AC7A3411F">
 												<Properties>
 													<CoordinateFrame name="CFrame">
-														<X>-0.00286670798</X>
-														<Y>0.124267094</Y>
-														<Z>-0.0341807716</Z>
+														<X>-0.00395407993</X>
+														<Y>0.171402887</Y>
+														<Z>-0.0471458919</Z>
 														<R00>0.999579251</R00>
 														<R01>-0.0222374722</R01>
 														<R02>0.0186276585</R02>
@@ -341461,9 +341462,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 												<Item class="Bone" referent="RBX3D67D08EE9E44BB3B7883176BD1FA043">
 													<Properties>
 														<CoordinateFrame name="CFrame">
-															<X>-1.83021331e-08</X>
-															<Y>0.232993677</Y>
-															<Z>4.55519768e-07</Z>
+															<X>-2.52443222e-08</X>
+															<Y>0.321370602</Y>
+															<Z>6.28303155e-07</Z>
 															<R00>1</R00>
 															<R01>5.48585177e-08</R01>
 															<R02>1.26449592e-07</R02>
@@ -1767293,11 +1767294,13 @@ return Art
 			<Properties>
 				<Content name="LinkedSource"><null></null></Content>
 				<ProtectedString name="Source"><![CDATA[-- Build a small static navigation graph from the actual cafe props, including non-queryable decor.
-local Nav={Step=2,Radius=20,Clearance=1.7}
+local Nav={Step=2,Radius=20}
 local function key(x,z) return x..":"..z end
 function Nav.Build(cafe,chef)
  local floor=cafe.CafeArchitecture.CafeFloor
  local center=Vector3.new(floor.Position.X,floor.Position.Y+floor.Size.X/2,floor.Position.Z)
+ local size=chef.PrimaryPart.Size
+ local clearance=math.max(size.X,size.Z)/2+.2
  local obstacles={}
  for _,p in ipairs(cafe:GetDescendants()) do
   if p:IsA("BasePart") and not p:IsDescendantOf(chef) and p~=floor and p.Name~="CafeInteriorBarrier" then
@@ -1767307,7 +1767310,7 @@ function Nav.Build(cafe,chef)
     lo=Vector3.new(math.min(lo.X,v.X),math.min(lo.Y,v.Y),math.min(lo.Z,v.Z))
     hi=Vector3.new(math.max(hi.X,v.X),math.max(hi.Y,v.Y),math.max(hi.Z,v.Z))
    end end end
-   if hi.Y>center.Y+.3 and lo.Y<center.Y+5.8 and lo.X<center.X+23 and hi.X>center.X-23 and lo.Z<center.Z+23 and hi.Z>center.Z-23 then
+   if hi.Y>center.Y+.3 and lo.Y<center.Y+size.Y and lo.X<center.X+23 and hi.X>center.X-23 and lo.Z<center.Z+23 and hi.Z>center.Z-23 then
     table.insert(obstacles,{Min=lo,Max=hi})
    end
   end
@@ -1767316,7 +1767319,7 @@ function Nav.Build(cafe,chef)
  function graph.Clear(pos)
   if Vector3.new(pos.X-center.X,0,pos.Z-center.Z).Magnitude>Nav.Radius then return false end
   for _,o in ipairs(obstacles) do
-   if pos.X>o.Min.X-Nav.Clearance and pos.X<o.Max.X+Nav.Clearance and pos.Z>o.Min.Z-Nav.Clearance and pos.Z<o.Max.Z+Nav.Clearance then return false end
+   if pos.X>o.Min.X-clearance and pos.X<o.Max.X+clearance and pos.Z>o.Min.Z-clearance and pos.Z<o.Max.Z+clearance then return false end
   end
   return true
  end
@@ -1768562,12 +1768565,12 @@ if animation then
  if ok then track=result;track.Looped=true;track.Priority=Enum.AnimationPriority.Movement else warn("[CafeChef] Walking clip failed",result) end
 end
 local rng=Random.new()
-local speed=chef:GetAttribute("WalkSpeed") or 3.2
+local speed=chef:GetAttribute("WalkSpeed") or 6
 local function move(target)
  local foot=chef:GetPivot();local destination=target.Position
  local facing=CFrame.lookAt(foot.Position,destination)
  if foot.LookVector:Dot(facing.LookVector)<.995 then
-  local turn=Tween:Create(mesh,TweenInfo.new(.18),{CFrame=facing*mesh.PivotOffset:Inverse()})
+  local turn=Tween:Create(mesh,TweenInfo.new(.12),{CFrame=facing*mesh.PivotOffset:Inverse()})
   turn:Play();turn.Completed:Wait()
  end
  local distance=(destination-foot.Position).Magnitude
@@ -1768581,7 +1768584,7 @@ while chef.Parent do
  local route=Nav.Route(current,destination)
  if #route>0 then
   chef:SetAttribute("Walking",true)
-  if track then track:Play(.2,1,.85) end
+  if track then track:Play(.2,1,chef:GetAttribute("WalkAnimationSpeed") or 1.15) end
   for _,node in ipairs(route) do if not chef.Parent then break end;move(node) end
   if track then track:Stop(.25) end
   chef:SetAttribute("Walking",false)
@@ -2195663,7 +2195666,7 @@ aWtvc2hpbWk=]]></BinaryString>
 				<token name="ModelStreamingMode">0</token>
 				<bool name="NeedsPivotMigration">false</bool>
 				<Ref name="PrimaryPart">RBX55F3DCA6E74941369693A9CB10E27860</Ref>
-				<float name="ScaleFactor">0.0341176502</float>
+				<float name="ScaleFactor">0.0470588282</float>
 				<SharedString name="SlimHash">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 				<OptionalCoordinateFrame name="WorldPivotData">
 					<CFrame>
@@ -2195681,9 +2195684,10 @@ aWtvc2hpbWk=]]></BinaryString>
 						<R22>1</R22>
 					</CFrame>
 				</OptionalCoordinateFrame>
-				<BinaryString name="AttributesSerialize"><![CDATA[BQAAAA4AAABSQlhfUmVpbXBvcnRJZAIkAAAAM2FlZDNlODctZGJjNy00N2Q5LWFmYmMtNzM3
+				<BinaryString name="AttributesSerialize"><![CDATA[BgAAAA4AAABSQlhfUmVpbXBvcnRJZAIkAAAAM2FlZDNlODctZGJjNy00N2Q5LWFmYmMtNzM3
 ZGFjZDc0NDQwDQAAAFRyaWFuZ2xlQ291bnQGAAAAAAC6qEAMAAAAVXNlclByb3ZpZGVkAwEP
-AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryString>
+AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCEgAAAFdhbGtBbmltYXRpb25TcGVlZAZmZmZm
+ZmbyPwkAAABXYWxrU3BlZWQGAAAAAAAAGEA=]]></BinaryString>
 				<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
 				<bool name="DefinesCapabilities">false</bool>
 				<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
@@ -2195745,7 +2195749,7 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 					<token name="BottomSurfaceInput">0</token>
 					<CoordinateFrame name="CFrame">
 						<X>0</X>
-						<Y>2.9000001</Y>
+						<Y>4.00000048</Y>
 						<Z>0</Z>
 						<R00>1</R00>
 						<R01>0</R01>
@@ -2195782,7 +2195786,7 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 					<string name="MaterialVariantSerialized"></string>
 					<CoordinateFrame name="PivotOffset">
 						<X>0</X>
-						<Y>-2.9000001</Y>
+						<Y>-4.00000048</Y>
 						<Z>0</Z>
 						<R00>1</R00>
 						<R01>0</R01>
@@ -2195816,9 +2195820,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 						<Z>0</Z>
 					</Vector3>
 					<Vector3 name="size">
-						<X>3.18554521</X>
-						<Y>5.80000019</Y>
-						<Z>2.8940556</Z>
+						<X>4.39385557</X>
+						<Y>8.00000095</Y>
+						<Z>3.99180079</Z>
 					</Vector3>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
@@ -2195868,9 +2195872,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 				<Item class="Bone" referent="RBXA9C787071A354C0B980783404A9D8052">
 					<Properties>
 						<CoordinateFrame name="CFrame">
-							<X>-0.0124545535</X>
-							<Y>-1.06857991</Y>
-							<Z>-0.676655352</Z>
+							<X>-0.0171786938</X>
+							<Y>-1.4739033</Y>
+							<Z>-0.933317721</Z>
 							<R00>0.999995232</R00>
 							<R01>0.00158428971</R01>
 							<R02>0.00265311659</R02>
@@ -2195895,9 +2195899,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 					<Item class="Bone" referent="RBX3498B42C953941D78350B824F5590CD2">
 						<Properties>
 							<CoordinateFrame name="CFrame">
-								<X>-0.373671889</X>
-								<Y>-0.179381609</Y>
-								<Z>-0.0785422847</Z>
+								<X>-0.51540947</X>
+								<Y>-0.247422904</Y>
+								<Z>-0.108334184</Z>
 								<R00>0.961186886</R00>
 								<R01>-0.188207865</R01>
 								<R02>-0.201736897</R02>
@@ -2195922,9 +2195926,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 						<Item class="Bone" referent="RBXF5E8C612DE3A4B16BA4950FABA98C1E0">
 							<Properties>
 								<CoordinateFrame name="CFrame">
-									<X>-3.05848994e-06</X>
-									<Y>0.794093847</Y>
-									<Z>-3.51400968e-06</Z>
+									<X>-4.21860659e-06</X>
+									<Y>1.09530187</Y>
+									<Z>-4.84691009e-06</Z>
 									<R00>0.969524562</R00>
 									<R01>0.150967151</R01>
 									<R02>0.192954019</R02>
@@ -2195949,9 +2195953,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 							<Item class="Bone" referent="RBXFB55B12B79564BDDA8C0DF2AFC9D5096">
 								<Properties>
 									<CoordinateFrame name="CFrame">
-										<X>1.95222754e-07</X>
-										<Y>0.544149935</Y>
-										<Z>1.8871533e-06</Z>
+										<X>2.69272789e-07</X>
+										<Y>0.750551701</Y>
+										<Z>2.6029702e-06</Z>
 										<R00>0.982788324</R00>
 										<R01>0.181322426</R01>
 										<R02>0.0353473425</R02>
@@ -2195976,9 +2195980,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 								<Item class="Bone" referent="RBX88FA2CE5E3304D7597A9A6843A203C63">
 									<Properties>
 										<CoordinateFrame name="CFrame">
-											<X>-7.80891014e-07</X>
-											<Y>0.365602642</Y>
-											<Z>-7.80891014e-07</Z>
+											<X>-1.07709116e-06</X>
+											<Y>0.504279494</Y>
+											<Z>-1.07709116e-06</Z>
 											<R00>0.998552382</R00>
 											<R01>0.0296860114</R01>
 											<R02>0.0448543727</R02>
@@ -2196007,9 +2196011,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 					<Item class="Bone" referent="RBXB2B09D49AEFF4CBDBA2B714B530B078A">
 						<Properties>
 							<CoordinateFrame name="CFrame">
-								<X>0.374456763</X>
-								<Y>-0.177836746</Y>
-								<Z>-0.0772240758</Z>
+								<X>0.516492128</X>
+								<Y>-0.245292053</Y>
+								<Z>-0.106515959</Z>
 								<R00>0.959548593</R00>
 								<R01>0.193428531</R01>
 								<R02>0.204577357</R02>
@@ -2196034,9 +2196038,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 						<Item class="Bone" referent="RBX11E2ECBC68ED44D097C45576907DD32D">
 							<Properties>
 								<CoordinateFrame name="CFrame">
-									<X>-7.15816782e-07</X>
-									<Y>0.793901682</Y>
-									<Z>2.92834147e-06</Z>
+									<X>-9.87333465e-07</X>
+									<Y>1.09503675</Y>
+									<Z>4.03909144e-06</Z>
 									<R00>0.960393846</R00>
 									<R01>-0.17136541</R01>
 									<R02>-0.21972166</R02>
@@ -2196061,9 +2196065,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 							<Item class="Bone" referent="RBXB4BB2882E98743C884276FADC02B194D">
 								<Properties>
 									<CoordinateFrame name="CFrame">
-										<X>-2.34267304e-06</X>
-										<Y>0.544412553</Y>
-										<Z>1.4967078e-06</Z>
+										<X>-3.23127324e-06</X>
+										<Y>0.750913918</Y>
+										<Z>2.06442451e-06</Z>
 										<R00>0.994254768</R00>
 										<R01>-0.102426745</R01>
 										<R02>-0.0310846157</R02>
@@ -2196088,9 +2196092,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 								<Item class="Bone" referent="RBX7129711CD366460A96DAF5EAFB5BBF93">
 									<Properties>
 										<CoordinateFrame name="CFrame">
-											<X>-2.60297014e-07</X>
-											<Y>0.362941682</Y>
-											<Z>-7.48353898e-07</Z>
+											<X>-3.59030366e-07</X>
+											<Y>0.500609219</Y>
+											<Z>-1.03221225e-06</Z>
 											<R00>0.999302506</R00>
 											<R01>-0.0206942018</R01>
 											<R02>-0.0310843904</R02>
@@ -2196119,9 +2196123,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 					<Item class="Bone" referent="RBX3B4897D4692E496F87DF17C0AB7D2AD3">
 						<Properties>
 							<CoordinateFrame name="CFrame">
-								<X>-0.000784724311</X>
-								<Y>0.234457329</Y>
-								<Z>0.155768827</Z>
+								<X>-0.00108237844</X>
+								<Y>0.323389411</Y>
+								<Z>0.214853555</Z>
 								<R00>0.999995232</R00>
 								<R01>-0.00278778211</R01>
 								<R02>-0.00133306975</R02>
@@ -2196147,8 +2196151,8 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 							<Properties>
 								<CoordinateFrame name="CFrame">
 									<X>0</X>
-									<Y>0.281480372</Y>
-									<Z>-6.50742535e-08</Z>
+									<Y>0.388248801</Y>
+									<Z>-8.97575916e-08</Z>
 									<R00>1</R00>
 									<R01>2.80480119e-08</R01>
 									<R02>-7.28999527e-09</R02>
@@ -2196174,8 +2196178,8 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 								<Properties>
 									<CoordinateFrame name="CFrame">
 										<X>0</X>
-										<Y>0.281483382</Y>
-										<Z>6.50742535e-08</Z>
+										<Y>0.388252914</Y>
+										<Z>8.97575916e-08</Z>
 										<R00>0.999579251</R00>
 										<R01>0.0164958965</R01>
 										<R02>-0.0238616038</R02>
@@ -2196200,9 +2196204,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 								<Item class="Bone" referent="RBX084A828365E748D3AE64FFC3F42C9AF2">
 									<Properties>
 										<CoordinateFrame name="CFrame">
-											<X>-0.148351625</X>
-											<Y>0.0752932504</Y>
-											<Z>0.025142869</Z>
+											<X>-0.204622939</X>
+											<Y>0.103852764</Y>
+											<Z>0.0346798189</Z>
 											<R00>-0.0968738124</R00>
 											<R01>-0.995010614</R01>
 											<R02>-0.0238613859</R02>
@@ -2196227,9 +2196231,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 									<Item class="Bone" referent="RBX892827CE0B75438CBFC19E158406A78E">
 										<Properties>
 											<CoordinateFrame name="CFrame">
-												<X>-1.30148507e-07</X>
-												<Y>0.592515171</Y>
-												<Z>7.80891014e-07</Z>
+												<X>-1.79515183e-07</X>
+												<Y>0.817262352</Y>
+												<Z>1.07709116e-06</Z>
 												<R00>0.634659171</R00>
 												<R01>-0.220889404</R01>
 												<R02>0.740550995</R02>
@@ -2196254,9 +2196258,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 										<Item class="Bone" referent="RBXEF50F63F58874A95994B4A79DC68372D">
 											<Properties>
 												<CoordinateFrame name="CFrame">
-													<X>-1.43163356e-06</X>
-													<Y>0.524705768</Y>
-													<Z>3.9044553e-06</Z>
+													<X>-1.97466693e-06</X>
+													<Y>0.723732054</Y>
+													<Z>5.38545555e-06</Z>
 													<R00>0.951278806</R00>
 													<R01>0.28478384</R01>
 													<R02>0.118182048</R02>
@@ -2196281,9 +2196285,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 											<Item class="Bone" referent="RBX26CC7926B96B4A679E4F69D83928F468">
 												<Properties>
 													<CoordinateFrame name="CFrame">
-														<X>-4.03460353e-06</X>
-														<Y>0.500557303</Y>
-														<Z>-3.25371275e-06</Z>
+														<X>-5.56497071e-06</X>
+														<Y>0.690423846</Y>
+														<Z>-4.48787978e-06</Z>
 														<R00>0.187873527</R00>
 														<R01>0.854882658</R01>
 														<R02>0.48361057</R02>
@@ -2196312,9 +2196316,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 								<Item class="Bone" referent="RBX5AE591B65E3B44ECAECE2B284301B990">
 									<Properties>
 										<CoordinateFrame name="CFrame">
-											<X>0.151218429</X>
-											<Y>0.103599772</Y>
-											<Z>0.00903959479</Z>
+											<X>0.208577141</X>
+											<Y>0.142896235</Y>
+											<Z>0.0124684069</Z>
 											<R00>-0.0611770265</R00>
 											<R01>0.997841716</R01>
 											<R02>-0.0238617919</R02>
@@ -2196339,9 +2196343,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 									<Item class="Bone" referent="RBX2CC405CF1E784601A7E5067CD8D55C1C">
 										<Properties>
 											<CoordinateFrame name="CFrame">
-												<X>8.45965303e-07</X>
-												<Y>0.612422645</Y>
-												<Z>1.04118806e-06</Z>
+												<X>1.16684873e-06</X>
+												<Y>0.8447209</Y>
+												<Z>1.43612147e-06</Z>
 												<R00>0.592096508</R00>
 												<R01>0.228754133</R01>
 												<R02>-0.772718191</R02>
@@ -2196366,9 +2196370,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 										<Item class="Bone" referent="RBX7DD784D5448145E28E84CF4096651857">
 											<Properties>
 												<CoordinateFrame name="CFrame">
-													<X>3.38386121e-06</X>
-													<Y>0.51722151</Y>
-													<Z>2.86326713e-06</Z>
+													<X>4.66739493e-06</X>
+													<Y>0.713408947</Y>
+													<Z>3.94933386e-06</Z>
 													<R00>0.961013675</R00>
 													<R01>-0.261764795</R01>
 													<R02>-0.0890621915</R02>
@@ -2196393,9 +2196397,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 											<Item class="Bone" referent="RBX1586543E43694289B20DBF52215198C8">
 												<Properties>
 													<CoordinateFrame name="CFrame">
-														<X>-2.08237611e-06</X>
-														<Y>0.520723045</Y>
-														<Z>2.34267304e-06</Z>
+														<X>-2.87224293e-06</X>
+														<Y>0.718238711</Y>
+														<Z>3.23127324e-06</Z>
 														<R00>0.268995136</R00>
 														<R01>-0.879209697</R01>
 														<R02>-0.393232763</R02>
@@ -2196424,9 +2196428,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 								<Item class="Bone" referent="RBX8FDF6DE06F5A4AD7B706A66C2B7C80DE">
 									<Properties>
 										<CoordinateFrame name="CFrame">
-											<X>-0.00286670798</X>
-											<Y>0.124267094</Y>
-											<Z>-0.0341807716</Z>
+											<X>-0.00395407993</X>
+											<Y>0.171402887</Y>
+											<Z>-0.0471458919</Z>
 											<R00>0.999579251</R00>
 											<R01>-0.0222374722</R01>
 											<R02>0.0186276585</R02>
@@ -2196451,9 +2196455,9 @@ AAAAV2Fsa0FuaW1hdGlvbklkBsApnDvSJtJCCQAAAFdhbGtTcGVlZAaamZmZmZkJQA==]]></BinaryS
 									<Item class="Bone" referent="RBX7FD09240F02A4FBDAC367F9B01BEB8BA">
 										<Properties>
 											<CoordinateFrame name="CFrame">
-												<X>-1.83021331e-08</X>
-												<Y>0.232993677</Y>
-												<Z>4.55519768e-07</Z>
+												<X>-2.52443222e-08</X>
+												<Y>0.321370602</Y>
+												<Z>6.28303155e-07</Z>
 												<R00>1</R00>
 												<R01>5.48585177e-08</R01>
 												<R02>1.26449592e-07</R02>
