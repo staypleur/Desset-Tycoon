@@ -39,6 +39,12 @@
       },
       "CafeMarket": {
         "$path": "src/shared/CafeMarket.luau"
+      },
+      "CleanPresentation": {
+        "$path": "src/shared/CleanPresentation.luau"
+      },
+      "CircularGauge": {
+        "$path": "src/shared/CircularGauge.luau"
       }
     },
     "ServerScriptService": {

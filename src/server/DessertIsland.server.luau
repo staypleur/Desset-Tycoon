@@ -112,7 +112,6 @@ spawn.Color, spawn.Material = C.mint, Enum.Material.SmoothPlastic
 spawn.Anchored, spawn.Neutral, spawn.Enabled = true, true, true
 spawn.Duration = 0
 spawn.Parent = hub
-label(spawn, "Welcome to Sugar Island!", 280, 40, Vector3.new(0, 3, 0))
 
 local shop = group("CentralShop", hub)
 part("ShopFloor", Vector3.new(24, 0.5, 18), CFrame.new(0, 1, -6), C.white, shop)
@@ -258,6 +257,7 @@ ClassicStyle.Apply(map)
 require(game.ReplicatedStorage.ProductionPlot).Apply(map)
 require(game.ReplicatedStorage.CentralCafeLayout).Apply(map)
 require(game.ReplicatedStorage.ReferenceStyle).Apply(map)
+require(game.ReplicatedStorage.CleanPresentation).Apply(map)
 require(game.ReplicatedStorage.DessertUI).ApplyWorld(map)
 map:SetAttribute("LayoutReady", true)
 assert(#plots:GetChildren() == 6)

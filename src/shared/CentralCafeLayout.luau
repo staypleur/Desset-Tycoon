@@ -157,7 +157,7 @@ function Layout.Apply(island)
 				elseif m.Name=="CafeTableAndChairs" then m:PivotTo(m:GetPivot()+cf:VectorToWorldSpace(Vector3.new((lp.X<0 and -55 or 55)-lp.X,0,-9-lp.Z))) end
 			end end
 		end
-		remove(plot.Entrance,{"ActionSign"}); sign(plot.Entrance,"Available Plot","OwnerLabel",280)
+		remove(plot.Entrance,{"ActionSign"})
 		local depositCF=CFrame.lookAt(center+radial*44+Vector3.new(0,.85,0),center+radial*45+Vector3.new(0,.85,0))
 		local deposit=p(deposits,"Deposit"..i,Vector3.new(12,.3,7),depositCF,pink); deposit:SetAttribute("PlotId",i); sign(deposit,"PLOT "..i.." | DEPOSIT")
 		local crate=p(crates,"Crate"..i,Vector3.new(7,.3,6),depositCF*CFrame.new(14,0,0),lavender); sign(crate,"DESSERT CRATES")

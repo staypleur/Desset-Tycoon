@@ -49,7 +49,7 @@ local waiting = {} -- FIFO; extra players remain in the hub until a plot is free
 local function updateOwnerLabel(index, player)
 	local label = plots[index]:FindFirstChild("OwnerLabel", true)
 	if label and label:IsA("TextLabel") then
-		label.Text = player and (player.Name .. "'s Dessert Plot") or "Available Plot"
+		label.Text = player and player.Name or ""
 	end
 end
 

@@ -68,3 +68,17 @@ All five imported templates were inspected and contained zero scripts or package
 새 Creator Store 원본은 `ServerStorage.FreeDesignSources`에 보관합니다. 가져온 코드, PackageLink, 프롬프트, ClickDetector, 소리는 제거하고 장식만 사용합니다. 게임 동작은 자체 서버 코드로 처리합니다. 거절한 첫 상자/에스프레소 머신은 맵에 사용하지 않았고 조사용 머신도 제거했습니다. 무료 완제품 원형 카페를 찾지 못해 별도 승인을 받고 사진을 참고한 원형 카운터/상부 링/40개 펜던트 조명을 직접 제작했습니다.
 
 카페 판매 배율 UI는 승인된 Hapy 상태 바 이미지를 재사용하며, 계정 음성 UI는 Roblox 기본 컨트롤입니다. 유료 소스/플러그인은 구매하지 않았습니다.
+
+## v15 선택한 무료 소스와 간결한 화면
+
+- [Pink and blue cotton candy sky](https://create.roblox.com/store/asset/10800422601), momogone: 사용자 선택 하늘 A. 기존 어두운 산 배경을 교체했습니다.
+- [Happy Birthday Cake](https://create.roblox.com/store/asset/76551418404097), Marko97_IT: 사용자가 툴박스 썸네일로 직접 지정한 흰색·핑크 케이크입니다. 카페 바닥과 같은 X/Z 중심에 맞춰 지름 약 60 studs로 확대했습니다. 촛불/장식은 보존하고 배율 UI는 앞에 표시합니다. 앞서 승인한 pink cake display는 최종 지붕에 사용하지 않습니다.
+- [Cute Pink Park Sign](https://create.roblox.com/store/asset/119414144714376), MidnightFirlefanz, [Cherry Sign cute](https://create.roblox.com/store/asset/9680569807), IMochiButterfly: 모두 승인. 구역별로 번갈아 사용하는 무료 프레임에 앞·뒤 SurfaceGui를 붙였습니다. 얼굴은 Roblox AvatarHeadShot, 이름은 서버가 할당한 OwnerName입니다. 미할당 시 비어 있습니다.
+- [cute flower pot](https://create.roblox.com/store/asset/5682830668), [cute flower potted plant](https://create.roblox.com/store/asset/5683155663), eienorid: 두 소스 모두 승인. 각 구역과 중앙 벤치 근처에 배치했습니다.
+- [Yasu's Stylized Tree Pack](https://create.roblox.com/store/asset/79689531752352), mvyasu: 승인된 팩에서 Tree_01–Tree_20 모델만 사용합니다. 전시용 바닥/설명판은 복제하지 않습니다. 24개 나무의 Canopy 메시를 민트·핑크·라벤더·피치·블루·크림으로 변경했습니다. 기존 무료 벚꽃은 보존하고 직접 제작한 CandyGarden 나무·덤불을 제거했습니다.
+- [Roblox 공식 원형 이미지 사용 예제](https://create.roblox.com/docs/reference/engine/enums/ProximityPromptStyle): 내장 무료 `rbxasset://textures/ui/Controls/RadialFill.png`를 두 반원으로 마스킹하고 파스텔 무지개 UIGradient를 적용했습니다. 사용자에게 실제 게이지 미리보기를 보여 승인받았습니다. 가운데에는 배율만 표시하고 30초 동안 채웁니다.
+- 사용자가 제공한 투명 PNG를 그대로 `assets/dessert-counter-plate.png`에 보관하고 Roblox에 업로드했습니다. Decal ID는 **116465391477996**, 실제 이미지 Texture ID는 **73464157423623**입니다. ImageLabel은 Texture ID를 사용하며 실제 클라이언트 IsLoaded 및 화면 표시를 확인했습니다. 외부 무료 팩이 아닌 사용자 제공 그림입니다.
+
+이번 새 소스는 무료 표시/제작자를 확인한 뒤 사용했습니다. 가져올 때 Script·LocalScript·ModuleScript·PackageLink·기존 상호작용·소리를 제거하는 검사를 통과시켰으며 해당 새 모델에서는 제거 대상 코드가 발견되지 않았습니다. 기존 맵, 건물 및 ServerStorage의 원본 템플릿도 검사했으며 외부 실행 코드는 없었습니다. 직접 작성한 게임 코드 20개와 Roblox가 플레이 중 생성하는 기본 캐릭터/채팅 코드는 유지합니다.
+
+v15의 은행·상점 건물은 충돌합니다. 각 구역의 상자는 하나만 남겼고 상점 옆 입구 반대쪽으로 옮겼습니다. 위 v12/v14 항목의 비충돌/두 상자/카페 사각 배율 UI 설명은 해당 버전의 기록입니다.

@@ -107,6 +107,6 @@ function UI.ApplyWorld(island)
 		UI.Label(plot.PersonalShopArea.RobuxShop,"Shop","Hold E",Color3.fromRGB(255,231,169))
 		UI.Label(plot.MergeBoard,"Merge","")
 	end
-	island:SetAttribute("UIStyleVersion",2); island:SetAttribute("MapVersion","14.0.0")
+	island:SetAttribute("UIStyleVersion",2); island:SetAttribute("MapVersion","15.0.0")
 end
 return UI

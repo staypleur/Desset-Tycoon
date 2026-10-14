@@ -5,6 +5,7 @@ local Config = {
 	ProductionInterval = 3,
 	PuddingCost = 5,
 	Capacity = 60,
+	PlateImageId = "rbxassetid://73464157423623",
 	CafeInterval = 2,
 	CafeMarketInterval = 30,
 	CafeMarketMinTenths = 5,

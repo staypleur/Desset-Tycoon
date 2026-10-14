@@ -11,6 +11,7 @@ local Catalog=require(RS:WaitForChild("DessertCatalog"))
 local Rules=require(RS:WaitForChild("DessertRules"))
 local Visuals=require(RS:WaitForChild("DessertVisuals"))
 local Style=require(RS:WaitForChild("DessertUI"))
+local Gauge=require(RS:WaitForChild("CircularGauge"))
 local remotes=RS:WaitForChild("DessertRemotes")
 local action=remotes:WaitForChild("Action"); local event=remotes:WaitForChild("Event")
 local colors={Cream=Color3.fromRGB(255,248,239),Pink=Color3.fromRGB(255,193,217),Lavender=Color3.fromRGB(215,199,249),Mint=Color3.fromRGB(184,233,212),Text=Color3.fromRGB(105,66,90)}
@@ -64,27 +65,23 @@ local function format(n)
 	return math.abs(n-math.floor(n))>.00001 and string.format("%.1f",n) or tostring(math.floor(n))
 end
 local cash=box("$25",UDim2.fromOffset(180,60),UDim2.new(0,18,1,-80),colors.Mint,"Coins"); cash.Name="CashValue"; cash.TextSize=28
-local bag=box("Mini Desserts: 0",UDim2.fromOffset(260,60),UDim2.new(.5,-130,1,-80),nil,"Cake"); bag.Name="BagValue"
-local boost=box("1x Mini Desserts",UDim2.fromOffset(170,60),UDim2.new(1,-188,.5,-30),colors.Lavender)
-local cafeStatus=box("Cafe Queue: 0\n10% / 2s\nBank: $0",UDim2.fromOffset(180,112),UDim2.new(1,-198,.5,40),colors.Mint,"Cafe"); cafeStatus.TextSize=16
-local function updateCafeHUD()
-	cafeStatus.Text="Cafe Queue: "..format(data.CafeQueue or 0).."\n"..string.format("%.0f%% / 2s",(data.CafeRate or .1)*100).."\nBank: $"..format(data.Pending)
-end
-local toast=box("Welcome to Dessert Island!",UDim2.fromOffset(440,40),UDim2.new(.5,-220,1,-136))
-local cafeRateLabel,cafeCountdown,marketIsland
+local plate=Instance.new("ImageLabel"); plate.Name="MiniDessertPlate"; plate.BackgroundTransparency=1
+plate.Size=UDim2.fromOffset(112,112); plate.AnchorPoint=Vector2.new(.5,1); plate.Position=UDim2.new(.5,0,1,-12)
+plate.Image=Config.PlateImageId or ""; plate.ScaleType=Enum.ScaleType.Fit; plate.Parent=gui
+local bag=text(plate,"0",UDim2.fromScale(.68,.5),UDim2.fromScale(.16,.32)); bag.Name="BagValue"; bag.TextScaled=true
+local numberLimit=Instance.new("UITextSizeConstraint"); numberLimit.MinTextSize=14; numberLimit.MaxTextSize=27; numberLimit.Parent=bag
+local boost=box("×1",UDim2.fromOffset(94,52),UDim2.new(1,-112,.5,-26),colors.Lavender)
+local cafeRateLabel,cafeGauge,marketIsland
 task.spawn(function()
 	marketIsland=workspace:WaitForChild("DessertJellyIsland",30); if not marketIsland then return end
 	local hub=marketIsland:WaitForChild("CentralHub"); local shop=hub:WaitForChild("CentralShop")
 	local architecture=shop:WaitForChild("CafeArchitecture"); local anchor=architecture:WaitForChild("CafeMultiplierAnchor",30)
 	if not anchor then return end
 	local board=Instance.new("BillboardGui"); board.Name="CafeMarketSign"
-	local function fitMarket() local scale=math.clamp(workspace.CurrentCamera.ViewportSize.X/1280,.65,1); board.Size=UDim2.fromOffset(240*scale,110*scale) end
+	local function fitMarket() local scale=math.clamp(workspace.CurrentCamera.ViewportSize.X/1280,.65,1); board.Size=UDim2.fromOffset(150*scale,150*scale) end
 	fitMarket(); workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(fitMarket)
-	board.Adornee=anchor; board.MaxDistance=250; board.AlwaysOnTop=false; board.Parent=screen
-	local frame=Instance.new("Frame"); frame.Size=UDim2.fromScale(1,1); frame.BackgroundTransparency=1; frame.Parent=board; Style.Art(frame,"Stats")
-	local header=text(frame,"CAFE SALE RATE",UDim2.fromScale(1,.23),UDim2.fromScale(0,.08)); header.TextScaled=true
-	cafeRateLabel=text(frame,"1.0x",UDim2.fromScale(1,.4),UDim2.fromScale(0,.29)); cafeRateLabel.Font=Enum.Font.GothamBlack; cafeRateLabel.TextScaled=true
-	cafeCountdown=text(frame,"Changes in 30s",UDim2.fromScale(1,.23),UDim2.fromScale(0,.69)); cafeCountdown.TextScaled=true
+	board.Adornee=anchor; board.MaxDistance=250; board.AlwaysOnTop=true; board.Parent=screen
+	cafeGauge=Gauge.Create(board); cafeRateLabel=cafeGauge.Label
 end)
 local window=Instance.new("Frame"); window.Name="Panel"; window.Size=UDim2.fromScale(.78,.72); window.Position=UDim2.fromScale(.11,.15)
 window.ZIndex=10; window.Visible=false; window.Parent=gui; Style.Card(window,colors.Cream,24)
@@ -95,7 +92,7 @@ local scroll=Instance.new("ScrollingFrame"); scroll.Size=UDim2.new(1,-24,1,-70);
 scroll.ZIndex=window.ZIndex+1; scroll.BackgroundTransparency=1; scroll.BorderSizePixel=0; scroll.ScrollBarThickness=6; scroll.ScrollBarImageColor3=colors.Text; scroll.AutomaticCanvasSize=Enum.AutomaticSize.Y; scroll.CanvasSize=UDim2.new(); scroll.Parent=window
 local function request(verb,arg)
 	local ok,result,message=pcall(action.InvokeServer,action,verb,arg)
-	if ok and result==false and message then toast.Text=message elseif not ok then toast.Text="Please try again" end
+	if not ok then warn("[DessertHUD] Action unavailable") end
 	return ok and result
 end
 local function preview(parent,tier,shiny,size,pos)
@@ -161,9 +158,15 @@ show=function(name)
 end
 button(gui,"Index",UDim2.fromOffset(118,54),UDim2.new(0,18,.5,-70),function() show("Index") end)
 button(gui,"Shop",UDim2.fromOffset(118,48),UDim2.new(0,18,.5,-8),function() show("Shop") end,colors.Mint)
-button(gui,"Crates",UDim2.fromOffset(118,48),UDim2.new(0,18,.5,48),function() show("Crates") end,colors.Lavender)
-button(gui,"Dessert Island",UDim2.fromOffset(180,44),UDim2.fromOffset(18,18),function() toast.Text="Deposit at the central cafe. Collect cash and upgrade conversion at your bank!" end)
-button(gui,"Settings",UDim2.fromOffset(124,44),UDim2.fromOffset(210,18),function() show("Settings") end,colors.Lavender)
+local topbar=Instance.new("ScreenGui"); topbar.Name="DessertTopbar"; topbar.IgnoreGuiInset=true; topbar.ResetOnSpawn=false; topbar.Parent=screen.Parent
+local settings=Instance.new("ImageButton"); settings.Name="SettingsButton"; settings.Size=UDim2.fromOffset(42,42)
+settings.Image=Style.Icons.Settings; settings.ImageColor3=colors.Text; settings.BackgroundColor3=colors.Lavender; settings.Parent=topbar; corner(settings,21)
+local function positionSettings()
+	local inset=game:GetService("GuiService").TopbarInset
+	settings.Position=UDim2.fromOffset(inset.Min.X+8,inset.Min.Y+math.max(0,(inset.Height-42)/2))
+end
+positionSettings(); game:GetService("GuiService"):GetPropertyChangedSignal("TopbarInset"):Connect(positionSettings)
+settings.Activated:Connect(function() if not data or data.Settings.Effects then click:Play() end; show("Settings") end)
 local function applySettings()
 	if not data then return end
 	if data.Settings.Music then if not music.Playing then music:Play() end else music:Stop() end
@@ -214,9 +217,8 @@ event.OnClientEvent:Connect(function(kind,value,message)
 		local previousHighest=data and data.Highest
 		local previousNormal=data and data.NormalTokens
 		local previousPerk=data and data.PerkTokens
-		data=value; cash.Text="$"..format(data.Cash); bag.Text="Mini Desserts: "..format(data.Bag); boost.Text=data.Multiplier.."x Mini Desserts"
-		updateCafeHUD()
-		if message then toast.Text=message end; applySettings()
+		data=value; cash.Text="$"..format(data.Cash); bag.Text=format(data.Bag); boost.Text="×"..data.Multiplier
+		applySettings()
 		if giftLabel and giftLabel.Parent then giftLabel.Text=giftText() end
 		if panelName=="Index" and previousEquipped~=data.Equipped then show("Index") end
 		if panelName=="Crates" and (previousHighest~=data.Highest or previousNormal~=data.NormalTokens or previousPerk~=data.PerkTokens) then show("Crates") end
@@ -234,9 +236,9 @@ local visibilityTimer=0
 Run.RenderStepped:Connect(function(dt)
 	if cafeRateLabel and marketIsland then
 		local rate=marketIsland:GetAttribute("CafeSaleMultiplier") or 1
-		local remaining=math.max(0,math.ceil((marketIsland:GetAttribute("CafeNextSaleChange") or workspace:GetServerTimeNow())-workspace:GetServerTimeNow()))
-		cafeRateLabel.Text=string.format("%.1fx",rate); cafeRateLabel.TextColor3=rate>=1 and Color3.fromRGB(58,143,90) or Color3.fromRGB(200,82,100)
-		cafeCountdown.Text="Changes in "..remaining.."s"
+		local remaining=math.max(0,(marketIsland:GetAttribute("CafeNextSaleChange") or workspace:GetServerTimeNow()+30)-workspace:GetServerTimeNow())
+		cafeRateLabel.Text=string.format("%.1fx",rate)
+		Gauge.SetProgress(cafeGauge,1-remaining/30)
 	end
 	for n=#transfers,1,-1 do local v=transfers[n]; local alpha=math.clamp((os.clock()-v.Time)/v.Duration,0,1)
 		v.Model:PivotTo(CFrame.new(v.Start:Lerp(v.Finish,alpha)+Vector3.new(0,math.sin(alpha*math.pi)*8,0)))
@@ -247,6 +249,6 @@ Run.RenderStepped:Connect(function(dt)
 end)
 task.spawn(function()
 	for _=1,30 do local state=request("State"); if type(state)=="table" then
-		data=state; cash.Text="$"..format(data.Cash); bag.Text="Mini Desserts: "..format(data.Bag); boost.Text=data.Multiplier.."x Mini Desserts"; updateCafeHUD(); applySettings(); break
+		data=state; cash.Text="$"..format(data.Cash); bag.Text=format(data.Bag); boost.Text="×"..data.Multiplier; applySettings(); break
 	end; task.wait(1) end
 end)

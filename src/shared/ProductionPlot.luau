@@ -50,7 +50,6 @@ function Layout.Apply(island)
 		local tray=part(belts,"Collector",Vector3.new(12,.25,8),at(0,.25,-11),cream)
 		for _,x in ipairs({-6,6}) do part(belts,"TrayLip",Vector3.new(.4,.7,8),at(x,.65,-11),pink) end
 		part(belts,"TrayLip",Vector3.new(12,.7,.4),at(0,.65,-15),pink)
-		sign(tray,"Mini Dessert Tray")
 		for _,name in ipairs({"MergeBoard","MergeCells","PurchaseButtons"}) do local old=plot:FindFirstChild(name); if old then old:Destroy() end end
 		local merge=part(plot,"MergeBoard",Vector3.new(10,.4,6),at(0,.35,-21),pink); sign(merge,"MERGE")
 		local buttons=group(plot,"PurchaseButtons")

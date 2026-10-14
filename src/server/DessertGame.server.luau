@@ -17,6 +17,7 @@ while island:GetAttribute("LayoutReady")==false do task.wait(.1) end
 Layout.Apply(island)
 require(RS:WaitForChild("CentralCafeLayout")).Apply(island)
 require(RS:WaitForChild("ReferenceStyle")).Apply(island)
+require(RS:WaitForChild("CleanPresentation")).Apply(island)
 UI.ApplyWorld(island)
 local remotes=Instance.new("Folder"); remotes.Name="DessertRemotes"; remotes.Parent=RS
 local action=Instance.new("RemoteFunction"); action.Name="Action"; action.Parent=remotes
