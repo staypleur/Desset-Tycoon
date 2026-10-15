@@ -196,3 +196,16 @@ User confirmed all four Macaron assets belong to tier five. Original Meshy FBX g
 | DarkMacaron | 3110 | 137825462406032 | 71830617311568 |
 
 Base heights remain 18/28 studs for mini and 2.5 studs for full models; producers display at 5 studs. Bottom-center pivots, automatic render fidelity, disabled shadows and existing companion scaling retained. Shiny minis use the supplied face-free mini with existing gold tint/sparkles. Three transparent cutouts from user references use built-in image_gen; exact prompts recorded in icons/prompts.json. Shared 1024px atlas image 81932094548604, decal 111801012745786. Proof: docs/previews/macaron-world.png and macaron-index.png.
+## Tier 6 Croissant — user assets, 2026-10-15
+
+Four user-supplied Meshy archives replace the tier-six Donut placeholder. Source archives were found in the user's dessert asset folder; original geometry, UVs, textures and hashes are retained under assets/desserts and manifest.json. One script-free MeshPart per template, bottom-center pivots and automatic render fidelity; existing 2.5-stud base / 5-stud producer height and companion scale remain. Mini base height is 18/28 studs.
+
+| Template | Triangles | Mesh |
+|---|---:|---:|
+| MiniCroissant | 312 | 136495500428417 |
+| NormalCroissant | 3050 | 99062875409151 |
+| GalaxyCroissant | 3144 | 77393796050585 |
+| QuartzCroissant | 3094 | 139508983045026 |
+
+Three user-reference cutouts were prepared with built-in image_gen, using actual transparency and aspect-preserving 512px atlas cells. Exact prompts are in icons/prompts.json. Atlas image 101676992338599, decal 87769853568747. Shiny minis reuse the supplied face-free mesh with the existing gold tint/sparkles. No external visual designs were added. Proof: docs/previews/croissant-world.png and croissant-index.png.
+- Normal Croissant initially failed live texture delivery with BMP image 94249948799545. Re-uploading the unchanged original PNG resolved it: decal 90165978839336, image 139578570970895. Live preload returned Success for all three producer maps and the mini map.

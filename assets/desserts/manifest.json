@@ -361,5 +361,85 @@
       ]
     },
     "cellSize": 512
+  },
+  "mini-croissant": {
+    "sourceArchive": "Meshy_AI_croissant_no_face_300_1015093134_texture_fbx.zip",
+    "archiveSha256": "527171034a12908b52f66a4696d5cf01e09365924a374b1b9c0f7cdfc2509a5e",
+    "heightCm": 18,
+    "triangles": 312,
+    "files": {
+      "color.png": "52207ee41638f2c439b8135cf181bd724759f5c0b9ad201389a35d35bf72be9d",
+      "mini-croissant-import.fbx": "098462d047032d610e1474b4c2b139dad5032cfc9cbc5ac45b68f91bead31579",
+      "source.fbx": "18f1f274c096653a85b8158935bc79d9ab313733ac52c9b679a2a329de7eedc0"
+    },
+    "meshId": 136495500428417,
+    "textureId": 108599367125848,
+    "textureDecalId": 111039201890968,
+    "textureUploadFormat": "BMP; RGB-identical conversion of color.png"
+  },
+  "croissant": {
+    "sourceArchive": "Meshy_AI_cute_croissant_charac_1015093152_texture_fbx.zip",
+    "archiveSha256": "72458146c55852dd639de2c6b48d835c74708cada32bcdea306a577f7ea38494",
+    "heightCm": 70,
+    "triangles": 3050,
+    "files": {
+      "color.png": "4321a146ddff496b8177fdbc5b642371cb637314b59c03720e5b0a508aef8ac9",
+      "croissant-import.fbx": "2885d44281a04994295d28b63f960c2344c8dc58cfe8689b94aac0624b192ed9",
+      "source.fbx": "19b5f56ed843c861d5724ec6eca32a5571f68fbbffaffe9cf60776c6433bb4ae"
+    },
+    "meshId": 99062875409151,
+    "textureId": 139578570970895,
+    "textureDecalId": 90165978839336,
+    "textureUploadFormat": "Original color.png; replaced BMP asset that failed live texture delivery"
+  },
+  "galaxy-croissant": {
+    "sourceArchive": "Meshy_AI_galaxy_crescent_crois_1015093208_texture_fbx.zip",
+    "archiveSha256": "abb528fbec830cda7882624acad90905a362d0eb454bec6bb9c09b83f3161ff6",
+    "heightCm": 70,
+    "triangles": 3144,
+    "files": {
+      "color.png": "46eb677b97e55f9c58713cea6e01c4ccefe91015448cc52837a2dd5e5f20f765",
+      "galaxy-croissant-import.fbx": "a6ab455cd616212fb4326b3bd0ab1fe1f3daa2ff7030622d570cedbf45ca7ab6",
+      "source.fbx": "fe598e2dfda3ab7b6633578964675b9882eb652ee64ca9e6301d2a22c4cfcd3b"
+    },
+    "meshId": 77393796050585,
+    "textureId": 128780475624238,
+    "textureDecalId": 112947918095830,
+    "textureUploadFormat": "BMP; RGB-identical conversion of color.png"
+  },
+  "quartz-croissant": {
+    "sourceArchive": "Meshy_AI_pink_quartz_rose_gold_1015093224_texture_fbx.zip",
+    "archiveSha256": "9d80939f6752447290b933a50bfcd696f1b3477390549b18eba259e9e62a9514",
+    "heightCm": 70,
+    "triangles": 3094,
+    "files": {
+      "color.png": "2de2769f0cad34862e684322af1a15a8cb861a7a53c81735badf9acf642b7fd8",
+      "quartz-croissant-import.fbx": "5f0e7b6b383b0e97d778c61ba3d176d87cebb30d0701fff077990c09ff21a350",
+      "source.fbx": "166f2787f31e5566944e3cdec4e8d706a735a2a7eb01f518651d581b8f3cb667"
+    },
+    "meshId": 139508983045026,
+    "textureId": 131109169034313,
+    "textureDecalId": 81886885990947,
+    "textureUploadFormat": "BMP; RGB-identical conversion of color.png"
+  },
+  "croissantIndexAtlas": {
+    "decalId": 87769853568747,
+    "imageId": 101676992338599,
+    "file": "icons/croissant-index-atlas.png",
+    "cells": {
+      "6n": [
+        0,
+        0
+      ],
+      "6s": [
+        512,
+        0
+      ],
+      "6s2": [
+        0,
+        512
+      ]
+    },
+    "cellSize": 512
   }
 }

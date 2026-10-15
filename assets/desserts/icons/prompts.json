@@ -65,5 +65,20 @@
       "crystal-macaron": "Background-extraction edit for a Roblox index icon. Remove only the white background and ground shadow. Preserve exactly the complete crystal gem macaron character, pastel crystalline facets and sparkles, cream filling, face, hands, feet, silhouette, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background.",
       "dark-macaron": "Background-extraction edit for a Roblox index icon. Remove only the white background and ground shadow. Preserve exactly the complete pink gold dark macaron character, dark pink shell, gold flakes and stars, cream filling, face, hands, feet, silhouette, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background."
     }
+  },
+  "croissantCutouts": {
+    "mode": "built-in image_gen",
+    "transparent_background": true,
+    "outputs": [
+      "croissant.png",
+      "galaxy-croissant.png",
+      "quartz-croissant.png"
+    ],
+    "packing": "Three 512px cells in a 1024px RGBA atlas; aspect-preserving max480px resize with transparent padding.",
+    "prompts": {
+      "croissant": "Background-extraction edit for a Roblox index icon. Remove only the white background and ground shadow. Preserve exactly the complete golden croissant character, curved pastry shape, face, hands, feet, silhouette, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background.",
+      "galaxy-croissant": "Background-extraction edit for a Roblox index icon. Remove only the white background and ground shadow. Preserve exactly the complete galaxy crescent croissant character, crescent silhouette, purple galaxy textures and pastel stars, face, hands, feet, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background.",
+      "quartz-croissant": "Background-extraction edit for a Roblox index icon. Remove only the white background and ground shadow. Preserve exactly the complete pink quartz rose gold croissant character, pink crystalline pastry shape, rose gold bands, face, hands, feet, silhouette, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background."
+    }
   }
 }

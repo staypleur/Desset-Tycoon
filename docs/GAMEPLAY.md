@@ -110,3 +110,5 @@ Tier 4 is Shortcake. Galaxy Aurora Shortcake (4s) and Rainbow Unicorn Shortcake 
 
 ### Tier-five Macaron update
 Tier 5 is Macaron. Crystal Gem Macaron (5s) and Pink Gold Dark Macaron (5s2) split conditional shiny rolls 50:50. Ownership, discovery, equipment and merge lineage remain separate. Existing tier-five counts are preserved. Transparent index/roulette images and fixed-facing floating 3D discovery reuse the existing presentation; MiniMacaron uses the guided physical-drop system.
+### Tier-six Croissant update
+Tier 6 is Croissant. Galaxy Crescent Croissant (6s) and Pink Quartz Rose Gold Croissant (6s2) split conditional shiny rolls 50:50, with separate inventory, index and equipment identities. Macaron merges preserve the shiny lineage. Existing tier-six counts remain intact. Index and roulette use transparent images; discovery uses one floating, fixed-facing native model. MiniCroissant uses the guided physical-drop system.
