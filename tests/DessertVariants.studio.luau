@@ -14,6 +14,16 @@ assert(math.abs(milk-galaxy)<600,"Two shiny variants are equally likely")
 local rainbow,choco=0,0
 for _=1,20000 do if R.RollVariant(2,true,random)==1 then rainbow+=1 else choco+=1 end end
 assert(math.abs(rainbow-choco)<600 and R.RollVariant(1,false,random)==0)
+local sherbet,ruby=0,0
+for _=1,20000 do if R.RollVariant(3,true,random)==1 then sherbet+=1 else ruby+=1 end end
+assert(math.abs(sherbet-ruby)<600,"Jelly shinies are equally likely")
+local jelly=R.New(0);jelly.Pets={};jelly.Index={};local jellyFound={}
+R.Add(jelly,2,true,3,jellyFound,1);R.Add(jelly,2,true,3,jellyFound,2);R.Merge(jelly,jellyFound)
+assert(jelly.Pets["3s"]==1 and jelly.Pets["3s2"]==1 and jelly.Index["3s"] and jelly.Index["3s2"],"Custard merges retain jelly variant lineage")
+assert(R.ToggleEquip(jelly,"3s2") and jelly.Equipped=="3s2")
+local crateData=R.New(0);crateData.Index["3n"]=true;crateData.Pets["3n"]=1;local sample3={.999,0,.75};local sampleIndex=0
+local jellyRoll=R.Roll(crateData,"Perk",{NextNumber=function() sampleIndex+=1;return sample3[sampleIndex] end},1,{})
+assert(jellyRoll.Key=="3s2" and jellyRoll.Tier==3,"Tier-three crate winner retains ruby identity")
 local priority=R.New(0);priority.Pets={["1n"]=100,["2n"]=4,["4n"]=2};assert(R.ProductionPerSecond(priority)==40,"Highest tiers occupy limited production slots first")
 local d=R.New(0);local found={}
 R.Add(d,1,true,2,found,1);R.Add(d,1,true,2,found,2);R.Merge(d,found)
@@ -28,7 +38,7 @@ assert(math.abs(R.ProductionPerSecond(d)-6/require(f.TycoonConfig).ProductionInt
 local sample={0,0,.75};local i=0
 local roll=R.Roll(R.New(0),"Normal",{NextNumber=function() i+=1;return sample[i] end},1,{})
 assert(roll.Key=="1s2" and roll.Variant==2,"Crates carry the exact shiny identity")
-local expected={{1,false,0,"NormalPudding",5},{1,true,1,"MilkPudding",5},{1,true,2,"GalaxyPudding",5},{2,false,0,"NormalCustard",5},{2,true,1,"RainbowCustard",5},{2,true,2,"DarkChocoCustard",5}}
+local expected={{1,false,0,"NormalPudding",5},{1,true,1,"MilkPudding",5},{1,true,2,"GalaxyPudding",5},{2,false,0,"NormalCustard",5},{2,true,1,"RainbowCustard",5},{2,true,2,"DarkChocoCustard",5},{3,false,0,"NormalJelly",5},{3,true,1,"SherbetJelly",5},{3,true,2,"RubyJelly",5}}
 for _,spec in ipairs(expected) do
  local m=V.Build(spec[1],spec[2],spec[3]);local _,size=m:GetBoundingBox()
  assert(m.PrimaryPart.MeshId==f.DessertModelTemplates[spec[4]].PrimaryPart.MeshId)
@@ -38,6 +48,6 @@ for _,spec in ipairs(expected) do
  m:Destroy()
 end
 local mini=V.BuildMini(2,false);assert(mini.PrimaryPart.MeshId==f.DessertModelTemplates.MiniCustard.PrimaryPart.MeshId)
-assert(math.abs(select(2,mini:GetBoundingBox()).Y-18/28)<.001);mini:Destroy();f:Destroy()
+assert(math.abs(select(2,mini:GetBoundingBox()).Y-18/28)<.001);mini:Destroy();local jellyMini=V.BuildMini(3,false);assert(jellyMini.PrimaryPart.MeshId==f.DessertModelTemplates.MiniJelly.PrimaryPart.MeshId);assert(math.abs(select(2,jellyMini:GetBoundingBox()).Y-18/28)<.001);jellyMini:Destroy();f:Destroy()
 print("[DessertVariants] PASS: legacy save, 50:50",milk,galaxy,"separate merges/equip, offline production, crate identity, all imported models")
 

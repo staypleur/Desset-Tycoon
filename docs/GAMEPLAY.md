@@ -100,3 +100,7 @@ Join Group opens a confirmation and the native Roblox join prompt for Cosmon Stu
 Production now sorts tiers descending before applying the shared 60-model limit. The highest tiers occupy the front slots, continuing right row one, left row one, right row two, left row two. Offline production uses this same ordering. Index catalog order remains tier order.
 Tier-two shiny rolls now choose Rainbow Cotton Candy Custard (`2s`) or Dark Choco Custard (`2s2`) with equal conditional probability. Existing shiny keys and merges keep their variant identity; both have distinct models and index images.
 Pad activation uses a consistent home-space footprint and leave/re-enter hysteresis. A jump re-arms only after upward airborne separation with positive vertical speed; ordinary walking and limb contacts do not re-arm. Press tweens cancel and restart from a fixed home CFrame, then restore it, preventing cumulative sinking and disappearance of the colored top.
+
+
+### Tier-three jelly variants
+Strawberry Jelly uses the supplied normal/mini models. Conditional shiny rolls select Strawberry Mint Sherbet Jelly (3s) or Strawberry Mint Ruby Crystal Jelly (3s2) equally. Existing 3s saves retain their counts and now render as Sherbet Jelly; merges preserve variant lineage. Each variant has separate discovery, ownership and equipment identity, with 2D index/carousel art and fixed-facing floating 3D discovery presentation. Shiny minis reuse the supplied face-free MiniJelly with the existing gold treatment until distinct mini variants are provided.

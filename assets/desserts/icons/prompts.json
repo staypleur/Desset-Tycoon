@@ -19,5 +19,21 @@
       "source": "codex-clipboard-52b662ed-c32d-4492-a367-d23843a1f2b5.png",
       "prompt": "Use case: background-extraction. Edit target: supplied Dark Choco Custard reference image. Remove only the flat gray background and ground shadow with actual transparent alpha. Preserve the single complete character exactly: dark chocolate caramel cap, dark iridescent faceted custard body, large starry eyes, pink cheeks, smiling mouth, arms, feet, pose, colors, lighting and proportions. Center with modest transparent padding. No text, no border, no extra decorations, no redesign. Game index cutout."
     }
+  },
+  "jellyCutouts": {
+    "mode": "built-in image_gen",
+    "transparent_background": true,
+    "outputs": [
+      "strawberry-jelly.png",
+      "sherbet-jelly.png",
+      "ruby-jelly.png"
+    ],
+    "prompt": "Background-extraction edit for a game index icon. Remove only gray background and ground shadow. Preserve exactly the supplied jelly character, lid if present, polygon silhouette, face, details, colors, pose and front view. Full character centered, no cropping, no added elements, no text. True transparent background.",
+    "packing": "Three 512px cells in a 1024px RGBA atlas; aspect-preserving resize with transparent padding.",
+    "prompts": {
+      "strawberry-jelly": "Background-extraction edit for a game index icon. Remove only the gray background and ground shadow. Preserve exactly the pink strawberry jelly character, its polygon silhouette, face, seed details, colors, pose and front view. Full character centered, no cropping, no added elements, no text. True transparent background.",
+      "sherbet-jelly": "Background-extraction edit for a game index icon. Remove only gray background and ground shadow. Preserve exactly the strawberry mint sherbet jelly character, mint lid, pastel sparkles, polygon silhouette, face, colors, pose and front view. Full character centered, no cropping, no added elements, no text. True transparent background.",
+      "ruby-jelly": "Background-extraction edit for a game index icon. Remove only gray background and ground shadow. Preserve exactly the ruby crystal strawberry jelly character, mint lid, red facets and glowing seeds, polygon silhouette, face, colors, pose and front view. Full character centered, no cropping, no added elements, no text. True transparent background."
+    }
   }
 }

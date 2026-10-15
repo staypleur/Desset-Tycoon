@@ -122,5 +122,84 @@
         0
       ]
     }
+  },
+  "mini-strawberry-jelly": {
+    "sourceArchive": "Meshy_AI_strawberry_jelly_no_f_1015075959_texture_fbx.zip",
+    "archiveSha256": "d7c4a6cc0e87eb5aac7265d40042963220993092886da035d10f4cfa92cc0a8f",
+    "heightCm": 18,
+    "triangles": 212,
+    "files": {
+      "color.png": "ac305b7d506751e877105131e11664064c345c0d1b2a734c4640b30ec7e1941e",
+      "mini-strawberry-jelly-import.fbx": "a2e2334b739aeeea613b9662850e809b3140bbb6683c2e83c19c331a6515eb41",
+      "source.fbx": "9e4df8fbaf8203bcead0f36ce2f5f23e347e29fc802ab0fdf1df2893d935d4fa"
+    },
+    "meshId": 113858503243198,
+    "textureId": 79264747990109,
+    "textureDecalId": 111716383164893
+  },
+  "strawberry-jelly": {
+    "sourceArchive": "Meshy_AI_strawberry_jelly_lowp_1015080059_texture_fbx.zip",
+    "archiveSha256": "9c4de8b29925e346e326845c4205c9ee76600fd6a307b55865e5bc6cbcf289a5",
+    "heightCm": 70,
+    "triangles": 3042,
+    "files": {
+      "color.png": "1a3e3e58850cb3bd106519e30e31d97952ed33f64672f6a37170f7cdff2c5e43",
+      "source.fbx": "f01e87d0ea944cf1153a7f1dbc33fa604a261d9c16257dd489ebee550995bb91",
+      "strawberry-jelly-import.fbx": "c6a5fc7bd92386539804422d8065585025e0b9fa9316c292a14638fd934cf548",
+      "color.bmp": "f62bc004e8fa52a0a255868b894b35c88881999fef213d9f317e7dc5d440382c"
+    },
+    "meshId": 138699807859155,
+    "textureId": 136064848332451,
+    "textureDecalId": 99000398352397,
+    "failedPngTextureId": 128804070025192,
+    "textureImportNote": "Original PNG failed Roblox client fetch; RGB-identical BMP reupload."
+  },
+  "sherbet-jelly": {
+    "sourceArchive": "Meshy_AI_mint_cap_sherbet_jell_1015080119_texture_fbx.zip",
+    "archiveSha256": "d1c01098354cd13f661f117eb9d59f16d570b9d643cbdecc2923182b7358deb6",
+    "heightCm": 70,
+    "triangles": 2905,
+    "files": {
+      "color.png": "c2cd3983d4821ad946c5b4c941f8778574c506a8d414e45098ce5ce6dfa49225",
+      "sherbet-jelly-import.fbx": "7b3129ea3194d7ecb6016db044edfac7bd2273bb7810dba6bd6b2ff130ebb670",
+      "source.fbx": "c55d7c8fb700d33ce5aeff63267a0c90f26b598f19f7892a4e8e05fdcf632566"
+    },
+    "meshId": 99142049695757,
+    "textureId": 106390573780043,
+    "textureDecalId": 84047846947918
+  },
+  "ruby-jelly": {
+    "sourceArchive": "Meshy_AI_mint_cap_ruby_crystal_1015080141_texture_fbx.zip",
+    "archiveSha256": "adb888dfe39923cd1557f361affee6b5227ea75414953a828a1eda0f96994df8",
+    "heightCm": 70,
+    "triangles": 2977,
+    "files": {
+      "color.png": "9e4f590617b8572cb90c2416dfd7205a1f91bfe5d15bcda754f559f1ee69a80c",
+      "ruby-jelly-import.fbx": "18f27ff34d7e252953e03a24474be1bf5792297aed07eb7311e3fe23165162f3",
+      "source.fbx": "16bad8743da44b66268077995d3366d0f2088df3d9c02b506821d63b4d779931"
+    },
+    "meshId": 79986430669397,
+    "textureId": 122400771524082,
+    "textureDecalId": 104949631410123
+  },
+  "jellyIndexAtlas": {
+    "file": "icons/jelly-index-atlas.png",
+    "imageId": 78200800148968,
+    "decalId": 101974423900380,
+    "cellSize": 512,
+    "keys": {
+      "3n": [
+        0,
+        0
+      ],
+      "3s": [
+        512,
+        0
+      ],
+      "3s2": [
+        0,
+        512
+      ]
+    }
   }
 }
