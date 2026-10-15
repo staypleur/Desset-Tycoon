@@ -170,5 +170,25 @@
       "mint-wagashi.png",
       "dark-wagashi.png"
     ]
+  },
+  "cheesecakeFinancierCutouts": {
+    "tool": "image_gen",
+    "prompt": "Remove only the plain background and floor shadow from this supplied dessert character. Preserve the complete original character, silhouette, face, colors, materials, highlights and proportions exactly. Center the single full-body character with clear padding, transparent RGBA background, no text, no added elements. Game inventory icon cutout.",
+    "outputs": [
+      "cheesecake.png",
+      "ruby-cheesecake.png",
+      "mint-cheesecake.png",
+      "financier.png",
+      "gold-financier.png",
+      "pink-financier.png"
+    ],
+    "generatedFiles": [
+      "exec-0b1a5cf8-4c1d-4f55-b7b2-60fccbedc022.png",
+      "exec-a6ef696f-27a2-4678-932b-728f23035be7.png",
+      "exec-7fbe4ef8-2a0f-4ee2-8357-ba94ab5f887a.png",
+      "exec-6b3dcd88-e154-4e42-a79e-4503ea21bfb7.png",
+      "exec-3a573a3c-7a01-48e2-a4cd-ebf9b805bc9c.png",
+      "exec-ec753697-4e23-46ee-acbb-d1f5b50e0d2a.png"
+    ]
   }
 }

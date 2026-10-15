@@ -1121,5 +1121,148 @@
   "wagashiAtlas": {
     "imageId": 117055066619950,
     "decalId": 99297828955434
+  },
+  "mini-cheesecake": {
+    "sourceArchive": "Meshy_AI_cheesecake_no_face_no_1015121516_texture_fbx.zip",
+    "archiveSha256": "f3d77abba19c85c07fee542ab441086c92b2a5e86a6ec1f9dd4c3346ca5245d0",
+    "heightCm": 18,
+    "triangles": 280,
+    "files": {
+      "color-game.png": "048bb3a1040fb365c861ef1b9ffb4e3f14756a8b7c927614eba98c40499438a6",
+      "color.png": "f22d3a68ec9c8ca5b30354b9c3e186f31383d02ee0a92e7a0a13dd8110234ff2",
+      "mini-cheesecake-import.fbx": "df192084970ee75d42a1098c1bde496616db7a5f9d6034d68abd6a4bfa0bc3bf",
+      "source.fbx": "940daa60c9eaf759607695d41f3782a9a5ee85745b895097afbdb15783d681f6"
+    },
+    "template": "MiniCheesecake",
+    "meshId": 135477759400182,
+    "textureImageId": 133121120199517,
+    "textureDecalId": 102641112531647,
+    "uploadFormat": "PNG, 2048x2048, RGB-identical to original"
+  },
+  "cheesecake": {
+    "sourceArchive": "Meshy_AI_cheesecake_character__1015121533_texture_fbx.zip",
+    "archiveSha256": "3a90cc0c7a68bd90585062b47008bc631cc7a4eaef4dbf3365a6b100f3a087d4",
+    "heightCm": 70,
+    "triangles": 2952,
+    "files": {
+      "cheesecake-import.fbx": "1a5b1aa0041ce2fef33a1e50ae2cea7e14c2858b361b65a05063d0e0abd38966",
+      "color-game.png": "d2ce8f80688b69e75201b7083407e313b163f95fb4a858692639df852a3c57cf",
+      "color.png": "bac74f54ff497665c47cc163fbc5600d69a963a0731ad7334ab6cdcf8bf48463",
+      "source.fbx": "b6148600fb5729333f331f57047ed6fc351d1e2453c5d0b44a004eafee42872c"
+    },
+    "template": "NormalCheesecake",
+    "meshId": 140485678693052,
+    "textureImageId": 115306931740821,
+    "textureDecalId": 88603168960213,
+    "uploadFormat": "PNG, 2048x2048, RGB-identical to original"
+  },
+  "ruby-cheesecake": {
+    "sourceArchive": "Meshy_AI_luxury_ruby_blueberry_1015123033_texture_fbx.zip",
+    "archiveSha256": "4a89e17fbd75554fa375014b97c76333e1d611c12c9bad8bdd401988c153f2be",
+    "heightCm": 70,
+    "triangles": 2975,
+    "files": {
+      "color-game.png": "43bd3249269561ce3728685ca488d0e48d44ec5911c7e92bbd8e7177a807d617",
+      "color.png": "89c0abecf32b464f85dcb3cc9fc1205b14b67f1aa4b574dcfad7510256cd7e79",
+      "ruby-cheesecake-import.fbx": "0b9e078fb09222a3ad331f3dfd9527f97f60dd247b2a15028c2ba917d85a13ba",
+      "source.fbx": "951333e6aab3562336851bd1f6a1a0a3ce3b31e2cdaf5720673e134d710f3ee8"
+    },
+    "template": "RubyCheesecake",
+    "meshId": 123828124901898,
+    "textureImageId": 82168178854585,
+    "textureDecalId": 77026846785129,
+    "uploadFormat": "PNG, 2048x2048, RGB-identical to original"
+  },
+  "mint-cheesecake": {
+    "sourceArchive": "Meshy_AI_mint_ocean_emerald_ch_1015123048_texture_fbx.zip",
+    "archiveSha256": "1ede83bb7854d2af879179b3ced8245461d9625971aeae851ecc1abed819e5ea",
+    "heightCm": 70,
+    "triangles": 2945,
+    "files": {
+      "color-game.png": "6b76b789444c6cd82d30c0183254caf7c286c504a6ac2edd75e26b6aa459b4b0",
+      "color.png": "3319acd64fdcce09cc8038c7dcffcdfe113943fd9ca0f6e835322094c7d3dc90",
+      "mint-cheesecake-import.fbx": "e3da6b24e494de60f7373497bef74ccf9b680cb21067c460955d689aa0317b1b",
+      "source.fbx": "bef416ca133915560ec620c114f44bf476db37cb87b92fa7098da6f031cbb807"
+    },
+    "template": "MintCheesecake",
+    "meshId": 71022699304061,
+    "textureImageId": 105716955131908,
+    "textureDecalId": 138584057935737,
+    "uploadFormat": "PNG, 2048x2048, RGB-identical to original",
+    "previousUpload": {
+      "textureDecalId": 72479595317297,
+      "textureImageId": 92532618548779,
+      "result": "Failed in Play; reuploaded identical PNG"
+    }
+  },
+  "mini-financier": {
+    "sourceArchive": "Meshy_AI_financier_no_face_no__1015123233_texture_fbx.zip",
+    "archiveSha256": "90cc6888a1bad8e04293f8bd9288c95ad8b2bbda5143e656b8ea2b761e1669fd",
+    "heightCm": 18,
+    "triangles": 296,
+    "files": {
+      "color-game.png": "563aac32e868a7e9723f52fa8dcd20591a1675cd028a2ac31c74b9530209e866",
+      "color.png": "ace83052895f61a6582b0fa8ec54c004bd6d42d4f99ac89d9ea7c9d16f742b38",
+      "mini-financier-import.fbx": "162f38b863e5d65f3e819b792492b5b8c806ed73eb1368cc7e420b3d3bf34eac",
+      "source.fbx": "921c4f3a1cb9b915bbf8ac411407b057a764197764d275b15a7385928f1f302a"
+    },
+    "template": "MiniFinancier",
+    "meshId": 90580099912135,
+    "textureImageId": 136361858225832,
+    "textureDecalId": 83199325264977,
+    "uploadFormat": "PNG, 2048x2048, RGB-identical to original"
+  },
+  "financier": {
+    "sourceArchive": "Meshy_AI_financier_character_3_1015123302_texture_fbx.zip",
+    "archiveSha256": "48bbe72087670a650cdb376fd499eb7bfdacaef792cc6b14a757649257d16ebd",
+    "heightCm": 70,
+    "triangles": 3053,
+    "files": {
+      "color-game.png": "de43e1d4f4676c508ecbe5a2c1c513b25a27155f8e2b934219ecf333bd2f7618",
+      "color.png": "8ed8953a8fd09fccbf70f939e940c4c25390bbc93b223b5441913c22d0d92839",
+      "financier-import.fbx": "90841d4bd86ab3eb87e1e394b8c61f9f0f9316216171315d3a11682442fff466",
+      "source.fbx": "4696e07bdc527dd0a527b755fe044da4b84979dea25e3848ffdb8ee3e7db60fb"
+    },
+    "template": "NormalFinancier",
+    "meshId": 108395472307284,
+    "textureImageId": 130526245021656,
+    "textureDecalId": 115906751700084,
+    "uploadFormat": "PNG, 2048x2048, RGB-identical to original"
+  },
+  "gold-financier": {
+    "sourceArchive": "Meshy_AI_financier_pure_gold_c_1015123318_texture_fbx.zip",
+    "archiveSha256": "d97404d1ec80a78598276708e407bc48f112370b3921b6d0a4829e52152d9650",
+    "heightCm": 70,
+    "triangles": 3072,
+    "files": {
+      "color-game.png": "9325946934842e41e858205723f7dd01cd5a6f54d017b4af5987520fdd9b345b",
+      "color.png": "c3e296efd486d8b2ea6f79da947cb94d0295d4a87f2677d6ece7ea58d43145b7",
+      "gold-financier-import.fbx": "c24b667136c17e39092fbd6624f0207833f2dbb54c26bdc2ae7caaa719fe4834",
+      "source.fbx": "f4c37f36d6fe77d76015414fa2de67537421077bfc3a03eced55b73bc3447478"
+    },
+    "template": "GoldFinancier",
+    "meshId": 132068985304380,
+    "textureImageId": 109464385408230,
+    "textureDecalId": 127217241497453,
+    "uploadFormat": "PNG, 2048x2048, RGB-identical to original"
+  },
+  "pink-financier": {
+    "sourceArchive": "Meshy_AI_pink_quartz_financier_1015124840_texture_fbx.zip",
+    "archiveSha256": "f82f995b8698b778d9dca6dceac6061f90ed4fd3ef86da62ec9578331e763811",
+    "heightCm": 70,
+    "triangles": 3043,
+    "files": {
+      "color-game-2k.png": "344f7d032ca9b5eee44a3b7595ef76b1362212de4662c26b494e1fb4e2933093",
+      "color.png": "2eb584fc26c88af40f2aa7066bfaab23d1330be61176a141f091a16de6472c94",
+      "pink-financier-import.fbx": "2f5b9ffacdb4798f83437d255e9c654c7286603d09fea274c2d1e8359315b192",
+      "source.fbx": "860dfffb418193a101579b719072c5813f815036590200890ca09eea32d5a46c"
+    },
+    "template": "PinkFinancier",
+    "meshId": 114721539735165,
+    "textureImageId": 87518907195379,
+    "textureDecalId": 97347906821239,
+    "uploadFormat": "PNG, 2048x2048, Lanczos from 4096 original",
+    "supersededArchive": "Meshy_AI_pink_quartz_financier_1015124111_image-to-3d-texture_fbx.zip",
+    "supersededTriangles": 226452
   }
 }

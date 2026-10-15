@@ -131,3 +131,9 @@ Tier 9 is Tiramisu Cake. Prism Cube Tiramisu Cake (9s) and Pink Quartz Rose Gold
 - Tier 13 is Souffle Pancake: normal, Sakura Souffle Pancake (13s), Black Hole Choco Souffle Pancake (13s2). Conditional shiny split is 50:50, with separate ownership/equip/discovery and tier-twelve merge lineage. Index and roulette use transparent 2D art; mini production uses MiniSouffle. Higher tiers retain front-row priority.
 
 - Tier 14 is Wagashi: normal, Mint Emerald Crystal Wagashi (14s), Dark Choco Gold Wagashi (14s2). Conditional shiny split is 50:50, with separate ownership/equip/discovery and tier-thirteen merge lineage. Index and roulette use transparent 2D art; mini production uses MiniWagashi. Higher tiers retain front-row priority.
+
+### Tier 15 and 16 user desserts
+- Tier 15: Cheesecake; shiny variants Ruby Blueberry Cheesecake and Mint Ocean Emerald Cheesecake.
+- Tier 16: Financier; shiny variants Pure Gold Financier and Pink Quartz Financier.
+- Each tier has a dedicated miniature, normal character and two independent shiny identities. Conditional on a shiny result, each variant has 50% probability; the overall shiny chance is unchanged. Merge lineage, equip, discovery and crate results preserve the exact identity.
+- Index and crate art use transparent 2D atlases; discovery keeps one fixed-facing floating 3D preview.

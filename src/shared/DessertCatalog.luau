@@ -1,8 +1,8 @@
 -- English display names; the first three tiers follow the latest economy specification.
 local names = {
 	"Pudding", "Custard", "Strawberry Jelly", "Shortcake", "Macaron", "Croissant", "Waffle", "Patbingsu",
-	"Tiramisu Cake", "Madeleine", "Eclair", "Panna Cotta", "Souffle Pancake", "Wagashi", "Souffle",
-	"Parfait", "Roll Cake", "Crepe", "Shaved Ice", "Eclair", "Tiramisu", "Mont Blanc",
+	"Tiramisu Cake", "Madeleine", "Eclair", "Panna Cotta", "Souffle Pancake", "Wagashi", "Cheesecake",
+	"Financier", "Roll Cake", "Crepe", "Shaved Ice", "Eclair", "Tiramisu", "Mont Blanc",
 	"Panna Cotta", "Mille-Feuille", "Handmade Candy", "Pastel Potion", "Royal Tea Pudding",
 	"Macaron Tower", "Moonlight Sugar Castle", "Parfait Dragon",
 }

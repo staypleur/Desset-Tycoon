@@ -317,3 +317,22 @@ Single script-free anchored MeshPart templates, collision/touch/query/shadows di
 Built-in image_gen transparent inventory cutouts from supplied character references; exact prompt and paths in `assets/desserts/icons/prompts.json`. Atlas `icons/wagashi-atlas.png`, 1024px RGBA; 512px cells: 14n=(0,0), 14s=(512,0), 14s2=(0,512). Image 117055066619950; decal 99297828955434. Proof: `docs/previews/wagashi-world.png`, `wagashi-index.png`.
 
 MintWagashi uses the RGB-identical PNG upload after the BMP image failed to load in Play. Both upload IDs are recorded in the manifest.
+
+## Tier 15 Cheesecake and tier 16 Financier (2026-10-15)
+
+User-supplied Meshy FBX models and reference art. The user confirmed the almond-topped Financier is the normal dessert. Full characters retain source geometry and UVs; imports remove FBX texture/video links and decorative copies contain no executable code or package links. Full templates are 2.5 studs tall (5 studs in production); minis are 18/28 studs. Textures are RGB PNG at 2048 square; Pink Quartz uses a Lanczos reduction from 4096 square. The initial 226,452-triangle Pink Quartz file was replaced by the user with the 3,043-triangle export.
+
+| Model | Triangles | Mesh | Texture image | Decal |
+|---|---:|---:|---:|---:|
+| MiniCheesecake | 280 | 135477759400182 | 133121120199517 | 102641112531647 |
+| NormalCheesecake | 2952 | 140485678693052 | 115306931740821 | 88603168960213 |
+| RubyCheesecake | 2975 | 123828124901898 | 82168178854585 | 77026846785129 |
+| MintCheesecake | 2945 | 71022699304061 | 105716955131908 | 138584057935737 |
+| MiniFinancier | 296 | 90580099912135 | 136361858225832 | 83199325264977 |
+| NormalFinancier | 3053 | 108395472307284 | 130526245021656 | 115906751700084 |
+| GoldFinancier | 3072 | 132068985304380 | 109464385408230 | 127217241497453 |
+| PinkFinancier | 3043 | 114721539735165 | 87518907195379 | 97347906821239 |
+
+Source archive names and SHA-256 values: assets/desserts/manifest.json. All eight source FBX files and original color textures are preserved in their model folders.
+
+Transparent icons were edited with image_gen from the user reference images; prompts and generated files are recorded in assets/desserts/icons/prompts.json. Each atlas is 1024 square with three 512-square cells. Cheesecake atlas image: 108637796798942 (decal 94394520366782). Financier atlas image: 139647408954483 (decal 108562617158850). Mint Cheesecake texture 92532618548779 failed during Play; the same PNG was reuploaded as 105716955131908.
