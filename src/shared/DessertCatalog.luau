@@ -2,10 +2,9 @@
 local names = {
 	"Pudding", "Custard", "Strawberry Jelly", "Shortcake", "Macaron", "Croissant", "Waffle", "Patbingsu",
 	"Tiramisu Cake", "Madeleine", "Eclair", "Panna Cotta", "Souffle Pancake", "Wagashi", "Cheesecake",
-	"Financier", "Roll Cake", "Crepe", "Shaved Ice", "Eclair", "Tiramisu", "Mont Blanc",
-	"Panna Cotta", "Mille-Feuille", "Handmade Candy", "Pastel Potion", "Royal Tea Pudding",
-	"Macaron Tower", "Moonlight Sugar Castle", "Parfait Dragon",
+	"Financier", "Croffle", "Gelato", "Crepe", "Churro", "Chiffon Cake Slice", "Cookie", "Cream Puff Profiterole", "Creme Brulee", "Donut", "Egg Tart", "Scone", "Brownie", "Crepe", "Mont Blanc",
 }
+-- User labels: tier 19 = 크레이프; tier 29 = 크레페. Both translate to Crepe.
 local tiers = {}
 for tier, name in ipairs(names) do
 	tiers[tier] = table.freeze({

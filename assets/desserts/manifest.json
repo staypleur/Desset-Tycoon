@@ -1264,5 +1264,1013 @@
     "uploadFormat": "PNG, 2048x2048, Lanczos from 4096 original",
     "supersededArchive": "Meshy_AI_pink_quartz_financier_1015124111_image-to-3d-texture_fbx.zip",
     "supersededTriangles": 226452
+  },
+  "t17-mini": {
+    "sourceArchive": "Meshy_AI_croffle_no_face_no_li_1015131508_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\17단계 크로플\\미니디저트\\Meshy_AI_croffle_no_face_no_li_1015131508_texture_fbx.zip",
+    "archiveSha256": "a65c9d6c08b274c4779cf6336c9e59b617fc77c5bf2f50f5ba9bae158b23d53b",
+    "heightCm": 18,
+    "triangles": 318,
+    "files": {
+      "color-game.png": "a3adf156c9a3ddaac7414a1ae794113ab77c26118a0d20cc72762d11b445c6c9",
+      "color.png": "044a46c2716fc00a845334399dc75a7aeb79c9e0d4401c0c382d1409b8de0c77",
+      "reference.png": "a1666b7d73102d6a08d09a189031038cd45fc2327cef19dacac8e2ecf7a207c7",
+      "source.fbx": "55c87ecebedbe3b7cfdc7d2963eebe492d25668e4d9ef0b5af85fd00e66b8d56",
+      "t17-mini-import.fbx": "baf84a1d7c488443790c87cef55a9a4f59061a791d564a425a195212329d2e4e"
+    },
+    "meshId": 104926881958086,
+    "textureId": 98836567653642,
+    "textureDecalId": 84946599008549,
+    "template": "Tier17Mini"
+  },
+  "t17-s2": {
+    "sourceArchive": "Meshy_AI_croffle_mint_ocean_cr_1015131709_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\17단계 크로플\\이로치 민트 바다 크리스탈 크로플\\Meshy_AI_croffle_mint_ocean_cr_1015131709_texture_fbx.zip",
+    "archiveSha256": "2fdf39b33e8d997f8d8fe50e850d395c50b4ffcb15418c3ba3fc8bac779543f3",
+    "heightCm": 70,
+    "triangles": 2969,
+    "files": {
+      "color-game.png": "33758fd05a3622fc45a34d16abf6553ffd546b00d867aa1558b492639756f516",
+      "color.png": "0528f0b048359bc8536a80ff1e24f146cc9d8ee7c1327ef5f6a82847c3676910",
+      "reference.png": "b31294388c3c5445c21401446571279bcd6e8c3b86413e127dd8802ce7eb9712",
+      "source.fbx": "63b9abccea15b10d177c9fb9f66478658d8f69b7d2e5eabe5c286029dac19a2a",
+      "t17-s2-import.fbx": "6f5514adaf4bc9aab24b2251a7e8387dabbe98554e7639d33d5726fb3e154833"
+    },
+    "meshId": 111248668279335,
+    "textureId": 110648514113069,
+    "textureDecalId": 129103049547603,
+    "template": "Tier17Shiny2"
+  },
+  "t17-s": {
+    "sourceArchive": "Meshy_AI_croffle_pink_quartz_r_1015131643_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\17단계 크로플\\이로치 핑크 쿼츠 크로플\\Meshy_AI_croffle_pink_quartz_r_1015131643_texture_fbx.zip",
+    "archiveSha256": "b832293e378e8f731f069d0d329c55c7abfe783f41bd7cc57c2328b8d7d1a7e5",
+    "heightCm": 70,
+    "triangles": 3021,
+    "files": {
+      "color-game.png": "e7d043fedff224c96da965d7f281df6a4caba30dc855de896be6de5089948ea7",
+      "color.png": "8ca52daba7ca3766d4e8d638168cd3372a01ddcf7ab98f8318a644a08067dc07",
+      "reference.png": "f20e99024f2d30b0d2abf00443476f4dee85c7481f8af8326745cc3255dec300",
+      "source.fbx": "63b8c5a3699722a17491ee4184077b28f3842d0132fd8ba51fe874b28021283b",
+      "t17-s-import.fbx": "f33371d5ffd3466000ab5dfc7195e68722e7fa4ec83b15ec86462722bc74fea7"
+    },
+    "meshId": 72708633881314,
+    "textureId": 138726533667357,
+    "textureDecalId": 126125122094252,
+    "template": "Tier17Shiny1"
+  },
+  "t17-n": {
+    "sourceArchive": "Meshy_AI_croffle_character_3k_1015131522_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\17단계 크로플\\일반크로플\\Meshy_AI_croffle_character_3k_1015131522_texture_fbx.zip",
+    "archiveSha256": "244bb9ac87b7ebd56f51b233561a04dd44eaf2e6c433118aa9360fa52b96c823",
+    "heightCm": 70,
+    "triangles": 3013,
+    "files": {
+      "color-game.png": "408711121a4f756dd7ca27b3646361d3bba8183433f0e402f7b04d678c1fc436",
+      "color.png": "6afa434666c0401bf7682de5420ce30b17ebef60b2c27c27bbf64539299ec06a",
+      "reference.png": "6501abe880490fcbd430783944756cd454b877a063aebb820ff47297b6606c4a",
+      "source.fbx": "a368f76747476628d9487e0bb408d6d807839c8e06dcc30713d64cc0096b01c5",
+      "t17-n-import.fbx": "cffc8cb4af64b10b43f7e16eb213117027314cbafdf97e32ad0d4936d1881bdb"
+    },
+    "meshId": 70671388480453,
+    "textureId": 111476582221337,
+    "textureDecalId": 132812352278384,
+    "template": "Tier17Normal"
+  },
+  "t18-mini": {
+    "sourceArchive": "Meshy_AI_gelato_no_face_no_lim_1015131728_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\18단계 젤라또\\미니디저트\\Meshy_AI_gelato_no_face_no_lim_1015131728_texture_fbx.zip",
+    "archiveSha256": "b6748c5b044620ba344d349bc706b06c69753b4e42c30056d3a6962c4cfd30c0",
+    "heightCm": 18,
+    "triangles": 308,
+    "files": {
+      "color-game.png": "e309dd9420ddd2df79981469eb285f92a4ccf63410bebc9ff8460b54caf51bf1",
+      "color.png": "fa41608e8445f85aa5b4f58c94c9142cee0a9b8349734e2a823410379195a7e2",
+      "reference.png": "f97a8f342db923b37f4bf3a11b99a8e61418be9c957d7142862b33af3e583765",
+      "source.fbx": "2e8faf08c6638d465adb666870750141666d17cab3d4feb1935d819e5e75f90d",
+      "t18-mini-import.fbx": "9b5e34d638ec2678dd486871241d8ff2af547196ceeda37ff10af0e17e968b34"
+    },
+    "meshId": 96409869180701,
+    "textureId": 103699297172012,
+    "textureDecalId": 74741594551697,
+    "template": "Tier18Mini"
+  },
+  "t18-s": {
+    "sourceArchive": "Meshy_AI_gelato_diamond_snow_c_1015131744_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\18단계 젤라또\\이로치 다이아몬드 스노우 젤라또\\Meshy_AI_gelato_diamond_snow_c_1015131744_texture_fbx.zip",
+    "archiveSha256": "ad176cf08c9a2655890bb40b2b3e08dc2bcf3bacfacfb2f679b6bc6640f565c0",
+    "heightCm": 70,
+    "triangles": 2919,
+    "files": {
+      "color-game.png": "a76127c7e772efe6e1a18846396af52776e2508a0e930d050fa7c021bcc6c232",
+      "color.png": "0283cad2422ce208ab3a7e6f981d30f6e48c6e470dc6d7d6e360b171d1c971c9",
+      "reference.png": "631678b1334b83bc36a3a1acc5dfb74fcb94eb4564c39ddfcffb900dee3a2e76",
+      "source.fbx": "35bada2840cf3b2c49f428b6c2ebe89138dcef26a6331aff2582b793cf293e28",
+      "t18-s-import.fbx": "2fc93e782db96b0c0210b2d0b701d1e5e698fa8fcfac8915a6029fa8b0e225e4"
+    },
+    "meshId": 93448619336779,
+    "textureId": 128276123806039,
+    "textureDecalId": 140599367737950,
+    "template": "Tier18Shiny1"
+  },
+  "t18-s2": {
+    "sourceArchive": "Meshy_AI_rainbow_cotton_candy__1015131823_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\18단계 젤라또\\이로치 무지개 솜사탕 젤라또\\Meshy_AI_rainbow_cotton_candy__1015131823_texture_fbx.zip",
+    "archiveSha256": "ba6c6d9eac51b289916e42f42b15ab54610ebc01a88f818a4c0882d119f95bf7",
+    "heightCm": 70,
+    "triangles": 3120,
+    "files": {
+      "color-game.png": "b59f4e0f9017b8f9eb304430ba7adc8c311c72a726015bcacd68301162b53cab",
+      "color.png": "2f0b450270046424326ab97fe37954b1cd72e5de79618297cda75a2fe579c1ee",
+      "reference.png": "1ebb1fe5fceb1a361f78d9ad1faa49cade8d9dcc90c542c3bf40dafe7746105f",
+      "source.fbx": "6051fdaf1cb5fd37e32b41cf04d5f0d6974c25e9741c1c506bb27bcad7fa7c53",
+      "t18-s2-import.fbx": "a0508cd40ec267b2b47a55978c8656986c2f79321baa7bc81972e75898115edc"
+    },
+    "meshId": 88558666485862,
+    "textureId": 79756973729915,
+    "textureDecalId": 74838708851140,
+    "template": "Tier18Shiny2"
+  },
+  "t18-n": {
+    "sourceArchive": "Meshy_AI_gelato_character_3k_1015131737_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\18단계 젤라또\\일반젤라또\\Meshy_AI_gelato_character_3k_1015131737_texture_fbx.zip",
+    "archiveSha256": "d7d6642da4c789a948d5add257ef8c8f67b90af3f51858ac963f87f8517f2417",
+    "heightCm": 70,
+    "triangles": 2977,
+    "files": {
+      "color-game.png": "bad1cda5c33cf83ee322985827fd607fef7a6de9691d56e89f89f4e6b5d7e55d",
+      "color.png": "6df105aefb028700b12fcee0f4d397311782b4ff34d7285b0a9d1c5a1eaea203",
+      "reference.png": "4efc85726101fc901fe9c29992e69f2729a23a3c18680e697782a8f2f4336520",
+      "source.fbx": "6b2a945108e0647a8a37ae6f3bfb1f116345fc19999aa055733e01050f3738af",
+      "t18-n-import.fbx": "9cc234f5442a504c9386dcb82a9609e01d195c91a97877842d577173d7d0e4d6"
+    },
+    "meshId": 100244985337614,
+    "textureId": 79387809515551,
+    "textureDecalId": 118411641201180,
+    "template": "Tier18Normal"
+  },
+  "t19-mini": {
+    "sourceArchive": "Meshy_AI_crepe_no_face_no_limb_1015131844_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\19단계 크레페\\미니디저트\\Meshy_AI_crepe_no_face_no_limb_1015131844_texture_fbx.zip",
+    "archiveSha256": "571974c44b139db47461c1e7122ecaa312631a5e47ff921b2beadac4767abb5e",
+    "heightCm": 18,
+    "triangles": 312,
+    "files": {
+      "color-game.png": "a8d66d9afce4dc70557fc77f751c9f9313cf4fb3f8ebed2a34715daa0e666619",
+      "color.png": "1036b71abf33ce02480f81038ae362ce52966954fc3849f33bbdc8c1b2d91921",
+      "reference.png": "5d1bdd67348216513dcaa3b2485a5fa5cfb3c8982bed02e0e139d77645055914",
+      "source.fbx": "2278d2405d70df88fe0f5842a1421e9d0bf9bdd818884a50ab4e383804230f84",
+      "t19-mini-import.fbx": "a7a7f578c893e304cd2edb32823f3b350dcef8e63b60107edc8d1ac2563a92c9"
+    },
+    "meshId": 75514956296567,
+    "textureId": 88231112614101,
+    "textureDecalId": 74046246827330,
+    "template": "Tier19Mini"
+  },
+  "t19-s2": {
+    "sourceArchive": "Meshy_AI_galaxy_aurora_crepe_3_1015131906_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\19단계 크레페\\이로치 은하수 오로라 크레페\\Meshy_AI_galaxy_aurora_crepe_3_1015131906_texture_fbx.zip",
+    "archiveSha256": "9f9bbeddd6a7c7b55bac67b09ba545ec8fc189e27f4db479af996fe9e4c10699",
+    "heightCm": 70,
+    "triangles": 3138,
+    "files": {
+      "color-game.png": "a24273a64ef5b507e363d8af451d28d075399233daecb7d01cd59f093886f544",
+      "color.png": "4f25a01bcbf9a1eb25b8b921505da2b95209f402545cab0d94db1c3b47879660",
+      "reference.png": "a1b26e8895db60422c7f8b6de3cd4bf017b62a130ce3aced6a789cf6d6a0bf9b",
+      "source.fbx": "9f9b97744a664cb41e77780a6418fbf60b8edd25925e5663ac20ef1cd4491ac1",
+      "t19-s2-import.fbx": "14de33152e7ccec9989b377ad8d0f485f8cef3bc737690af3e28509ec1e83896"
+    },
+    "meshId": 85046223269924,
+    "textureId": 79671938572558,
+    "textureDecalId": 95520402354009,
+    "template": "Tier19Shiny2"
+  },
+  "t19-s": {
+    "sourceArchive": "Meshy_AI_pink_quartz_crepe_3k_1015131900_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\19단계 크레페\\이로치 핑크 쿼츠 크레페\\Meshy_AI_pink_quartz_crepe_3k_1015131900_texture_fbx.zip",
+    "archiveSha256": "8f871dd057a1f0bfa536727165be2abbc033dfede15a926ca61ab5bab658182f",
+    "heightCm": 70,
+    "triangles": 3091,
+    "files": {
+      "color-game.png": "4b51a1bf786882cd99f263d8408891e5d358bedc2fed33bcf428f97ad98d9031",
+      "color.png": "0f6eeb4134da3fd160ac298c9c46954feca0eb91edff3831314732b5362358cd",
+      "reference.png": "c951a431572126910c9eaad01f86cb11eef1486077f3281308d6899fca286629",
+      "source.fbx": "ea45b152c25674b6c75b2bcaa10d67d23b7917f40e603180abe192eef0009f98",
+      "t19-s-import.fbx": "75784126842f5b4934377e76d5b6db08f64ccba6ad8271a16b807a2dee6ea57b"
+    },
+    "meshId": 84689118202426,
+    "textureId": 135321454922983,
+    "textureDecalId": 131422825941667,
+    "template": "Tier19Shiny1"
+  },
+  "t19-n": {
+    "sourceArchive": "Meshy_AI_crepe_character_3k_1015131853_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\19단계 크레페\\일반크레페\\Meshy_AI_crepe_character_3k_1015131853_texture_fbx.zip",
+    "archiveSha256": "66ec8e5ed9ab70a92ad40d8548e8c529ebc7bf5d7ee5a6fca8c268189eee9e0e",
+    "heightCm": 70,
+    "triangles": 2811,
+    "files": {
+      "color-game.png": "efb404c8323ed99a3a4b6d6bd4d4c6cd332cb12f7f3afacc100b6e8f74fde527",
+      "color.png": "69a03d525032089d5aa83e1a3aba923b69668adf2d482e47c6e10a73051ffa7d",
+      "reference.png": "1fa251e163119134dd686643a608c0e0a47996edfaa00d9c171f5e029a78f6e6",
+      "source.fbx": "e214eccdeb463486079f81df7cf7b032a352f6cf2826da7437138dccf8c575b6",
+      "t19-n-import.fbx": "144439c33fab9ebb3416c19638dd1abcae478006ea40b58bdc28e535523a6ee7"
+    },
+    "meshId": 108654765466934,
+    "textureId": 77235270746327,
+    "textureDecalId": 105275815640404,
+    "template": "Tier19Normal"
+  },
+  "t20-mini": {
+    "sourceArchive": "Meshy_AI_churro_no_face_no_lim_1015131916_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\20단계 츄러스\\미니디저트\\Meshy_AI_churro_no_face_no_lim_1015131916_texture_fbx.zip",
+    "archiveSha256": "b4c525d36e3c953d26ff3d18498f62c64d15916a962076266e7cd3f4f5eef7b4",
+    "heightCm": 18,
+    "triangles": 293,
+    "files": {
+      "color-game.png": "5c9d95e9e04dad1faa4bf5375a035b7c7b516280034beba6638d2612dd838336",
+      "color.png": "d8a6ce287973777f1d853200e4915569b64a8939aec55979199e79fee7f30dc4",
+      "reference.png": "0f8ee970ed7be287d9250a80d22b77c489a384184c689860c589e4924494aebf",
+      "source.fbx": "53ae57da5af41770800b400c13fc1a61bfd6ce52c3980ac2e63d8360ab6c90fd",
+      "t20-mini-import.fbx": "52533523ab9346187570525b5aeb7d7db2d28263a3611e11a8a2e671dd103649"
+    },
+    "meshId": 108779946488385,
+    "textureId": 126787347752559,
+    "textureDecalId": 75390548488838,
+    "template": "Tier20Mini"
+  },
+  "t20-s": {
+    "sourceArchive": "Meshy_AI_diamond_snow_churro_3_1015131935_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\20단계 츄러스\\이로치 다이아몬드 스노우 츄러스\\Meshy_AI_diamond_snow_churro_3_1015131935_texture_fbx.zip",
+    "archiveSha256": "30f53ced3d0c670de31a37c62c9ea71c1150faaaec145e009cc657723140ef97",
+    "heightCm": 70,
+    "triangles": 2922,
+    "files": {
+      "color-game.png": "82895d6194731388cd89d3d9de221fc29c23d348598ff651bea8712b8616a739",
+      "color.png": "b9ce223e389fd4482534f73faff5c5a3f0b9df4503428e25c35ca5ca7c48ec4c",
+      "reference.png": "09d8e3e38fa1a132cee341697984c63401596d564465216f8636e802cc567b68",
+      "source.fbx": "8a53cf3dd26427419b1f324588c84f847575c86fc8242b036db3e1a9623ab218",
+      "t20-s-import.fbx": "9c420acedfefa040c540e0144daa4ef6d13e51ca1357f458a3847a7836618ef0"
+    },
+    "meshId": 123690999276743,
+    "textureId": 131924175871295,
+    "textureDecalId": 83439382902551,
+    "template": "Tier20Shiny1"
+  },
+  "t20-s2": {
+    "sourceArchive": "Meshy_AI_black_hole_choco_chur_1015131941_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\20단계 츄러스\\이로치 블랙홀 초코 츄러스\\Meshy_AI_black_hole_choco_chur_1015131941_texture_fbx.zip",
+    "archiveSha256": "074c3a9872c7e431287f14921f7765996797e7a59ba8a4b1b2df8b20746022ea",
+    "heightCm": 70,
+    "triangles": 3156,
+    "files": {
+      "color-game.png": "e7175eb305980f8cbaf80783b7416e720b8096ef87d6c2162ea7c2cde04f3109",
+      "color.png": "4123ecdd82ba14c134182b98efc2db6477b4deeb753f7c55596fefefa9ef3868",
+      "reference.png": "87775d03f8045bc129925deabebe2186ebcedff0966528f893b3614bc41c3325",
+      "source.fbx": "43c6d2b8aa456fcbf1259ae39059474d8a14a2e0da03eae4948984dc3430df68",
+      "t20-s2-import.fbx": "369bd25eb19a9505de4e62b86d623892c641b17c4e10f95a43bcc33271277782"
+    },
+    "meshId": 74711888995552,
+    "textureId": 95971906599262,
+    "textureDecalId": 120899101086121,
+    "template": "Tier20Shiny2"
+  },
+  "t20-n": {
+    "sourceArchive": "Meshy_AI_churro_character_3k_1015131929_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\20단계 츄러스\\일반 츄러스\\Meshy_AI_churro_character_3k_1015131929_texture_fbx.zip",
+    "archiveSha256": "4ece941268150cda9e34b11c2a02e838aa85fcaf4e6847244199419171f90240",
+    "heightCm": 70,
+    "triangles": 3092,
+    "files": {
+      "color-game.png": "5c0ec7a7a21a039edda83d92b39f51d7787daf8f1c9103a939e463232dd1bb1b",
+      "color.png": "753a23f747d44cab32d7833fb066bb235c4deb77ff6372c7a3831fb2d230986d",
+      "reference.png": "777947e9ac43bc41fd0399ce4ca2f1de15b9f2b9e19afd115a29eadc74a366a9",
+      "source.fbx": "2c89cdb153474bb443b4fcb4bdb15df9a1ef6f8e4e218b8a496d99e20b2f54c8",
+      "t20-n-import.fbx": "bb8181674f643360d26d6da798ff0c7f61c2ec23239e0d3b01d31fe63c109479"
+    },
+    "meshId": 93378098981477,
+    "textureId": 110366394436599,
+    "textureDecalId": 126301871848032,
+    "template": "Tier20Normal"
+  },
+  "t21-mini": {
+    "sourceArchive": "Meshy_AI_chiffon_cake_no_face__1015131952_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\21단계 쉬폰조각 케이크\\미니디저트\\Meshy_AI_chiffon_cake_no_face__1015131952_texture_fbx.zip",
+    "archiveSha256": "4340f57f570dddf81f218a039e2b08b2a69e42f1f214a45225fb71f2a5264695",
+    "heightCm": 18,
+    "triangles": 318,
+    "files": {
+      "color-game.png": "029c365792605bdca943b9d87663e4ef5f6b34cd311c53393aceb866504236d9",
+      "color.png": "cb1a277a7e79f976d92fcee81d637e7885e2d5854c4a7ac4daefb6d75d279a15",
+      "reference.png": "136bdb7bb0376551c214909849537ae17958fda1693358cef98d21b3b4ccf81d",
+      "source.fbx": "163fc99021ac162e197e3efbddc3a3d84fd9dc65f69cfe0594b22595134cb932",
+      "t21-mini-import.fbx": "55140783fa3c6189be7f46f29ff2e64d2a4c059a4b7625f31314b259df041b24"
+    },
+    "meshId": 121441504591950,
+    "textureId": 99988071557138,
+    "textureDecalId": 119248674032234,
+    "template": "Tier21Mini"
+  },
+  "t21-s2": {
+    "sourceArchive": "Meshy_AI_mint_ocean_emerald_ch_1015132043_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\21단계 쉬폰조각 케이크\\이로치 민트 바다 에메랄드 쉬폰 조각케이크\\Meshy_AI_mint_ocean_emerald_ch_1015132043_texture_fbx.zip",
+    "archiveSha256": "e99bea5074fa897e301af7f50fa0be70b3fd6510b39cf2c8780e7c790c4b2ee0",
+    "heightCm": 70,
+    "triangles": 2969,
+    "files": {
+      "color-game.png": "7c9b43f2db6b5186cb124dae8815cd1844a2f2e2a8833ed74db551345cf30d0e",
+      "color.png": "0f57af5cf3625562bee2cf1d337856b47190381458e6430ac651265e519cb79a",
+      "reference.png": "870703d516ba53595fb3bb603ec2f4f87ffc875680ccde26f5856ca7a23aa6c3",
+      "source.fbx": "42b5d79b3759ce334d576ffffabb172ed9b2c68797a614b4ed94a990d6c4999c",
+      "t21-s2-import.fbx": "70f90aa623af476d51fa1db9e7b521b9501825aaa5e7b51d7d74a775fa9c5c26"
+    },
+    "meshId": 87356774507160,
+    "textureId": 110312266254910,
+    "textureDecalId": 135761628380172,
+    "template": "Tier21Shiny2"
+  },
+  "t21-s": {
+    "sourceArchive": "Meshy_AI_pink_quartz_chiffon_c_1015132145_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\21단계 쉬폰조각 케이크\\이로치 핑크 쿼츠 쉬폰 조각 케이크\\Meshy_AI_pink_quartz_chiffon_c_1015132145_texture_fbx.zip",
+    "archiveSha256": "70d5a75f2c5380a49ef1db0ba2b871ecf7df74c0d542e95db404d29e9a72ddc4",
+    "heightCm": 70,
+    "triangles": 3012,
+    "files": {
+      "color-game.png": "338b8c7547bbefdac6608ab07efdfaffb250036715fa75e90c2263ce23c9b7df",
+      "color.png": "ca731ff9d528d91a59a33664bdec2273b41a7903020bdd8c30eec3aff2697908",
+      "reference.png": "543d23d4c1d2d7c6e2de840cdf3149bbeae7add818e85ebb0c25c48f455be199",
+      "source.fbx": "77a016b6620c8e2d1c3a5e95e259c7bf0bc9ab2292777c70bc673f0dc5411161",
+      "t21-s-import.fbx": "00e752a8b805296d7ec45a4bbd31f4a77d5d5c296faadde359d127d99746bf0f"
+    },
+    "meshId": 74049839991356,
+    "textureId": 111082826667968,
+    "textureDecalId": 114615136342362,
+    "template": "Tier21Shiny1"
+  },
+  "t21-n": {
+    "sourceArchive": "Meshy_AI_chiffon_cake_characte_1015132021_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\21단계 쉬폰조각 케이크\\일반 쉬폰 조각케이크\\Meshy_AI_chiffon_cake_characte_1015132021_texture_fbx.zip",
+    "archiveSha256": "95996186540b74ad3beb17e24eff3fbf41cc22d1a9a542d15d964fd322757d30",
+    "heightCm": 70,
+    "triangles": 2996,
+    "files": {
+      "color-game.png": "d9f921ac7063243546a086e3e2ae0fe548d3918bd51329a3b538a0d4ff65b2d6",
+      "color.png": "90a2d1231b3455be7b03e77efe033225d03247f6a0c0edd94a24784d19680a8e",
+      "reference.png": "d9aea686ab2c43040e9d356c120a00ce6ff27cda240faa106fcb42b0fdcde966",
+      "source.fbx": "f03658270f4832eed4c9292776099c09cc1102d5af89646ee31b59378461eb1f",
+      "t21-n-import.fbx": "d4771dfc45585d5488f82c5328e79f0a590df19afc021af81dabcb27dc311efd"
+    },
+    "meshId": 140410563591834,
+    "textureId": 116822240893534,
+    "textureDecalId": 97995085935147,
+    "template": "Tier21Normal"
+  },
+  "t22-mini": {
+    "sourceArchive": "Meshy_AI_cookie_no_face_no_lim_1015132200_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\22단계 쿠키\\미니디저트\\Meshy_AI_cookie_no_face_no_lim_1015132200_texture_fbx.zip",
+    "archiveSha256": "b4521146b49919d4513f1d53ff66d2450ab0f1448617121bafc488ab303f9177",
+    "heightCm": 18,
+    "triangles": 288,
+    "files": {
+      "color-game.png": "ee30b2a4cae7e6a9305f43ad9792f28aed1952ffc7070bade328e5ed622405d3",
+      "color.png": "00493f32a2a3927f4845b1344626bae112e14ca638df76f472f7d16fa840648a",
+      "reference.png": "130437ddcd0ce97675c0edc1d78bf25358aceaedf9e63aa953b3572f752b1a82",
+      "source.fbx": "4d9f1ac5f375c691c57e3b33a17737e0752c0743ef0a1e91fd19dfdff36b7163",
+      "t22-mini-import.fbx": "b62a6ead08781f04c72b1b74b1ad73ad68734cb66014c2d04f9a90c733eadd76"
+    },
+    "meshId": 73697029871653,
+    "textureId": 114815895160901,
+    "textureDecalId": 86522736401689,
+    "template": "Tier22Mini"
+  },
+  "t22-s": {
+    "sourceArchive": "Meshy_AI_diamond_snow_cookie_3_1015132246_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\22단계 쿠키\\이로치 다이아몬드 스노우 쿠키\\Meshy_AI_diamond_snow_cookie_3_1015132246_texture_fbx.zip",
+    "archiveSha256": "15587756edf85e044bf2bbb0908684b6b1b7b29b2256a9e5dc57e445cf704bf5",
+    "heightCm": 70,
+    "triangles": 3016,
+    "files": {
+      "color-game.png": "92c6260b654ee94cc799b7c152f568f81fbf37c13c26a2bcc84c4503b40f2e2a",
+      "color.png": "3607ae7351690b920a40bbcc2704e811f6b5307d894156209a9fd58acbae9565",
+      "reference.png": "bc51b340ca830ab9bc4461e95b5f126be4422f7c76b023a1e259c0af80742361",
+      "source.fbx": "e53742dad789f44cb4ac795b0ef5760d806763e4e8d1d5b79e099940fbdf8267",
+      "t22-s-import.fbx": "d67be6d24a9240ea0338167cc2760dfe359e6f7c7c8e882573d8b94e87aa14ed"
+    },
+    "meshId": 77248658295187,
+    "textureId": 119459612836770,
+    "textureDecalId": 115836399766346,
+    "template": "Tier22Shiny1"
+  },
+  "t22-s2": {
+    "sourceArchive": "Meshy_AI_black_hole_choco_cook_1015132231_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\22단계 쿠키\\이로치 블랙홀 초코쿠키\\Meshy_AI_black_hole_choco_cook_1015132231_texture_fbx.zip",
+    "archiveSha256": "90c6309f3380104ef329efb477f1fbaa7b46c3ec0bedadbd9ef382f8ea88a65f",
+    "heightCm": 70,
+    "triangles": 3140,
+    "files": {
+      "color-game.png": "16c49b5a9b6b87c06a5c160b28e3c77f20dd56ae33dba4f5785af6da711cec2c",
+      "color.png": "fe57afc6ce3ccb444d71ea67ae23802cc6c280846dc712a7a92792a0ddacd77f",
+      "reference.png": "5c7636bb0b406c7d1fe8c9f1d779ff743dc9802aca33abff32d46e97e76a459b",
+      "source.fbx": "957515b229d52a1ce78cfef2278c42cd5c4eb53f8a3677f86bd930fd52ac3fad",
+      "t22-s2-import.fbx": "a4b735191fde14ef129a2c40cfa57f2ce73dfff0bb2b7b5aab620697c056902d"
+    },
+    "meshId": 136838971491534,
+    "textureId": 88611909906856,
+    "textureDecalId": 119894486623592,
+    "template": "Tier22Shiny2"
+  },
+  "t22-n": {
+    "sourceArchive": "Meshy_AI_cookie_character_3k_1015132217_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\22단계 쿠키\\일반 쿠키\\Meshy_AI_cookie_character_3k_1015132217_texture_fbx.zip",
+    "archiveSha256": "abbbd4e3ef3398282fad64d81b9db3fc20daa6bcc6de1ea8ad54056165515027",
+    "heightCm": 70,
+    "triangles": 3035,
+    "files": {
+      "color-game.png": "a67b6bc4941eebe34505187ded678762b51171abfd1674794f229b7686296136",
+      "color.png": "293b93747470495cbbaaecc1b0f0f1d8294ee774d53dd463575cc9255f4211f3",
+      "reference.png": "3ca410b46ba604d454ac954ebd3d09755c0fde03a430fd55c75d717e1f0072dd",
+      "source.fbx": "5b30f1c1ff46a6e6416eac29ac9b8009a6ce56100daa67c1bb910057a7cd77c2",
+      "t22-n-import.fbx": "b2c66fbced569dc3a6e843813312c5d52988411acc3606cc16027a50bf597ca7"
+    },
+    "meshId": 137997132232030,
+    "textureId": 111001059418344,
+    "textureDecalId": 83562723534439,
+    "template": "Tier22Normal"
+  },
+  "t23-mini": {
+    "sourceArchive": "Meshy_AI_cream_puff_no_face_no_1015132307_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\23단계 슈크림 프로피테롤\\미니디저트\\Meshy_AI_cream_puff_no_face_no_1015132307_texture_fbx.zip",
+    "archiveSha256": "918a842b3194703608f503483c41c1db41791c0586b8e353869feb0eb15c918e",
+    "heightCm": 18,
+    "triangles": 312,
+    "files": {
+      "color-game.png": "b0a7b315a556cd76aa2510d83de3177907dee01b32cf4e8361657502476c14fe",
+      "color.png": "357d7cc7ebc693a68ccb6cfca3611bcee76206ed04f0a0b69ffeb5f3c7d25e6f",
+      "reference.png": "80ba5a0387add0ca118cf161d707ac2e6237eac6cf9dec340a2977d453578010",
+      "source.fbx": "4d7493ffcb509caaa2c46e3d28b7a90845224c1b7fac7827dda4f3af1ff6a73e",
+      "t23-mini-import.fbx": "b80498582ebcd566ece6d9140e6d98dbd050c6dc509e085da8da8948b0dfb733"
+    },
+    "meshId": 75336888814906,
+    "textureId": 79678139137220,
+    "textureDecalId": 71967067675115,
+    "template": "Tier23Mini"
+  },
+  "t23-s2": {
+    "sourceArchive": "Meshy_AI_galaxy_aurora_cream_p_1015132350_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\23단계 슈크림 프로피테롤\\이로치 은하수 오로라 슈크림 프로피테롤\\Meshy_AI_galaxy_aurora_cream_p_1015132350_texture_fbx.zip",
+    "archiveSha256": "a16069b3beb607c2107f3e26096b499edfe151f6d9dc81b6c83bff2142645cae",
+    "heightCm": 70,
+    "triangles": 3102,
+    "files": {
+      "color-game.png": "0c51dc9dd0eeabdd2c83f0baa1e5781c84cf7bc0823569bb4f46c11615333f26",
+      "color.png": "504ab62aa0f32aebc3edd10880e99e842ac72569fd6e2a969ae4c1fb556f77e6",
+      "reference.png": "62e4e7f519724f06994b8da320a3ec9fd46a3a5f3b7fb293ecd60c7fe225acbe",
+      "source.fbx": "14f2215f5093272ca290b462d4cf9256f2886909ac613537600cf68559449113",
+      "t23-s2-import.fbx": "50ffa8d4dc0c46ddb171268e00625a1416ad1ebe412f07aaf4e41de719192a61"
+    },
+    "meshId": 137034704685353,
+    "textureId": 125334444943378,
+    "textureDecalId": 109878837351775,
+    "template": "Tier23Shiny2"
+  },
+  "t23-s": {
+    "sourceArchive": "Meshy_AI_pink_quartz_cream_puf_1015132405_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\23단계 슈크림 프로피테롤\\이로치 핑크 쿼츠 슈크림 프로피테롤\\Meshy_AI_pink_quartz_cream_puf_1015132405_texture_fbx.zip",
+    "archiveSha256": "4f650c31e129e6afeb88381deb00c05bfa6bcabb97a9570ab8e1455330e1de5d",
+    "heightCm": 70,
+    "triangles": 3011,
+    "files": {
+      "color-game.png": "5e24ab55b65855ea3c9b745cf5968cfe89ad5dd9b296e552f6fef0f460a3cb12",
+      "color.png": "7c2963acbafc37ad5a6657fd38f4e13afde86a68431a727a3be94e9506402066",
+      "reference.png": "c34e4f095798a3c71f4b6153a600ef4c6d0fc1679d6fc2e1a7254bd6bc1e0fb1",
+      "source.fbx": "243b2f56b6c9030932b3737ab2ef6cae56229e000705827beba6c9ec4eb6afa6",
+      "t23-s-import.fbx": "3b831991c5b4731c1332d0cb8cd605a274cc5b63b7825096922a9b7a3606a5cb"
+    },
+    "meshId": 87433482590830,
+    "textureId": 132732163008490,
+    "textureDecalId": 115843329725975,
+    "template": "Tier23Shiny1"
+  },
+  "t23-n": {
+    "sourceArchive": "Meshy_AI_cream_puff_profiterol_1015132334_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\23단계 슈크림 프로피테롤\\일반 슈크림 프로프테롤\\Meshy_AI_cream_puff_profiterol_1015132334_texture_fbx.zip",
+    "archiveSha256": "73281407425a4bef120c1669725f0049ccb2a88e9e4b64b8e136319fd2679ab9",
+    "heightCm": 70,
+    "triangles": 3130,
+    "files": {
+      "color-game.png": "d93f110b48097c35a329ef883555b5c6bea65674338b55bc85495afc0a51b97f",
+      "color.png": "f69c14c0127e8120b89d74417ba7f12f53f8a3735a7128e51db0a9a4579b425e",
+      "reference.png": "8badcee65a3d37ce23530079d0e52954041371390de404a1f9599975bca254e8",
+      "source.fbx": "467e13d2b6632cd9de96db0b0d00f960deaa2583def793743f4c9aaf7caab991",
+      "t23-n-import.fbx": "c0c47b97adfffb5a52e2b2739f92dbd709c993c8df98b12d7e59e0b06a891069"
+    },
+    "meshId": 127868473118247,
+    "textureId": 90764159572695,
+    "textureDecalId": 125872812777047,
+    "template": "Tier23Normal"
+  },
+  "t24-mini": {
+    "sourceArchive": "Meshy_AI_creme_brulee_no_face__1015132420_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\24단계 크림 브륄레\\미니디저트\\Meshy_AI_creme_brulee_no_face__1015132420_texture_fbx.zip",
+    "archiveSha256": "56e8cd84e4f16704510244f6963d7843f6e4c599889d56bb25d8567c8f769a9f",
+    "heightCm": 18,
+    "triangles": 294,
+    "files": {
+      "color-game.png": "c04d958d43411806deca9551ead3c68341b4675bbf15956ce9fa737fd10b82e0",
+      "color.png": "7bee55b19dc0a13d709da566b33e964d6f4b75ec0b794f8f4e3f40a40277e98d",
+      "reference.png": "b2efe617351b9e09b5203b588beee4eb62dcf25a0828f43ada32cdcc2a58a17c",
+      "source.fbx": "4e261239712aeea9967df58f39c0d0585f74a4cb6791a443162b4ad3c03679cb",
+      "t24-mini-import.fbx": "3ec0d53573b6f9bd4f3c142dca007a9fa0f454f4510974a6153af1ee34ad9e34"
+    },
+    "meshId": 125585849608286,
+    "textureId": 136008950093413,
+    "textureDecalId": 88645370340884,
+    "template": "Tier24Mini"
+  },
+  "t24-s2": {
+    "sourceArchive": "Meshy_AI_mint_ocean_crystal_cr_1015132547_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\24단계 크림 브륄레\\이로치 민트 바다 크리스탈 크림 브륄레\\Meshy_AI_mint_ocean_crystal_cr_1015132547_texture_fbx.zip",
+    "archiveSha256": "d01207733498dec8e0bc408c820cc8c5cf12128b8f750a59cfbbbc7991df6c4e",
+    "heightCm": 70,
+    "triangles": 2697,
+    "files": {
+      "color-game.png": "de7b0e3bcdb5c5a0bc0fb599ed832407e231764100916cc48fe2bf848c8ba5fc",
+      "color.png": "df986b830bd10d32f170cfc8dd7531f00399ff6768cf136ccb29e8a06c338fcb",
+      "reference.png": "3f7c645fb85f9f30a8ab2ac2a2e0ad1fc9ff822c999d0652c668212048eda22b",
+      "source.fbx": "70fdbecfa44201757105bc19c58ec73a156f8525e74d407674a6f35acc12ba32",
+      "t24-s2-import.fbx": "7c6d485f2989cdd47ae50404e967a9e72ff2338d5998506e46761066cb6100ee"
+    },
+    "meshId": 107715592576804,
+    "textureId": 115161906367732,
+    "textureDecalId": 72006995331750,
+    "template": "Tier24Shiny2"
+  },
+  "t24-s": {
+    "sourceArchive": "Meshy_AI_pink_quartz_creme_bru_1015132522_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\24단계 크림 브륄레\\이로치 핑크 쿼츠 크림 브륄레\\Meshy_AI_pink_quartz_creme_bru_1015132522_texture_fbx.zip",
+    "archiveSha256": "d16a59ed4139bfe4a0ef07db91e8fdf65a16d57e7fa41d6a3f30854d5217aae2",
+    "heightCm": 70,
+    "triangles": 3060,
+    "files": {
+      "color-game.png": "6c199b16af1fe9e037fb13615ea1be0b99ddf34292411d39b0b6ba6f6c92cf9d",
+      "color.png": "1e0da1a9699f98b7fc40b8ebe2fbf0b6dd049a49309798fa06019bd0b3f81212",
+      "reference.png": "cfa8a75ec8a5f69799a02fab3ade97d745781b3e93ea686052cc78ba1352e6bb",
+      "source.fbx": "4cf6846f36132328f2a63cd52aaaaea885b5a07833bb24062600e4a938d1ed9a",
+      "t24-s-import.fbx": "728e4049bebc56954b98e0fcc6bc5358565ba6a4912bcee86d6bd7471923b544"
+    },
+    "meshId": 76425499713595,
+    "textureId": 95182097507859,
+    "textureDecalId": 130047073951764,
+    "template": "Tier24Shiny1"
+  },
+  "t24-n": {
+    "sourceArchive": "Meshy_AI_creme_brulee_characte_1015132507_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\24단계 크림 브륄레\\일반 크림 브륄레\\Meshy_AI_creme_brulee_characte_1015132507_texture_fbx.zip",
+    "archiveSha256": "392d176313288d3bc541be9fb2f448c4453eec50fa8dd7e7ae42d90061bb6bd1",
+    "heightCm": 70,
+    "triangles": 3062,
+    "files": {
+      "color-game.png": "cba87c542f8231476debabd0ff1b81a72566480afd13acda08ee0d629ec8bd23",
+      "color.png": "406d6427bd1afb14b4eaa7ed7fcfa48e63f0666c9aa7dc7adac32562340cfcb9",
+      "reference.png": "189f97fb6ee2ce8178ae2d3c13a8e232acd166ee22a6a8d8982f1d70c5b35e35",
+      "source.fbx": "f420e28e711375803b715c30502be520e30bb861fe8bed05c5c1d98a1d8f4f1b",
+      "t24-n-import.fbx": "8bc3fe0857cf7005d1484ebb4142c7da4f52a227d38988c22f6b8edf65e4deef"
+    },
+    "meshId": 123621667456860,
+    "textureId": 87951140054721,
+    "textureDecalId": 122657665483029,
+    "template": "Tier24Normal"
+  },
+  "t25-mini": {
+    "sourceArchive": "Meshy_AI_plain_donut_no_face_n_1015132629_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\25단계 도넛\\미니디저트\\Meshy_AI_plain_donut_no_face_n_1015132629_texture_fbx.zip",
+    "archiveSha256": "9d9c0443df3022473f8207b923b0e4fdb71889a8cae80e09fd2a8172481de4d4",
+    "heightCm": 18,
+    "triangles": 284,
+    "files": {
+      "color-game.png": "8c1879182ce40c78ba6b53cf7fd709f7bf639aeb9b54bc9b820196fae1873c37",
+      "color.png": "50172639841d9ba502f5bcffe3c0ac6498bd75b0b63593700a588a39cad91bee",
+      "reference.png": "84f0c4e550be0696b9329404693c9abe2ccf2c3693f3fd81cbe0f9ddb7acf77f",
+      "source.fbx": "b345d2da67f053f422ed504d633843edabf2ec1fe2d774087dd5e532fe49bb58",
+      "t25-mini-import.fbx": "913d11855d7ad0e04ed47f41261519771e40d3a6046d3d9eb9de631ca3613781"
+    },
+    "meshId": 119356067858528,
+    "textureId": 127566527690557,
+    "textureDecalId": 102862766957750,
+    "template": "Tier25Mini"
+  },
+  "t25-s": {
+    "sourceArchive": "Meshy_AI_diamond_snow_donut_ch_1015132659_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\25단계 도넛\\이로치 다이아몬드 스노우 도넛\\Meshy_AI_diamond_snow_donut_ch_1015132659_texture_fbx.zip",
+    "archiveSha256": "5d12c629beb93a80465196e0828d5f76360538a139494f9e824d1566a4107c1b",
+    "heightCm": 70,
+    "triangles": 2968,
+    "files": {
+      "color-game.png": "76ee1db9da212739a5a7fb8e7e26ccbb466348ed81a3a50ad5742b1ff37fb368",
+      "color.png": "a615ac411315277ee1ca4a1390f1c3041329b9e90c2f0666beaf569beca01eb5",
+      "reference.png": "7f98c099bcacf8fdf0c72a242c6fa346f4d2d2588c34413ac5049473b4b64381",
+      "source.fbx": "b656b4b53f3f0b34ad5db2a1622ceb2faf6e1cd1d2c1d72b5c5c7e2e3f34c5ed",
+      "t25-s-import.fbx": "18b971182d097315f51c70ca4ba65d40a947107edb1303a5915859ccf8a00391"
+    },
+    "meshId": 105247689939765,
+    "textureId": 106184823756112,
+    "textureDecalId": 91018881774483,
+    "template": "Tier25Shiny1"
+  },
+  "t25-s2": {
+    "sourceArchive": "Meshy_AI_rainbow_cotton_candy__1015132712_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\25단계 도넛\\이로치 무지개 솜사탕 도넛\\Meshy_AI_rainbow_cotton_candy__1015132712_texture_fbx.zip",
+    "archiveSha256": "b4606ab8e20d47a94d9d3d036f6e4f6472020d297e9a028379b25b3df879c006",
+    "heightCm": 70,
+    "triangles": 3110,
+    "files": {
+      "color-game.png": "ff8ed413ecf382844069b01f3012ffb3d78ff784a7eca23b33da84d2a9b3cfc6",
+      "color.png": "4a74ba49700c492dfe9d4d5c59361b9560cabd0ee3072d3b74c4756c62fb1ed7",
+      "reference.png": "2dd3565ac9b84275edda9ac5072e52d19ccbcbd05329d159a1237054beb13470",
+      "source.fbx": "e27833d60da5b8819acb79dc4c94c4a9ca524d34c9cd107609b8d404f30e4307",
+      "t25-s2-import.fbx": "7462f1787f21a59e062bfe5ecb64b3f7fc0b7e0cba9379ffeea34dbafef42e45"
+    },
+    "meshId": 75867147817249,
+    "textureId": 104274632519255,
+    "textureDecalId": 88911794794466,
+    "template": "Tier25Shiny2"
+  },
+  "t25-n": {
+    "sourceArchive": "Meshy_AI_standing_donut_charac_1015132643_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\25단계 도넛\\일반 도넛\\Meshy_AI_standing_donut_charac_1015132643_texture_fbx.zip",
+    "archiveSha256": "7e10fb60253d9dbe63dee3ef78d252342df5bda626fb0882b7e39eaa4b5b88e9",
+    "heightCm": 70,
+    "triangles": 3034,
+    "files": {
+      "color-game.png": "cced28018653cf1b64b352228499ecb6a2edef41c909922f766926d9aca45f74",
+      "color.png": "16e97fdbd19349cbe427a9a03f380a177bf64c0357cde847956108f418c234d4",
+      "reference.png": "84a2909c9c5eafd84c7bdea5a266985e64c181f9f2c486e706217338af1a264c",
+      "source.fbx": "82cfddac790f9dc717509eedfbb6560280f6a7e380659fc58719b4bfcee22b2f",
+      "t25-n-import.fbx": "4a75a2d58fb268d6db3c90b1e460ae74aeed034161cb206831272d76bfad6451"
+    },
+    "meshId": 135872176043533,
+    "textureId": 81225635139237,
+    "textureDecalId": 114544319832892,
+    "template": "Tier25Normal"
+  },
+  "t26-mini": {
+    "sourceArchive": "Meshy_AI_egg_tart_no_face_no_l_1015132724_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\26단계 에그타르트\\미니디저트\\Meshy_AI_egg_tart_no_face_no_l_1015132724_texture_fbx.zip",
+    "archiveSha256": "4ec2fa363dc7c9f75f239de39d7b3e5cd29263acb5cfdfe9d2ced7e10e827860",
+    "heightCm": 18,
+    "triangles": 310,
+    "files": {
+      "color-game.png": "210139514963cf02d49a33ea38f48e11fe31de0fbab965392291e7ec13c0a85f",
+      "color.png": "c24f2544870c1ed7b7e33c686baaee8fc77601f14e976d7298ecfdf3138981a6",
+      "reference.png": "1e8646b8d6565235fa7a65026780a211ed85c14a6177468edf20c0c6382ab1a1",
+      "source.fbx": "21313dccb3824a1c71381d848cbb75330dee7f6ba6e2b239727806f30f3096c8",
+      "t26-mini-import.fbx": "ab86560bf1f133dc4d9568845c724bceb3797511b4ed6b6df0e446d193740980"
+    },
+    "meshId": 99489272029974,
+    "textureId": 119869986031885,
+    "textureDecalId": 75476927996888,
+    "template": "Tier26Mini"
+  },
+  "t26-s2": {
+    "sourceArchive": "Meshy_AI_diamond_snow_egg_tart_1015132806_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\26단계 에그타르트\\이로치 다이아몬드 스노우 에그타르트\\Meshy_AI_diamond_snow_egg_tart_1015132806_texture_fbx.zip",
+    "archiveSha256": "fd02fead66ae53371a82761ac25851c80f4eaaef269819d63f9fc24ca6cd6798",
+    "heightCm": 70,
+    "triangles": 2920,
+    "files": {
+      "color-game.png": "99469d755bd30a3c1508d267e2b2f43ae0526390cad4a8e8d2d274abd192c378",
+      "color.png": "5bee1bb6a07c37e77a8ffb4b2675f5bd6c8d4d681436a15841b0e79a60304ed7",
+      "reference.png": "6c6142b459d3c980ef7642bd1dbc6fc58304c283136c370b89295a65784f33c6",
+      "source.fbx": "02254e46621a508030dfbd953cec5f67656a72a320db9cc08cbac97421c237cf",
+      "t26-s2-import.fbx": "c915b223b7a5aaeadd4397405a88bdce78f19fafc86c589c498202053babc6e3"
+    },
+    "meshId": 131705375618054,
+    "textureId": 126314000753281,
+    "textureDecalId": 76731085496148,
+    "template": "Tier26Shiny2"
+  },
+  "t26-s": {
+    "sourceArchive": "Meshy_AI_pink_quartz_egg_tart__1015132751_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\26단계 에그타르트\\이로치 핑크 쿼츠 에그타르트\\Meshy_AI_pink_quartz_egg_tart__1015132751_texture_fbx.zip",
+    "archiveSha256": "d89c495152ec98c314caa1c726c8df8480d8e5826861c295de3dfbdd40362f4b",
+    "heightCm": 70,
+    "triangles": 2886,
+    "files": {
+      "color-game.png": "fb27771fbff838e750505d7f3377d30b4d0d094501c1d5c26f263d21dc994104",
+      "color.png": "5974ce9ce5a2dd812692be295ccf970347d2b611633f8e2a62d778e7777985bd",
+      "reference.png": "71278f2bc2dcf54adee0e5da6609479e348b193db4c6a4d1509896dff15bd222",
+      "source.fbx": "1e7f27dddacd0689d653a04075f086d816337b8fc1da819540a19f0ca1879532",
+      "t26-s-import.fbx": "65b1f8316e3a196c050a3fef7d1e816c7f4053b937259c3d1eb8b5eabe597764"
+    },
+    "meshId": 121989820280607,
+    "textureId": 116146606734706,
+    "textureDecalId": 139744776758986,
+    "template": "Tier26Shiny1"
+  },
+  "t26-n": {
+    "sourceArchive": "Meshy_AI_egg_tart_character_3k_1015132737_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\26단계 에그타르트\\일반 에그타르트\\Meshy_AI_egg_tart_character_3k_1015132737_texture_fbx.zip",
+    "archiveSha256": "5f0ba31b987e940f35d31793ae141dc9eef1002f0547a7c209c8024e023c10e5",
+    "heightCm": 70,
+    "triangles": 3015,
+    "files": {
+      "color-game.png": "5e7f33f70ba1f4b4d5a05fe8b1000c662cad3549ed196dd20c078a2618da756f",
+      "color.png": "7cf6fa4b48d52bd0f492939e0be4f6e1a285b061e0ab4d6c0b6b29c2b608c944",
+      "reference.png": "3b7731d0c7b468c05517804b47a46ae764a6de183c77d014599e9f51d47e1a2d",
+      "source.fbx": "3e012bf5becce0e5d21cd3c064e7fb96f751fa26f0f200c9a2a9aea7800924a2",
+      "t26-n-import.fbx": "79cf91c3462782e7225fb35dc5327fa0e485607f81c6b8921180648b8b94fc3d"
+    },
+    "meshId": 74417296150018,
+    "textureId": 77327312557293,
+    "textureDecalId": 127790748602918,
+    "template": "Tier26Normal"
+  },
+  "t27-mini": {
+    "sourceArchive": "Meshy_AI_scone_no_face_no_limb_1015132831_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\27단계 스콘\\미니디저트\\Meshy_AI_scone_no_face_no_limb_1015132831_texture_fbx.zip",
+    "archiveSha256": "da32e2ff1556bc5185b5ae0762de9c85958d0bf3ce20bf917a77136e071b4525",
+    "heightCm": 18,
+    "triangles": 312,
+    "files": {
+      "color-game.png": "59af5d73dc38ab4d5e45d180ddd9dc2eb682f913606497eb232199a81d5f8c94",
+      "color.png": "47f0a8ef4dc36069f626549617f289c35363c9abdf5010ffc466995553827feb",
+      "reference.png": "65c28b065d7d6908310e209f1f0dbc8e3948817a51cc260607f836a526dbf65e",
+      "source.fbx": "9208de4d2fb45497ad980b5acfa076eef12e1c9cd05d12cb644f96e902edd67f",
+      "t27-mini-import.fbx": "7f8b015f294203027152b6f82a15d66e6fdb97eba6853df40d2b246aab2a8287"
+    },
+    "meshId": 125998872783914,
+    "textureId": 115919721520976,
+    "textureDecalId": 82553895648567,
+    "template": "Tier27Mini"
+  },
+  "t27-s2": {
+    "sourceArchive": "Meshy_AI_diamond_snow_scone_ch_1015132922_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\27단계 스콘\\이로치 다이아몬드 스노우 스콘\\Meshy_AI_diamond_snow_scone_ch_1015132922_texture_fbx.zip",
+    "archiveSha256": "59abf325356f07fbdd61e511f3872422c9de554d03a54ca4f5c7685d1ab66f9d",
+    "heightCm": 70,
+    "triangles": 3110,
+    "files": {
+      "color-game.png": "e7214199f2a8567407c85636b3e05b3753f1c540d95be1bb3a217fa636747cbf",
+      "color.png": "a2d5c1ce540c5ea55b2331dc8f89534a637559614144759b3cc24cfc2ad58075",
+      "reference.png": "9ccb791fdf52bef0eea4d68dd022c89da189928a235e04501930103814bff551",
+      "source.fbx": "28d10b3a457bcd3d6bd442753f81e7afab57c48278b439f1a48e7c717bc4bedb",
+      "t27-s2-import.fbx": "f17bbe4641b5a54af43b2e590ffab6e88625407f31fa6a21ce986ebc85630451"
+    },
+    "meshId": 70611214912148,
+    "textureId": 82871330969341,
+    "textureDecalId": 122611708275101,
+    "template": "Tier27Shiny2"
+  },
+  "t27-s": {
+    "sourceArchive": "Meshy_AI_pink_quartz_scone_cha_1015132912_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\27단계 스콘\\이로치 핑크 쿼츠 스콘\\Meshy_AI_pink_quartz_scone_cha_1015132912_texture_fbx.zip",
+    "archiveSha256": "8ce6e88f0b947904bb2c2b5e52aff8a0415aea4557dddd4893a192d7d19dc105",
+    "heightCm": 70,
+    "triangles": 2932,
+    "files": {
+      "color-game.png": "c844ca8de6cf494209e9f92352ec9510ca3c579165d844fa8641da6a466a763c",
+      "color.png": "29c9da570f4c96aa2fa52ba858748401e6a8774ce1a681ecf7d2b847c1210f6e",
+      "reference.png": "49f1c1235af2bcd02fe07ae53d2abfdc4d15d70cd59767634f17d2028151a3d0",
+      "source.fbx": "3723ae44de8ddf1af9a5680932bc86f9d50e657e8155bf07a25ff6f7c80c30dd",
+      "t27-s-import.fbx": "4e5ffb7ae98e64f3c28870dba9e086f8218148bd6e497e53432b0c5ed6e50fec"
+    },
+    "meshId": 103473537686518,
+    "textureId": 94640918623657,
+    "textureDecalId": 72980202315068,
+    "template": "Tier27Shiny1"
+  },
+  "t27-n": {
+    "sourceArchive": "Meshy_AI_scone_character_3k_1015132859_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\27단계 스콘\\일반 스콘\\Meshy_AI_scone_character_3k_1015132859_texture_fbx.zip",
+    "archiveSha256": "bc41c7dd52f33abb2e4d3695feec4c071508b710798ecba19cf5d70152e29b41",
+    "heightCm": 70,
+    "triangles": 3085,
+    "files": {
+      "color-game.png": "35d484515b5d59dd0501f237a17058202a739ac66479c68be2733a8f051841c1",
+      "color.png": "08d3db14c746228bd7699c67362d9e96722842115594021d8d933cd316686df6",
+      "reference.png": "9c583a913470cd2498a2f262c979dced29679e144eed36289c88ad5b9e33e15b",
+      "source.fbx": "7161844134ef43c22fd47552703e82293fecacef626ad07e6694a0c8d5d3f50c",
+      "t27-n-import.fbx": "5ae13d5513c697b44dfceb665b81b6ff4412a4d0da79cb04629d58cd8f9679a1"
+    },
+    "meshId": 116880914311353,
+    "textureId": 95348138265978,
+    "textureDecalId": 91383557962755,
+    "template": "Tier27Normal"
+  },
+  "t28-mini": {
+    "sourceArchive": "Meshy_AI_plain_brownie_no_face_1015132937_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\28단계 브라우니\\미니디저트\\Meshy_AI_plain_brownie_no_face_1015132937_texture_fbx.zip",
+    "archiveSha256": "b42f30847583cb3856d4c54d5a333f1a2b73efd2a5092670d8e082a9116001c6",
+    "heightCm": 18,
+    "triangles": 274,
+    "files": {
+      "color-game.png": "07ebb696a8d4c93fda7ed8fc3bfdc3383a6913f4272f09dfdb994f1820cc69dc",
+      "color.png": "a6e1d0f5220304272d1e4dc5563169cc6c113c36aff3be6443a79299f738696e",
+      "reference.png": "c5323bc50a444636b79eda4b4bc9404c1be2eeef0be2cf3658d32dab5982926c",
+      "source.fbx": "48847a12e0e1515f2d7284c8bb79ddedd33f5a90149eb9b2b791550e5e219e7d",
+      "t28-mini-import.fbx": "38cd5f22af428a0d19e8ea78efaf45e8304ce05042a5995f9fc46f50aa444e3c"
+    },
+    "meshId": 135628776011544,
+    "textureId": 123536602752986,
+    "textureDecalId": 70508354083135,
+    "template": "Tier28Mini"
+  },
+  "t28-s": {
+    "sourceArchive": "Meshy_AI_diamond_snow_brownie__1015133006_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\28단계 브라우니\\이로치 다이아몬드 스노우 브라우니\\Meshy_AI_diamond_snow_brownie__1015133006_texture_fbx.zip",
+    "archiveSha256": "c3e2acb706edbc16bd40ad361f381cb899bacb6323b6cf8815f21b3429aafb4f",
+    "heightCm": 70,
+    "triangles": 2875,
+    "files": {
+      "color-game.png": "78e1107bbefd62f25529e62311001389381a90299319a1e4db1018de852cacdf",
+      "color.png": "74eea43e67185b18837d0d66d2d600cf6558a983d88e1a537460c41b6af25909",
+      "reference.png": "1b0dfc55807f02569bbb9948390ba8d485dab9b75619257519b07977b2956cbe",
+      "source.fbx": "02e2b812459f41917ea5116b02f6aa0be36e8f63b41f8ff2c2aaf83c16a6831d",
+      "t28-s-import.fbx": "1acbc1c59bb5ddfbb046534f7bbd9d73635e19fe88c03e6c5702213cef6ebb76"
+    },
+    "meshId": 118195625333813,
+    "textureId": 72904074656253,
+    "textureDecalId": 79296880584090,
+    "template": "Tier28Shiny1"
+  },
+  "t28-s2": {
+    "sourceArchive": "Meshy_AI_rainbow_cotton_candy__1015133020_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\28단계 브라우니\\이로치 무지개 솜사탕 브라우니\\Meshy_AI_rainbow_cotton_candy__1015133020_texture_fbx.zip",
+    "archiveSha256": "d5138c675a3c2c6f94e6ce8c2919fd04d6fbf3604a2f92b6d64d009e71fdebf5",
+    "heightCm": 70,
+    "triangles": 3106,
+    "files": {
+      "color-game.png": "7f6008132bbdfa638f364ab052149b06a8ca0e0fb7108e5c6a8fbe9a85b1a43a",
+      "color.png": "0d08643fa52a1b4400baf22695187c563cd1f80b279e72468ab5a834768d344a",
+      "reference.png": "9bb73677f99003bcd4a34f603046c9f5cf094a258174063ddb26f1dcb5d2590e",
+      "source.fbx": "7a34ffa58bfdddac636ad0c3dd6abdac39d861725774491d0e53fa918dca7926",
+      "t28-s2-import.fbx": "72e2ea62f912afb67533ddea86b8360a1b1f318b8e9e78592462ee8ace93a2e9"
+    },
+    "meshId": 119057562010480,
+    "textureId": 71558884773273,
+    "textureDecalId": 129304276721248,
+    "template": "Tier28Shiny2"
+  },
+  "t28-n": {
+    "sourceArchive": "Meshy_AI_brownie_character_3k_1015132951_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\28단계 브라우니\\일반 브라우니\\Meshy_AI_brownie_character_3k_1015132951_texture_fbx.zip",
+    "archiveSha256": "45055be80a28cc905083673a286f8eb229b9c94c16654cab594bc103f2371bf7",
+    "heightCm": 70,
+    "triangles": 2880,
+    "files": {
+      "color-game.png": "d54a312efa50bc57dbddd0cd990129e73b0abcbfc42c19def05ea2026f6e9130",
+      "color.png": "56dab409c5360f81df23a4944bba33b25be074061935dc5c12ddce900379349f",
+      "reference.png": "83f5b5b49fbcd09a096f198cbd00911532d972c17ddf21b848cafc64efee8991",
+      "source.fbx": "0eea2b780ac4c4851eb1aedb1389329fafe8b315d9388b9bbebd553be0857dfb",
+      "t28-n-import.fbx": "f9ed08ad549e26f861d6ec88fa3c6418c7f09704b96ce1d5a3bbdbf1f8bcaf7b"
+    },
+    "meshId": 84904754571642,
+    "textureId": 117808311046112,
+    "textureDecalId": 80065194124546,
+    "template": "Tier28Normal"
+  },
+  "t29-mini": {
+    "sourceArchive": "Meshy_AI_plain_crepe_no_face_n_1015133037_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\29단계 크레페\\미니디저트\\Meshy_AI_plain_crepe_no_face_n_1015133037_texture_fbx.zip",
+    "archiveSha256": "7d052c1b808ed3955df8e08953c6399974350322446ca074521c1ad08d9ceb25",
+    "heightCm": 18,
+    "triangles": 310,
+    "files": {
+      "color-game.png": "8302bd6d04a708c68c8fb2c3087f99aec5a1233f82862e7242d504832a8c46b6",
+      "color.png": "381e4a1f9015c5a0693ccba480f6dc8f0d7196a016764354b9a3a4862d31e1f1",
+      "reference.png": "211884225e2efbd27c74ad20053f54f4d3e49b1b398f5f781f376b815d0644f1",
+      "source.fbx": "c6073a12c0a62174b1e8d6f34ab4ed4aa94c7c0635f76758fa88b3cc91ca00d4",
+      "t29-mini-import.fbx": "b1159d803e7ceb9ca323c9e1543fe422167ce5cce6e06f8ea95d968fbee58b4b"
+    },
+    "meshId": 106889000562322,
+    "textureId": 93978088925047,
+    "textureDecalId": 133696527955476,
+    "template": "Tier29Mini"
+  },
+  "t29-s": {
+    "sourceArchive": "Meshy_AI_diamond_snow_crepe_ch_1015133118_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\29단계 크레페\\이로치 다이아몬드 스노우 크레페\\Meshy_AI_diamond_snow_crepe_ch_1015133118_texture_fbx.zip",
+    "archiveSha256": "a998128e0bdea6454985aaaee15176312fe8a42af872333b6e29edc224bfb894",
+    "heightCm": 70,
+    "triangles": 2960,
+    "files": {
+      "color-game.png": "79b5c081fd0f94f72d7144f99fe6b0584355cd2e2386a9e7cf9485c95d0b99eb",
+      "color.png": "da78bc8e552c8140b8e7b96bd33c8fc0a781bbd3447b3cfa968a121a06485e17",
+      "reference.png": "017bc826f701218a41ab2ebbe0b72ec635fba3685772214f361ef24dcf6ab98d",
+      "source.fbx": "8eb6e81975a84bca02a07ab0a53a09bc4e8c266c67e6038ca233d228c6cdc0c6",
+      "t29-s-import.fbx": "46c19b3cda1031a082a41106706d6dd90422668f1f6b93f4e49dee6241075e5d"
+    },
+    "meshId": 75724374143317,
+    "textureId": 95092092132067,
+    "textureDecalId": 139105232794555,
+    "template": "Tier29Shiny1"
+  },
+  "t29-s2": {
+    "sourceArchive": "Meshy_AI_mint_ocean_emerald_cr_1015133105_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\29단계 크레페\\이로치 민트 바다 에메랄드 크레페\\Meshy_AI_mint_ocean_emerald_cr_1015133105_texture_fbx.zip",
+    "archiveSha256": "d3c2db290bdec629041f0b93a248ce643ce6cf14be2b1dd1ece4b44fc7b10c96",
+    "heightCm": 70,
+    "triangles": 2962,
+    "files": {
+      "color-game.png": "bcd69d15bd91b5f9f7f6e535052d18a60071037950ee150e7b79a77bcb4ac419",
+      "color.png": "534f2b9b98e7656baf2856459d7466188d8859c755ffd1712c7db19c0f28e107",
+      "reference.png": "d8bb5ac7723401493f37efa6855efee7961dcd66bdb0369e8b66c163409f0fa4",
+      "source.fbx": "0904ed304b530b58c459bb1d9ddfec309e579989de4503ea700eb50c716f806c",
+      "t29-s2-import.fbx": "38f41cabbca2dababd883e0a87a131e0dbb4992d62297b7d3e1c2dcf3cd7eb0a"
+    },
+    "meshId": 121659396469701,
+    "textureId": 76777846129798,
+    "textureDecalId": 91077279878030,
+    "template": "Tier29Shiny2"
+  },
+  "t29-n": {
+    "sourceArchive": "Meshy_AI_crepe_character_3k_1015133052_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\29단계 크레페\\일반 크레페\\Meshy_AI_crepe_character_3k_1015133052_texture_fbx.zip",
+    "archiveSha256": "29b548c4e55c1afe671be2b8bd4122a9d5a75c7e4a5294ac92ba5d6ea1bf2025",
+    "heightCm": 70,
+    "triangles": 2942,
+    "files": {
+      "color-game.png": "fe7dc21f9bae95bff113e9a37af132247bb3bb68930543894ac9ca03451def1b",
+      "color.png": "e2d23c91e8fc32b1faf3fd3f99df8f3f5715968f517714f9970d07ef8abe5870",
+      "reference.png": "c98b7f8cad453300fd0880858554acc18d49dbaafb4da620fc0a263cd32204e5",
+      "source.fbx": "df84566e724704efd321f1c6c7b6a79eb231ab543c6d8f025498a281166fda5f",
+      "t29-n-import.fbx": "7b1a04fcffdc35c49e2bad1fa6149b7bc2aea0139c44cf06ba74fba7b69bf806"
+    },
+    "meshId": 119957294222147,
+    "textureId": 135292353403740,
+    "textureDecalId": 78880962734510,
+    "template": "Tier29Normal"
+  },
+  "t30-mini": {
+    "sourceArchive": "Meshy_AI_plain_mont_blanc_no_f_1015133132_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\30단계 몽블랑\\미니디저트\\Meshy_AI_plain_mont_blanc_no_f_1015133132_texture_fbx.zip",
+    "archiveSha256": "c01b58792e26f6d3543ddd9d92c33c2762229e2d843f9feb888e63193a20fd55",
+    "heightCm": 18,
+    "triangles": 292,
+    "files": {
+      "color-game.png": "e7a5c68b7d1730808fa498619f9e117b8becca389957ba2a10632190b466b024",
+      "color.png": "af2ffddf6e4aadd66bf06759355049af247be3d7fe61bc6826f5739847050da9",
+      "reference.png": "943e12f933e00414a4e7455c665db3c47ee42e18c463b6eb486f69015e7245de",
+      "source.fbx": "e83f06054886ef8a10b2744a3c2eb3ad94c14f42d42666546be3dbe71857020d",
+      "t30-mini-import.fbx": "65b6d6a3d4efb7b29b0a7a29f4949fa61a3dcd12e98f2ad6ea917d2659a217d1"
+    },
+    "meshId": 118126865541640,
+    "textureId": 86592871605794,
+    "textureDecalId": 91942787551273,
+    "template": "Tier30Mini"
+  },
+  "t30-s2": {
+    "sourceArchive": "Meshy_AI_diamond_snow_mont_bla_1015133156_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\30단계 몽블랑\\이로치 다이아몬드 스노우 몽블랑\\Meshy_AI_diamond_snow_mont_bla_1015133156_texture_fbx.zip",
+    "archiveSha256": "3c53f4440b344307d411b8dbd4da8c51636181bb82c1ed83244ffda14589ca22",
+    "heightCm": 70,
+    "triangles": 3010,
+    "files": {
+      "color-game.png": "25f4d5daa4e0b398af9efb01e55dfee04530e03f41f735409a04fb91871e7ce3",
+      "color.png": "bd25456c5c24c188c324be09ff7604f1193de5bc91ac11114c6a03b0b8192708",
+      "reference.png": "f90d6cf0f8dbe948fd1d540e4877078b4121df88bf87214e8f697ab48a3fe9d5",
+      "source.fbx": "cf05043354057f546c4d238c50fd84723b6f30482ffd7feb670b64550cb1df6a",
+      "t30-s2-import.fbx": "bce110d927f1e08004b1b9484a365bd993dad0df9e64bde0dc2b0f2e30513e3a"
+    },
+    "meshId": 134395282247813,
+    "textureId": 84737817423491,
+    "textureDecalId": 70596269610186,
+    "template": "Tier30Shiny2"
+  },
+  "t30-s": {
+    "sourceArchive": "Meshy_AI_pink_quartz_mont_blan_1015133206_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\30단계 몽블랑\\이로치 핑크 쿼츠 몽블랑\\Meshy_AI_pink_quartz_mont_blan_1015133206_texture_fbx.zip",
+    "archiveSha256": "36e182fb992646c1ae56a04b1bd68c4619a4ed52adf676a5c129740f94cf728d",
+    "heightCm": 70,
+    "triangles": 3062,
+    "files": {
+      "color-game.png": "ca47ccaf6762ff5655f31eeac62340f91538790e9a86060f5e6f242b108154eb",
+      "color.png": "dcd463674e661338e85d50f80e5c79af2dcb0012d1f2e64893d8fa77da5d761f",
+      "reference.png": "6be161e8a504f6c92eddc162105112e79047ea87323b2c656d248bb35a88c441",
+      "source.fbx": "9d3cc9254da337e40a42456960858493d4a89517c30a66958914df7d0e2bdf5a",
+      "t30-s-import.fbx": "8f5dd751ab6f282c8f400f301b672ee3cac70ab56cbf5caf6245cd5b0dc5ea68"
+    },
+    "meshId": 89934940961257,
+    "textureId": 111219524848129,
+    "textureDecalId": 113850649831050,
+    "template": "Tier30Shiny1"
+  },
+  "t30-n": {
+    "sourceArchive": "Meshy_AI_mont_blanc_character__1015133143_texture_fbx.zip",
+    "sourcePath": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\ahdma\\30단계 몽블랑\\일반 몽블랑\\Meshy_AI_mont_blanc_character__1015133143_texture_fbx.zip",
+    "archiveSha256": "9a57dd2f7880dac18f3ed92c1adf877aaf13070da1838cf214f70f039d5e69bd",
+    "heightCm": 70,
+    "triangles": 3133,
+    "files": {
+      "color-game.png": "7d0270d35bc78502865e40f4032bdef29c07dcb3cc384eef1c8d3572b7bacf56",
+      "color.png": "9cc202dd8459a2ecec58420bc86a33ea11a22a9ba3941e8d7631b59bd844652b",
+      "reference.png": "3acd7835750bf033bc667e4692edf836f7535687c687b5be06f97d9f377feb82",
+      "source.fbx": "0b623452cdc80dc535365232855cc33b23cd699ca02e0cd6bcf65805afb88a14",
+      "t30-n-import.fbx": "e9225e720def46ccb9d731d3f4ed2a806915870578e8ee643645702b31e24592"
+    },
+    "meshId": 133507261298020,
+    "textureId": 106772955477484,
+    "textureDecalId": 109824436337995,
+    "template": "Tier30Normal"
   }
 }

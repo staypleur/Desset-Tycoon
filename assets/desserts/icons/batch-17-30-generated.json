@@ -1,0 +1,76 @@
+{
+  "tool": "image_gen built-in",
+  "prompt": "Remove ONLY white backgrounds and floor shadows to true transparency. Preserve all three existing dessert characters, faces, colors, shapes, relative sizes and exact 2x2 quadrant positions. Normal upper left, shiny1 upper right, shiny2 lower left, lower right empty. No new objects, text, borders or checkerboard.",
+  "outputs": [
+    {
+      "tier": 17,
+      "generatedFile": "exec-f219406f-33a8-494c-b02a-12ba21c972bd.png",
+      "file": "assets/desserts/icons/t17-atlas-transparent.png"
+    },
+    {
+      "tier": 18,
+      "generatedFile": "exec-88f5bc7e-9f21-4a1b-896b-94a58e22b501.png",
+      "file": "assets/desserts/icons/t18-atlas-transparent.png"
+    },
+    {
+      "tier": 19,
+      "generatedFile": "exec-5ed7358b-53b1-4f4a-8a4d-ede8aec78b08.png",
+      "file": "assets/desserts/icons/t19-atlas-transparent.png"
+    },
+    {
+      "tier": 20,
+      "generatedFile": "exec-1124800a-050f-4a50-8828-54694a17637f.png",
+      "file": "assets/desserts/icons/t20-atlas-transparent.png"
+    },
+    {
+      "tier": 21,
+      "generatedFile": "exec-5d65d483-c034-4a01-b9f9-bc2b30ab3f1a.png",
+      "file": "assets/desserts/icons/t21-atlas-transparent.png"
+    },
+    {
+      "tier": 22,
+      "generatedFile": "exec-b155c054-d959-41fb-879a-13d24ec2d474.png",
+      "file": "assets/desserts/icons/t22-atlas-transparent.png"
+    },
+    {
+      "tier": 23,
+      "generatedFile": "exec-121488ae-7bfa-4f3d-8161-e161b5bba83a.png",
+      "file": "assets/desserts/icons/t23-atlas-transparent.png"
+    },
+    {
+      "tier": 24,
+      "generatedFile": "exec-2bb7e745-cb6a-4cf6-99d2-8a20c4d52ec6.png",
+      "file": "assets/desserts/icons/t24-atlas-transparent.png"
+    },
+    {
+      "tier": 25,
+      "generatedFile": "exec-1026d361-e509-475f-aafe-7a4eeb24da9f.png",
+      "file": "assets/desserts/icons/t25-atlas-transparent.png"
+    },
+    {
+      "tier": 26,
+      "generatedFile": "exec-8bc3eb8f-147b-4a36-8458-cb6c0130a2ca.png",
+      "file": "assets/desserts/icons/t26-atlas-transparent.png"
+    },
+    {
+      "tier": 27,
+      "generatedFile": "exec-a45ff38e-8896-4581-8964-af9bd30a61cc.png",
+      "file": "assets/desserts/icons/t27-atlas-transparent.png"
+    },
+    {
+      "tier": 28,
+      "generatedFile": "exec-a5109a32-e3bc-4f4c-9abd-0c760b3a10ad.png",
+      "file": "assets/desserts/icons/t28-atlas-transparent.png"
+    },
+    {
+      "tier": 29,
+      "generatedFile": "exec-2a8bbbbb-66d8-4729-a4c3-c1277efe0bfa.png",
+      "file": "assets/desserts/icons/t29-atlas-transparent.png"
+    },
+    {
+      "tier": 30,
+      "generatedFile": "exec-dbbd3c01-1780-4ff5-b4a6-09487685b3ed.png",
+      "file": "assets/desserts/icons/t30-atlas-transparent.png"
+    }
+  ]
+}

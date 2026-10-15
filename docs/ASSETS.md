@@ -336,3 +336,72 @@ User-supplied Meshy FBX models and reference art. The user confirmed the almond-
 Source archive names and SHA-256 values: assets/desserts/manifest.json. All eight source FBX files and original color textures are preserved in their model folders.
 
 Transparent icons were edited with image_gen from the user reference images; prompts and generated files are recorded in assets/desserts/icons/prompts.json. Each atlas is 1024 square with three 512-square cells. Cheesecake atlas image: 108637796798942 (decal 94394520366782). Financier atlas image: 139647408954483 (decal 108562617158850). Mint Cheesecake texture 92532618548779 failed during Play; the same PNG was reuploaded as 105716955131908.
+
+## Tiers 17–30 — user model batch (2026-10-15)
+
+User supplied 56 Meshy FBX archives and matching reference images from the ahdma folder and authorized applying them to the game. Creator: user-provided Meshy exports. Original files, archive paths and SHA-256 values are recorded in assets/desserts/manifest.json. Tier 19 is 크레이프 and tier 29 is 크레페 as confirmed by the user; both display Crepe in the English UI and retain separate tier identities.
+
+Source geometry and UVs are retained (274–3,156 triangles). Import copies remove FBX texture/video links. Textures are RGB PNG, reduced to at most 2048px when needed. Each display template contains one anchored MeshPart with collision, touch, query and shadows disabled, white SmoothPlastic, and a bottom-center pivot. Full templates are 2.5 studs high (5 in production); minis are 18/28 stud. No scripts or package links are imported into display templates.
+
+| Template | Triangles | Mesh ID | Texture image ID | Decal ID |
+|---|---:|---:|---:|---:|
+| Tier17Mini | 318 | 104926881958086 | 98836567653642 | 84946599008549 |
+| Tier17Normal | 3013 | 70671388480453 | 111476582221337 | 132812352278384 |
+| Tier17Shiny1 | 3021 | 72708633881314 | 138726533667357 | 126125122094252 |
+| Tier17Shiny2 | 2969 | 111248668279335 | 110648514113069 | 129103049547603 |
+| Tier18Mini | 308 | 96409869180701 | 103699297172012 | 74741594551697 |
+| Tier18Normal | 2977 | 100244985337614 | 79387809515551 | 118411641201180 |
+| Tier18Shiny1 | 2919 | 93448619336779 | 128276123806039 | 140599367737950 |
+| Tier18Shiny2 | 3120 | 88558666485862 | 79756973729915 | 74838708851140 |
+| Tier19Mini | 312 | 75514956296567 | 88231112614101 | 74046246827330 |
+| Tier19Normal | 2811 | 108654765466934 | 77235270746327 | 105275815640404 |
+| Tier19Shiny1 | 3091 | 84689118202426 | 135321454922983 | 131422825941667 |
+| Tier19Shiny2 | 3138 | 85046223269924 | 79671938572558 | 95520402354009 |
+| Tier20Mini | 293 | 108779946488385 | 126787347752559 | 75390548488838 |
+| Tier20Normal | 3092 | 93378098981477 | 110366394436599 | 126301871848032 |
+| Tier20Shiny1 | 2922 | 123690999276743 | 131924175871295 | 83439382902551 |
+| Tier20Shiny2 | 3156 | 74711888995552 | 95971906599262 | 120899101086121 |
+| Tier21Mini | 318 | 121441504591950 | 99988071557138 | 119248674032234 |
+| Tier21Normal | 2996 | 140410563591834 | 116822240893534 | 97995085935147 |
+| Tier21Shiny1 | 3012 | 74049839991356 | 111082826667968 | 114615136342362 |
+| Tier21Shiny2 | 2969 | 87356774507160 | 110312266254910 | 135761628380172 |
+| Tier22Mini | 288 | 73697029871653 | 114815895160901 | 86522736401689 |
+| Tier22Normal | 3035 | 137997132232030 | 111001059418344 | 83562723534439 |
+| Tier22Shiny1 | 3016 | 77248658295187 | 119459612836770 | 115836399766346 |
+| Tier22Shiny2 | 3140 | 136838971491534 | 88611909906856 | 119894486623592 |
+| Tier23Mini | 312 | 75336888814906 | 79678139137220 | 71967067675115 |
+| Tier23Normal | 3130 | 127868473118247 | 90764159572695 | 125872812777047 |
+| Tier23Shiny1 | 3011 | 87433482590830 | 132732163008490 | 115843329725975 |
+| Tier23Shiny2 | 3102 | 137034704685353 | 125334444943378 | 109878837351775 |
+| Tier24Mini | 294 | 125585849608286 | 136008950093413 | 88645370340884 |
+| Tier24Normal | 3062 | 123621667456860 | 87951140054721 | 122657665483029 |
+| Tier24Shiny1 | 3060 | 76425499713595 | 95182097507859 | 130047073951764 |
+| Tier24Shiny2 | 2697 | 107715592576804 | 115161906367732 | 72006995331750 |
+| Tier25Mini | 284 | 119356067858528 | 127566527690557 | 102862766957750 |
+| Tier25Normal | 3034 | 135872176043533 | 81225635139237 | 114544319832892 |
+| Tier25Shiny1 | 2968 | 105247689939765 | 106184823756112 | 91018881774483 |
+| Tier25Shiny2 | 3110 | 75867147817249 | 104274632519255 | 88911794794466 |
+| Tier26Mini | 310 | 99489272029974 | 119869986031885 | 75476927996888 |
+| Tier26Normal | 3015 | 74417296150018 | 77327312557293 | 127790748602918 |
+| Tier26Shiny1 | 2886 | 121989820280607 | 116146606734706 | 139744776758986 |
+| Tier26Shiny2 | 2920 | 131705375618054 | 126314000753281 | 76731085496148 |
+| Tier27Mini | 312 | 125998872783914 | 115919721520976 | 82553895648567 |
+| Tier27Normal | 3085 | 116880914311353 | 95348138265978 | 91383557962755 |
+| Tier27Shiny1 | 2932 | 103473537686518 | 94640918623657 | 72980202315068 |
+| Tier27Shiny2 | 3110 | 70611214912148 | 82871330969341 | 122611708275101 |
+| Tier28Mini | 274 | 135628776011544 | 123536602752986 | 70508354083135 |
+| Tier28Normal | 2880 | 84904754571642 | 117808311046112 | 80065194124546 |
+| Tier28Shiny1 | 2875 | 118195625333813 | 72904074656253 | 79296880584090 |
+| Tier28Shiny2 | 3106 | 119057562010480 | 71558884773273 | 129304276721248 |
+| Tier29Mini | 310 | 106889000562322 | 93978088925047 | 133696527955476 |
+| Tier29Normal | 2942 | 119957294222147 | 135292353403740 | 78880962734510 |
+| Tier29Shiny1 | 2960 | 75724374143317 | 95092092132067 | 139105232794555 |
+| Tier29Shiny2 | 2962 | 121659396469701 | 76777846129798 | 91077279878030 |
+| Tier30Mini | 292 | 118126865541640 | 86592871605794 | 91942787551273 |
+| Tier30Normal | 3133 | 133507261298020 | 106772955477484 | 109824436337995 |
+| Tier30Shiny1 | 3062 | 89934940961257 | 111219524848129 | 113850649831050 |
+| Tier30Shiny2 | 3010 | 134395282247813 | 84737817423491 | 70596269610186 |
+
+Fourteen 1024px transparent PNG atlases contain normal, shiny 1 and shiny 2 in the upper-left, upper-right and lower-left 512px cells. User reference art was edited with built-in image_gen to remove backgrounds; exact prompt and generated filenames are in assets/desserts/icons/batch-17-30-generated.json. Final paths: assets/desserts/icons/t17-atlas-transparent.png through t30-atlas-transparent.png. Roblox image/decal IDs are in batch-17-30-atlases.json.
+
+Ten initially uploaded textures failed in Play. RGB-identical PNGs were reuploaded and all 120 model templates subsequently passed ContentProvider loading with zero failures. Superseded texture IDs remain in batch-17-30.json.

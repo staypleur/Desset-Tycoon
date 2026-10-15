@@ -158,6 +158,37 @@ local financierData=R.New(0);financierData.Index["16n"]=true;financierData.Pets[
 local financierRoll=R.Roll(financierData,"Perk",{NextNumber=function() mi+=1;return ({.999,0,.75})[mi] end},1,{})
 assert(financierRoll.Key=="16s2" and financierRoll.Tier==16,"Crate returns pink quartz financier")
 end
+-- Validate the full new tier range, including the 16 -> 17 transition and max-tier boundary.
+for tier=17,30 do
+ local counts={0,0}
+ for _=1,20000 do local variant=R.RollVariant(tier,true,random);counts[variant]+=1 end
+ assert(math.abs(counts[1]-counts[2])<600,"Balanced shinies: "..tier)
+ local data=R.New(0);data.Pets={};data.Index={};local found={}
+ for variant=1,2 do R.Add(data,tier-1,true,3,found,variant) end
+ R.Merge(data,found)
+ for variant=1,2 do
+  local key=R.Key(tier,true,variant)
+  assert(data.Pets[key]==1 and data.Index[key] and R.ToggleEquip(data,key))
+ end
+ local crate=R.New(0);crate.Index[R.Key(tier,false)]=true;crate.Pets[R.Key(tier,false)]=1
+ local step=0;local roll=R.Roll(crate,"Perk",{NextNumber=function() step+=1;return ({.999,0,.75})[step] end},1,{})
+ assert(roll.Key==R.Key(tier,true,2),"Crate variant identity: "..tier)
+ for variant=0,2 do
+  local model=V.Build(tier,variant>0,variant)
+  local template=f.DessertModelTemplates["Tier"..tier..(variant==0 and "Normal" or "Shiny"..variant)]
+  assert(model.PrimaryPart.MeshId==template.PrimaryPart.MeshId and model.PrimaryPart.TextureID==template.PrimaryPart.TextureID)
+  assert(math.abs(select(2,model:GetBoundingBox()).Y-5)<.001 and model:GetPivot():FuzzyEq(CFrame.new()))
+  assert(model:GetAttribute("Variant")==variant)
+  for _,p in ipairs(model:GetDescendants()) do assert(not p:IsA("LuaSourceContainer") and not p:IsA("PackageLink")) end
+  model:Destroy()
+  local mini=V.BuildMini(tier,variant>0,variant)
+  assert(mini.PrimaryPart.MeshId==f.DessertModelTemplates["Tier"..tier.."Mini"].PrimaryPart.MeshId)
+  assert(math.abs(select(2,mini:GetBoundingBox()).Y-18/28)<.001)
+  mini:Destroy()
+ end
+end
+local capped=R.New(0);capped.Pets={["30n"]=3,["30s"]=3,["30s2"]=3};capped.Index={};R.Merge(capped,{})
+assert(capped.Pets["30n"]==3 and capped.Pets["30s"]==3 and capped.Pets["30s2"]==3 and not capped.Pets["31n"])
 local priority=R.New(0);priority.Pets={["1n"]=100,["2n"]=4,["4n"]=2};assert(R.ProductionPerSecond(priority)==40,"Highest tiers occupy limited production slots first")
 local d=R.New(0);local found={}
 R.Add(d,1,true,2,found,1);R.Add(d,1,true,2,found,2);R.Merge(d,found)
