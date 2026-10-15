@@ -791,5 +791,93 @@
       ]
     },
     "cellSize": 512
+  },
+  "mini-eclair": {
+    "sourceArchive": "Meshy_AI_eclair_no_face_no_lim_1015112459_texture_fbx.zip",
+    "archiveSha256": "be6a754d6556fa94b39c6c22952daec84e705f9a4ea07fe7456ac5da9a1a583c",
+    "heightCm": 18,
+    "triangles": 312,
+    "files": {
+      "color-game.png": "9e66542232ac1585228f05e2f20cb7db9753c7d2b1810b501e6d27232762b007",
+      "color.png": "b8b0ec62ba982ace83f2236a88ada6885bb187f1c5bc09d975dd5b245b9fbc10",
+      "mini-eclair-import.fbx": "7cfdf1c937a3883e69e24353058e388971634d4010056f58c636c1faea7c3bc1",
+      "source.fbx": "3e9ca1afe25582713288d4664dd5ee9535a8c496432f5b6668faeb60fe394c72"
+    },
+    "template": "MiniEclair",
+    "meshId": 79227449706537,
+    "textureImageId": 75341684941115,
+    "textureDecalId": 72702463192341,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "eclair": {
+    "sourceArchive": "Meshy_AI_eclair_character_3k_1015112514_texture_fbx.zip",
+    "archiveSha256": "369404992c7467048003d8bdee87ce925cbabf77636a18fd17aacdb47feaceed",
+    "heightCm": 70,
+    "triangles": 2965,
+    "files": {
+      "color-game.png": "5a5f73bb48c0bb9e98ed134d98b917d841731efce5e39484b6925852bfad5b71",
+      "color.png": "ce132a5ff5ea321dd0d96ba2385384196184a8743d0f84bb2d53a7bb87196be5",
+      "eclair-import.fbx": "8c56bb0de2523821a85d1b210fdb7e13039d8c285e381163d53bb03cd12fa20b",
+      "source.fbx": "57a440fd4f69c7329bdae01c96ca8917ae68d89cd890c4911bafb318c4ab627f"
+    },
+    "template": "NormalEclair",
+    "meshId": 120329744531564,
+    "textureImageId": 122620488530060,
+    "textureDecalId": 70394256985722,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "quartz-eclair": {
+    "sourceArchive": "Meshy_AI_pink_quartz_rose_gold_1015112525_texture_fbx.zip",
+    "archiveSha256": "145fe986391ba013230538a44ab58c9a543d271fb11860f3ea761638a5c3e83a",
+    "heightCm": 70,
+    "triangles": 3052,
+    "files": {
+      "color-game.png": "79b398e776fe3d7ec2ee8959baa56a7523a1913bcff71183f61e9f199168c5f8",
+      "color.png": "68ecbe9813ffa26edbf6ccfbab00ab5a0527cfd00bbf839c0ff211d50299ca13",
+      "quartz-eclair-import.fbx": "c7705f8da48b0091aa33d1f6812ae91b7787aad272a9e37813005f74ad257407",
+      "source.fbx": "86d23479d7d5f69de457df1b03dc5772344312becba0f2345cfdcf0a12c7abf3"
+    },
+    "template": "QuartzEclair",
+    "meshId": 134851971568011,
+    "textureImageId": 138300062755975,
+    "textureDecalId": 112950380919238,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "galaxy-eclair": {
+    "sourceArchive": "Meshy_AI_galaxy_aurora_eclair__1015112533_texture_fbx.zip",
+    "archiveSha256": "b9e665d8bd2035110c634f3b1229c2c564f462de1fe6b2f82aecd2ab38633e53",
+    "heightCm": 70,
+    "triangles": 3071,
+    "files": {
+      "color-game.png": "a8f63d08e0ad9d339132909534e49e3ccc1b8215acc6f9c8a0ccfd40b8b7ea11",
+      "color.png": "1ac4b3b10541f1b34eebb2aece3e21c054ae60dbaa06c764706c138a6bf8093d",
+      "galaxy-eclair-import.fbx": "572efdc902080b69269473a26737343777ce2ff01426fc47bfbaa979ff282a4f",
+      "source.fbx": "573537a9eb564f4c3db2d8f3499ad3daeaf9b3c14d64fb3bf98dc0ae11c2a6a7"
+    },
+    "template": "GalaxyEclair",
+    "meshId": 100788863793826,
+    "textureImageId": 116270054195281,
+    "textureDecalId": 125674000100307,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "eclairIndexAtlas": {
+    "decalId": 120016916731846,
+    "imageId": 91034076326961,
+    "file": "icons/eclair-atlas.png",
+    "cells": {
+      "11n": [
+        0,
+        0
+      ],
+      "11s": [
+        512,
+        0
+      ],
+      "11s2": [
+        0,
+        512
+      ]
+    },
+    "cellSize": 512
   }
 }

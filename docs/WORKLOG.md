@@ -357,3 +357,11 @@ PASS: PlayerProfiles deterministic mock verifies persisted gift/AFK clocks, dupl
 - Play PASS: thirty bounded 2D index icons without ViewportFrames/WorldModels; discovery single fixed-facing model, 0.303-stud floating span and cleanup. Twelve live mini drops verified; producer/mini meshes and textures and all three atlas icons preload Success. Both shiny names fit their cards; saved world/index screenshots.
 - Final Perk crate regression PASS: ten grants exactly once, spent-credit replay rejected, 195 stopped-arrow alignment samples and image-only carousel. Removed both temporary fixtures and enabled normal game.
 - Saved XML audit PASS: 32 exact sources, zero foreign scripts/packages or temporary fixtures, 94,656,318 bytes; exported all forty native templates.
+
+## 2026-10-15 — Tier-eleven Eclair family
+- Imported MiniEclair (312 triangles), NormalEclair (2,965), Pink Quartz Rose Gold Eclair (3,052), Galaxy Aurora Eclair (3,071). Original geometry/UVs and 2048px texture colors retained; forty-four script-free templates cover tiers 1–11.
+- Added separate 11n/11s/11s2 ownership, discovery/equipment and conditional shiny 50:50 selection, tier-ten merge lineage, transparent 2D index/roulette atlas. Source hashes, IDs and exact image_gen cutout prompt recorded.
+- Native regression PASS: 220,000 conditional shiny samples across eleven tiers, legacy saves, merge/equip, deterministic galaxy crate result, thirty-three full models and mini heights/pivots.
+- Play PASS: thirty-three bounded 2D index images without ViewportFrames/WorldModels; discovery one fixed-facing model, 0.237-stud floating span and cleanup. Ten live mini drops verified; producer and mini mesh/texture preload Success; all three atlas icons loaded and fit their cards. Saved eclair-world.png and eclair-index.png.
+- Final Perk crate regression PASS: ten server grants once, spent-credit replay rejected, 196 stopped-arrow alignment samples, image-only carousel. Removed both temporary fixtures and enabled normal game.
+- Saved XML audit PASS: 32 exact sources, zero foreign scripts/packages or temporary fixtures, 94,811,805 bytes; exported all forty-four native templates.

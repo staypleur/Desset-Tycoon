@@ -134,5 +134,14 @@
       "pearl-madeleine.png",
       "mint-madeleine.png"
     ]
+  },
+  "eclairCutouts": {
+    "tool": "image_gen",
+    "prompt": "Remove only the plain background and floor shadow from this supplied eclair character. Preserve the complete original character, silhouette, face, colors, materials, highlights and proportions exactly. Center the single full-body character with clear padding, transparent RGBA background, no text, no added elements. Game inventory icon cutout.",
+    "outputs": [
+      "eclair.png",
+      "quartz-eclair.png",
+      "galaxy-eclair.png"
+    ]
   }
 }

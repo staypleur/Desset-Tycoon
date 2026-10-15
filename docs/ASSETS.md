@@ -261,3 +261,16 @@ User-supplied Meshy FBX archives: `Meshy_AI_madeleine_no_face_no__1015111142_tex
 
 Templates use a single script-free anchored MeshPart, no collision/touch/query/shadow, white SmoothPlastic, bottom-center pivot; full base height 2.5 studs (5 in production), mini 18/28 stud. Shiny minis reuse the ordinary face-free mini with established sparkle treatment.
 Transparent inventory cutouts created with built-in image_gen from user reference images; exact prompt and output files in `assets/desserts/icons/prompts.json`. Atlas: `madeleine-atlas.png`, 1024px RGBA, cells 10n=(0,0), 10s=(512,0), 10s2=(0,512), each 512px. Image ID 112960015006578, decal 134199821770770. Proof: `docs/previews/madeleine-world.png`, `madeleine-index.png`.
+
+## Tier 11 — Eclair family (2026-10-15)
+User-supplied Meshy archives: `Meshy_AI_eclair_no_face_no_lim_1015112459_texture_fbx.zip`, `Meshy_AI_eclair_character_3k_1015112514_texture_fbx.zip`, `Meshy_AI_pink_quartz_rose_gold_1015112525_texture_fbx.zip`, `Meshy_AI_galaxy_aurora_eclair__1015112533_texture_fbx.zip`. User supplied the designs and authorized import. Original geometry/UVs and 2048px texture colors retained; embedded texture links removed from import copies. Original hashes in `assets/desserts/manifest.json`.
+
+| Template | Triangles | Mesh ID | Texture image ID | Decal ID |
+|---|---:|---:|---:|---:|
+| MiniEclair | 312 | 79227449706537 | 75341684941115 | 72702463192341 |
+| NormalEclair | 2965 | 120329744531564 | 122620488530060 | 70394256985722 |
+| QuartzEclair | 3052 | 134851971568011 | 138300062755975 | 112950380919238 |
+| GalaxyEclair | 3071 | 100788863793826 | 116270054195281 | 125674000100307 |
+
+Single script-free anchored MeshPart templates, collision/touch/query/shadows disabled, white SmoothPlastic and bottom-center pivots. Full base height 2.5 studs (5 in production); mini 18/28 stud. Shiny minis reuse the face-free ordinary mini with existing sparkle treatment.
+Built-in image_gen transparent inventory cutouts preserve user reference characters. Exact prompt and paths in `assets/desserts/icons/prompts.json`. Atlas `icons/eclair-atlas.png`, 1024px RGBA; 512px cells: 11n=(0,0), 11s=(512,0), 11s2=(0,512). Image 91034076326961; decal 120016916731846. Proof: `docs/previews/eclair-world.png`, `eclair-index.png`.
