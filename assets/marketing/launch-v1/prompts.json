@@ -1,0 +1,49 @@
+{
+  "tool": "Built-in image_gen",
+  "textPolicy": "No text, characters only",
+  "commonPrompt": "Create polished, highly appealing promotional key art for this actual cute dessert-collecting tycoon game. NO TEXT anywhere, no letters, numbers, logos, UI, watermark, borders or badges. Reference 1 is character identity sheet: yellow caramel cherry pudding, pearly cream pudding, galaxy pudding, custard. Reference 2 is strawberry-topped cheesecake character. Reference 3 is croffle characters (normal, pink quartz, mint crystal). Reference 4 shows the actual pastel mint conveyors and pink dessert world; use only as setting reference, omit all editor/game UI and human avatar. Preserve recognizable character designs, toppings, stubby limbs, big eyes and warm smiles. Premium stylized 3D game illustration, lightly faceted forms faithful to models, tasty materials, expressive adorable faces, clear silhouettes, sharp focal subjects, warm key light, gentle rim light, strong figure/background separation. Tasteful sparse sparkles. Not photoreal food, no humans, no invented rewards or combat. Edge-to-edge opaque composition. Keep essential faces and toppings within central 85% safe area. ",
+  "references": [
+    "C:/Users/wucha/OneDrive/바탕 화면/Project/Dessert Tycoon/assets/desserts/icons/dessert-index-atlas.png",
+    "C:/Users/wucha/OneDrive/바탕 화면/Project/Dessert Tycoon/assets/desserts/icons/cheesecake.png",
+    "C:/Users/wucha/OneDrive/바탕 화면/Project/Dessert Tycoon/assets/desserts/icons/t17-atlas-transparent.png",
+    "C:/Users/wucha/OneDrive/바탕 화면/Project/Dessert Tycoon/docs/previews/batch-17-30-world.png"
+  ],
+  "jobs": [
+    {
+      "name": "01-icon-pudding",
+      "ratio": "square",
+      "prompt": "SQUARE 1:1 game icon. One large joyful yellow caramel pudding with red cherry from reference1 dominates center and 75% canvas, tiny arms lifted, looking at viewer. Behind it only two smaller overlapping friends: pearly pudding left and galaxy pudding right. Tight triangular portrait, buttery golden hero against a richly saturated turquoise-to-mint simple background with a soft radial glow. Three characters only. Crisp large eyes, no tiny busy objects. Must read strongly at 150px. Hero cherry fully inside frame.",
+      "source": "C:\\Users\\wucha\\.codex\\generated_images\\01a135e7-deb9-7b53-b64c-1c2b391f758e\\exec-145a6dcb-1b44-461b-9307-6aa44a895da4.png"
+    },
+    {
+      "name": "02-icon-galaxy",
+      "ratio": "square",
+      "prompt": "SQUARE 1:1 alternative game icon. Galaxy aurora pudding from reference1 is sole large hero occupying 80% canvas, happy astonished mouth, luminous violet blue turquoise glazing and starry eyes. Deep plum background with softly lit peach-pink halo separating silhouette, a few large four-point glints. Tiny normal caramel pudding peeks from lower left at one third hero size. Premium cute collectible appeal, simple bold silhouette, all toppings inside frame. Readable at 150px.",
+      "source": "C:\\Users\\wucha\\.codex\\generated_images\\01a135e7-deb9-7b53-b64c-1c2b391f758e\\exec-a391ab16-7ffd-416f-88ee-379ddafd9718.png"
+    },
+    {
+      "name": "03-banner-world",
+      "ratio": "landscape",
+      "prompt": "WIDE 16:9 flagship game banner. Three large adorable heroes across the foreground: smiling caramel cherry pudding left, strawberry cheesecake center largest, galaxy pudding right; a pink crystal croffle peeks behind right. Behind them a faithful pastel mint conveyor dessert garden with pink cherry blossom trees and a pink cake-shaped cafe in soft focus. Camera low at character eye level, delightful expansive world, warm sun, mint and blush pink palette with caramel accents. Characters fill 65% height, inviting foreground depth, uncluttered background. No fake UI or written signs. Important focal content above bottom 12%.",
+      "source": "C:\\Users\\wucha\\.codex\\generated_images\\01a135e7-deb9-7b53-b64c-1c2b391f758e\\exec-8b98e698-3b51-4649-becc-06a9b7b15303.png"
+    },
+    {
+      "name": "04-promo-merge",
+      "ratio": "landscape",
+      "prompt": "WIDE 16:9 promotional illustration communicating merging WITHOUT words, arrows or numerals. Left half: three identical small yellow caramel cherry pudding characters from reference1 huddle in a triangular cluster, leaning toward a soft warm magical glow at center. Right half: a single much larger smiling round yellow custard with brown caramel cap, NO cherry, reference1 bottom right character, emerges with restrained golden sparkles. Clear visual progression from three puddings to one custard, same normal coloration not shiny. On pastel mint conveyor platforms faithful to game world, lavender and peach backdrop. Dramatic perspective and large faces, no extra characters. Accurate merge concept.",
+      "source": "C:\\Users\\wucha\\.codex\\generated_images\\01a135e7-deb9-7b53-b64c-1c2b391f758e\\exec-0f804305-0c3b-4bd9-b4ba-8f12b2efde72.png"
+    },
+    {
+      "name": "05-promo-shiny",
+      "ratio": "landscape",
+      "prompt": "WIDE 16:9 collector showcase. Three reference3 CROFFLE characters in a unified scene, not panels: golden baked normal croffle left slightly smaller, beautiful pink quartz rose-gold croffle center largest, turquoise mint crystal croffle right. Keep their exact waffle-grid faces and crystal toppings. All face camera with delighted smiles. Elegant berry-purple to midnight-blue background, soft mint circular pedestals, delicate sparkling particles and rose-gold rim light. Jewel material pops but eyes stay clear. High visual contrast, balanced three-character composition, no claims, chance numbers, chests or arrows. Capture desire to collect these actual variants.",
+      "source": "C:\\Users\\wucha\\.codex\\generated_images\\01a135e7-deb9-7b53-b64c-1c2b391f758e\\exec-fc060a0a-ac44-4c1c-a49d-c0009bcca377.png"
+    },
+    {
+      "name": "06-promo-factory",
+      "ratio": "landscape",
+      "prompt": "WIDE 16:9 lively dessert factory promotional scene. Foreground right a large happy strawberry cheesecake from reference2 beside a large caramel cherry pudding from reference1 on white display plates. Sweeping mint conveyor belts curve diagonally from lower left into background, carrying small FACELESS dessert products (mini cheesecakes with berries, little caramel puddings, small croffles), accurately distinguishing producers from mini products. In background a few smaller croffle and pink crystal croffle characters on production plates, pink cafe and cherry blossoms. Bright sunny pastel mint cream and strawberry-pink world, readable organized factory, attractive tilt-shift depth, characters the strongest focal points, not a crowded wallpaper. No humans, currency or UI.",
+      "source": "C:\\Users\\wucha\\.codex\\generated_images\\01a135e7-deb9-7b53-b64c-1c2b391f758e\\exec-238794b6-e0b3-4719-91e9-773b8d336905.png"
+    }
+  ]
+}

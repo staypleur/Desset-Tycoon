@@ -407,3 +407,8 @@ PASS: PlayerProfiles deterministic mock verifies persisted gift/AFK clocks, dupl
 - Play PASS: all 42 new full models, 42 new image labels and 14 miniature assets loaded (154 asset callbacks, zero failures). Ten initial texture failures were resolved by identical PNG reuploads. All 120 templates also passed loading with zero failures. Live mini drops from all 14 new tiers were observed in the first pass; 9 tiers were active at the final instantaneous snapshot.
 - Index PASS: 90 bounded 2D images, centered header, zero ViewportFrames/WorldModels. Discovery PASS: one fixed-facing preview, 0.235-stud floating span and cleanup. Final visual evidence: docs/previews/batch-17-30-world.png and batch-17-30-index.png.
 - Removed BatchPlayFixture and BatchUITest, enabled normal game, saved DessertIsland.rbxlx (97,766,543 bytes). Saved-XML audit PASS: 32 exact source matches, zero foreign scripts/package links or temporary fixtures. Exported all 120 templates to assets/pudding/DessertModelTemplates.rbxmx.
+
+## 2026-10-15 — Text-free promotional artwork
+- Generated two alternate icons, a main banner and three feature promos from actual character references, per user preference for no text.
+- Exported 512-square icons and 1920x1080 landscape PNG/JPEG files, preserved generated originals and complete prompts, prepared a downloadable ZIP and small-size comparison preview.
+- Visually checked all six images and reduced-size readability. No Studio or live experience changes.

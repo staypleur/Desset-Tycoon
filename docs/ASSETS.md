@@ -405,3 +405,13 @@ Source geometry and UVs are retained (274–3,156 triangles). Import copies remo
 Fourteen 1024px transparent PNG atlases contain normal, shiny 1 and shiny 2 in the upper-left, upper-right and lower-left 512px cells. User reference art was edited with built-in image_gen to remove backgrounds; exact prompt and generated filenames are in assets/desserts/icons/batch-17-30-generated.json. Final paths: assets/desserts/icons/t17-atlas-transparent.png through t30-atlas-transparent.png. Roblox image/decal IDs are in batch-17-30-atlases.json.
 
 Ten initially uploaded textures failed in Play. RGB-identical PNGs were reuploaded and all 120 model templates subsequently passed ContentProvider loading with zero failures. Superseded texture IDs remain in batch-17-30.json.
+
+## Promotional artwork — text-free launch set (2026-10-15)
+
+User requested an icon, banner and multiple acquisition-focused promotional images, then explicitly chose character-focused artwork without text. Created six images with built-in image_gen using existing approved pudding, cheesecake and croffle artwork plus the actual mint-conveyor world screenshot as references. These are stylized promotional illustrations, not gameplay screenshots. No new in-game assets or mechanics were installed.
+
+Files: assets/marketing/launch-v1/originals/ (six generated originals), ready-to-upload/ (two 512-square icons and four 1920x1080 banners/promos, PNG plus landscape JPEG), preview.jpg (150px icon / 480px banner comparison), dessert-tycoon-promo-pack.zip (upload files). Complete prompts and source references: assets/marketing/launch-v1/prompts.json. Landscape originals were 1672x941 and resized to 1920x1080; square originals were 1254x1254 and downscaled to 512x512.
+
+Recommended starting combination: 01-icon-pudding and 03-banner-world. Alternative icon: 02-icon-galaxy. Supplemental promos: 04-promo-merge (three puddings to custard), 05-promo-shiny (normal and two croffle variants), 06-promo-factory (characters producing faceless minis). Recommendation is visual judgment; click-through performance has not yet been measured.
+
+Roblox size guidance checked: https://create.roblox.com/docs/production/publishing/experience-icons and https://create.roblox.com/docs/production/publishing/thumbnails. Six outputs visually inspected at original and reduced preview sizes; no text, clear main faces, correct intended proportions. Upload copies are under 3 MB each.
