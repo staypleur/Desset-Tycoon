@@ -209,3 +209,16 @@ Four user-supplied Meshy archives replace the tier-six Donut placeholder. Source
 
 Three user-reference cutouts were prepared with built-in image_gen, using actual transparency and aspect-preserving 512px atlas cells. Exact prompts are in icons/prompts.json. Atlas image 101676992338599, decal 87769853568747. Shiny minis reuse the supplied face-free mesh with the existing gold tint/sparkles. No external visual designs were added. Proof: docs/previews/croissant-world.png and croissant-index.png.
 - Normal Croissant initially failed live texture delivery with BMP image 94249948799545. Re-uploading the unchanged original PNG resolved it: decal 90165978839336, image 139578570970895. Live preload returned Success for all three producer maps and the mini map.
+
+## Tier 7 Waffle — user assets, 2026-10-15
+
+Four user-supplied Meshy archives replace the tier-seven Egg Tart placeholder. Original geometry, UVs, textures and archive hashes are retained in assets/desserts and manifest.json. Decorative templates contain one MeshPart each with no scripts or packages. Bottom-center pivots, automatic render fidelity and disabled shadows retain existing 2.5-stud base / 5-stud producer height; mini base is 18/28 studs.
+
+| Template | Triangles | Mesh | Texture |
+|---|---:|---:|---:|
+| MiniWaffle | 310 | 131382460999233 | 122853078437347 |
+| NormalWaffle | 2951 | 126280120891352 | 127005342006041 |
+| UnicornWaffle | 2879 | 96312769938454 | 140560590973789 |
+| HoneybeeWaffle | 3114 | 130076525799889 | 94136436247267 |
+
+User-provided reference images were cut out with built-in image_gen; exact prompts are in assets/desserts/icons/prompts.json. Transparent 1024px atlas image 91766508733195 ([decal](https://create.roblox.com/dashboard/creations/store/87381359525723/configure)) contains three aspect-preserving 512px cells. Shiny minis reuse the supplied face-free mini with existing gold tint/sparkles. The user's fourth name is preserved as Pink Dark Choco Honey Waffle without altering the supplied chocolate/honeybee colors. Proof: docs/previews/waffle-world.png and waffle-index.png.

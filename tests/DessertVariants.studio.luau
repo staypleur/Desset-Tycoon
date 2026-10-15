@@ -54,6 +54,16 @@ assert(R.ToggleEquip(croissant,"6s2") and croissant.Equipped=="6s2")
 local croissantData=R.New(0);croissantData.Index["6n"]=true;croissantData.Pets["6n"]=1;local mi=0
 local croissantRoll=R.Roll(croissantData,"Perk",{NextNumber=function() mi+=1;return ({.999,0,.75})[mi] end},1,{})
 assert(croissantRoll.Key=="6s2" and croissantRoll.Tier==6,"Crate returns pink quartz rose gold croissant")
+local cotton,honey=0,0
+for _=1,20000 do if R.RollVariant(7,true,random)==1 then cotton+=1 else honey+=1 end end
+assert(math.abs(cotton-honey)<600,"Waffle shinies are equally likely")
+local waffle=R.New(0);waffle.Pets={};waffle.Index={};local waffleFound={}
+R.Add(waffle,6,true,3,waffleFound,1);R.Add(waffle,6,true,3,waffleFound,2);R.Merge(waffle,waffleFound)
+assert(waffle.Pets["7s"]==1 and waffle.Pets["7s2"]==1 and waffle.Index["7s"] and waffle.Index["7s2"])
+assert(R.ToggleEquip(waffle,"7s2") and waffle.Equipped=="7s2")
+local waffleData=R.New(0);waffleData.Index["7n"]=true;waffleData.Pets["7n"]=1;local mi=0
+local waffleRoll=R.Roll(waffleData,"Perk",{NextNumber=function() mi+=1;return ({.999,0,.75})[mi] end},1,{})
+assert(waffleRoll.Key=="7s2" and waffleRoll.Tier==7,"Crate returns pink dark choco honey waffle")
 local priority=R.New(0);priority.Pets={["1n"]=100,["2n"]=4,["4n"]=2};assert(R.ProductionPerSecond(priority)==40,"Highest tiers occupy limited production slots first")
 local d=R.New(0);local found={}
 R.Add(d,1,true,2,found,1);R.Add(d,1,true,2,found,2);R.Merge(d,found)
@@ -68,7 +78,7 @@ assert(math.abs(R.ProductionPerSecond(d)-6/require(f.TycoonConfig).ProductionInt
 local sample={0,0,.75};local i=0
 local roll=R.Roll(R.New(0),"Normal",{NextNumber=function() i+=1;return sample[i] end},1,{})
 assert(roll.Key=="1s2" and roll.Variant==2,"Crates carry the exact shiny identity")
-local expected={{1,false,0,"NormalPudding",5},{1,true,1,"MilkPudding",5},{1,true,2,"GalaxyPudding",5},{2,false,0,"NormalCustard",5},{2,true,1,"RainbowCustard",5},{2,true,2,"DarkChocoCustard",5},{3,false,0,"NormalJelly",5},{3,true,1,"SherbetJelly",5},{3,true,2,"RubyJelly",5},{4,false,0,"NormalShortcake",5},{4,true,1,"GalaxyShortcake",5},{4,true,2,"UnicornShortcake",5},{5,false,0,"NormalMacaron",5},{5,true,1,"CrystalMacaron",5},{5,true,2,"DarkMacaron",5},{6,false,0,"NormalCroissant",5},{6,true,1,"GalaxyCroissant",5},{6,true,2,"QuartzCroissant",5}}
+local expected={{1,false,0,"NormalPudding",5},{1,true,1,"MilkPudding",5},{1,true,2,"GalaxyPudding",5},{2,false,0,"NormalCustard",5},{2,true,1,"RainbowCustard",5},{2,true,2,"DarkChocoCustard",5},{3,false,0,"NormalJelly",5},{3,true,1,"SherbetJelly",5},{3,true,2,"RubyJelly",5},{4,false,0,"NormalShortcake",5},{4,true,1,"GalaxyShortcake",5},{4,true,2,"UnicornShortcake",5},{5,false,0,"NormalMacaron",5},{5,true,1,"CrystalMacaron",5},{5,true,2,"DarkMacaron",5},{6,false,0,"NormalCroissant",5},{6,true,1,"GalaxyCroissant",5},{6,true,2,"QuartzCroissant",5},{7,false,0,"NormalWaffle",5},{7,true,1,"UnicornWaffle",5},{7,true,2,"HoneybeeWaffle",5}}
 for _,spec in ipairs(expected) do
  local m=V.Build(spec[1],spec[2],spec[3]);local _,size=m:GetBoundingBox()
  assert(m.PrimaryPart.MeshId==f.DessertModelTemplates[spec[4]].PrimaryPart.MeshId)
@@ -78,6 +88,6 @@ for _,spec in ipairs(expected) do
  m:Destroy()
 end
 local mini=V.BuildMini(2,false);assert(mini.PrimaryPart.MeshId==f.DessertModelTemplates.MiniCustard.PrimaryPart.MeshId)
-assert(math.abs(select(2,mini:GetBoundingBox()).Y-18/28)<.001);mini:Destroy();local jellyMini=V.BuildMini(3,false);assert(jellyMini.PrimaryPart.MeshId==f.DessertModelTemplates.MiniJelly.PrimaryPart.MeshId);assert(math.abs(select(2,jellyMini:GetBoundingBox()).Y-18/28)<.001);jellyMini:Destroy();local cakeMini=V.BuildMini(4,false);assert(cakeMini.PrimaryPart.MeshId==f.DessertModelTemplates.MiniShortcake.PrimaryPart.MeshId);assert(math.abs(select(2,cakeMini:GetBoundingBox()).Y-18/28)<.001);cakeMini:Destroy();local macaronMini=V.BuildMini(5,false);assert(macaronMini.PrimaryPart.MeshId==f.DessertModelTemplates.MiniMacaron.PrimaryPart.MeshId);assert(math.abs(select(2,macaronMini:GetBoundingBox()).Y-18/28)<.001);macaronMini:Destroy();local croissantMini=V.BuildMini(6,false);assert(croissantMini.PrimaryPart.MeshId==f.DessertModelTemplates.MiniCroissant.PrimaryPart.MeshId);assert(math.abs(select(2,croissantMini:GetBoundingBox()).Y-18/28)<.001);croissantMini:Destroy();f:Destroy()
+assert(math.abs(select(2,mini:GetBoundingBox()).Y-18/28)<.001);mini:Destroy();local jellyMini=V.BuildMini(3,false);assert(jellyMini.PrimaryPart.MeshId==f.DessertModelTemplates.MiniJelly.PrimaryPart.MeshId);assert(math.abs(select(2,jellyMini:GetBoundingBox()).Y-18/28)<.001);jellyMini:Destroy();local cakeMini=V.BuildMini(4,false);assert(cakeMini.PrimaryPart.MeshId==f.DessertModelTemplates.MiniShortcake.PrimaryPart.MeshId);assert(math.abs(select(2,cakeMini:GetBoundingBox()).Y-18/28)<.001);cakeMini:Destroy();local macaronMini=V.BuildMini(5,false);assert(macaronMini.PrimaryPart.MeshId==f.DessertModelTemplates.MiniMacaron.PrimaryPart.MeshId);assert(math.abs(select(2,macaronMini:GetBoundingBox()).Y-18/28)<.001);macaronMini:Destroy();local croissantMini=V.BuildMini(6,false);assert(croissantMini.PrimaryPart.MeshId==f.DessertModelTemplates.MiniCroissant.PrimaryPart.MeshId);assert(math.abs(select(2,croissantMini:GetBoundingBox()).Y-18/28)<.001);croissantMini:Destroy();local waffleMini=V.BuildMini(7,false);assert(waffleMini.PrimaryPart.MeshId==f.DessertModelTemplates.MiniWaffle.PrimaryPart.MeshId);assert(math.abs(select(2,waffleMini:GetBoundingBox()).Y-18/28)<.001);waffleMini:Destroy();f:Destroy()
 print("[DessertVariants] PASS: legacy save, 50:50",milk,galaxy,"separate merges/equip, offline production, crate identity, all imported models")
 

@@ -80,5 +80,20 @@
       "galaxy-croissant": "Background-extraction edit for a Roblox index icon. Remove only the white background and ground shadow. Preserve exactly the complete galaxy crescent croissant character, crescent silhouette, purple galaxy textures and pastel stars, face, hands, feet, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background.",
       "quartz-croissant": "Background-extraction edit for a Roblox index icon. Remove only the white background and ground shadow. Preserve exactly the complete pink quartz rose gold croissant character, pink crystalline pastry shape, rose gold bands, face, hands, feet, silhouette, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background."
     }
+  },
+  "waffleCutouts": {
+    "mode": "built-in image_gen",
+    "transparent_background": true,
+    "outputs": [
+      "waffle.png",
+      "unicorn-waffle.png",
+      "honeybee-waffle.png"
+    ],
+    "packing": "Three 512px cells in a 1024px RGBA atlas; aspect-preserving max480px resize with transparent padding.",
+    "prompts": {
+      "waffle": "Background-extraction edit for a Roblox index icon. Remove only the white background and ground shadow. Preserve exactly the complete golden waffle character, grid pattern, butter, syrup, strawberries, cream, face, hands, feet, silhouette, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background.",
+      "unicorn-waffle": "Background-extraction edit for a Roblox index icon. Remove only the white background and ground shadow. Preserve exactly the complete cotton candy unicorn waffle character, waffle grid, pastel cream hair, ears and horn, face, hands, feet, silhouette, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background.",
+      "honeybee-waffle": "Background-extraction edit for a Roblox index icon. Remove only the white background and ground shadow. Preserve exactly the complete dark chocolate honeybee waffle character, waffle grid, chocolate drizzle, striped cap, antennae, honey wings, face, hands, feet, silhouette, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background."
+    }
   }
 }

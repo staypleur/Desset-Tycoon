@@ -326,3 +326,10 @@ PASS: PlayerProfiles deterministic mock verifies persisted gift/AFK clocks, dupl
 - Detected failed BMP delivery for normal croissant, replaced it with unchanged original PNG. Final producer texture preloads all Success and front-row appearance visually verified; saved croissant-world.png and croissant-index.png.
 - Final Perk crate regression PASS: ten server grants exactly once, spent-credit replay rejected, 192 stopped-arrow alignment samples and image-only carousel.
 - Removed both fixture scripts, enabled game, saved Studio and exported 24 templates. Saved XML audit PASS: 32 exact sources, zero foreign scripts/packages or fixtures, 94,041,720 bytes.
+
+## 2026-10-15 — Tier-seven Waffle family
+- Imported user MiniWaffle (310 triangles), NormalWaffle (2,951), Cotton Candy Unicorn Waffle (2,879), Pink Dark Choco Honey Waffle (3,114). Original geometry/UVs/textures retained; 28 script-free templates cover tiers 1–7.
+- Added separate 7n/7s/7s2 inventory, discovery and equipment identities, conditional shiny 50:50 selection, croissant merge lineage, image-only index/roulette and floating native discovery presentation. Source hashes, asset IDs and exact image_gen prompts recorded.
+- Native regression PASS: 140,000 conditional shiny samples across tiers 1–7, legacy saves, merge/equip, deterministic tier-seven honey waffle crate result, all 21 full models and mini heights.
+- Play PASS: 21 bounded 2D index images, no ViewportFrames/WorldModels; three waffle cards and atlas preload Success. Discovery fixed facing, 0.321-stud floating span and cleanup. Fifteen live mini waffle drops had matching mesh/texture and successful preload. All three producer textures loaded successfully; world and index screenshots recorded.
+- Final Perk crate regression PASS: ten grants once, spent-credit replay rejected, 195 stopped-arrow alignment samples and image-only carousel. Removed fixtures, enabled game, saved Studio and exported all 28 templates. Saved XML audit PASS: 32 exact sources, zero foreign scripts/packages or temporary fixtures, 94,195,740 bytes.

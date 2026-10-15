@@ -441,5 +441,89 @@
       ]
     },
     "cellSize": 512
+  },
+  "mini-waffle": {
+    "sourceArchive": "Meshy_AI_waffle_no_face_no_lim_1015095656_texture_fbx.zip",
+    "archiveSha256": "63d8aec2a64493c9fe2fdf37b8aa10f950523f88e885792c28b7da6d39ae1e8a",
+    "heightCm": 18,
+    "triangles": 310,
+    "files": {
+      "color.png": "17f148d87bb4a505dffb7987d1350fba45e0f1e0ca39a98f054d5b2776df591f",
+      "mini-waffle-import.fbx": "0036d80530c8cd69c44f763c4945b7773990b0e9a784dde96f3715e4f14e17ef",
+      "source.fbx": "397b429096b41eeaf108084117cc20b6ff22b72ea3833baa483ea0ce7f5d07b0"
+    },
+    "template": "MiniWaffle",
+    "meshId": 131382460999233,
+    "textureImageId": 122853078437347,
+    "textureDecalId": 111937411675923,
+    "uploadFormat": "BMP (RGB-identical to source PNG)"
+  },
+  "waffle": {
+    "sourceArchive": "Meshy_AI_cute_waffle_character_1015095707_texture_fbx.zip",
+    "archiveSha256": "eadd68cad10e3eb7f776c7d17e1540a28a35104eaa8621605a41ede10582bf0a",
+    "heightCm": 70,
+    "triangles": 2951,
+    "files": {
+      "color.png": "c78fa392bb123d6ae0261a058429e21867b48ea27aeb49cc0e5c3fd945dac02a",
+      "source.fbx": "042418173763b40394db387a6d96bb1ec484fc785aee40480c66fedf31ec6d87",
+      "waffle-import.fbx": "d05c8f40cb5cbb7469c11e35e33ae85fead7e30e088bde5182976c4faebd6df2"
+    },
+    "template": "NormalWaffle",
+    "meshId": 126280120891352,
+    "textureImageId": 127005342006041,
+    "textureDecalId": 121367893794363,
+    "uploadFormat": "BMP (RGB-identical to source PNG)"
+  },
+  "unicorn-waffle": {
+    "sourceArchive": "Meshy_AI_cotton_candy_unicorn__1015095717_texture_fbx.zip",
+    "archiveSha256": "b705e370247bc7e105cc7edd44c04084f77aa0fddebf08907270310a2cb585f6",
+    "heightCm": 70,
+    "triangles": 2879,
+    "files": {
+      "color.png": "767b63dea56f573d611d7f9eddc115504ed1dbed257f513c6f4afdb6b92090f4",
+      "source.fbx": "c468218e0fcdf7ea935473757858b5409126f57d9a5388a2b88175ede49daad7",
+      "unicorn-waffle-import.fbx": "a1f8d132d59aee6c7f82c014358bdcd3ee7c8a44dd86f1b4b1c082e5eb5ce7af"
+    },
+    "template": "UnicornWaffle",
+    "meshId": 96312769938454,
+    "textureImageId": 140560590973789,
+    "textureDecalId": 103564015936352,
+    "uploadFormat": "BMP (RGB-identical to source PNG)"
+  },
+  "honeybee-waffle": {
+    "sourceArchive": "Meshy_AI_deep_choco_honeybee_w_1015095727_texture_fbx.zip",
+    "archiveSha256": "abc077ea05902a5ced48fdb7bb9a528db20703fd18636b4866e8ca04bfdd39ab",
+    "heightCm": 70,
+    "triangles": 3114,
+    "files": {
+      "color.png": "36ced43e932eb16c2c4f19a40496ac603dd16df242de95d616541caae3778510",
+      "honeybee-waffle-import.fbx": "a215ec09f056ab191189b7dbb4c4f56861579558211e18813ecb8eb618b9b216",
+      "source.fbx": "fe7975282f96176452b01b37a7f44a1ebb5f389ab7afc9103b3df358de318015"
+    },
+    "template": "HoneybeeWaffle",
+    "meshId": 130076525799889,
+    "textureImageId": 94136436247267,
+    "textureDecalId": 113214004102919,
+    "uploadFormat": "BMP (RGB-identical to source PNG)"
+  },
+  "waffleIndexAtlas": {
+    "decalId": 87381359525723,
+    "imageId": 91766508733195,
+    "file": "icons/waffle-atlas.png",
+    "cells": {
+      "7n": [
+        0,
+        0
+      ],
+      "7s": [
+        512,
+        0
+      ],
+      "7s2": [
+        0,
+        512
+      ]
+    },
+    "cellSize": 512
   }
 }
