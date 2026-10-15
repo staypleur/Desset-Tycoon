@@ -92,7 +92,7 @@ local function render(player)
 	if not s or not p or s.Plot:GetAttribute("OwnerUserId")~=player.UserId then return end
 	s.Models:ClearAllChildren(); s.Pets={}; s.Owner=player
 	local slot=0; local cf=s.Plot:GetPivot()
-	for tier=1,30 do for variant=0,2 do
+	for tier=30,1,-1 do for variant=0,2 do
 		local shiny=variant>0
 		for _=1,math.min(p.Data.Pets[Rules.Key(tier,shiny,variant)] or 0,60-slot) do
 			slot+=1; local pad=s.Plot.PetSpawnPads["PetPad"..slot]; local pos=cf:PointToObjectSpace(pad.Position)
@@ -231,32 +231,41 @@ for i=1,6 do
 			prompt=Instance.new("ProximityPrompt"); prompt.ActionText=text; prompt.KeyboardKeyCode=Enum.KeyCode.E; prompt.HoldDuration=hold; prompt.MaxActivationDistance=10; prompt.RequiresLineOfSight=false; prompt.Parent=pad
 		end
 		local pressed,latched={},{}
+		local home=pad.CFrame
+		local pressTween
 		local function activate(player,fromTouch)
 			if (not public and player~=s.Owner) or not near(player,pad) or not profiles[player] then return end
 			if fromTouch then
 				local humanoid=player.Character and player.Character:FindFirstChildOfClass("Humanoid")
 				if not humanoid or humanoid.FloorMaterial==Enum.Material.Air then return end
+				local r=root(player);local pos=r and home:PointToObjectSpace(r.Position)
+				if not pos or math.abs(pos.X)>pad.Size.X/2 or math.abs(pos.Z)>pad.Size.Z/2 or pos.Y<=0 or pos.Y>=6 then return end
 			end
 			if fromTouch and latched[player] then return end
 			if os.clock()-(pressed[player] or 0)<(fromTouch and .2 or 1) then return end; pressed[player]=os.clock()
 			if fromTouch then
 				latched[player]=true
 				local initialRoot=root(player)
-				local lowestY=initialRoot and pad.CFrame:PointToObjectSpace(initialRoot.Position).Y or math.huge
+				local lowestY=initialRoot and home:PointToObjectSpace(initialRoot.Position).Y or math.huge
 				task.spawn(function()
 					repeat task.wait(.05); local r=root(player)
-						local pos=r and pad.CFrame:PointToObjectSpace(r.Position)
+						local pos=r and home:PointToObjectSpace(r.Position)
 						if not pos or math.abs(pos.X)>pad.Size.X/2+2 or math.abs(pos.Z)>pad.Size.Z/2+2 then break end
 						lowestY=math.min(lowestY,pos.Y)
 						local humanoid=player.Character and player.Character:FindFirstChildOfClass("Humanoid")
 						-- Re-arm only after a real upward separation. Pad tween/idle limbs
 						-- cannot re-buy; the next landing's Touched buys exactly once.
-						if humanoid and humanoid.FloorMaterial==Enum.Material.Air and pos.Y>lowestY+1 then break end
+						if humanoid and humanoid.FloorMaterial==Enum.Material.Air and r.AssemblyLinearVelocity.Y>12 and pos.Y>lowestY+1 then break end
 					until player.Parent~=Players
 					latched[player]=nil
 				end)
 			end
-			Tween:Create(pad,TweenInfo.new(.12,Enum.EasingStyle.Quad,Enum.EasingDirection.Out,0,true),{CFrame=pad.CFrame*CFrame.new(0,-.16,0)}):Play()
+			if pressTween then pressTween:Cancel() end
+			pad.CFrame=home
+			pressTween=Tween:Create(pad,TweenInfo.new(.12,Enum.EasingStyle.Quad,Enum.EasingDirection.Out,0,true),{CFrame=home*CFrame.new(0,-.16,0)})
+			local current=pressTween
+			current.Completed:Once(function(playback) if current==pressTween and playback==Enum.PlaybackState.Completed then pad.CFrame=home end end)
+			current:Play()
 			if verb=="Panel" then events:FireClient(player,"Panel",arg) else perform(player,verb,arg) end
 		end
 		if prompt then prompt.Triggered:Connect(activate) end
@@ -269,7 +278,7 @@ for i=1,6 do
 					task.wait(.05)
 					local player=s.Owner; local r=player and root(player)
 					if r then
-						local pos=pad.CFrame:PointToObjectSpace(r.Position)
+						local pos=home:PointToObjectSpace(r.Position)
 						if math.abs(pos.X)<=pad.Size.X/2 and math.abs(pos.Z)<=pad.Size.Z/2 and pos.Y>0 and pos.Y<6 then activate(player,true) end
 					end
 				end

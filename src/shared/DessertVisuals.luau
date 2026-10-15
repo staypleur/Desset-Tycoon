@@ -21,8 +21,8 @@ local function imported(name,tier,shiny,variant,nativeShiny)
 end
 function Visuals.Build(tier,shiny,variant)
 	if tier<=2 then
-		local name=tier==2 and "NormalCustard" or shiny and (variant==2 and "GalaxyPudding" or "MilkPudding") or "NormalPudding"
-		local m=imported(name,tier,shiny,variant,tier==1 and shiny)
+		local name=tier==2 and (shiny and (variant==2 and "DarkChocoCustard" or "RainbowCustard") or "NormalCustard") or shiny and (variant==2 and "GalaxyPudding" or "MilkPudding") or "NormalPudding"
+		local m=imported(name,tier,shiny,variant,shiny)
 		if m then m:ScaleTo(m:GetScale()*DISPLAY_SCALE); return m end
 	end
 	local m=Instance.new("Model"); m.Name=Catalog[tier].Name; m:SetAttribute("Tier",tier); m:SetAttribute("Shiny",shiny)

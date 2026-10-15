@@ -15,7 +15,7 @@ function Rules.Decode(key)
 end
 function Rules.RollVariant(tier,shiny,rng)
 	if not shiny then return 0 end
-	return tier==1 and (rng:NextNumber()<.5 and 1 or 2) or 1
+	return tier<=2 and (rng:NextNumber()<.5 and 1 or 2) or 1
 end
 function Rules.New(now)
 	return {Version=2, Cash=0, Bag=0, Pending=0, CafeQueue=0, CafeLevel=0, Pets={["1n"]=1}, Index={["1n"]=true},
@@ -66,7 +66,7 @@ end
 -- Use exactly the same 60-slot ordering as the displayed producer models.
 function Rules.ProductionPerSecond(data)
 	local slots,value=0,0
-	for tier=1,30 do for variant=0,2 do
+	for tier=30,1,-1 do for variant=0,2 do
 		local count=math.min(data.Pets[Rules.Key(tier,variant>0,variant)] or 0,Config.Capacity-slots)
 		slots+=count; value+=count*3^(tier-1)
 	end end

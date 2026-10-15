@@ -61,7 +61,7 @@ local function prop(source,parent,name,cf,width)
 	m:SetAttribute("DecorationOnly",true); m:SetAttribute("SourceAssetId",source:GetAttribute("SourceAssetId")); return m
 end
 function Style.Apply(island)
-	if island:GetAttribute("ReferenceStyleVersion")==1 then return end
+	if island:GetAttribute("ReferenceStyleVersion")==1 then Style.RefinePlots(island);return end
 	local anchor=island.CentralHub.CentralShop; local origin=anchor:GetPivot().Position; local center=Vector3.new(origin.X,0,origin.Z)
 	local old=anchor:FindFirstChild("CafeArchitecture"); local cake=old and old:FindFirstChild("FacelessRoofCake")
 	if cake then cake.Parent=anchor end; if old then old:Destroy() end
@@ -138,7 +138,24 @@ function Style.Apply(island)
 	if sky then for _,d in ipairs(game.Lighting:GetChildren()) do if d:IsA("Sky") then d:Destroy() end end
 		local copy=sky:Clone(); copy.Name="FreePinkSky"; copy:SetAttribute("SourceAssetId",107689530722174); copy.Parent=game.Lighting
 	end
+	Style.RefinePlots(island)
 	island:SetAttribute("ReferenceStyleVersion",1); island:SetAttribute("MapVersion","14.0.0")
+end
+-- Inset the hidden filler sides so they cannot z-fight with the shelf faces.
+-- Keep the approved furniture together in a clear pocket beside the first row.
+function Style.RefinePlots(island)
+	for _,plot in ipairs(island.PlayerPlots:GetChildren()) do
+		local cf=plot:GetPivot()
+		for _,ground in ipairs(plot.ProductionBeds:GetChildren()) do
+			if ground.Name=="RaisedFieldGround" then ground.Size=Vector3.new(51.5,ground.Size.Y,ground.Size.Z) end
+		end
+		local decor=plot:FindFirstChild("CafeGardenDecor")
+		if decor then for _,item in ipairs(decor:GetChildren()) do if item.Name=="CafeTableAndChairs" then
+			local pos=cf:PointToObjectSpace(item:GetPivot().Position)
+			local destination=Vector3.new(pos.X<0 and -55 or 55,pos.Y,-23)
+			item:PivotTo(item:GetPivot()+cf:VectorToWorldSpace(destination-pos))
+		end end end
+	end
 end
 function Style.Button(pad)
 	if pad:FindFirstChild("ButtonTop") then return end

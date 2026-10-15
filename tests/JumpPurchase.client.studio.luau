@@ -6,6 +6,7 @@ local root=character.HumanoidRootPart
 local plot=workspace.DessertJellyIsland.PlayerPlots["Plot"..player:GetAttribute("PlotId")]
 local pad=plot.PurchaseButtons.Buy1
 local Rules=require(game.ReplicatedStorage.DessertRules)
+local home=pad.CFrame
 local before=action:InvokeServer("State")
 root.CFrame=pad.CFrame*CFrame.new(0,5,0)
 task.wait(1.2)
@@ -14,7 +15,14 @@ assert(landed.Cash==before.Cash-Rules.BuyCost(1),"Initial landing purchases exac
 task.wait(.8)
 local standing=action:InvokeServer("State")
 assert(standing.Cash==landed.Cash,"Standing must not repeat purchases")
-for n=1,3 do
+-- Walk between interior points (including the edges) without ever leaving the pad.
+for _,offset in ipairs({Vector3.new(4,0,0),Vector3.new(-4,0,0),Vector3.new(0,0,2),Vector3.new(0,0,-2),Vector3.zero}) do
+ humanoid:MoveTo((home*CFrame.new(offset)).Position+Vector3.new(0,3.6,0))
+ task.wait(.65)
+ assert(action:InvokeServer("State").Cash==standing.Cash,"Walking on pad must not re-arm")
+end
+humanoid:Move(Vector3.zero)
+for n=1,8 do
  humanoid.Jump=true
  local start=os.clock()
  repeat task.wait(.03) until humanoid.FloorMaterial==Enum.Material.Air or os.clock()-start>1
@@ -27,5 +35,7 @@ for n=1,3 do
 end
 task.wait(.8)
 assert(action:InvokeServer("State").Cash==standing.Cash,"No idle repeat after jumps")
+assert(pad.CFrame:FuzzyEq(home,.0001),"Press animation restores the original position without drift")
+local head=pad.ButtonTop:FindFirstChildWhichIsA("BasePart",true);assert((head.Position-pad.Position).Magnitude<.001,"Visible top remains attached")
 root.CFrame=pad.CFrame*CFrame.new(0,5,-12)
-print("[JumpPurchase] PASS: initial purchase, three real jumps/landings, exactly four purchases, no idle repeats")
+print("[JumpPurchase] PASS: initial purchase, walking/edge movement without re-buy, eight actual landings, no idle repeat or pad drift")

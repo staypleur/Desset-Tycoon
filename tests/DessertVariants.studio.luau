@@ -11,7 +11,10 @@ assert(not R.Decode("31s") and not R.Decode("1s3") and not R.ToggleEquip(legacy,
 local random=Random.new(42178);local milk,galaxy=0,0
 for _=1,20000 do local n=R.RollVariant(1,true,random);if n==1 then milk+=1 else galaxy+=1 end end
 assert(math.abs(milk-galaxy)<600,"Two shiny variants are equally likely")
-assert(R.RollVariant(2,true,random)==1 and R.RollVariant(1,false,random)==0)
+local rainbow,choco=0,0
+for _=1,20000 do if R.RollVariant(2,true,random)==1 then rainbow+=1 else choco+=1 end end
+assert(math.abs(rainbow-choco)<600 and R.RollVariant(1,false,random)==0)
+local priority=R.New(0);priority.Pets={["1n"]=100,["2n"]=4,["4n"]=2};assert(R.ProductionPerSecond(priority)==40,"Highest tiers occupy limited production slots first")
 local d=R.New(0);local found={}
 R.Add(d,1,true,2,found,1);R.Add(d,1,true,2,found,2);R.Merge(d,found)
 assert(d.Pets["1s"]==2 and d.Pets["1s2"]==2 and (d.Pets["2s"] or 0)==0,"Do not merge across variants")
@@ -25,7 +28,7 @@ assert(math.abs(R.ProductionPerSecond(d)-6/require(f.TycoonConfig).ProductionInt
 local sample={0,0,.75};local i=0
 local roll=R.Roll(R.New(0),"Normal",{NextNumber=function() i+=1;return sample[i] end},1,{})
 assert(roll.Key=="1s2" and roll.Variant==2,"Crates carry the exact shiny identity")
-local expected={{1,false,0,"NormalPudding",5},{1,true,1,"MilkPudding",5},{1,true,2,"GalaxyPudding",5},{2,false,0,"NormalCustard",5}}
+local expected={{1,false,0,"NormalPudding",5},{1,true,1,"MilkPudding",5},{1,true,2,"GalaxyPudding",5},{2,false,0,"NormalCustard",5},{2,true,1,"RainbowCustard",5},{2,true,2,"DarkChocoCustard",5}}
 for _,spec in ipairs(expected) do
  local m=V.Build(spec[1],spec[2],spec[3]);local _,size=m:GetBoundingBox()
  assert(m.PrimaryPart.MeshId==f.DessertModelTemplates[spec[4]].PrimaryPart.MeshId)

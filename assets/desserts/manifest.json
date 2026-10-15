@@ -73,5 +73,54 @@
       "1s2",
       "2n"
     ]
+  },
+  "rainbow-custard": {
+    "sourceArchive": "Meshy_AI_iridescent_egg_custar_1015071247_texture_fbx.zip",
+    "archiveSha256": "1015ab2a38ab25ab0942f4f8e23b89de3964ba468362f8798c9e7b7702e9b865",
+    "heightCm": 70,
+    "triangles": 2955,
+    "files": {
+      "color.png": "acf4d960713d0e582c7c925571bf16c01d7c404899d9ae38380e17df9a507206",
+      "rainbow-custard-import.fbx": "2d6265c09fff49da8865b887bfc1ed22997804443d62a807ce5a6dced87828f2",
+      "source.fbx": "b73d6cf6c7f7adc34d8646b91e132b96ad761f66faf795e690f97483857152c3"
+    },
+    "meshId": 131508904993465,
+    "colorDecalId": 111642900720036,
+    "colorTextureId": 72584377487680,
+    "template": "RainbowCustard"
+  },
+  "dark-choco-custard": {
+    "sourceArchive": "Meshy_AI_iridescent_black_choc_1015073924_texture_fbx.zip",
+    "archiveSha256": "f0b504900483ac30b3d95b3f71c91de2a2a60f9c3e0cf66659e9cf3e116f7cc4",
+    "heightCm": 70,
+    "triangles": 3081,
+    "files": {
+      "color.png": "8b5dfa62868c34fcf334fc3717e26df734dba324f65fbe8c8c4e4a832d1afc83",
+      "dark-choco-custard-import.fbx": "a44e94a52069f1f8b0a9fe85f894b42e6e9eb3d0eee154046c056a5d8f7a9939",
+      "source.fbx": "cfe32e30f4590f508d9fd33329776703bfdc353cd763a493a891826efd1f5ea4"
+    },
+    "meshId": 109807250478265,
+    "colorDecalId": 105095541091725,
+    "colorTextureId": 82354773271014,
+    "template": "DarkChocoCustard"
+  },
+  "custardShinyAtlas": {
+    "file": "icons/custard-shiny-index-atlas.png",
+    "decalId": 77178095030342,
+    "imageId": 117870878192537,
+    "size": [
+      1024,
+      512
+    ],
+    "keys": {
+      "2s": [
+        0,
+        0
+      ],
+      "2s2": [
+        512,
+        0
+      ]
+    }
   }
 }

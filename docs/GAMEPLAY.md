@@ -94,3 +94,9 @@ New discoveries show one temporary, gently floating 3D model with fixed facing a
 Producer slots fill entrance-view right row one, left row one, right row two, left row two, and so on. Pad footprints detect grounded landings as well as direct contacts, accommodating decorative floor layers. Standing stays latched; each real jump re-arms a single purchase upon landing. Purchases remain server-authoritative.
 
 Join Group opens a confirmation and the native Roblox join prompt for Cosmon Studio (203626899). Existing members are also eligible once. Server verification grants one free Perk Crate credit, with the receipt saved atomically to prevent duplicates after retries or rejoining. Pending approval/cancel/error does not grant. Membership propagation may delay confirmation by about a minute. Studio does not submit a real account join; live joining and durable storage need the published experience.
+
+
+## Highest-tier-first production and custard shinies
+Production now sorts tiers descending before applying the shared 60-model limit. The highest tiers occupy the front slots, continuing right row one, left row one, right row two, left row two. Offline production uses this same ordering. Index catalog order remains tier order.
+Tier-two shiny rolls now choose Rainbow Cotton Candy Custard (`2s`) or Dark Choco Custard (`2s2`) with equal conditional probability. Existing shiny keys and merges keep their variant identity; both have distinct models and index images.
+Pad activation uses a consistent home-space footprint and leave/re-enter hysteresis. A jump re-arms only after upward airborne separation with positive vertical speed; ordinary walking and limb contacts do not re-arm. Press tweens cancel and restart from a fixed home CFrame, then restore it, preventing cumulative sinking and disappearance of the colored top.

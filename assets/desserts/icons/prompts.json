@@ -8,5 +8,16 @@
     "galaxy-pudding.png",
     "custard.png"
   ],
-  "packing": "Aspect-preserving resize into four 512px cells of a 1024px RGBA atlas; no background reconstruction in packing."
+  "packing": "Aspect-preserving resize into four 512px cells of a 1024px RGBA atlas; no background reconstruction in packing.",
+  "custardShinyCutouts": {
+    "mode": "built-in image_gen",
+    "rainbow-custard": {
+      "source": "codex-clipboard-b9111878-826f-4026-9fc4-3ce12d908ec3.png",
+      "prompt": "Use case: background-extraction. Edit target: the supplied Rainbow Cotton Candy Custard reference image. Remove only the flat gray background and ground shadow, producing an actual transparent alpha background. Preserve the exact single custard character, its egg-shaped faceted pastel rainbow body, orange caramel cap, face, cheeks, arms, feet, pose, colors, lighting and proportions. Show the complete character centered with modest transparent padding, no cropping. No text, no border, no extra decorations, no redesign. Game index cutout."
+    },
+    "dark-choco-custard": {
+      "source": "codex-clipboard-52b662ed-c32d-4492-a367-d23843a1f2b5.png",
+      "prompt": "Use case: background-extraction. Edit target: supplied Dark Choco Custard reference image. Remove only the flat gray background and ground shadow with actual transparent alpha. Preserve the single complete character exactly: dark chocolate caramel cap, dark iridescent faceted custard body, large starry eyes, pink cheeks, smiling mouth, arms, feet, pose, colors, lighting and proportions. Center with modest transparent padding. No text, no border, no extra decorations, no redesign. Game index cutout."
+    }
+  }
 }
