@@ -107,3 +107,6 @@ Strawberry Jelly uses the supplied normal/mini models. Conditional shiny rolls s
 
 ### Tier-four Shortcake update
 Tier 4 is Shortcake. Galaxy Aurora Shortcake (4s) and Rainbow Unicorn Shortcake (4s2) split shiny rolls 50:50, with separate inventory/index/equip identities and matching merge lineage. Existing tier-four counts stay intact. Index/roulette use transparent images; discovery keeps the single floating 3D model and approved star/heart effects. MiniShortcake uses the existing guided physical-drop system.
+
+### Tier-five Macaron update
+Tier 5 is Macaron. Crystal Gem Macaron (5s) and Pink Gold Dark Macaron (5s2) split conditional shiny rolls 50:50. Ownership, discovery, equipment and merge lineage remain separate. Existing tier-five counts are preserved. Transparent index/roulette images and fixed-facing floating 3D discovery reuse the existing presentation; MiniMacaron uses the guided physical-drop system.

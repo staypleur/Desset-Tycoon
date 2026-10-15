@@ -183,3 +183,16 @@ User-supplied Meshy FBX archives and matching references replace the old tier-fo
 | UnicornShortcake | 2848 | 81256150384408 | 106272870540753 | 2.5 studs |
 
 Producer display height remains 5 studs, with the existing companion scale. Shiny mini desserts reuse the face-free mini with the existing gold tint/sparkles because no separate shiny mini geometry was supplied. Three built-in image_gen transparent cutouts share a 1024px atlas (image 96411714992673, decal 126559086519407); index and roulette use 512px cells. Prompts recorded in assets/desserts/icons/prompts.json. Proof: docs/previews/shortcake-world.png and shortcake-index.png.
+
+## Tier 5 Macaron — user assets, 2026-10-15
+
+User confirmed all four Macaron assets belong to tier five. Original Meshy FBX geometry, UVs, color maps and archive hashes are retained under assets/desserts and manifest.json. Imported geometry uses one script-free MeshPart per template; RGB-identical BMP uploads preserve the supplied texture colors.
+
+| Template | Triangles | Mesh | Texture |
+|---|---:|---:|---:|
+| MiniMacaron | 313 | 84857173827168 | 130844940077854 |
+| NormalMacaron | 3146 | 115042704381446 | 109423306857960 |
+| CrystalMacaron | 2904 | 138413585714104 | 117080664575433 |
+| DarkMacaron | 3110 | 137825462406032 | 71830617311568 |
+
+Base heights remain 18/28 studs for mini and 2.5 studs for full models; producers display at 5 studs. Bottom-center pivots, automatic render fidelity, disabled shadows and existing companion scaling retained. Shiny minis use the supplied face-free mini with existing gold tint/sparkles. Three transparent cutouts from user references use built-in image_gen; exact prompts recorded in icons/prompts.json. Shared 1024px atlas image 81932094548604, decal 111801012745786. Proof: docs/previews/macaron-world.png and macaron-index.png.

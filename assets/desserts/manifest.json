@@ -281,5 +281,85 @@
       ]
     },
     "cellSize": 512
+  },
+  "mini-macaron": {
+    "sourceArchive": "Meshy_AI_macaron_no_face_300tr_1015090901_texture_fbx.zip",
+    "archiveSha256": "1d6011f5eab3803b7a1601407388bb12452a5d240b9b7e07cd5c3def455c44e9",
+    "heightCm": 18,
+    "triangles": 313,
+    "files": {
+      "color.png": "b1e64819e003e004b0bdb14eb48722a19663e188d43b1a0a1bc0fce2cb8d7648",
+      "mini-macaron-import.fbx": "99c345d93e02d6e0a4f8d54834b639a91b605e6cc7868d73bc47a9f49c149624",
+      "source.fbx": "b63ab457ef5c0336b450acf51070d87faa8f0899258fe8ba629f174309fc11a1"
+    },
+    "meshId": 84857173827168,
+    "textureId": 130844940077854,
+    "textureDecalId": 138103910216482,
+    "textureUploadFormat": "BMP; RGB-identical conversion of color.png"
+  },
+  "macaron": {
+    "sourceArchive": "Meshy_AI_cute_macaron_characte_1015090927_texture_fbx.zip",
+    "archiveSha256": "8b33e19e2946bd3ae33df97ec8e6dcebb5db69133992a9773ae2d4c6d9c775d1",
+    "heightCm": 70,
+    "triangles": 3146,
+    "files": {
+      "color.png": "db4e79bbb13a8175c4166bdb7995d994372ae7c2b93f2697b394a303c07d72f4",
+      "macaron-import.fbx": "45bf2a0c8ea44fc27fa3101fa68a368f9592c17c8349dbd3b0930754df3d595a",
+      "source.fbx": "cbf7d42991b818d4f51253217c5022b086b1bf3c3461d2381b56395602aa07f4"
+    },
+    "meshId": 115042704381446,
+    "textureId": 109423306857960,
+    "textureDecalId": 93868532266904,
+    "textureUploadFormat": "BMP; RGB-identical conversion of color.png"
+  },
+  "crystal-macaron": {
+    "sourceArchive": "Meshy_AI_crystal_gem_macaron_c_1015090946_texture_fbx.zip",
+    "archiveSha256": "3b72d6b024fe7de55a12962f3a09bdeeb6fe0d6245c3d4eb1d2cb55b7fc84786",
+    "heightCm": 70,
+    "triangles": 2904,
+    "files": {
+      "color.png": "3cd2d2456e723c098de3a8246e98f1ceb57dccba1e79133fae1825b37e0f12eb",
+      "crystal-macaron-import.fbx": "34a1fdd3f3aa37066166ad15a397b49f3d61969e7c7a4540fe288b6c65e5bd57",
+      "source.fbx": "0039fce54694220170f73779ee4ad1aec22238fa096ddc2f235e6dba9fdc1b88"
+    },
+    "meshId": 138413585714104,
+    "textureId": 117080664575433,
+    "textureDecalId": 127504783946552,
+    "textureUploadFormat": "BMP; RGB-identical conversion of color.png"
+  },
+  "dark-macaron": {
+    "sourceArchive": "Meshy_AI_pink_gold_dark_macaro_1015091003_texture_fbx.zip",
+    "archiveSha256": "ee479b4d915929fcca516c5ff49e31f6f38135aff3a14509d244106b777d8906",
+    "heightCm": 70,
+    "triangles": 3110,
+    "files": {
+      "color.png": "3e816441d5bd7dcd293668b68035b8f371cc2fd04a6188deb877837b285e1911",
+      "dark-macaron-import.fbx": "5544415ed9f912164464de3121f4587e5039cb6dc9b0e105ae0f6189c9f31da8",
+      "source.fbx": "312c686313d19d3e09b9d82e28727528de59bad353efd2e0931becb077f76147"
+    },
+    "meshId": 137825462406032,
+    "textureId": 71830617311568,
+    "textureDecalId": 77118876817150,
+    "textureUploadFormat": "BMP; RGB-identical conversion of color.png"
+  },
+  "macaronIndexAtlas": {
+    "decalId": 111801012745786,
+    "imageId": 81932094548604,
+    "file": "icons/macaron-index-atlas.png",
+    "cells": {
+      "5n": [
+        0,
+        0
+      ],
+      "5s": [
+        512,
+        0
+      ],
+      "5s2": [
+        0,
+        512
+      ]
+    },
+    "cellSize": 512
   }
 }

@@ -50,5 +50,20 @@
       "galaxy-shortcake": "Remove only the white background and ground shadow from this supplied Galaxy Aurora Shortcake character for a game index icon. Preserve the complete original character, face, stars, strawberries, colors, silhouette, proportions and pose. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background.",
       "unicorn-shortcake": "Remove only the white background and ground shadow from this supplied Rainbow Unicorn Shortcake character for a game index icon. Preserve the complete original character, face, ears, horn, stars, strawberry, colors, silhouette, proportions and pose. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background."
     }
+  },
+  "macaronCutouts": {
+    "mode": "built-in image_gen",
+    "transparent_background": true,
+    "outputs": [
+      "macaron.png",
+      "crystal-macaron.png",
+      "dark-macaron.png"
+    ],
+    "packing": "Three 512px cells in a 1024px RGBA atlas; aspect-preserving max480px resize with transparent padding.",
+    "prompts": {
+      "macaron": "Background-extraction edit for a Roblox index icon. Remove only the white background and ground shadow. Preserve exactly the complete pink macaron character, cream filling, face, hands, feet, silhouette, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background.",
+      "crystal-macaron": "Background-extraction edit for a Roblox index icon. Remove only the white background and ground shadow. Preserve exactly the complete crystal gem macaron character, pastel crystalline facets and sparkles, cream filling, face, hands, feet, silhouette, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background.",
+      "dark-macaron": "Background-extraction edit for a Roblox index icon. Remove only the white background and ground shadow. Preserve exactly the complete pink gold dark macaron character, dark pink shell, gold flakes and stars, cream filling, face, hands, feet, silhouette, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background."
+    }
   }
 }
