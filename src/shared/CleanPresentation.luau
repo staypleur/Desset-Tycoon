@@ -35,6 +35,7 @@ local function bindOwner(panel,plot)
 end
 local function ownerBoard(source,area,plot,cf)
  local m=prop(source,area,'OwnerBoard',cf,9)
+ m:SetAttribute('BoardStyle','PinkPark')
  -- Retain the selected free frame; replace its artwork with two readable owner faces.
  for _,d in ipairs(m:GetDescendants()) do if d:IsA('Decal') or d:IsA('SurfaceGui') then d:Destroy() end end
  local panel=m:FindFirstChild('Decal',true)
@@ -215,7 +216,14 @@ function Presentation.Apply(island)
    island:SetAttribute('PresentationVersion',2)
   end
   for _,plot in ipairs(island.PlayerPlots:GetChildren()) do
-   local board=plot.PersonalShopArea:FindFirstChild('OwnerBoard'); local gui=board and board:FindFirstChildWhichIsA('SurfaceGui',true)
+   local area=plot.PersonalShopArea
+   local board=area:FindFirstChild('OwnerBoard')
+   if not board or board:GetAttribute('BoardStyle')~='PinkPark' then
+    if board then board:Destroy() end
+    ownerBoard(sources.OwnerBoardA,area,plot,plot:GetPivot()*CFrame.new(18,.2,-48))
+    board=area.OwnerBoard
+   end
+   local gui=board:FindFirstChildWhichIsA('SurfaceGui',true)
    if gui then bindOwner(gui.Parent,plot) end
   end
   faceChestsIntoPlots(island)
@@ -246,7 +254,7 @@ function Presentation.Apply(island)
    local building=area[name]
    for _,p in ipairs(building:GetDescendants()) do if p:IsA('BasePart') and not p:FindFirstAncestor('RoofWord') then p.CanCollide=true end end
   end
-  ownerBoard(sources[i%2==1 and 'OwnerBoardA' or 'OwnerBoardB'],area,plot,cf*CFrame.new(18,.2,-48))
+  ownerBoard(sources.OwnerBoardA,area,plot,cf*CFrame.new(18,.2,-48))
   prop(sources.FlowerPot,area,'FreeFlowerPot',cf*CFrame.new(22,.2,-35),3.2)
   prop(sources.PottedFlowers,area,'FreePottedFlowers',cf*CFrame.new(-25,.2,-55),3.2)
  end

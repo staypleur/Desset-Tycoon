@@ -7,6 +7,7 @@ local Tween=game:GetService("TweenService")
 local Config=require(RS:WaitForChild("TycoonConfig"))
 local Rules=require(RS:WaitForChild("DessertRules"))
 local Visuals=require(RS:WaitForChild("DessertVisuals"))
+local DropPhysics=require(script.Parent:WaitForChild("DessertDropPhysics"))
 local Layout=require(RS:WaitForChild("ProductionPlot"))
 local UI=require(RS:WaitForChild("DessertUI"))
 local CafeMarket=require(RS:WaitForChild("CafeMarket"))
@@ -93,7 +94,9 @@ local function render(player)
 		for _=1,math.min(p.Data.Pets[Rules.Key(tier,shiny)] or 0,60-slot) do
 			slot+=1; local pad=s.Plot.PetSpawnPads["PetPad"..slot]; local pos=cf:PointToObjectSpace(pad.Position)
 			local model=Visuals.Build(tier,shiny); model.Name="Dessert"..slot
-			model:SetAttribute("OwnerUserId",player.UserId); model.Parent=s.Models; model:PivotTo(cf*CFrame.new(pos+Vector3.new(0,.1,0)))
+			local placement=cf*CFrame.new(pos+Vector3.new(0,.1,0))
+			model:SetAttribute("OwnerUserId",player.UserId);model:SetAttribute("DisplayBasePivot",placement)
+			model:PivotTo(placement);model.Parent=s.Models
 			table.insert(s.Pets,{Tier=tier,Shiny=shiny,Slot=slot,Next=os.clock()+Config.ProductionInterval})
 		end
 	end end
@@ -101,6 +104,9 @@ end
 local function near(player,pad) local r=root(player); return r and (r.Position-pad.Position).Magnitude<=14 end
 local function emit(s,pet,now)
 	local p=profiles[s.Owner]; if not p or p.Busy then return end
+	local producedAt=workspace:GetServerTimeNow()
+	local producer=s.Models:FindFirstChild("Dessert"..pet.Slot)
+	if producer then producer:SetAttribute("LastProductionTime",producedAt) end
 	local value=3^(pet.Tier-1)*multiplier(p)
 	if p.Passes.DessertMagnet then p.Data.Bag+=value; p.Data.TotalMiniCollected+=value; return end
 	local cf=s.Plot:GetPivot(); local pad=s.Plot.PetSpawnPads["PetPad"..pet.Slot]
@@ -109,11 +115,13 @@ local function emit(s,pet,now)
 	local y=lo+(high-lo)*math.clamp((math.abs(pos.X)-4)/(s.Plot:GetAttribute("SideLaneWidth") or 40),0,1)
 	local points={pos+Vector3.new(0,.65,0),Vector3.new(pos.X,y+.6,z),Vector3.new(0,lo+.6,z),
 		Vector3.new(0,.8,-7),Vector3.new(rng:NextNumber(-4,4),.45,rng:NextNumber(-13,-9))}
-	local durations={}; for n=1,#points-1 do durations[n]=(points[n+1]-points[n]).Magnitude/9 end
 	if #s.Drops>=Config.MaxDrops then p.Data.AFKStored+=value; return end
 	local m=Visuals.BuildMini(pet.Tier,pet.Shiny); m.Name="MiniDessert"
-	m:SetAttribute("OwnerUserId",s.Owner.UserId); m.Parent=s.Products; m:PivotTo(cf*CFrame.new(points[1]))
-	table.insert(s.Drops,{Model=m,Points=points,Durations=durations,Start=now,Value=value,CF=cf})
+	m:SetAttribute("OwnerUserId",s.Owner.UserId);m:SetAttribute("DropStartTime",producedAt)
+	for i,point in ipairs(points) do points[i]=cf:PointToWorldSpace(point) end
+	m:PivotTo(CFrame.new(points[1])*cf.Rotation)
+	local drop=DropPhysics.New(m,points,s.Products);drop.Value=value
+	table.insert(s.Drops,drop)
 end
 local function perform(player,verb,arg)
 	local p=profiles[player]; local s=stateFor(player)
@@ -129,7 +137,9 @@ local function perform(player,verb,arg)
 		if p.Companion then p.Companion:Destroy(); p.Companion=nil end
 		if d.Equipped then
 			local tier,shiny=Rules.Decode(d.Equipped); local m=Visuals.Build(tier,shiny); m:ScaleTo(m:GetScale()*.65)
-			m.Name="DessertCompanion"; m:SetAttribute("OwnerUserId",player.UserId); m.Parent=workspace; p.Companion=m
+			m.Name="DessertCompanion"; m:SetAttribute("OwnerUserId",player.UserId)
+			local r=root(player); m:PivotTo(r and r.CFrame*CFrame.new(-3,3,2) or s.Plot:GetPivot())
+			m.Parent=workspace; p.Companion=m
 		end
 		update(player); return true
 	elseif verb=="Crate" then
@@ -258,9 +268,11 @@ local function join(player)
  if player.Parent~=Players then Profiles.Save(p,true,true); return end
  p.Passes={}; p.Restricted=true; p.Premium=player.MembershipType==Enum.MembershipType.Premium
  player.CharacterAdded:Connect(function(character)
+  DropPhysics.Character(character)
   local humanoid=character:WaitForChild("Humanoid",10)
   if humanoid then humanoid.WalkSpeed=16*Rules.PassMultiplier(p.Passes,"Speed") end
  end)
+ if player.Character then DropPhysics.Character(player.Character) end
  Rules.NormalizeCafe(p.Data)
  if not Run:IsStudio() then local ok,info=pcall(Policy.GetPolicyInfoForPlayerAsync,Policy,player); p.Restricted=not ok or info.ArePaidRandomItemsRestricted~=false end
  refreshPasses(player,p)
@@ -329,18 +341,21 @@ Run.Heartbeat:Connect(function(dt)
 				end
 			end end
 			for n=#s.Drops,1,-1 do
-				local drop=s.Drops[n]; local elapsed=now-drop.Start; local segment=1
-				while segment<=#drop.Durations and elapsed>=drop.Durations[segment] do elapsed-=drop.Durations[segment]; segment+=1 end
-				local pos=segment>#drop.Durations and drop.Points[#drop.Points] or drop.Points[segment]:Lerp(drop.Points[segment+1],elapsed/drop.Durations[segment])
-				drop.Model:PivotTo(drop.CF*CFrame.new(pos)*CFrame.Angles(0,now*2,segment>#drop.Durations and 0 or now*3))
-				if p.Passes.DessertMagnet or (r and (r.Position-drop.Model:GetPivot().Position).Magnitude<=6) then p.Data.Bag+=drop.Value; p.Data.TotalMiniCollected+=drop.Value; drop.Model:Destroy(); table.remove(s.Drops,n); picked=true end
+				local drop=s.Drops[n]
+				DropPhysics.Step(drop)
+				local pos=drop.Body.Position
+				if p.Passes.DessertMagnet or (r and (r.Position-pos).Magnitude<=6) then p.Data.Bag+=drop.Value; p.Data.TotalMiniCollected+=drop.Value; drop.Model:Destroy(); table.remove(s.Drops,n); picked=true
+				elseif pos.Y<s.Plot:GetPivot().Position.Y-25 or (pos-s.Plot:GetPivot().Position).Magnitude>150 then
+					-- Preserve value if a physics body falls outside its plot.
+					p.Data.AFKStored+=drop.Value;drop.Model:Destroy();table.remove(s.Drops,n);picked=true
+				end
 			end
 			if picked then update(s.Owner) end
 		end
 	end
 	for player,p in pairs(profiles) do
 		if p.Passes.MoneyMagnet and not p.Busy and not p.Closing and not p.Faulted and p.Data.Pending>0 then p.Data.Cash+=p.Data.Pending; p.Data.Pending=0; update(player) end
-		local r=root(player); if p.Companion and r then p.Companion:PivotTo(r.CFrame*CFrame.new(-3,3+math.sin(now*2)*.3,0)) end
+		-- Companions are cosmetic; each client follows the replicated character every render frame.
 		if p.NextCafeTick and now>=p.NextCafeTick and not p.Busy and not p.Closing and not p.Faulted then
 			local units,cash=Rules.ConvertCafe(p.Data,os.time())
 			p.NextCafeTick=p.Data.CafeQueue>0 and now+Config.CafeInterval or nil

@@ -25,6 +25,9 @@
       "DessertVisuals": {
         "$path": "src/shared/DessertVisuals.luau"
       },
+      "DessertMotion": {
+        "$path": "src/shared/DessertMotion.luau"
+      },
       "DessertModelTemplates": {
         "$path": "assets/pudding/DessertModelTemplates.rbxmx"
       },
@@ -84,6 +87,9 @@
       },
       "DessertGame": {
         "$path": "src/server/DessertGame.server.luau"
+      },
+      "DessertDropPhysics": {
+        "$path": "src/server/DessertDropPhysics.luau"
       },
       "PlayerProfiles": {
         "$path": "src/server/PlayerProfiles.luau"

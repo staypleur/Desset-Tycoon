@@ -7,7 +7,7 @@ for _,mini in ipairs({false,true}) do
   local expected=game.ReplicatedStorage.DessertModelTemplates[mini and "MiniPudding" or "NormalPudding"]
   assert(m.PrimaryPart:IsA("MeshPart") and m.PrimaryPart.MeshId==expected.PrimaryPart.MeshId)
   local box,size=m:GetBoundingBox()
-  assert(math.abs(size.Y-(mini and 18/28 or 2.5))<.001,"Imported height")
+  assert(math.abs(size.Y-(mini and 18/28 or 5))<.001,"Imported height")
   assert((box.Position-Vector3.new(0,size.Y/2,0)).Magnitude<.001,"Bottom-center origin")
   assert(m:GetAttribute("Shiny")==shiny)
   for _,part in ipairs(m:GetDescendants()) do
@@ -23,7 +23,7 @@ for tier=2,30 do
  local normal=V.Build(tier,false);local mini=V.BuildMini(tier,false)
  local _,a=normal:GetBoundingBox();local _,b=mini:GetBoundingBox()
  -- Roblox clamps very small primitive dimensions to 0.05 studs.
- assert((a*.25-b).Magnitude<.06,"Other tier mini scale")
+ assert((a*.125-b).Magnitude<.06,"Other tier mini scale")
  normal:Destroy();mini:Destroy()
 end
 module:Destroy()

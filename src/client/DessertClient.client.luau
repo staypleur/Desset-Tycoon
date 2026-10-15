@@ -10,6 +10,7 @@ local Config=require(RS:WaitForChild("TycoonConfig"))
 local Catalog=require(RS:WaitForChild("DessertCatalog"))
 local Rules=require(RS:WaitForChild("DessertRules"))
 local Visuals=require(RS:WaitForChild("DessertVisuals"))
+local Motion=require(RS:WaitForChild("DessertMotion"))
 local Style=require(RS:WaitForChild("DessertUI"))
 local Gauge=require(RS:WaitForChild("CircularGauge"))
 local Art=require(RS:WaitForChild("PastelArt"))
@@ -29,6 +30,7 @@ local function resize()
 end
 resize(); workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(resize)
 local data,panelName,spinning=nil,nil,{}
+local dropViews={}
 local giftLabel
 local statLabels={}
 local indexGrid
@@ -118,7 +120,7 @@ task.spawn(function()
 end)
 local window=Instance.new("Frame"); window.Name="Panel"; window.Size=UDim2.fromScale(.78,.72); window.Position=UDim2.fromScale(.11,.15)
 window.ZIndex=10; window.Visible=false; window.Parent=screen; Art.Apply(window,"Panel")
-local title=text(window,"",UDim2.new(1,-140,0,54),UDim2.fromOffset(18,0)); title.TextXAlignment=Enum.TextXAlignment.Center; title.TextSize=24
+local title=text(window,"",UDim2.new(1,-100,0,54),UDim2.fromOffset(50,0)); title.TextXAlignment=Enum.TextXAlignment.Center; title.TextSize=24
 button(window,"×",UDim2.fromOffset(38,38),UDim2.new(1,-65,0,22),function() window.Visible=false; panelName=nil end)
 local scroll=Instance.new("ScrollingFrame"); scroll.Size=UDim2.new(1,-24,1,-70); scroll.Position=UDim2.fromOffset(12,60)
 scroll.ZIndex=window.ZIndex+1; scroll.BackgroundTransparency=1; scroll.BorderSizePixel=0; scroll.ScrollBarThickness=6; scroll.ScrollBarImageColor3=colors.Text; scroll.AutomaticCanvasSize=Enum.AutomaticSize.Y; scroll.CanvasSize=UDim2.new(); scroll.Parent=window
@@ -193,8 +195,16 @@ local function preview(parent,tier,shiny,size,pos)
 	view.ZIndex=parent.ZIndex+1; view.Ambient=Color3.fromRGB(220,208,220); view.LightColor=Color3.fromRGB(255,247,233); view.Parent=parent
 	local world=Instance.new("WorldModel"); world.Parent=view
 	local model=Visuals.Build(tier,shiny); model.Parent=world
-	local camera=Instance.new("Camera"); camera.FieldOfView=35; camera.CFrame=CFrame.lookAt(Vector3.new(0,2.6,-4.5),Vector3.new(0,1.2,0)); camera.Parent=view; view.CurrentCamera=camera
-	table.insert(spinning,{Model=model,View=view})
+	local box,bounds=model:GetBoundingBox()
+	local camera=Instance.new("Camera"); camera.FieldOfView=35
+	camera.Parent=view; view.CurrentCamera=camera
+	local function fitCamera()
+		local aspect=math.max(.1,view.AbsoluteSize.X/math.max(1,view.AbsoluteSize.Y))
+		local distance=math.max((bounds.Y+.65)/2,bounds.X/(2*aspect))/math.tan(math.rad(35/2))+bounds.Z/2
+		camera.CFrame=CFrame.lookAt(box.Position+Vector3.new(0,.15,-distance),box.Position)
+	end
+	fitCamera();view:GetPropertyChangedSignal("AbsoluteSize"):Connect(fitCamera)
+	table.insert(spinning,{Model=model,View=view,Base=model:GetPivot()})
 	return view
 end
 local show,kawaiiShop
@@ -231,8 +241,8 @@ show=function(name)
 			local index=(tier-1)*2+variant; local row=math.floor(index/4); local column=index%4
 			local card=Instance.new("Frame"); card.Size=UDim2.new(.25,-12,0,190); card.Position=UDim2.new(column*.25,6,0,row*200)
 			card.LayoutOrder=index; card.ZIndex=scroll.ZIndex+1; card.Parent=scroll; Art.Apply(card,"Card")
-			if owned then preview(card,tier,shiny,UDim2.new(1,0,0,112),UDim2.new()) else text(card,"?",UDim2.new(1,0,0,110),UDim2.new()) end
-			text(card,owned and ((shiny and "Shiny " or "")..Catalog[tier].Name) or "Undiscovered",UDim2.new(1,-8,0,34),UDim2.fromOffset(4,112)).TextSize=14
+			if owned then preview(card,tier,shiny,UDim2.new(1,0,0,126),UDim2.new()) else text(card,"?",UDim2.new(1,0,0,124),UDim2.new()) end
+			text(card,owned and ((shiny and "Shiny " or "")..Catalog[tier].Name) or "Undiscovered",UDim2.new(1,-8,0,26),UDim2.fromOffset(4,126)).TextSize=14
 			if owned then button(card,data.Equipped==key and "Unequip" or "Equip",UDim2.new(1,-16,0,32),UDim2.fromOffset(8,152),function() request("Equip",key) end,colors.Mint) end
 		end end
 	elseif name=="Settings" then
@@ -363,10 +373,20 @@ local function applySettings(forceVisibility)
 	for _,model in ipairs(models) do
 		local owner=model:IsA("Model") and model:GetAttribute("OwnerUserId")
 		local pet=model.Parent and (model.Parent.Name=="ActiveDesserts" or model.Parent.Name=="MovingDesserts" or model.Name=="DessertCompanion")
-		if pet and owner and owner~=0 and owner~=player.UserId then for _,p in ipairs(model:GetDescendants()) do
+		if model:GetAttribute("PhysicalDrop") then
+			for _,p in ipairs(model:GetDescendants()) do
+				if p:IsA("BasePart") then p.LocalTransparencyModifier=1 elseif p:IsA("ParticleEmitter") then p.Enabled=false end
+			end
+		elseif pet and owner and owner~=0 and owner~=player.UserId then for _,p in ipairs(model:GetDescendants()) do
 			if p:IsA("BasePart") then p.LocalTransparencyModifier=data.Settings.HideOthers and 1 or 0
 			elseif p:IsA("ParticleEmitter") then p.Enabled=not data.Settings.HideOthers end
 		end end
+	end
+	for model,state in pairs(dropViews) do
+		local hidden=data.Settings.HideOthers and model:GetAttribute("OwnerUserId")~=player.UserId
+		for _,p in ipairs(state.View:GetDescendants()) do
+			if p:IsA("BasePart") then p.LocalTransparencyModifier=hidden and 1 or 0 elseif p:IsA("ParticleEmitter") then p.Enabled=not hidden end
+		end
 	end
 end
 local revealQueue={}; local revealing=false
@@ -446,7 +466,69 @@ Run:BindToRenderStep("DessertIdleCameraMotion",Enum.RenderPriority.Camera.Value+
  end
 end)
 local visibilityTimer=0
+local producers={}
+local dropFolder=Instance.new("Folder");dropFolder.Name="ClientDropVisuals";dropFolder.Parent=workspace
+local function trackDessert(model)
+	if not model:IsA("Model") or not model.Parent then return end
+	if model.Name=="MiniDessert" and model:GetAttribute("PhysicalDrop") then
+		local body=model:WaitForChild("DropCollider",5);if not body or not model.Parent then return end
+		local view=Visuals.BuildMini(model:GetAttribute("Tier") or 1,model:GetAttribute("Shiny")==true)
+		view.Name="DropVisual";view:SetAttribute("SourceDrop",model:GetAttribute("DropStartTime"))
+		local offset=model:GetAttribute("DropVisualOffset") or CFrame.new(0,-body.Size.Y/2,0)
+		view:PivotTo(body.CFrame*offset);view.Parent=dropFolder
+		dropViews[model]={View=view,Body=body,Offset=offset,Current=body.CFrame}
+		for _,p in ipairs(model:GetDescendants()) do
+			if p:IsA("BasePart") then p.LocalTransparencyModifier=1 elseif p:IsA("ParticleEmitter") then p.Enabled=false end
+		end
+		local hidden=data and data.Settings.HideOthers and model:GetAttribute("OwnerUserId")~=player.UserId
+		for _,p in ipairs(view:GetDescendants()) do
+			if p:IsA("BasePart") then p.LocalTransparencyModifier=hidden and 1 or 0 elseif p:IsA("ParticleEmitter") then p.Enabled=not hidden end
+		end
+	elseif model.Parent.Name=="ActiveDesserts" then
+		producers[model]={Base=model:GetAttribute("DisplayBasePivot") or model:GetPivot(),Height=0}
+	end
+end
+for _,model in ipairs(workspace:GetDescendants()) do trackDessert(model) end
+workspace.DescendantAdded:Connect(trackDessert)
+workspace.DescendantRemoving:Connect(function(model)
+	producers[model]=nil
+	local view=dropViews[model];if view then view.View:Destroy();dropViews[model]=nil end
+end)
+local companions={}
+local function trackCompanion(model)
+	if model:IsA("Model") and model.Name=="DessertCompanion" then
+		companions[model]={Owner=Players:GetPlayerByUserId(model:GetAttribute("OwnerUserId") or 0)}
+	end
+end
+for _,model in ipairs(workspace:GetChildren()) do trackCompanion(model) end
+workspace.ChildAdded:Connect(trackCompanion)
+workspace.ChildRemoved:Connect(function(model) companions[model]=nil end)
 Run.RenderStepped:Connect(function(dt)
+	local serverNow=workspace:GetServerTimeNow()
+	for _,state in pairs(dropViews) do
+		local target=state.Body.CFrame
+		if (target.Position-state.Current.Position).Magnitude>15 then state.Current=target
+		else state.Current=state.Current:Lerp(target,1-math.exp(-18*math.min(dt,.1))) end
+		state.View:PivotTo(state.Current*state.Offset)
+	end
+	for model,state in pairs(producers) do
+		local producedAt=model:GetAttribute("LastProductionTime")
+		local height=producedAt and Motion.HopHeight(serverNow-producedAt) or 0
+		if height~=state.Height then model:PivotTo(state.Base+Vector3.new(0,height,0));state.Height=height end
+	end
+	for model,state in pairs(companions) do
+		local owner=state.Owner
+		if not owner then owner=Players:GetPlayerByUserId(model:GetAttribute("OwnerUserId") or 0);state.Owner=owner end
+		local character=owner and owner.Character
+		local root=character and character:FindFirstChild("HumanoidRootPart")
+		if root then
+			local target=root.CFrame*CFrame.new(-3,3+math.sin(workspace:GetServerTimeNow()*2)*.3,2)
+			local current=state.Current
+			if not current or (current.Position-target.Position).Magnitude>40 then current=target
+			else current=current:Lerp(target,1-math.exp(-10*math.min(dt,.1))) end
+			state.Current=current;model:PivotTo(current)
+		end
+	end
 	if cafeRateLabel and marketIsland then
 		local rate=marketIsland:GetAttribute("CafeSaleMultiplier") or 1
 		local remaining=math.max(0,(marketIsland:GetAttribute("CafeNextSaleChange") or workspace:GetServerTimeNow()+30)-workspace:GetServerTimeNow())
@@ -457,7 +539,7 @@ Run.RenderStepped:Connect(function(dt)
 		v.Model:PivotTo(CFrame.new(v.Start:Lerp(v.Finish,alpha)+Vector3.new(0,math.sin(alpha*math.pi)*8,0)))
 		if alpha>=1 then v.Model:Destroy(); table.remove(transfers,n) end
 	end
-	for n=#spinning,1,-1 do local v=spinning[n]; if not v.View.Parent then table.remove(spinning,n) else v.Model:PivotTo(CFrame.Angles(0,os.clock()*.5,0)) end end
+	for n=#spinning,1,-1 do local v=spinning[n]; if not v.View.Parent then table.remove(spinning,n) else v.Model:PivotTo(v.Base+Vector3.new(0,math.sin(serverNow*2)*.2,0)) end end
 	visibilityTimer+=dt; if visibilityTimer>2 then visibilityTimer=0; applySettings(true) end
 end)
 task.spawn(function()

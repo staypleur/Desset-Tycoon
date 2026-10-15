@@ -1,6 +1,7 @@
 -- Native, script-free dessert models shared by world pets and ViewportFrame previews.
 local Catalog=require(script.Parent.DessertCatalog)
 local Visuals={}
+local DISPLAY_SCALE=2
 local function imported(name,tier,shiny)
 	local folder=script.Parent:FindFirstChild("DessertModelTemplates")
 	local template=folder and folder:FindFirstChild(name)
@@ -20,7 +21,7 @@ end
 function Visuals.Build(tier,shiny)
 	if tier==1 then
 		local m=imported("NormalPudding",tier,shiny)
-		if m then return m end
+		if m then m:ScaleTo(m:GetScale()*DISPLAY_SCALE); return m end
 	end
 	local m=Instance.new("Model"); m.Name=Catalog[tier].Name; m:SetAttribute("Tier",tier); m:SetAttribute("Shiny",shiny)
 	local tint=shiny and Color3.fromRGB(255,220,115) or Color3.fromHSV((tier*.071+.07)%1,.24,1)
@@ -103,6 +104,7 @@ function Visuals.Build(tier,shiny)
 		sparkle.Rate=3; sparkle.Lifetime=NumberRange.new(.8,1.3); sparkle.Speed=NumberRange.new(.3,.8)
 		sparkle.Color=ColorSequence.new(Color3.fromRGB(255,225,129)); sparkle.Size=NumberSequence.new(.18); sparkle.Parent=body
 	end
+	m:ScaleTo(m:GetScale()*DISPLAY_SCALE)
 	return m
 end
 function Visuals.BuildMini(tier,shiny)
@@ -110,7 +112,7 @@ function Visuals.BuildMini(tier,shiny)
 		local m=imported("MiniPudding",tier,shiny)
 		if m then return m end
 	end
-	local m=Visuals.Build(tier,shiny); m:ScaleTo(m:GetScale()*.25)
+	local m=Visuals.Build(tier,shiny); m:ScaleTo(m:GetScale()*.25/DISPLAY_SCALE)
 	return m
 end
 return Visuals
