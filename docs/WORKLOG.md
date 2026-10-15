@@ -373,3 +373,11 @@ PASS: PlayerProfiles deterministic mock verifies persisted gift/AFK clocks, dupl
 - Play PASS: thirty-six bounded 2D index images without ViewportFrames/WorldModels; discovery one fixed-facing model, 0.181-stud floating span and cleanup. Nine live mini drops verified; producer/mini meshes and textures and all atlas icons preload Success. Saved pannacotta-world.png and pannacotta-index.png.
 - Final Perk crate regression PASS: ten server grants once, spent-credit replay rejected, 195 stopped-arrow alignment samples and image-only carousel. Removed both temporary fixtures and enabled normal game.
 - Saved XML audit PASS: 32 exact sources, zero foreign scripts/packages or temporary fixtures, 94,965,111 bytes; exported all forty-eight native templates.
+
+## 2026-10-15 — Tier-thirteen Souffle Pancake family
+- Imported MiniSouffle (298 triangles), NormalSouffle (3,002), Sakura Souffle Pancake (3,008), Black Hole Choco Souffle Pancake (3,009). Original geometry/UVs and 2048px RGB colors retained; fifty-two script-free templates cover tiers 1–13.
+- Added separate 13n/13s/13s2 ownership, discovery/equipment, conditional shiny 50:50 selection, tier-twelve merge lineage and transparent 2D atlas. Source hashes, asset IDs and image_gen cutout prompt recorded.
+- Native regression PASS: 260,000 conditional shiny trials, legacy saves, merge/equip, deterministic black-hole crate result, thirty-nine full models and mini heights/pivots.
+- Play PASS: thirty-nine bounded 2D index images without ViewportFrames/WorldModels; discovery one fixed-facing model, 0.351-stud floating span and cleanup. Nine live mini drops verified. Black-hole BMP texture failed to load; replaced with RGB-identical PNG and verified all three producer meshes/textures preload Success. Mini and atlas preload Success. Tier-thirteen shiny captions fit at 10px. Saved souffle-world.png and souffle-index.png.
+- Final Perk crate regression PASS: ten server grants once, spent-credit replay rejected, 194 stopped-arrow alignment samples and image-only carousel. Removed both fixtures and enabled normal game.
+- Saved XML audit PASS: 32 exact sources, zero foreign scripts/packages or temporary fixtures, 95,118,190 bytes; exported all fifty-two native templates.

@@ -127,3 +127,5 @@ Tier 9 is Tiramisu Cake. Prism Cube Tiramisu Cake (9s) and Pink Quartz Rose Gold
 - Tier 11 is Eclair: normal, Pink Quartz Rose Gold Eclair (11s), Galaxy Aurora Eclair (11s2). Conditional shiny split is 50:50, with separate inventory/equip/discovery and tier-ten merge lineage. Index and roulette use transparent 2D art; mini production uses MiniEclair. Higher tiers retain front-row priority.
 
 - Tier 12 is Panna Cotta: normal, Ruby Strawberry Panna Cotta (12s), Mint Ocean Crystal Panna Cotta (12s2). Conditional shiny split is 50:50, with separate ownership/equip/discovery and tier-eleven merge lineage. Index and roulette use transparent 2D art; mini production uses MiniPannaCotta. Higher tiers retain front-row priority.
+
+- Tier 13 is Souffle Pancake: normal, Sakura Souffle Pancake (13s), Black Hole Choco Souffle Pancake (13s2). Conditional shiny split is 50:50, with separate ownership/equip/discovery and tier-twelve merge lineage. Index and roulette use transparent 2D art; mini production uses MiniSouffle. Higher tiers retain front-row priority.

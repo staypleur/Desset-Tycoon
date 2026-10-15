@@ -287,3 +287,18 @@ User-supplied Meshy archives: `Meshy_AI_panna_cotta_no_face_n_1015113945_texture
 
 Single script-free anchored MeshPart templates, collision/touch/query/shadows disabled, white SmoothPlastic and bottom-center pivots. Full base height 2.5 studs (5 in production); mini 18/28 stud. Shiny minis reuse the face-free ordinary mini with existing sparkle treatment.
 Built-in image_gen transparent inventory cutouts from supplied character references; exact prompt and paths in `assets/desserts/icons/prompts.json`. Atlas `icons/pannacotta-atlas.png`, 1024px RGBA; 512px cells: 12n=(0,0), 12s=(512,0), 12s2=(0,512). Image 92406130456099; decal 123904122357231. Proof: `docs/previews/pannacotta-world.png`, `pannacotta-index.png`.
+
+## Tier 13 — Souffle Pancake family (2026-10-15)
+User-supplied Meshy archives: `Meshy_AI_souffle_pancake_no_fa_1015114153_texture_fbx.zip`, `Meshy_AI_souffle_pancake_3k_1015114209_texture_fbx.zip`, `Meshy_AI_sakura_pink_pancake_3_1015114226_texture_fbx.zip`, `Meshy_AI_black_hole_choco_souf_1015114252_texture_fbx.zip`. User provided designs and authorized import. Original geometry/UVs and 2048px RGB textures retained; embedded texture links removed from import copies. Source hashes in `assets/desserts/manifest.json`.
+
+| Template | Triangles | Mesh ID | Texture image ID | Decal ID |
+|---|---:|---:|---:|---:|
+| MiniSouffle | 298 | 139416745078402 | 91858676885226 | 134252793361115 |
+| NormalSouffle | 3002 | 136480140819512 | 114634783013163 | 109334654037043 |
+| SakuraSouffle | 3008 | 104944316177812 | 86347752647953 | 86465616025283 |
+| BlackholeSouffle | 3009 | 89638499168297 | 82232143811791 | 127502522092101 |
+
+Single script-free anchored MeshPart templates, collision/touch/query/shadows disabled, white SmoothPlastic and bottom-center pivots. Full base height 2.5 studs (5 in production); mini 18/28 stud. Shiny minis reuse the face-free ordinary mini with existing sparkle treatment.
+Built-in image_gen transparent inventory cutouts from supplied character references; exact prompt and paths in `assets/desserts/icons/prompts.json`. Atlas `icons/souffle-atlas.png`, 1024px RGBA; 512px cells: 13n=(0,0), 13s=(512,0), 13s2=(0,512). Image 84736068710282; decal 128429991110472. Proof: `docs/previews/souffle-world.png`, `souffle-index.png`.
+
+BlackholeSouffle uses the RGB-identical PNG upload after the BMP image failed to load in Play. Both upload IDs are recorded in the manifest.

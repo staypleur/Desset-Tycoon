@@ -967,5 +967,82 @@
       ]
     },
     "cellSize": 512
+  },
+  "mini-souffle": {
+    "sourceArchive": "Meshy_AI_souffle_pancake_no_fa_1015114153_texture_fbx.zip",
+    "archiveSha256": "f9905164af00fb1aa2b9500e21ad6720beaa005d2fc60566c13d797d1f37a24b",
+    "heightCm": 18,
+    "triangles": 298,
+    "files": {
+      "color-game.png": "ae9a131128e10a67cf9e913a9f3be21164c83e9d21d8177bfb39347715b58bed",
+      "color.png": "fe59769827d749a57b13fc2f62a69b51f86103e37bba2759af1052d87ff3fb60",
+      "mini-souffle-import.fbx": "233863af97007a96b83f68368ee6a0814f4b95337a62f2a3c7eda8e2660b8b6c",
+      "source.fbx": "72eef9ab9ce065ee85914e72848f1e6b124dff0cf8a0c706cd5cc9b636e8d5f2"
+    },
+    "template": "MiniSouffle",
+    "meshId": 139416745078402,
+    "textureImageId": 91858676885226,
+    "textureDecalId": 134252793361115,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "souffle": {
+    "sourceArchive": "Meshy_AI_souffle_pancake_3k_1015114209_texture_fbx.zip",
+    "archiveSha256": "03bae91ccad69d8bdcdb45127ee97d314f0090dae64afbfbd08298104bff03a6",
+    "heightCm": 70,
+    "triangles": 3002,
+    "files": {
+      "color-game.png": "9c11dfb43f4a93d6e8656ec29da581514ccbf3a1e9ee4a256e8d4a25a42d0b24",
+      "color.png": "32e87d5dc8a1dd19906796ee833a788f6b8a4492b372717fede0c3e2c89467a0",
+      "souffle-import.fbx": "0961532b5cecf8fb6a93c723961ec6176f78bf60647729a16170def2ab659a14",
+      "source.fbx": "943535a3e360da74e36323278a382170203eccaf2a826e87f8743e73861f5a51"
+    },
+    "template": "NormalSouffle",
+    "meshId": 136480140819512,
+    "textureImageId": 114634783013163,
+    "textureDecalId": 109334654037043,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "sakura-souffle": {
+    "sourceArchive": "Meshy_AI_sakura_pink_pancake_3_1015114226_texture_fbx.zip",
+    "archiveSha256": "d2707f785f88a9a33ed41788d2db55fd79121fa721bc5db3de4a2ca7910a40cb",
+    "heightCm": 70,
+    "triangles": 3008,
+    "files": {
+      "color-game.png": "ef4f583c960ffe624c5de0392cb3e9140fce4b16ec14e2c22b74661eea5d5078",
+      "color.png": "ed81959c61f30a2530ea79265e95831393963ee2edcf210a376fdff9011127f3",
+      "sakura-souffle-import.fbx": "7a0c31cd11c26fc8c264dc646f110d03cf1684528448649241ad5d684f7860df",
+      "source.fbx": "95c8b5bebb562c430ff3adcb0fbf091d41836cc93bd4da36a3931884530d6299"
+    },
+    "template": "SakuraSouffle",
+    "meshId": 104944316177812,
+    "textureImageId": 86347752647953,
+    "textureDecalId": 86465616025283,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "blackhole-souffle": {
+    "sourceArchive": "Meshy_AI_black_hole_choco_souf_1015114252_texture_fbx.zip",
+    "archiveSha256": "783b28d9485f4b2b7969437941ad4765cc7f7a64ecd9ef84125a7392ad9c6fbf",
+    "heightCm": 70,
+    "triangles": 3009,
+    "files": {
+      "blackhole-souffle-import.fbx": "0c0330b65a5b8a447080a1b6addde2ff38abdf8accac14bbabe277ee79a8c8ba",
+      "color-game.png": "a4c6a0615b906eb30f54088a3953e4c2a81574c74c0ec99cbec9d58359b4fb3d",
+      "color.png": "c5831108b7d3596b2af22d5042e4df90db2b5abd206ce519de1215f04490ba0d",
+      "source.fbx": "5454de48a7354551f6456ad47df9dcc70beab3defa80940eb7494cba96a88e46"
+    },
+    "template": "BlackholeSouffle",
+    "meshId": 89638499168297,
+    "textureImageId": 82232143811791,
+    "textureDecalId": 127502522092101,
+    "uploadFormat": "PNG, 2048x2048, RGB-identical to original",
+    "previousUpload": {
+      "imageId": 132232570777355,
+      "decalId": 88209549182547,
+      "note": "BMP texture failed to load in Play; replaced with identical RGB PNG."
+    }
+  },
+  "souffleAtlas": {
+    "imageId": 84736068710282,
+    "decalId": 128429991110472
   }
 }
