@@ -22,6 +22,7 @@ require(RS:WaitForChild("CleanPresentation")).Apply(island)
 require(RS:WaitForChild("HubPromenade")).Apply(island)
 require(RS:WaitForChild("DessertBaskets")).Apply(island)
 UI.ApplyWorld(island)
+for _,plot in ipairs(island.PlayerPlots:GetChildren()) do DropPhysics.SetupPlot(plot) end
 local remotes=Instance.new("Folder"); remotes.Name="DessertRemotes"; remotes.Parent=RS
 local action=Instance.new("RemoteFunction"); action.Name="Action"; action.Parent=remotes
 local events=Instance.new("RemoteEvent"); events.Name="Event"; events.Parent=remotes
@@ -110,17 +111,12 @@ local function emit(s,pet,now)
 	local value=3^(pet.Tier-1)*multiplier(p)
 	if p.Passes.DessertMagnet then p.Data.Bag+=value; p.Data.TotalMiniCollected+=value; return end
 	local cf=s.Plot:GetPivot(); local pad=s.Plot.PetSpawnPads["PetPad"..pet.Slot]
-	local pos=cf:PointToObjectSpace(pad.Position); local z=pad:GetAttribute("DropLaneZ"); local lo=Layout.ChannelHeight(z,s.Plot:GetAttribute("FieldRise"))
-	local high=pad:GetAttribute("ShelfHeight") or 2.25
-	local y=lo+(high-lo)*math.clamp((math.abs(pos.X)-4)/(s.Plot:GetAttribute("SideLaneWidth") or 40),0,1)
-	local points={pos+Vector3.new(0,.65,0),Vector3.new(pos.X,y+.6,z),Vector3.new(0,lo+.6,z),
-		Vector3.new(0,.8,-7),Vector3.new(rng:NextNumber(-4,4),.45,rng:NextNumber(-13,-9))}
+	local points,collector=DropPhysics.Route(s.Plot,pad,rng)
 	if #s.Drops>=Config.MaxDrops then p.Data.AFKStored+=value; return end
 	local m=Visuals.BuildMini(pet.Tier,pet.Shiny); m.Name="MiniDessert"
 	m:SetAttribute("OwnerUserId",s.Owner.UserId);m:SetAttribute("DropStartTime",producedAt)
-	for i,point in ipairs(points) do points[i]=cf:PointToWorldSpace(point) end
 	m:PivotTo(CFrame.new(points[1])*cf.Rotation)
-	local drop=DropPhysics.New(m,points,s.Products);drop.Value=value
+	local drop=DropPhysics.New(m,points,s.Products,collector);drop.Value=value
 	table.insert(s.Drops,drop)
 end
 local function perform(player,verb,arg)
@@ -345,8 +341,8 @@ Run.Heartbeat:Connect(function(dt)
 				DropPhysics.Step(drop)
 				local pos=drop.Body.Position
 				if p.Passes.DessertMagnet or (r and (r.Position-pos).Magnitude<=6) then p.Data.Bag+=drop.Value; p.Data.TotalMiniCollected+=drop.Value; drop.Model:Destroy(); table.remove(s.Drops,n); picked=true
-				elseif pos.Y<s.Plot:GetPivot().Position.Y-25 or (pos-s.Plot:GetPivot().Position).Magnitude>150 then
-					-- Preserve value if a physics body falls outside its plot.
+				elseif pos.Y<s.Plot:GetPivot().Position.Y-25 or (pos-s.Plot:GetPivot().Position).Magnitude>150 or (os.clock()-drop.Started>90 and not DropPhysics.InCollector(drop)) then
+					-- Preserve value if a body is lost or its route remains blocked.
 					p.Data.AFKStored+=drop.Value;drop.Model:Destroy();table.remove(s.Drops,n);picked=true
 				end
 			end
