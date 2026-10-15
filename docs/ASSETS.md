@@ -248,3 +248,16 @@ Four user-supplied Meshy archives replace the tier-nine Macaron placeholder. Ori
 | QuartzTiramisu | 3138 | 113858916080254 | 132179357477332 |
 
 Transparent user-reference cutouts created with built-in image_gen; exact prompts in assets/desserts/icons/prompts.json. Three aspect-preserving 512px cells in 1024px atlas image 110416862812071 ([decal](https://create.roblox.com/dashboard/creations/store/86695871378793/configure)). Shiny minis reuse MiniTiramisu with existing gold tint/sparkles. Proof: docs/previews/tiramisu-world.png and tiramisu-index.png.
+
+## Tier 10 — Madeleine family (2026-10-15)
+User-supplied Meshy FBX archives: `Meshy_AI_madeleine_no_face_no__1015111142_texture_fbx.zip`, `Meshy_AI_madeleine_character_3_1015111157_texture_fbx.zip`, `Meshy_AI_pearl_prism_madeleine_1015111211_texture_fbx.zip`, `Meshy_AI_mint_ocean_crystal_ma_1015111218_texture_fbx.zip`. User supplied the designs and authorized import. Original geometry/UVs and 2048px RGB texture content retained; embedded texture links removed from import copies. Source hashes in `assets/desserts/manifest.json`.
+
+| Template | Triangles | Mesh ID | Texture image ID | Decal ID |
+|---|---:|---:|---:|---:|
+| MiniMadeleine | 308 | 90639149458137 | 82967791441092 | 117569468598658 |
+| NormalMadeleine | 3013 | 76580555905294 | 125463912879182 | 70724065556101 |
+| PearlMadeleine | 3094 | 89061165818579 | 89890262789552 | 95218896549017 |
+| MintMadeleine | 3130 | 134185762020398 | 86131355175689 | 136707955275038 |
+
+Templates use a single script-free anchored MeshPart, no collision/touch/query/shadow, white SmoothPlastic, bottom-center pivot; full base height 2.5 studs (5 in production), mini 18/28 stud. Shiny minis reuse the ordinary face-free mini with established sparkle treatment.
+Transparent inventory cutouts created with built-in image_gen from user reference images; exact prompt and output files in `assets/desserts/icons/prompts.json`. Atlas: `madeleine-atlas.png`, 1024px RGBA, cells 10n=(0,0), 10s=(512,0), 10s2=(0,512), each 512px. Image ID 112960015006578, decal 134199821770770. Proof: `docs/previews/madeleine-world.png`, `madeleine-index.png`.

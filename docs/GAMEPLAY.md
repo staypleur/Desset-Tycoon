@@ -121,3 +121,5 @@ Tier 8 is Patbingsu. Extra Red Bean Bingsu (8s) and Mango Bingsu (8s2) split con
 
 ### Tier-nine Tiramisu Cake update
 Tier 9 is Tiramisu Cake. Prism Cube Tiramisu Cake (9s) and Pink Quartz Rose Gold Tiramisu Cake (9s2) split conditional shiny rolls 50:50. Patbingsu merges preserve variant lineage; ownership, discovery and equipment remain separate. Existing tier-nine counts remain intact. Transparent index/roulette images and one floating, fixed-facing 3D discovery model retain existing presentation. MiniTiramisu uses guided physical drops.
+
+- Tier 10 is Madeleine: normal, Pearl Prism Madeleine (10s), Mint Ocean Crystal Madeleine (10s2). Shiny selection splits 50:50 conditional on a shiny roll; separate inventory/equip/discovery identities, tier-nine merge lineage and image-only index/roulette. Production uses the MiniMadeleine template; higher tiers retain front-row priority.

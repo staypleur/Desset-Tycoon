@@ -349,3 +349,11 @@ PASS: PlayerProfiles deterministic mock verifies persisted gift/AFK clocks, dupl
 - Play PASS: 27 bounded 2D index images, zero ViewportFrames/WorldModels; discovery one fixed-facing model, 0.395-stud floating span and cleanup. Twelve live mini drops verified; all producer and mini meshes/maps and atlas preloaded successfully. Long tier-nine shiny captions reduced to 10px to fit their cards. Proof: tiramisu-world.png and tiramisu-index.png.
 - Final Perk crate regression PASS: ten server grants exactly once, spent-credit replay rejected, 194 stopped-arrow alignment samples and image-only animation. Removed both fixtures and enabled normal game.
 - Saved XML audit PASS: 32 exact sources, zero foreign scripts/packages or temporary fixtures, 94,500,659 bytes; exported all 36 native templates.
+
+## 2026-10-15 — Tier-ten Madeleine family
+- Imported user MiniMadeleine (308 triangles), NormalMadeleine (3,013), Pearl Prism Madeleine (3,094), Mint Ocean Crystal Madeleine (3,130). Retained original geometry/UVs and 2048px RGB textures; 40 script-free templates cover tiers 1–10.
+- Added separate 10n/10s/10s2 inventory, discovery and equipment, conditional shiny 50:50 selection, tier-nine merge lineage and transparent 2D atlas. Source hashes/IDs and built-in image_gen cutout prompt recorded.
+- Native regression PASS: 200,000 conditional shiny samples across ten tiers, legacy saves, merge/equip, deterministic mint crate result, thirty full models and mini heights/pivots.
+- Play PASS: thirty bounded 2D index icons without ViewportFrames/WorldModels; discovery single fixed-facing model, 0.303-stud floating span and cleanup. Twelve live mini drops verified; producer/mini meshes and textures and all three atlas icons preload Success. Both shiny names fit their cards; saved world/index screenshots.
+- Final Perk crate regression PASS: ten grants exactly once, spent-credit replay rejected, 195 stopped-arrow alignment samples and image-only carousel. Removed both temporary fixtures and enabled normal game.
+- Saved XML audit PASS: 32 exact sources, zero foreign scripts/packages or temporary fixtures, 94,656,318 bytes; exported all forty native templates.

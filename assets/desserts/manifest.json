@@ -703,5 +703,93 @@
       ]
     },
     "cellSize": 512
+  },
+  "mini-madeleine": {
+    "sourceArchive": "Meshy_AI_madeleine_no_face_no__1015111142_texture_fbx.zip",
+    "archiveSha256": "a6fa0b2b54242bb76a57beebb2da8f1b02daed374c047d7322cc349b3b97fb73",
+    "heightCm": 18,
+    "triangles": 308,
+    "files": {
+      "color-game.png": "412b0f5078c9d5b733dc0719670ee12f40fdcdb845ca78b5d72cfe7530e640a3",
+      "color.png": "d4bb27d6b80e111f895050bc2ab2dfd52c72fb84eba0b3bd952ec9b2fb6f218d",
+      "mini-madeleine-import.fbx": "ea47338d328a1b195ab84e14a8e8bdfdc6119ef60fb68daafdd92e8aa7529d14",
+      "source.fbx": "493f06690016cebd31458727216dcf7df9ff9879e48653336f8fe1d2e2243225"
+    },
+    "template": "MiniMadeleine",
+    "meshId": 90639149458137,
+    "textureDecalId": 117569468598658,
+    "textureImageId": 82967791441092,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "madeleine": {
+    "sourceArchive": "Meshy_AI_madeleine_character_3_1015111157_texture_fbx.zip",
+    "archiveSha256": "0a6a130649a30fed9fd68bf794a4b253b60b153fa0b9094211501b34a46f1d52",
+    "heightCm": 70,
+    "triangles": 3013,
+    "files": {
+      "color-game.png": "4a0eec1d504e5e1da379913d3d6193f8be64fdce136ec2bd73fab4573cef9a58",
+      "color.png": "6bec117a35ad1c2f2fd1cd6812de327bc91109ee940b9d94158803c789bb4f7a",
+      "madeleine-import.fbx": "5d6969297059bcc2e091c108035dedb16b79fb27bba6ffeb312c74067af2c4d9",
+      "source.fbx": "305f4a5198ac752c342852cd6e52c16a1a0a28cbd49ac7499dfa674e17e3f100"
+    },
+    "template": "NormalMadeleine",
+    "meshId": 76580555905294,
+    "textureDecalId": 70724065556101,
+    "textureImageId": 125463912879182,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "pearl-madeleine": {
+    "sourceArchive": "Meshy_AI_pearl_prism_madeleine_1015111211_texture_fbx.zip",
+    "archiveSha256": "f4cb3303910e17703e9ef70b3efb29dd0b94f26dab0fbda5b3977e3ddd70e148",
+    "heightCm": 70,
+    "triangles": 3094,
+    "files": {
+      "color-game.png": "453a9ad232ea21327370fda4ffc15763843007a68662d385dc8ae0985447b605",
+      "color.png": "5f6456c6422bb316c2a95bc3b460a10dc560d0c4357a82e5b511b536af33cdf1",
+      "pearl-madeleine-import.fbx": "2249d1497d350d7661dad66afaa403d6e76003d71e0c936a1d2343ba574667f3",
+      "source.fbx": "baee49c789dbfcf5a4f2070446bff78872f0e863c28586f20b3dc1846dc9f153"
+    },
+    "template": "PearlMadeleine",
+    "meshId": 89061165818579,
+    "textureDecalId": 95218896549017,
+    "textureImageId": 89890262789552,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "mint-madeleine": {
+    "sourceArchive": "Meshy_AI_mint_ocean_crystal_ma_1015111218_texture_fbx.zip",
+    "archiveSha256": "c360c5891f93087f1cc6b6812000381aa590504c4b732c11e410d4f38369c222",
+    "heightCm": 70,
+    "triangles": 3130,
+    "files": {
+      "color-game.png": "3cbfb8857fe4fd7ca8c06df21c82f66f8a0ce1388f6f68b5d62826e77d61bbe4",
+      "color.png": "68d345267d90eff7a7d027477f943f9cdc5ff885b0a70c171deebbdec1ec25d7",
+      "mint-madeleine-import.fbx": "db1d00b66a0bd957093dd7b118a5bd26346273c83f5654410ddd81df0ba4607d",
+      "source.fbx": "7e242cf7711efe4594d52951178508dd3ed722a8820085844b677cbe8722fc21"
+    },
+    "template": "MintMadeleine",
+    "meshId": 134185762020398,
+    "textureDecalId": 136707955275038,
+    "textureImageId": 86131355175689,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "madeleineIndexAtlas": {
+    "decalId": 134199821770770,
+    "imageId": 112960015006578,
+    "file": "icons/madeleine-atlas.png",
+    "cells": {
+      "10n": [
+        0,
+        0
+      ],
+      "10s": [
+        512,
+        0
+      ],
+      "10s2": [
+        0,
+        512
+      ]
+    },
+    "cellSize": 512
   }
 }

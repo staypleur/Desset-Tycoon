@@ -125,5 +125,14 @@
       "prism-tiramisu": "Background-extraction edit for a Roblox index icon. Remove only the off-white background and ground shadow. Preserve exactly the complete prism cube tiramisu cake character, rainbow crystal facets, cocoa powder, chocolate curls, cream and cake layers, face, hands, feet, silhouette, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background.",
       "quartz-tiramisu": "Background-extraction edit for a Roblox index icon. Remove only the off-white background and ground shadow. Preserve exactly the complete pink quartz rose gold tiramisu cake character, pink crystal facets, rose gold bands and chocolate curl, crystal topping, cocoa powder, cream and cake layers, face, hands, feet, silhouette, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background."
     }
+  },
+  "madeleineCutouts": {
+    "tool": "image_gen",
+    "prompt": "Remove only the plain background and floor shadow from this supplied madeleine character. Preserve the complete original character, silhouette, face, colors, materials, highlights and proportions exactly. Center the single full-body character with clear padding, transparent RGBA background, no text, no added elements. Game inventory icon cutout.",
+    "outputs": [
+      "madeleine.png",
+      "pearl-madeleine.png",
+      "mint-madeleine.png"
+    ]
   }
 }
