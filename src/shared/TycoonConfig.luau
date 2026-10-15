@@ -1,5 +1,8 @@
 -- Configure real IDs only after creating products in this experience's Creator Dashboard.
 local Config = {
+	CommunityId = 203626899,
+	CommunityRewardReceipt = "community:203626899:v1",
+	CommunityIconId = "rbxassetid://89761423925798",
 	GiftInterval = 5 * 60 * 60,
 	AFKInterval = 3 * 60 * 60, -- Saved cumulative connected time.
 	ProductionInterval = 3,

@@ -16,6 +16,8 @@ local Gauge=require(RS:WaitForChild("CircularGauge"))
 local Art=require(RS:WaitForChild("PastelArt"))
 local ShopUI=require(RS:WaitForChild("KawaiiShop"))
 local UserArt=require(RS:WaitForChild("UserArt"))
+local DessertImages=require(RS:WaitForChild("DessertImages"))
+local Rewards=require(RS:WaitForChild("DessertRewards"))
 local remotes=RS:WaitForChild("DessertRemotes")
 local action=remotes:WaitForChild("Action"); local event=remotes:WaitForChild("Event")
 local colors={Cream=Color3.fromRGB(255,248,239),Pink=Color3.fromRGB(255,193,217),Lavender=Color3.fromRGB(215,199,249),Mint=Color3.fromRGB(184,233,212),Text=Color3.fromRGB(105,66,90)}
@@ -77,7 +79,7 @@ end
 local function button(parent,label,size,pos,callback,color,shortcut)
 	local b=Instance.new("TextButton"); b.Size=size; b.Position=pos; b.Text=label; b.Font=Enum.Font.GothamBold; b.TextSize=16
 	b.TextColor3=colors.Text; b.BackgroundColor3=color or colors.Pink; b.BorderSizePixel=0; b.ZIndex=parent.ZIndex+1; b.Parent=parent
-	local icon=Style.Icons[label] and label or label:find("Open") and "Crates" or label:find("Equipped") and "Check" or label:find("Equip") and "Cake" or "Sparkles"
+	local icon=label=="Join Group" and label or Style.Icons[label] and label or label:find("Open") and "Crates" or label:find("Equipped") and "Check" or label:find("Equip") and "Cake" or "Sparkles"
 	if shortcut then Style.Button(b,icon) else Art.Apply(b,"Button"); b.Font=Enum.Font.FredokaOne; b.TextXAlignment=Enum.TextXAlignment.Center; b.TextWrapped=true end
 	b.Activated:Connect(function() if not data or data.Settings.Effects then click:Play() end; callback() end)
 	return b
@@ -121,8 +123,14 @@ end)
 local window=Instance.new("Frame"); window.Name="Panel"; window.Size=UDim2.fromScale(.78,.72); window.Position=UDim2.fromScale(.11,.15)
 window.ZIndex=10; window.Visible=false; window.Parent=screen; Art.Apply(window,"Panel")
 local title=text(window,"",UDim2.new(1,-100,0,54),UDim2.fromOffset(50,0)); title.TextXAlignment=Enum.TextXAlignment.Center; title.TextSize=24
-button(window,"×",UDim2.fromOffset(38,38),UDim2.new(1,-65,0,22),function() window.Visible=false; panelName=nil end)
-local scroll=Instance.new("ScrollingFrame"); scroll.Size=UDim2.new(1,-24,1,-70); scroll.Position=UDim2.fromOffset(12,60)
+-- The approved 59px panel crop includes transparent pixels on its right edge.
+-- Align to the artwork's actual header center (x=139.5), not the crop rectangle.
+title.AnchorPoint=Vector2.new(.5,.5); title.Position=UDim2.fromScale(28.5/59,6/83)
+local closePanel=button(window,"×",UDim2.fromOffset(32,32),UDim2.fromScale(53/59,6/83),function() window.Visible=false; panelName=nil end)
+closePanel.AnchorPoint=Vector2.new(.5,.5)
+local scroll=Instance.new("ScrollingFrame"); scroll.Name="PanelContent"
+scroll.Size=UDim2.new(47/59,-12,60/83,-12); scroll.Position=UDim2.new(5/59,6,14/83,6)
+scroll.ClipsDescendants=true
 scroll.ZIndex=window.ZIndex+1; scroll.BackgroundTransparency=1; scroll.BorderSizePixel=0; scroll.ScrollBarThickness=6; scroll.ScrollBarImageColor3=colors.Text; scroll.AutomaticCanvasSize=Enum.AutomaticSize.Y; scroll.CanvasSize=UDim2.new(); scroll.Parent=window
 local function request(verb,arg)
 	local ok,result,message=pcall(action.InvokeServer,action,verb,arg)
@@ -190,11 +198,11 @@ Input.InputEnded:Connect(function(input)
 		draggingVolume=nil; scroll.ScrollingEnabled=true; setVolume(drag.Key,volumeValue(drag.Key),true)
 	end
 end)
-local function preview(parent,tier,shiny,size,pos)
+local function preview(parent,tier,shiny,size,pos,variant)
 	local view=Instance.new("ViewportFrame"); view.Size=size; view.Position=pos; view.BackgroundTransparency=1
 	view.ZIndex=parent.ZIndex+1; view.Ambient=Color3.fromRGB(220,208,220); view.LightColor=Color3.fromRGB(255,247,233); view.Parent=parent
 	local world=Instance.new("WorldModel"); world.Parent=view
-	local model=Visuals.Build(tier,shiny); model.Parent=world
+	local model=Visuals.Build(tier,shiny,variant); model.Parent=world
 	local box,bounds=model:GetBoundingBox()
 	local camera=Instance.new("Camera"); camera.FieldOfView=35
 	camera.Parent=view; view.CurrentCamera=camera
@@ -212,7 +220,12 @@ local function fitPanel()
  local v=workspace.CurrentCamera.ViewportSize
  local w=math.max(260,math.min(940,v.X-24)); local h=math.max(260,math.min(660,v.Y-90))
  window.AnchorPoint=Vector2.new(.5,.5); window.Position=UDim2.fromScale(.5,.5); window.Size=UDim2.fromOffset(w,h)
- if indexGrid then local cols=w>=800 and 4 or w>=600 and 3 or w>=400 and 2 or 1; indexGrid.FillDirectionMaxCells=cols; indexGrid.CellSize=UDim2.fromOffset(math.floor((w-42-(cols-1)*12)/cols),190) end
+ if indexGrid then
+  local contentWidth=w*47/59-12
+  local cols=contentWidth>=700 and 4 or contentWidth>=500 and 3 or contentWidth>=320 and 2 or 1
+  indexGrid.FillDirectionMaxCells=cols; indexGrid.HorizontalAlignment=Enum.HorizontalAlignment.Center
+  indexGrid.CellSize=UDim2.fromOffset(math.floor((contentWidth-8-(cols-1)*12)/cols),190)
+ end
 end
 workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(fitPanel)
 show=function(name)
@@ -220,7 +233,7 @@ show=function(name)
 	if draggingVolume then local key=draggingVolume.Key; draggingVolume=nil; setVolume(key,volumeValue(key),true) end
 	volumeControls={}; scroll.ScrollingEnabled=true
 	if kawaiiShop then kawaiiShop.Destroy(); kawaiiShop=nil end
-	panelName=name; window.Visible=name~="Shop"; title.Text=name; scroll:ClearAllChildren(); spinning={}; giftLabel=nil; statLabels={}; indexGrid=nil
+	panelName=name; window.Visible=name~="Shop"; title.Text=name; scroll:ClearAllChildren(); giftLabel=nil; statLabels={}; indexGrid=nil
 	if name=="Shop" then
 		kawaiiShop=ShopUI.Open(screen,data,{
 			Click=function() if data.Settings.Effects then click:Play() end end,
@@ -236,15 +249,55 @@ show=function(name)
 	end
 	if name=="Index" then
 		indexGrid=Instance.new("UIGridLayout"); indexGrid.CellPadding=UDim2.fromOffset(12,12); indexGrid.SortOrder=Enum.SortOrder.LayoutOrder; indexGrid.Parent=scroll
-		for tier=1,30 do for variant=0,1 do
-			local shiny=variant==1; local key=Rules.Key(tier,shiny); local owned=data.Index[key]
-			local index=(tier-1)*2+variant; local row=math.floor(index/4); local column=index%4
+		local index=0
+		for tier=1,30 do for variant=0,2 do
+			local shiny=variant>0; local key=Rules.Key(tier,shiny,variant); local owned=data.Index[key]
+			if variant==2 and tier~=1 and not owned then continue end
+			local row=math.floor(index/4); local column=index%4
 			local card=Instance.new("Frame"); card.Size=UDim2.new(.25,-12,0,190); card.Position=UDim2.new(column*.25,6,0,row*200)
-			card.LayoutOrder=index; card.ZIndex=scroll.ZIndex+1; card.Parent=scroll; Art.Apply(card,"Card")
-			if owned then preview(card,tier,shiny,UDim2.new(1,0,0,126),UDim2.new()) else text(card,"?",UDim2.new(1,0,0,124),UDim2.new()) end
-			text(card,owned and ((shiny and "Shiny " or "")..Catalog[tier].Name) or "Undiscovered",UDim2.new(1,-8,0,26),UDim2.fromOffset(4,126)).TextSize=14
+			card.Name="IndexCard"..key; card.LayoutOrder=index; index+=1; card.ZIndex=scroll.ZIndex+1; card.Parent=scroll; Art.Apply(card,"Card")
+			if owned then
+				local artBounds=Instance.new("Frame"); artBounds.Name="DessertImageBounds"; artBounds.BackgroundTransparency=1
+				artBounds.Position=UDim2.fromOffset(20,20); artBounds.Size=UDim2.new(1,-40,0,104)
+				artBounds.ClipsDescendants=true; artBounds.ZIndex=card.ZIndex+1; artBounds.Parent=card
+				DessertImages.Create(artBounds,tier,shiny,variant,UDim2.fromScale(1,1),UDim2.new())
+			else
+				local mystery=text(card,"?",UDim2.new(1,-40,0,64),UDim2.fromScale(.5,.5))
+				mystery.AnchorPoint=Vector2.new(.5,.5); mystery.Name="MysteryMark"; mystery.TextSize=58
+			end
+			text(card,owned and DessertImages.Name(tier,shiny,variant) or "Undiscovered",UDim2.new(1,-8,0,26),UDim2.fromOffset(4,126)).TextSize=14
 			if owned then button(card,data.Equipped==key and "Unequip" or "Equip",UDim2.new(1,-16,0,32),UDim2.fromOffset(8,152),function() request("Equip",key) end,colors.Mint) end
 		end end
+	elseif name=="Join Group" then
+		local claimed=data.CommunityRewardClaimed
+		text(scroll,"Join Cosmon Studio?",UDim2.new(1,-20,0,46),UDim2.fromOffset(10,8)).TextSize=25
+		UserArt.Create(scroll,"GroupJoin",UDim2.fromOffset(112,100),UDim2.new(.5,-56,0,58))
+		local status=text(scroll,claimed and "Your free Perk Crate has already been claimed." or "Join our community and receive 1 free Perk Crate!\nOne reward per account.",UDim2.new(1,-24,0,74),UDim2.fromOffset(12,164)); status.TextSize=17
+		local busy=false
+		local join=button(scroll,claimed and "Reward Claimed" or "Yes, Join Group",UDim2.new(.5,-16,0,46),UDim2.fromOffset(8,246),function()
+			if busy or data.CommunityRewardClaimed then return end
+			if Run:IsStudio() then status.Text="Group joining is available in the published game.";return end
+			busy=true
+			local ok,result=pcall(function() return game:GetService("GroupService"):PromptJoinAsync(Config.CommunityId) end)
+			if not ok or (result~=Enum.GroupMembershipStatus.Joined and result~=Enum.GroupMembershipStatus.AlreadyMember) then
+				if status.Parent then status.Text=ok and (result==Enum.GroupMembershipStatus.JoinRequestPending and "Your join request is pending. Claim after it is approved." or "Joining cancelled. You can try again anytime.") or "Could not open the group prompt. Please try again." end
+				busy=false;return
+			end
+			local called,granted,message=pcall(action.InvokeServer,action,"CommunityReward")
+			if status.Parent then status.Text=called and (message or "Checking membership...") or "Connection unavailable. Please try again." end
+			-- Roblox can retain a negative server membership result for sixty seconds.
+			if called and not granted and message and message:find("Membership not confirmed",1,true) then
+				if status.Parent then status.Text="Confirming your membership... Your reward will be checked again shortly." end
+				task.wait(65)
+				if screen.Parent and not data.CommunityRewardClaimed then
+					local retry,saved,note=pcall(action.InvokeServer,action,"CommunityReward")
+					if status.Parent then status.Text=retry and (note or "Please try again.") or "Connection unavailable. Please try again." end
+				end
+			end
+			busy=false
+		end,colors.Pink)
+		join.Name="ConfirmJoinGroup";join.Active=not claimed;join.AutoButtonColor=not claimed
+		button(scroll,"Cancel",UDim2.new(.5,-16,0,46),UDim2.new(.5,8,0,246),function() window.Visible=false;panelName=nil end,colors.Mint)
 	elseif name=="Settings" then
 		volumeSlider("Music","Background Music",0)
 		volumeSlider("Effects","Sound Effects",130)
@@ -302,6 +355,8 @@ show=function(name)
  fitPanel()
  for key,label in pairs(statLabels) do local value=data[key] or 0; label.Text=key=="PlaySeconds" and string.format("%dh %02dm %02ds",math.floor(value/3600),math.floor(value/60)%60,math.floor(value)%60) or (key=="TotalCashEarned" and "$" or "")..format(value) end
 end
+local communityButton=button(gui,"Join Group",UDim2.fromOffset(118,54),UDim2.new(0,18,.5,-132),function() show("Join Group") end,colors.Pink,true)
+communityButton.Name="JoinGroupButton"
 button(gui,"Index",UDim2.fromOffset(118,54),UDim2.new(0,18,.5,-70),function() show("Index") end,colors.Pink,true)
 button(gui,"Shop",UDim2.fromOffset(118,48),UDim2.new(0,18,.5,-8),function() show("Shop") end,colors.Mint,true)
 local topbar=Instance.new("ScreenGui"); topbar.Name="DessertTopbar"; topbar.IgnoreGuiInset=true; topbar.ResetOnSpawn=false; topbar.Parent=screen.Parent
@@ -389,25 +444,10 @@ local function applySettings(forceVisibility)
 		end
 	end
 end
-local revealQueue={}; local revealing=false
-local function reveal(item)
-	table.insert(revealQueue,item); if revealing then return end; revealing=true
-	task.spawn(function()
-		while #revealQueue>0 do
-			local found=table.remove(revealQueue,1)
-			local f=Instance.new("Frame"); f.Size=UDim2.fromScale(1,1); f.BackgroundColor3=colors.Lavender; f.BackgroundTransparency=.12; f.ZIndex=20; f.Parent=gui; Art.Apply(f,"Panel")
-			text(f,found.Shiny and "SHINY DISCOVERED!" or "NEW DESSERT!",UDim2.new(1,0,0,60),UDim2.fromScale(0,.17)).TextSize=32
-			preview(f,found.Tier,found.Shiny,UDim2.fromScale(.5,.46),UDim2.fromScale(.25,.25))
-			text(f,Catalog[found.Tier].Name.." | Tier "..found.Tier,UDim2.new(1,0,0,60),UDim2.fromScale(0,.72)).TextSize=28
-			if not data or data.Settings.Effects then revealSound:Play() end
-			for n=1,28 do
-				local star=text(f,n%2==0 and "✦" or "♥",UDim2.fromOffset(30,30),UDim2.fromScale(math.random(),-.05)); star.TextColor3=n%2==0 and colors.Pink or colors.Mint
-				Tween:Create(star,TweenInfo.new(2.3),{Position=UDim2.fromScale(math.random(),1.05),Rotation=math.random(-180,180)}):Play()
-			end
-			task.wait(2.6); f:Destroy()
-		end; revealing=false
-	end)
-end
+local rewards=Rewards.Open(gui,{
+ Text=text,Button=button,Preview=preview,
+ Sound=function() if not data or data.Settings.Effects then revealSound:Play() end end,
+})
 local transfers={}
 local function transfer(kind,start,finish)
 	if #transfers>=30 then return end
@@ -422,6 +462,7 @@ local function transfer(kind,start,finish)
 end
 event.OnClientEvent:Connect(function(kind,value,message)
 	if kind=="State" then
+		local previousIndex=data and data.Index or {}
 		local previousEquipped=data and data.Equipped
 		local previousHighest=data and data.Highest
 		local previousNormal=data and data.NormalTokens
@@ -433,14 +474,18 @@ event.OnClientEvent:Connect(function(kind,value,message)
 		data=value; updateShinyChance(); for key,label in pairs(statLabels) do local value=data[key] or 0; label.Text=key=="PlaySeconds" and string.format("%dh %02dm %02ds",math.floor(value/3600),math.floor(value/60)%60,math.floor(value)%60) or (key=="TotalCashEarned" and "$" or "")..format(value) end; cash.Text="$"..format(data.Cash); bag.Text=format(data.Bag); boost.Text="×"..data.Multiplier
 		applySettings()
 		if giftLabel and giftLabel.Parent then giftLabel.Text=giftText() end
-		if panelName=="Index" and previousEquipped~=data.Equipped then show("Index") end
+		if panelName=="Index" then
+   local changed=previousEquipped~=data.Equipped
+   for key in pairs(data.Index) do if not previousIndex[key] then changed=true; break end end
+   if changed then show("Index") end
+  end
 		if panelName=="Crates" and (previousHighest~=data.Highest or previousNormal~=data.NormalTokens or previousPerk~=data.PerkTokens or previousPaidNormal~=data.PaidNormalTokens or previousPaidPerk~=data.PaidPerkTokens or previousChance~=data.ShinyChance) then show("Crates") end
 		if panelName=="Shop" then
 			for key in pairs(Config.Passes) do if previousPasses[key]~=data.OwnedPasses[key] then show("Shop"); break end end
 		end
 	elseif kind=="Panel" then show(value)
-	elseif kind=="Discovery" then reveal(value)
-	elseif kind=="Crates" then for _,found in ipairs(value) do reveal(found) end
+	elseif kind=="Discovery" then rewards.Discovery(value)
+	elseif kind=="Crates" then rewards.Crates(value)
 	elseif kind=="CafeDelivery" or kind=="CafeCash" then transfer(kind,value,message)
 	end
 end)
@@ -472,7 +517,7 @@ local function trackDessert(model)
 	if not model:IsA("Model") or not model.Parent then return end
 	if model.Name=="MiniDessert" and model:GetAttribute("PhysicalDrop") then
 		local body=model:WaitForChild("DropCollider",5);if not body or not model.Parent then return end
-		local view=Visuals.BuildMini(model:GetAttribute("Tier") or 1,model:GetAttribute("Shiny")==true)
+		local view=Visuals.BuildMini(model:GetAttribute("Tier") or 1,model:GetAttribute("Shiny")==true,model:GetAttribute("Variant"))
 		view.Name="DropVisual";view:SetAttribute("SourceDrop",model:GetAttribute("DropStartTime"))
 		local offset=model:GetAttribute("DropVisualOffset") or CFrame.new(0,-body.Size.Y/2,0)
 		view:PivotTo(body.CFrame*offset);view.Parent=dropFolder
@@ -539,7 +584,18 @@ Run.RenderStepped:Connect(function(dt)
 		v.Model:PivotTo(CFrame.new(v.Start:Lerp(v.Finish,alpha)+Vector3.new(0,math.sin(alpha*math.pi)*8,0)))
 		if alpha>=1 then v.Model:Destroy(); table.remove(transfers,n) end
 	end
-	for n=#spinning,1,-1 do local v=spinning[n]; if not v.View.Parent then table.remove(spinning,n) else v.Model:PivotTo(v.Base+Vector3.new(0,math.sin(serverNow*2)*.2,0)) end end
+	for n=#spinning,1,-1 do
+  local v=spinning[n]
+  if not v.View:IsDescendantOf(screen) then table.remove(spinning,n)
+  else
+   local visible=true; local ancestor=v.View
+   while ancestor and ancestor~=screen do
+    if ancestor:IsA("GuiObject") and not ancestor.Visible then visible=false; break end
+    ancestor=ancestor.Parent
+   end
+   if visible then v.Model:PivotTo(v.Base+Vector3.new(0,math.sin(serverNow*2)*.2,0)) end
+  end
+ end
 	visibilityTimer+=dt; if visibilityTimer>2 then visibilityTimer=0; applySettings(true) end
 end)
 task.spawn(function()

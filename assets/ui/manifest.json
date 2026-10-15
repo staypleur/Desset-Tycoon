@@ -182,5 +182,16 @@
     "Size": 256,
     "Source": "codex-clipboard-a332ad27-a05e-441e-9c22-111271079715.png",
     "Sha256": "ea5833a4d3bc9d943c66ce30a7e4c8d891493c2c197fd27e58098a5162eca2e6"
+  },
+  "GroupJoin": {
+    "Source": "codex-clipboard-3b977cc2-d4cb-42fe-a552-f060f392e23e.png",
+    "File": "group-join.png",
+    "Sha256": "770c876b36631d572605a84a15cb22d2cdcf715a214c52239d34988956710eb3",
+    "DecalId": 86863203944007,
+    "ImageId": 89761423925798,
+    "Dimensions": [
+      1374,
+      1145
+    ]
   }
 }

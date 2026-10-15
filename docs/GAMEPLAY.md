@@ -82,3 +82,15 @@ Normal and Perk crates occupy one centered row, Normal on the left and Perk on t
 The user-provided cafe chef is a single 3,165-triangle rigged mesh, scaled to 8 studs with a foot-center pivot. One server walker uses the imported Walking clip, an anchored non-colliding mesh and a navigation graph built once from actual cafe decorations, including non-queryable props. Destinations stay within a 20-stud interior radius, routes avoid shelves/flowers/counters, and brief pauses alternate with walking. This NPC has no economy actions or player interaction.
 
 Current chef tuning: height 8 studs, travel speed 6 studs/sec, walking animation speed 1.15, heading turn 0.12 seconds. Navigation clearance and obstacle height derive from the chef mesh size.
+
+
+## Supplied dessert variants, image index and crate reveal (2026-10-15)
+Milky Pudding and Galaxy Aurora Pudding are separate tier-one shiny variants, selected 50:50 after a shiny roll. Legacy `1s` saves remain Milky Pudding; `1s2` identifies Galaxy. Inventory, discovery, equipment and matching merges preserve variant identity. The supplied normal Custard and Mini Custard replace tier-two starter art.
+
+Index cards use one transparent image atlas, without 3D scenes or per-card animations. Their images fit within a clipped inset above the name/button. Large unknown question marks are centered in the green card. The heading follows the center of the actual pink artwork, and the responsive grid stays inside its scroll bounds. Higher desserts reuse approved generic artwork until their reference images are supplied.
+
+New discoveries show one temporary, gently floating 3D model with fixed facing and the existing star/heart celebration. Crates show a horizontal train carousel and fixed arrow, stopping on the server-granted result. Known cards use images; unknown cards remain question marks until revealed. Ten opens play sequentially and can skip to the result summary without changing grants.
+
+Producer slots fill entrance-view right row one, left row one, right row two, left row two, and so on. Pad footprints detect grounded landings as well as direct contacts, accommodating decorative floor layers. Standing stays latched; each real jump re-arms a single purchase upon landing. Purchases remain server-authoritative.
+
+Join Group opens a confirmation and the native Roblox join prompt for Cosmon Studio (203626899). Existing members are also eligible once. Server verification grants one free Perk Crate credit, with the receipt saved atomically to prevent duplicates after retries or rejoining. Pending approval/cancel/error does not grant. Membership propagation may delay confirmation by about a minute. Studio does not submit a real account join; live joining and durable storage need the published experience.

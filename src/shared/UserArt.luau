@@ -27,9 +27,9 @@ local rects={
 	PerkCrate={2,512,256},
 }
 function Art.Create(parent,key,size,pos)
- local r=assert(rects[key],"Unknown user icon"); local image=Instance.new("ImageLabel")
- image.Name="UserArt"..key; image.BackgroundTransparency=1; image.Image=Config.UserAtlasIds[r[1]]
- image.ImageRectOffset=Vector2.new(r[2],r[3]); image.ImageRectSize=Vector2.new(256,256); image.ScaleType=Enum.ScaleType.Fit
+ local r=key=="GroupJoin" and {1,0,0} or assert(rects[key],"Unknown user icon"); local image=Instance.new("ImageLabel")
+ image.Name="UserArt"..key; image.BackgroundTransparency=1; image.Image=key=="GroupJoin" and Config.CommunityIconId or Config.UserAtlasIds[r[1]]
+ if key~="GroupJoin" then image.ImageRectOffset=Vector2.new(r[2],r[3]); image.ImageRectSize=Vector2.new(256,256) end; image.ScaleType=Enum.ScaleType.Fit
  image.Size=size or UDim2.fromScale(1,1); image.Position=pos or UDim2.new(); image.ZIndex=parent.ZIndex+1; image.Parent=parent
  image:SetAttribute("UserIcon",key); return image
 end

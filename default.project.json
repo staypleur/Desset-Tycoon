@@ -69,6 +69,12 @@
       },
       "CafeChefNavigation": {
         "$path": "src/shared/CafeChefNavigation.luau"
+      },
+      "DessertImages": {
+        "$path": "src/shared/DessertImages.luau"
+      },
+      "DessertRewards": {
+        "$path": "src/shared/DessertRewards.luau"
       }
     },
     "ServerScriptService": {
@@ -96,6 +102,9 @@
       },
       "CafeChef": {
         "$path": "src/server/CafeChef.server.luau"
+      },
+      "CommunityReward": {
+        "$path": "src/server/CommunityReward.luau"
       }
     },
     "StarterPlayer": {

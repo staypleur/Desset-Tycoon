@@ -1,0 +1,77 @@
+{
+  "milk-pudding": {
+    "sourceArchive": "Meshy_AI_iridescent_fluffy_mil_1015051659_texture_fbx.zip",
+    "archiveSha256": "78dd52ab3d0ae73f79ba3d92c730c4cd8f3f6c0c4158895323767ff40117b1ab",
+    "heightCm": 70,
+    "triangles": 3070,
+    "files": {
+      "color.png": "174deb3d23eac0f567b300fa7efd5324cd5d1917a2b1447916842db6549291cd",
+      "milk-pudding-import.fbx": "c9f0be219b1470ce1a48a608022921158a103b7d74d158123298d45df9e2a1f0",
+      "source.fbx": "d2e4e9158e4bfd81983932700af1289cf69d5718bcfe82b1bef467deaeec2e3a"
+    },
+    "meshId": 120134325737489,
+    "colorDecalId": 136404294417437,
+    "colorTextureId": 86602667387129,
+    "template": "MilkPudding"
+  },
+  "galaxy-pudding": {
+    "sourceArchive": "Meshy_AI_galaxy_glow_milk_pudd_1015051800_texture_fbx.zip",
+    "archiveSha256": "44f64620009c3aa44f19db5b9d6d9273a90983e2354dd051acb804dcec5e088e",
+    "heightCm": 70,
+    "triangles": 3116,
+    "files": {
+      "color.png": "33ae6bc0d3fc7bac92475ad9f10da7bb3fb75382126a18f9297e9de19f99ffbf",
+      "galaxy-pudding-import.fbx": "a5d89ebdc368794ae1ae72e2b5533fc2f5031204a536c399f03af89d03c2abfc",
+      "source.fbx": "6b385612dca142b2762957598f125df64a59a63f38e85a62ff6aba753802cdf0"
+    },
+    "meshId": 113259910578805,
+    "colorDecalId": 91816957432597,
+    "colorTextureId": 103470845017352,
+    "template": "GalaxyPudding"
+  },
+  "custard": {
+    "sourceArchive": "Meshy_AI_cute_custard_characte_1015051854_texture_fbx.zip",
+    "archiveSha256": "b4e28f2f1f93a836fed1729a8f7bbdd5f2b3a251a658d2c760864c06fd947ccc",
+    "heightCm": 70,
+    "triangles": 2907,
+    "files": {
+      "color.png": "8580d361f4a6a50e10c651f8653c79a7798e7716036ffb419123364c519e88b9",
+      "custard-import.fbx": "957f52c663f11550dc68cd60ee9b3b3e48f9a22732eeb2f5d36a43f22a96c143",
+      "source.fbx": "b3351bb726aaad7fc047d0a1e31c89100fc608a23b9504e93b36c81cb5eac826"
+    },
+    "meshId": 92687501796872,
+    "colorDecalId": 114590222157955,
+    "colorTextureId": 97064014004437,
+    "template": "NormalCustard"
+  },
+  "mini-custard": {
+    "sourceArchive": "Meshy_AI_mini_custard_dessert__1015051942_texture_fbx.zip",
+    "archiveSha256": "afe3ca7ee4a0760e627e714ddb5d245be13649e9fad3f9f89c129c56be4247a4",
+    "heightCm": 18,
+    "triangles": 313,
+    "files": {
+      "color.png": "06b9f80c18cb10681ec8dc90264256937e9169731f20f288db54d16973604d84",
+      "mini-custard-import.fbx": "4b3027d4a4d9bfe5ba1f03291a0e01a628d02c0707e6182167b5d07fd821eb3a",
+      "source.fbx": "93f82d40a212fca510252aeae10b2df440f9c50da8a16ea59a25249e34491ec2"
+    },
+    "meshId": 124582654308785,
+    "colorDecalId": 79377057623931,
+    "colorTextureId": 116599186930697,
+    "template": "MiniCustard"
+  },
+  "indexAtlas": {
+    "decalId": 84882413062102,
+    "textureId": 140655109036421,
+    "size": [
+      1024,
+      1024
+    ],
+    "cellSize": 512,
+    "keys": [
+      "1n",
+      "1s",
+      "1s2",
+      "2n"
+    ]
+  }
+}

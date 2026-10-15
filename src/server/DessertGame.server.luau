@@ -12,6 +12,7 @@ local Layout=require(RS:WaitForChild("ProductionPlot"))
 local UI=require(RS:WaitForChild("DessertUI"))
 local CafeMarket=require(RS:WaitForChild("CafeMarket"))
 local Profiles=require(script.Parent:WaitForChild("PlayerProfiles"))
+local CommunityReward=require(script.Parent:WaitForChild("CommunityReward"))
 local island=workspace:WaitForChild("DessertJellyIsland",30)
 assert(island,"Dessert island missing")
 while island:GetAttribute("LayoutReady")==false do task.wait(.1) end
@@ -60,7 +61,7 @@ local function snapshot(player)
 		CafeRate=Rules.CafeRate(d),CafeUpgradeCost=Rules.CafeUpgradeCost(d),Index=d.Index,Highest=Rules.Highest(d),
 		NormalTokens=d.NormalTokens,PerkTokens=d.PerkTokens,PaidNormalTokens=d.PaidNormalTokens,PaidPerkTokens=d.PaidPerkTokens,NextGift=d.NextGift,AFKSeconds=d.AFKSeconds,
 		Multiplier=multiplier(p),Luck=Rules.PassMultiplier(p.Passes,"Luck"),FriendBonus=friendBonus(player,p),ShinyChance=Rules.ShinyChance("Normal",Rules.PassMultiplier(p.Passes,"Luck"),friendBonus(player,p)),OwnedPasses=table.clone(p.Passes),Settings=d.Settings,Equipped=d.Equipped,
-		Durable=p.Durable,Premium=p.Premium,Restricted=p.Restricted,HotUntil=d.HotUntil,
+		CommunityRewardClaimed=d.Receipts[Config.CommunityRewardReceipt]==true,Durable=p.Durable,Premium=p.Premium,Restricted=p.Restricted,HotUntil=d.HotUntil,
 		Active=Rules.Count(d),PlotId=player:GetAttribute("PlotId"),ServerTime=os.time()}
 end
 local function update(player,message)
@@ -91,14 +92,15 @@ local function render(player)
 	if not s or not p or s.Plot:GetAttribute("OwnerUserId")~=player.UserId then return end
 	s.Models:ClearAllChildren(); s.Pets={}; s.Owner=player
 	local slot=0; local cf=s.Plot:GetPivot()
-	for tier=1,30 do for _,shiny in ipairs({false,true}) do
-		for _=1,math.min(p.Data.Pets[Rules.Key(tier,shiny)] or 0,60-slot) do
+	for tier=1,30 do for variant=0,2 do
+		local shiny=variant>0
+		for _=1,math.min(p.Data.Pets[Rules.Key(tier,shiny,variant)] or 0,60-slot) do
 			slot+=1; local pad=s.Plot.PetSpawnPads["PetPad"..slot]; local pos=cf:PointToObjectSpace(pad.Position)
-			local model=Visuals.Build(tier,shiny); model.Name="Dessert"..slot
+			local model=Visuals.Build(tier,shiny,variant); model.Name="Dessert"..slot
 			local placement=cf*CFrame.new(pos+Vector3.new(0,.1,0))
 			model:SetAttribute("OwnerUserId",player.UserId);model:SetAttribute("DisplayBasePivot",placement)
 			model:PivotTo(placement);model.Parent=s.Models
-			table.insert(s.Pets,{Tier=tier,Shiny=shiny,Slot=slot,Next=os.clock()+Config.ProductionInterval})
+			table.insert(s.Pets,{Tier=tier,Shiny=shiny,Variant=variant,Slot=slot,Next=os.clock()+Config.ProductionInterval})
 		end
 	end end
 end
@@ -113,7 +115,7 @@ local function emit(s,pet,now)
 	local cf=s.Plot:GetPivot(); local pad=s.Plot.PetSpawnPads["PetPad"..pet.Slot]
 	local points,collector=DropPhysics.Route(s.Plot,pad,rng)
 	if #s.Drops>=Config.MaxDrops then p.Data.AFKStored+=value; return end
-	local m=Visuals.BuildMini(pet.Tier,pet.Shiny); m.Name="MiniDessert"
+	local m=Visuals.BuildMini(pet.Tier,pet.Shiny,pet.Variant); m.Name="MiniDessert"
 	m:SetAttribute("OwnerUserId",s.Owner.UserId);m:SetAttribute("DropStartTime",producedAt)
 	m:PivotTo(CFrame.new(points[1])*cf.Rotation)
 	local drop=DropPhysics.New(m,points,s.Products,collector);drop.Value=value
@@ -124,7 +126,16 @@ local function perform(player,verb,arg)
 	if not p or p.Busy or p.Closing or p.Faulted then return false,"Please wait" end
 	local d=p.Data
 	if verb=="State" then return snapshot(player) end
-	if verb=="Settings" then
+	if verb=="CommunityReward" then
+		if os.clock()-(p.LastCommunityCheck or -math.huge)<8 then return false,"Please wait before checking again" end
+		p.LastCommunityCheck=os.clock()
+		local ok,message=CommunityReward.Claim(p,function() return player:IsInGroupAsync(Config.CommunityId) end,function(profile,id,grant)
+			if profile.Durable then return Profiles.Receipt(profile,id,grant) end
+			if not Run:IsStudio() then return false end
+			grant(profile.Data);profile.Data.Receipts[id]=true;return true
+		end)
+		update(player,message);return ok,message
+	elseif verb=="Settings" then
 		if not Rules.UpdateSettings(d,arg) then return false end
 		update(player); return true
 	elseif verb=="Activity" then p.LastActivity=os.clock(); return true
@@ -132,7 +143,7 @@ local function perform(player,verb,arg)
 		if not Rules.ToggleEquip(d,arg) then return false end
 		if p.Companion then p.Companion:Destroy(); p.Companion=nil end
 		if d.Equipped then
-			local tier,shiny=Rules.Decode(d.Equipped); local m=Visuals.Build(tier,shiny); m:ScaleTo(m:GetScale()*.65)
+			local tier,shiny,variant=Rules.Decode(d.Equipped); local m=Visuals.Build(tier,shiny,variant); m:ScaleTo(m:GetScale()*.65)
 			m.Name="DessertCompanion"; m:SetAttribute("OwnerUserId",player.UserId)
 			local r=root(player); m:PivotTo(r and r.CFrame*CFrame.new(-3,3,2) or s.Plot:GetPivot())
 			m.Parent=workspace; p.Companion=m
@@ -144,10 +155,14 @@ local function perform(player,verb,arg)
 		local paidKey="Paid"..key; local paid=d[paidKey] or 0
 		if d[key]+(p.Restricted and 0 or paid)<arg.Count then return false,"Not enough available crate credits" end
 		local freeUsed=math.min(d[key],arg.Count); d[key]-=freeUsed; d[paidKey]=paid-(arg.Count-freeUsed)
+		local knownBefore=table.clone(d.Index); local highestBefore=Rules.Highest(d)
 		local found={}; local results={}
 		for _=1,arg.Count do table.insert(results,Rules.Roll(d,arg.Kind,rng,Rules.PassMultiplier(p.Passes,"Luck"),found,friendBonus(player,p))) end
 		if p.Passes.AutoMerge then Rules.Merge(d,found) end
-		render(player); events:FireClient(player,"Crates",results); update(player); return true
+		render(player)
+		-- Rewards are already granted here. The carousel only presents these results.
+		events:FireClient(player,"Crates",{Results=results,KnownBefore=knownBefore,Discoveries=found,Highest=highestBefore,Kind=arg.Kind})
+		update(player); return true
 	elseif verb=="Purchase" then
 		if type(arg)~="string" then return false end
 		local product=Config.Products[arg]; local spec=product or Config.Passes[arg]
@@ -218,14 +233,25 @@ for i=1,6 do
 		local pressed,latched={},{}
 		local function activate(player,fromTouch)
 			if (not public and player~=s.Owner) or not near(player,pad) or not profiles[player] then return end
+			if fromTouch then
+				local humanoid=player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+				if not humanoid or humanoid.FloorMaterial==Enum.Material.Air then return end
+			end
 			if fromTouch and latched[player] then return end
-			if os.clock()-(pressed[player] or 0)<1 then return end; pressed[player]=os.clock()
+			if os.clock()-(pressed[player] or 0)<(fromTouch and .2 or 1) then return end; pressed[player]=os.clock()
 			if fromTouch then
 				latched[player]=true
+				local initialRoot=root(player)
+				local lowestY=initialRoot and pad.CFrame:PointToObjectSpace(initialRoot.Position).Y or math.huge
 				task.spawn(function()
-					repeat task.wait(.25); local r=root(player)
+					repeat task.wait(.05); local r=root(player)
 						local pos=r and pad.CFrame:PointToObjectSpace(r.Position)
 						if not pos or math.abs(pos.X)>pad.Size.X/2+2 or math.abs(pos.Z)>pad.Size.Z/2+2 then break end
+						lowestY=math.min(lowestY,pos.Y)
+						local humanoid=player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+						-- Re-arm only after a real upward separation. Pad tween/idle limbs
+						-- cannot re-buy; the next landing's Touched buys exactly once.
+						if humanoid and humanoid.FloorMaterial==Enum.Material.Air and pos.Y>lowestY+1 then break end
 					until player.Parent~=Players
 					latched[player]=nil
 				end)
@@ -234,7 +260,21 @@ for i=1,6 do
 			if verb=="Panel" then events:FireClient(player,"Panel",arg) else perform(player,verb,arg) end
 		end
 		if prompt then prompt.Triggered:Connect(activate) end
-		if not hold then pad.Touched:Connect(function(hit) local c=hit:FindFirstAncestorOfClass("Model"); local player=c and Players:GetPlayerFromCharacter(c); if player then activate(player,true) end end) end
+		if not hold then
+			pad.Touched:Connect(function(hit) local c=hit:FindFirstAncestorOfClass("Model"); local player=c and Players:GetPlayerFromCharacter(c); if player then activate(player,true) end end)
+			-- Decorative floor layers can prevent direct pad contacts. Detect grounded
+			-- feet over its footprint too; both paths share the same landing latch.
+			task.spawn(function()
+				while pad.Parent do
+					task.wait(.05)
+					local player=s.Owner; local r=player and root(player)
+					if r then
+						local pos=pad.CFrame:PointToObjectSpace(r.Position)
+						if math.abs(pos.X)<=pad.Size.X/2 and math.abs(pos.Z)<=pad.Size.Z/2 and pos.Y>0 and pos.Y<6 then activate(player,true) end
+					end
+				end
+			end)
+		end
 	end
 	for _,count in ipairs({1,10,100,1000}) do button(plot.PurchaseButtons["Buy"..count],"Buy",count,"Buy "..count) end
 	button(plot.MergeBoard,"Merge",nil,"Merge matching desserts")

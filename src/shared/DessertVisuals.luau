@@ -2,13 +2,14 @@
 local Catalog=require(script.Parent.DessertCatalog)
 local Visuals={}
 local DISPLAY_SCALE=2
-local function imported(name,tier,shiny)
+local function imported(name,tier,shiny,variant,nativeShiny)
 	local folder=script.Parent:FindFirstChild("DessertModelTemplates")
 	local template=folder and folder:FindFirstChild(name)
 	if not template then return nil end
 	local m=template:Clone(); m.Name=Catalog[tier].Name
 	m:SetAttribute("Tier",tier); m:SetAttribute("Shiny",shiny)
-	if shiny then
+	m:SetAttribute("Variant",shiny and (variant or 1) or 0)
+	if shiny and not nativeShiny then
 		for _,part in ipairs(m:GetDescendants()) do
 			if part:IsA("BasePart") then part.Color=Color3.fromRGB(255,220,115) end
 		end
@@ -18,12 +19,14 @@ local function imported(name,tier,shiny)
 	end
 	return m
 end
-function Visuals.Build(tier,shiny)
-	if tier==1 then
-		local m=imported("NormalPudding",tier,shiny)
+function Visuals.Build(tier,shiny,variant)
+	if tier<=2 then
+		local name=tier==2 and "NormalCustard" or shiny and (variant==2 and "GalaxyPudding" or "MilkPudding") or "NormalPudding"
+		local m=imported(name,tier,shiny,variant,tier==1 and shiny)
 		if m then m:ScaleTo(m:GetScale()*DISPLAY_SCALE); return m end
 	end
 	local m=Instance.new("Model"); m.Name=Catalog[tier].Name; m:SetAttribute("Tier",tier); m:SetAttribute("Shiny",shiny)
+	m:SetAttribute("Variant",shiny and (variant or 1) or 0)
 	local tint=shiny and Color3.fromRGB(255,220,115) or Color3.fromHSV((tier*.071+.07)%1,.24,1)
 	if not shiny then
 		if tier==2 then tint=Color3.fromRGB(255,239,198)
@@ -107,12 +110,12 @@ function Visuals.Build(tier,shiny)
 	m:ScaleTo(m:GetScale()*DISPLAY_SCALE)
 	return m
 end
-function Visuals.BuildMini(tier,shiny)
-	if tier==1 then
-		local m=imported("MiniPudding",tier,shiny)
+function Visuals.BuildMini(tier,shiny,variant)
+	if tier<=2 then
+		local m=imported(tier==2 and "MiniCustard" or "MiniPudding",tier,shiny,variant)
 		if m then return m end
 	end
-	local m=Visuals.Build(tier,shiny); m:ScaleTo(m:GetScale()*.25/DISPLAY_SCALE)
+	local m=Visuals.Build(tier,shiny,variant); m:ScaleTo(m:GetScale()*.25/DISPLAY_SCALE)
 	return m
 end
 return Visuals

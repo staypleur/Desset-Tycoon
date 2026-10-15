@@ -4,7 +4,7 @@ local V=require(module)
 for _,mini in ipairs({false,true}) do
  for _,shiny in ipairs({false,true}) do
   local m=mini and V.BuildMini(1,shiny) or V.Build(1,shiny)
-  local expected=game.ReplicatedStorage.DessertModelTemplates[mini and "MiniPudding" or "NormalPudding"]
+  local expected=game.ReplicatedStorage.DessertModelTemplates[mini and "MiniPudding" or shiny and "MilkPudding" or "NormalPudding"]
   assert(m.PrimaryPart:IsA("MeshPart") and m.PrimaryPart.MeshId==expected.PrimaryPart.MeshId)
   local box,size=m:GetBoundingBox()
   assert(math.abs(size.Y-(mini and 18/28 or 5))<.001,"Imported height")
@@ -19,7 +19,7 @@ for _,mini in ipairs({false,true}) do
   m:Destroy()
  end
 end
-for tier=2,30 do
+for tier=3,30 do
  local normal=V.Build(tier,false);local mini=V.BuildMini(tier,false)
  local _,a=normal:GetBoundingBox();local _,b=mini:GetBoundingBox()
  -- Roblox clamps very small primitive dimensions to 0.05 studs.
@@ -27,4 +27,4 @@ for tier=2,30 do
  normal:Destroy();mini:Destroy()
 end
 module:Destroy()
-print("[PuddingModels] PASS: both imported meshes, heights, bottom pivots, shiny variants, companion scale, other 29 tiers")
+print("[PuddingModels] PASS: both imported meshes, heights, bottom pivots, shiny variants, companion scale, other procedural tiers")

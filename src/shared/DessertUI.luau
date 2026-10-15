@@ -34,7 +34,7 @@ function UI.Card(object,color,radius)
 	object.ZIndex=shadow.ZIndex+1
 end
 function UI.Icon(parent,key,size,pos)
-	local custom={Coins="CashIcon",Index="IndexIcon",Shop="ShopIcon",Crates="NormalCrate",Sparkles="ShinyIcon",Multiplier="MultiplierIcon"}
+	local custom={["Join Group"]="GroupJoin",Coins="CashIcon",Index="IndexIcon",Shop="ShopIcon",Crates="NormalCrate",Sparkles="ShinyIcon",Multiplier="MultiplierIcon"}
 	if custom[key] then return UserArt.Create(parent,custom[key],UDim2.fromOffset(size,size),pos) end
 	local image=Instance.new("ImageLabel"); image.Name="Icon"; image.BackgroundTransparency=1; image.Image=UI.Icons[key] or UI.Icons.Cake
 	image.ImageColor3=UI.Hapy[key] and Color3.new(1,1,1) or UI.Ink; image.Size=UDim2.fromOffset(size,size); image.Position=pos; image.ZIndex=parent.ZIndex+1; image.Parent=parent; return image

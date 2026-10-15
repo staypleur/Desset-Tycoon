@@ -2,8 +2,21 @@
 local Rules = {}
 local Config=require(script.Parent.TycoonConfig)
 local INTERVAL = Config.GiftInterval
-function Rules.Key(tier, shiny) return tostring(tier)..(shiny and "s" or "n") end
-function Rules.Decode(key) return tonumber(key:sub(1,-2)), key:sub(-1)=="s" end
+-- Keep the original shiny key (1s) for existing saves; the second variant is 1s2.
+function Rules.Key(tier, shiny, variant)
+	return tostring(tier)..(shiny and (variant==2 and "s2" or "s") or "n")
+end
+function Rules.Decode(key)
+	if type(key)~="string" then return nil end
+	local tier,suffix=key:match("^(%d+)([ns]%d*)$")
+	tier=tonumber(tier)
+	if not tier or tier<1 or tier>30 or (suffix~="n" and suffix~="s" and suffix~="s2") then return nil end
+	return tier,suffix~="n",suffix=="s2" and 2 or suffix=="s" and 1 or 0
+end
+function Rules.RollVariant(tier,shiny,rng)
+	if not shiny then return 0 end
+	return tier==1 and (rng:NextNumber()<.5 and 1 or 2) or 1
+end
 function Rules.New(now)
 	return {Version=2, Cash=0, Bag=0, Pending=0, CafeQueue=0, CafeLevel=0, Pets={["1n"]=1}, Index={["1n"]=true},
 		TotalCashEarned=0,TotalMiniCollected=0,PlaySeconds=0,AFKStored=0,OfflineStored=0,LastSeen=now,
@@ -53,8 +66,8 @@ end
 -- Use exactly the same 60-slot ordering as the displayed producer models.
 function Rules.ProductionPerSecond(data)
 	local slots,value=0,0
-	for tier=1,30 do for _,shiny in ipairs({false,true}) do
-		local count=math.min(data.Pets[Rules.Key(tier,shiny)] or 0,Config.Capacity-slots)
+	for tier=1,30 do for variant=0,2 do
+		local count=math.min(data.Pets[Rules.Key(tier,variant>0,variant)] or 0,Config.Capacity-slots)
 		slots+=count; value+=count*3^(tier-1)
 	end end
 	return value/Config.ProductionInterval
@@ -70,7 +83,7 @@ function Rules.CafeRate(data) return Config.CafeBaseRate*Config.CafeRateGrowth^d
 function Rules.CafeUpgradeCost(data) return Config.CafeUpgradeBaseCost*Config.CafeUpgradeCostGrowth^data.CafeLevel end
 -- Companion selection is independent of the producing desserts on the plot.
 function Rules.ToggleEquip(data,key)
-	if type(key)~="string" or not data.Index[key] then return false end
+	if not Rules.Decode(key) or not data.Index[key] then return false end
 	data.Equipped=data.Equipped~=key and key or nil
 	return true
 end
@@ -95,21 +108,22 @@ function Rules.UpgradeCafe(data)
 	if data.Cash<cost then return false,"Not enough cash for converter upgrade" end
 	data.Cash-=cost; data.CafeLevel+=1; return true
 end
-function Rules.Add(data,tier,shiny,count,discoveries)
-	local key=Rules.Key(tier,shiny)
+function Rules.Add(data,tier,shiny,count,discoveries,variant)
+	variant=shiny and (variant==2 and 2 or 1) or 0
+	local key=Rules.Key(tier,shiny,variant)
 	data.Pets[key]=(data.Pets[key] or 0)+(count or 1)
 	if not data.Index[key] then
 		data.Index[key]=true
-		if discoveries then table.insert(discoveries,{Tier=tier,Shiny=shiny}) end
+		if discoveries then table.insert(discoveries,{Tier=tier,Shiny=shiny,Variant=variant,Key=key}) end
 	end
 end
 function Rules.Merge(data,discoveries)
-	for tier=1,29 do for _,shiny in ipairs({false,true}) do
-		local key=Rules.Key(tier,shiny)
+	for tier=1,29 do for variant=0,2 do
+		local shiny=variant>0; local key=Rules.Key(tier,shiny,variant)
 		local count=data.Pets[key] or 0
 		local nextCount=math.floor(count/3)
 		data.Pets[key]=count%3
-		if nextCount>0 then Rules.Add(data,tier+1,shiny,nextCount,discoveries) end
+		if nextCount>0 then Rules.Add(data,tier+1,shiny,nextCount,discoveries,variant) end
 	end end
 end
 function Rules.Count(data)
@@ -151,7 +165,10 @@ function Rules.Buy(data,count,rng,luck,autoMerge,friendBonus)
 	if data.Cash<cost then return false,"Not enough cash" end
 	local trial={Pets=table.clone(data.Pets), Index=table.clone(data.Index)}
 	local discoveries={}
-	for _=1,count do Rules.Add(trial,1,rng:NextNumber()<Rules.ShinyChance("Normal",luck,friendBonus),1,discoveries) end
+	for _=1,count do
+		local shiny=rng:NextNumber()<Rules.ShinyChance("Normal",luck,friendBonus)
+		Rules.Add(trial,1,shiny,1,discoveries,Rules.RollVariant(1,shiny,rng))
+	end
 	if count>1 or autoMerge then Rules.Merge(trial,discoveries) end
 	if Rules.Count(trial)>Config.Capacity then return false,"Plates are full. Merge desserts first." end
 	data.Pets,data.Index=trial.Pets,trial.Index
@@ -176,8 +193,9 @@ function Rules.Roll(data,kind,rng,luck,discoveries,friendBonus)
 		sum+=odds[tier] or 0
 		if roll<sum or tier==lastTier then
 			local shiny=rng:NextNumber()<Rules.ShinyChance(kind,luck,friendBonus)
-			Rules.Add(data,tier,shiny,1,discoveries)
-			return {Tier=tier,Shiny=shiny}
+			local variant=Rules.RollVariant(tier,shiny,rng)
+			Rules.Add(data,tier,shiny,1,discoveries,variant)
+			return {Tier=tier,Shiny=shiny,Variant=variant,Key=Rules.Key(tier,shiny,variant)}
 		end
 	end
 end

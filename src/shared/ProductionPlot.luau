@@ -24,8 +24,27 @@ local function sign(p,text)
 	t.Text=text; t.TextColor3=Color3.fromRGB(101,64,89); t.Font=Enum.Font.GothamBold; t.TextScaled=true; t.Parent=g
 end
 function Layout.ChannelHeight(z,rise) return .3+math.clamp((z+7)/62,0,1)*(.65+(rise or 0)) end
+-- Preserve the first side as seen from the entrance, then fill its opposite row
+-- before moving backwards: right row 1, left row 1, right row 2, left row 2.
+function Layout.ReorderSlots(plot)
+	local pads=plot:FindFirstChild("PetSpawnPads"); if not pads then return end
+	local ordered={}
+	for _,pad in ipairs(pads:GetChildren()) do
+		local row,column=pad:GetAttribute("Row"),pad:GetAttribute("Column")
+		if row and column then
+			local sideIndex=pad:GetAttribute("Side")=="Left" and 0 or 1
+			local slot=(row-1)*12+sideIndex*6+column
+			table.insert(ordered,{Pad=pad,Slot=slot})
+		end
+	end
+	for _,item in ipairs(ordered) do item.Pad.Name="ReorderingPad"..item.Slot end
+	for _,item in ipairs(ordered) do item.Pad.Name="PetPad"..item.Slot;item.Pad:SetAttribute("SlotIndex",item.Slot) end
+end
 function Layout.Apply(island)
-	if island:GetAttribute("ProductionPlotVersion")==1 then return end
+	if island:GetAttribute("ProductionPlotVersion")==1 then
+		for _,plot in ipairs(island.PlayerPlots:GetChildren()) do Layout.ReorderSlots(plot) end
+		return
+	end
 	for i=1,6 do
 		local plot=island.PlayerPlots["Plot"..i]; local cf=plot:GetPivot()
 		local function at(x,y,z) return cf*CFrame.new(x,y,z) end
@@ -38,7 +57,7 @@ function Layout.Apply(island)
 			local slope=part(belts,"FeedSlope",Vector3.new(3.4,height,40),at(side*24,low+height/2,laneZ)*CFrame.Angles(0,side*math.pi/2,0),pink,"WedgePart")
 			slope:SetAttribute("FlowDirection",side<0 and "Right" or "Left")
 			for column=1,6 do
-				local slot=(sideIndex-1)*30+(row-1)*6+column; local x=side*(10+(column-1)*6.2)
+				local slot=(row-1)*12+(sideIndex-1)*6+column; local x=side*(10+(column-1)*6.2)
 				local pad=part(pads,"PetPad"..slot,Vector3.new(.16,4.9,4.9),at(x,2.35,z)*CFrame.Angles(0,0,math.pi/2),cream)
 				pad.Shape=Enum.PartType.Cylinder
 				pad:SetAttribute("SlotIndex",slot); pad:SetAttribute("Row",row); pad:SetAttribute("Column",column)
