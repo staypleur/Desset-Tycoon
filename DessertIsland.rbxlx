@@ -1796410,6 +1796410,8 @@ local function text(parent,label,size,pos)
 	t.TextColor3=colors.Text; t.TextSize=20; t.TextWrapped=true; t.BackgroundTransparency=1; t.ZIndex=parent.ZIndex+1; t.Parent=parent; return t
 end
 local click=Instance.new("Sound"); click.Name="DessertClick"; click.SoundId=Config.ClickSoundId; click.Volume=.3; click.Parent=SoundService
+local pickupSound=Instance.new("Sound"); pickupSound.Name="DessertPickup"; pickupSound.SoundId=Config.PickupSoundId; pickupSound.PlaybackSpeed=1.5; pickupSound.Volume=.2; pickupSound.Parent=SoundService
+local lastPickup=-math.huge
 local revealSound=Instance.new("Sound"); revealSound.Name="DessertDiscovery"; revealSound.SoundId=Config.DiscoverySoundId; revealSound.Volume=.3; revealSound.Parent=SoundService
 local music=Instance.new("Sound"); music.Name="DessertCafeMusic"; music.SoundId=Config.MusicId; music.Volume=.12; music.Looped=true; music.Parent=SoundService
 local audioDraft,volumeControls={},{}
@@ -1796419,7 +1796421,7 @@ local function volumeValue(key)
 end
 local function applyAudio()
 	music.Volume=.3*volumeValue("Music")
-	click.Volume=.6*volumeValue("Effects"); revealSound.Volume=click.Volume
+	click.Volume=.6*volumeValue("Effects"); revealSound.Volume=click.Volume; pickupSound.Volume=.45*volumeValue("Effects")
 	if music.Volume>0 then
 		if not music.Playing then if music.TimePosition>0 then music:Resume() else music:Play() end end
 	elseif music.Playing then music:Pause() end
@@ -1796618,7 +1796620,7 @@ show=function(name)
 				mystery.AnchorPoint=Vector2.new(.5,.5); mystery.Name="MysteryMark"; mystery.TextSize=58
 			end
 			text(card,owned and DessertImages.Name(tier,shiny,variant) or "Undiscovered",UDim2.new(1,-8,0,26),UDim2.fromOffset(4,126)).TextSize=((tier==9 or tier==13 or tier==14 or tier==15 or tier>=17) and shiny) and 10 or (shiny and 12 or 14)
-			if owned then button(card,data.Equipped==key and "Unequip" or "Equip",UDim2.new(1,-16,0,32),UDim2.fromOffset(8,152),function() request("Equip",key) end,colors.Mint) end
+			if owned then local equipButton=button(card,data.Equipped==key and "Unequip" or "Equip",UDim2.new(1,-16,0,32),UDim2.fromOffset(8,152),function() request("Equip",key) end,colors.Mint); equipButton.Name="TutorialEquip"..key end
 		end end
 	elseif name=="Join Group" then
 		local claimed=data.CommunityRewardClaimed
@@ -1796709,7 +1796711,7 @@ show=function(name)
 end
 local communityButton=button(gui,"Join Group",UDim2.fromOffset(118,54),UDim2.new(0,18,.5,-132),function() show("Join Group") end,colors.Pink,true)
 communityButton.Name="JoinGroupButton"
-button(gui,"Index",UDim2.fromOffset(118,54),UDim2.new(0,18,.5,-70),function() show("Index") end,colors.Pink,true)
+local indexButton=button(gui,"Index",UDim2.fromOffset(118,54),UDim2.new(0,18,.5,-70),function() show("Index") end,colors.Pink,true)
 button(gui,"Shop",UDim2.fromOffset(118,48),UDim2.new(0,18,.5,-8),function() show("Shop") end,colors.Mint,true)
 local topbar=Instance.new("ScreenGui"); topbar.Name="DessertTopbar"; topbar.IgnoreGuiInset=true; topbar.ResetOnSpawn=false; topbar.Parent=screen.Parent
 local microphone=Instance.new("ImageButton"); microphone.Name="MicrophoneButton"; microphone.Size=UDim2.fromOffset(56,56)
@@ -1796813,7 +1796815,11 @@ local function transfer(kind,start,finish)
 	table.insert(transfers,{Model=model,Start=start+Vector3.new(0,2,0),Finish=finish+Vector3.new(0,2,0),Time=os.clock(),Duration=kind=="CafeCash" and 1.8 or .8})
 end
 event.OnClientEvent:Connect(function(kind,value,message)
-	if kind=="State" then
+	if kind=="Pickup" then
+		if os.clock()-lastPickup>=.12 and volumeValue("Effects")>0 then
+			lastPickup=os.clock(); pickupSound.TimePosition=0; pickupSound:Play()
+		end
+	elseif kind=="State" then
 		local previousIndex=data and data.Index or {}
 		local previousEquipped=data and data.Equipped
 		local previousHighest=data and data.Highest
@@ -1796955,6 +1796961,9 @@ task.spawn(function()
 		data=state; updateShinyChance(); cash.Text="$"..format(data.Cash); bag.Text=format(data.Bag); boost.Text="×"..data.Multiplier; applySettings(); break
 	end; task.wait(1) end
 end)
+
+indexButton.Name="TutorialIndexButton"
+require(RS:WaitForChild("DessertTutorial")).Start(screen,function() return data end)
 ]]></ProtectedString>
 					<bool name="Disabled">false</bool>
 					<Content name="LinkedSource"><null></null></Content>
@@ -1797888,12 +1797897,14 @@ function Rules.RollVariant(tier,shiny,rng)
 	return rng:NextNumber()<.5 and 1 or 2
 end
 function Rules.New(now)
-	return {Version=2, Cash=0, Bag=0, Pending=0, CafeQueue=0, CafeLevel=0, Pets={["1n"]=1}, Index={["1n"]=true},
+	return {Version=2, TutorialStep=1, Cash=0, Bag=0, Pending=0, CafeQueue=0, CafeLevel=0, Pets={["1n"]=1}, Index={["1n"]=true},
 		TotalCashEarned=0,TotalMiniCollected=0,PlaySeconds=0,AFKStored=0,OfflineStored=0,LastSeen=now,
 		NormalTokens=0, PerkTokens=0, PaidNormalTokens=0, PaidPerkTokens=0, NextGift=now+INTERVAL, AFKSeconds=0,
 		Settings={Music=true, Effects=true, MusicVolume=.4, EffectsVolume=.5, HideOthers=false}, Receipts={}, HotUntil=0}
 end
 function Rules.NormalizeCafe(data)
+	-- Missing marker means a pre-tutorial save, never replay onboarding for veterans.
+	data.TutorialStep=type(data.TutorialStep)=="number" and math.clamp(math.floor(data.TutorialStep),1,11) or 11
 	data.CafeQueue=math.max(0,data.CafeQueue or 0)
 	data.CafeLevel=math.clamp(math.floor(data.CafeLevel or 0),0,Config.CafeMaxLevel)
 	data.Version=2
@@ -1797949,15 +1797960,54 @@ function Rules.AccrueOffline(data,now,multiplier)
 	return earned
 end
 -- Capacity is queued units per SECOND; no percentage of the remaining queue.
-function Rules.CafeRate(data) return Config.CafeBaseRate*Config.CafeRateGrowth^data.CafeLevel end
-function Rules.CafeUpgradeCost(data) return Config.CafeUpgradeBaseCost*Config.CafeUpgradeCostGrowth^data.CafeLevel end
+function Rules.UnlockedTier(data)
+	local tier=1
+	for key,owned in pairs(data.Index) do if owned then tier=math.max(tier,Rules.Decode(key) or 1) end end
+	return tier
+end
+function Rules.CafeRate(data) return Config.CafeBaseRate*3^(Rules.UnlockedTier(data)-1)*Config.CafeRateGrowth^data.CafeLevel end
+function Rules.CafeUpgradeCost(data) return Config.CafeUpgradeBaseCost*3^(Rules.UnlockedTier(data)-1)*Config.CafeUpgradeCostGrowth^data.CafeLevel end
 -- Companion selection is independent of the producing desserts on the plot.
 function Rules.ToggleEquip(data,key)
 	if not Rules.Decode(key) or not data.Index[key] then return false end
 	data.Equipped=data.Equipped~=key and key or nil
 	return true
 end
-function Rules.BuyCost(count) return Config.BuyCosts[count] end
+function Rules.Equivalent(data)
+	local total=0
+	for key,count in pairs(data.Pets) do local tier=Rules.Decode(key); if tier then total+=count*3^(tier-1) end end
+	return total
+end
+function Rules.BuyTier(data) return math.max(1,Rules.UnlockedTier(data)-6) end
+function Rules.BuyQuantity(count,data) return count*3^(Rules.BuyTier(data)-1) end
+function Rules.BuyCost(count,data)
+	if not Config.BuyCosts[count] then return nil end
+	if not data then return Config.BuyCosts[count] end -- Unowned pads show starter prices.
+	local start=Rules.Equivalent(data); local remaining=Rules.BuyQuantity(count,data); local cost=0
+	for tier=1,30 do
+		local boundary=tier==30 and math.huge or 3^tier
+		if start<boundary and remaining>0 then
+			local units=math.min(remaining,boundary-start)
+			local hours=(Config.ProgressionHours[math.min(30,tier+1)]-Config.ProgressionHours[math.min(29,tier)])
+			local price=tier==1 and Config.PuddingCost or hours*3600/(Config.ProductionInterval*math.log(3)) * Config.ProgressionCostScale
+			cost+=units*price; start+=units; remaining-=units
+		end
+	end
+	return cost*Config.BuyDiscounts[count]
+end
+function Rules.TutorialEvent(data,event)
+	local step=data.TutorialStep or 11
+	local expected=({"Pickup","Deposit","Collect","Buy","Pickup","Deposit","Collect","Buy","Merge","Equip"})[step]
+	if event~=expected then return false end
+	if event=="Pickup" and data.Bag<10 then return false end
+	if event=="Collect" and data.Cash<Rules.BuyCost(1,data) then return false end
+	if event=="Merge" and not (data.Index["2n"] or data.Index["2s"] or data.Index["2s2"]) then return false end
+	if event=="Equip" and data.Equipped~="1n" then return false end
+	data.TutorialStep=step+1
+	-- A player who already selected Pudding should never be guided to unequip it.
+	if data.TutorialStep==10 and data.Equipped=="1n" then data.TutorialStep=11 end
+	return true
+end
 function Rules.Deposit(data,multiplier)
 	local amount=math.max(0,data.Bag)
 	local credited=amount*(multiplier or 1)
@@ -1797987,14 +1798037,26 @@ function Rules.Add(data,tier,shiny,count,discoveries,variant)
 		if discoveries then table.insert(discoveries,{Tier=tier,Shiny=shiny,Variant=variant,Key=key}) end
 	end
 end
-function Rules.Merge(data,discoveries)
-	for tier=1,29 do for variant=0,2 do
-		local shiny=variant>0; local key=Rules.Key(tier,shiny,variant)
-		local count=data.Pets[key] or 0
-		local nextCount=math.floor(count/3)
-		data.Pets[key]=count%3
-		if nextCount>0 then Rules.Add(data,tier+1,shiny,nextCount,discoveries,variant) end
-	end end
+function Rules.Merge(data,discoveries,rng,luck,friendBonus)
+	rng=rng or Random.new()
+	local chance=Rules.ShinyChance("Normal",luck,friendBonus)
+	for tier=1,29 do
+		local total=0
+		for variant=0,2 do total+=data.Pets[Rules.Key(tier,variant>0,variant)] or 0 end
+		local nextCount=math.floor(total/3)
+		-- Consume normals first, preserving rare leftovers when possible. Result odds
+		-- are rolled independently; even three identical shinies confer no bonus.
+		local consume=nextCount*3
+		for variant=0,2 do
+			local key=Rules.Key(tier,variant>0,variant)
+			local used=math.min(data.Pets[key] or 0,consume)
+			data.Pets[key]=(data.Pets[key] or 0)-used; consume-=used
+		end
+		for _=1,nextCount do
+			local shiny=rng:NextNumber()<chance
+			Rules.Add(data,tier+1,shiny,1,discoveries,Rules.RollVariant(tier+1,shiny,rng))
+		end
+	end
 end
 function Rules.Count(data)
 	local count=0; for _,n in pairs(data.Pets) do count+=n end; return count
@@ -1798031,15 +1798093,16 @@ function Rules.CanBuyPass(passes,key)
 end
 function Rules.Buy(data,count,rng,luck,autoMerge,friendBonus)
 	if count~=1 and count~=10 and count~=100 and count~=1000 then return false,"Invalid quantity" end
-	local cost=Rules.BuyCost(count)
+	local cost=Rules.BuyCost(count,data)
 	if data.Cash<cost then return false,"Not enough cash" end
 	local trial={Pets=table.clone(data.Pets), Index=table.clone(data.Index)}
 	local discoveries={}
+	local buyTier=Rules.BuyTier(data)
 	for _=1,count do
 		local shiny=rng:NextNumber()<Rules.ShinyChance("Normal",luck,friendBonus)
-		Rules.Add(trial,1,shiny,1,discoveries,Rules.RollVariant(1,shiny,rng))
+		Rules.Add(trial,buyTier,shiny,1,discoveries,Rules.RollVariant(buyTier,shiny,rng))
 	end
-	if count>1 or autoMerge then Rules.Merge(trial,discoveries) end
+	if count>1 or autoMerge then Rules.Merge(trial,discoveries,rng,luck,friendBonus) end
 	if Rules.Count(trial)>Config.Capacity then return false,"Plates are full. Merge desserts first." end
 	data.Pets,data.Index=trial.Pets,trial.Index
 	data.Cash-=cost
@@ -1821283,6 +1821346,10 @@ local Config = {
 	ProductionInterval = 3,
 	PuddingCost = 5,
 	BuyCosts = {[1]=5, [10]=48, [100]=450, [1000]=4000},
+	-- Cumulative active F2P hours; collection/sale/bank cycle reference is 60 seconds.
+	ProgressionHours = {0,.05,.2,.55,1.2,2.4,4.2,6.8,10.2,15,18.9,23.2,27.9,33,38.5,44.4,50.7,57.4,64.5,72,79.8,88,96.6,105.6,115,124.8,135,145.6,156.6,168},
+	BuyDiscounts = {[1]=1,[10]=.98,[100]=.96,[1000]=.94},
+	ProgressionCostScale = .97,
 	MaxDrops = 100,
 	IdleCameraNudgeEnabled = true, -- Experimental; user will verify in published game.
 	IdleCameraStartSeconds = 120,
@@ -1821308,6 +1821375,7 @@ local Config = {
 	HotTimeMultiplier = 2,
 	MusicId = "rbxassetid://73635875504187", -- Approved Smooth Focus Rain Melody / DistrokidOfficial.
 	ClickSoundId = "rbxasset://sounds/volume_slider.ogg",
+	PickupSoundId = "rbxasset://sounds/volume_slider.ogg",
 	DiscoverySoundId = "rbxassetid://158050602",
 	Products = {
 		Normal1 = {Id=0, Price=9, Count=1, Crate="Normal"},
@@ -1821347,6 +1821415,118 @@ return Config
 				<int64 name="SourceAssetId">-1</int64>
 				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 				<UniqueId name="UniqueId">24be45843d2709660ae0e4c00002cb89</UniqueId>
+			</Properties>
+		</Item>
+		<Item class="ModuleScript" referent="RBXCF7D94CD2AC544929797A9C1C3F34A4B">
+			<Properties>
+				<Content name="LinkedSource"><null></null></Content>
+				<ProtectedString name="Source"><![CDATA[-- Client-only, noninteractive guidance. Progress is saved and validated by the server.
+local Tutorial={}
+function Tutorial.Start(screen,getData)
+	local player=game:GetService("Players").LocalPlayer
+	local Run=game:GetService("RunService")
+	local folder=Instance.new("Folder"); folder.Name="DessertTutorialArrows"; folder.Parent=workspace
+	local arrows={}
+	for i=1,12 do
+		local model=Instance.new("Model"); model.Name="Arrow"..i; model.Parent=folder
+		for side=-1,1,2 do
+			local p=Instance.new("Part"); p.Name="Chevron"; p.Size=Vector3.new(.35,.1,1.7)
+			p.Anchored=true; p.CanCollide=false; p.CanTouch=false; p.CanQuery=false
+			p.Material=Enum.Material.Neon; p.Color=Color3.fromRGB(255,215,103); p.Transparency=1; p.Parent=model
+			p:SetAttribute("Side",side)
+		end
+		arrows[i]=model
+	end
+	local marker=Instance.new("BillboardGui"); marker.Name="TutorialTarget"; marker.Size=UDim2.fromOffset(70,80)
+	marker.AlwaysOnTop=true; marker.StudsOffset=Vector3.new(0,5,0); marker.Parent=screen
+	local glyph=Instance.new("TextLabel"); glyph.Size=UDim2.fromScale(1,1); glyph.BackgroundTransparency=1
+	glyph.Text="▼"; glyph.TextColor3=Color3.fromRGB(255,215,103); glyph.TextStrokeTransparency=.2; glyph.TextSize=62; glyph.Parent=marker
+	local pointer=glyph:Clone(); pointer.Name="TutorialMenuArrow"; pointer.Size=UDim2.fromOffset(54,54); pointer.AnchorPoint=Vector2.new(.5,1); pointer.ZIndex=100; pointer.Visible=false; pointer.Parent=screen
+	local lastEquip,elapsed=nil,0
+	local connection
+	local function hide()
+		for _,m in ipairs(arrows) do for _,p in ipairs(m:GetChildren()) do p.Transparency=1 end end
+		marker.Enabled=false; pointer.Visible=false
+	end
+	connection=Run.Heartbeat:Connect(function(dt)
+		elapsed+=dt; if elapsed<.1 then return end; elapsed=0
+		local d=getData(); if not d then hide(); return end
+		local step=d.TutorialStep or 11
+		screen:SetAttribute("TutorialStep",step)
+		if step>=11 then hide(); folder:Destroy(); marker:Destroy(); pointer:Destroy(); connection:Disconnect(); return end
+		hide()
+		if step==10 then
+			local equip=screen:FindFirstChild("TutorialEquip1n",true)
+			local target=screen:FindFirstChild("TutorialIndexButton",true)
+			if equip then
+				local visible=true; local parent=equip.Parent
+				while parent and parent~=screen do
+					if parent:IsA("GuiObject") and not parent.Visible then visible=false end
+					if parent:IsA("ScrollingFrame") and equip~=lastEquip then parent.CanvasPosition=Vector2.zero end
+					parent=parent.Parent
+				end
+				if visible then target=equip; lastEquip=equip end
+			end
+			if target then pointer.Visible=true; pointer.Position=UDim2.fromOffset(target.AbsolutePosition.X+target.AbsoluteSize.X/2,target.AbsolutePosition.Y+math.sin(os.clock()*4)*5) end
+			return
+		end
+		local island=workspace:FindFirstChild("DessertJellyIsland")
+		local plot=island and island.PlayerPlots:FindFirstChild("Plot"..tostring(d.PlotId))
+		local r=player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+		if not plot or not r then return end
+		local target
+		if step==1 or step==5 then
+			target=plot.Conveyors:FindFirstChild("Collector")
+			if d.AFKStored>0 then target=plot.DessertBaskets.AFKAnchor
+			elseif d.OfflineStored>0 then target=plot.DessertBaskets.OfflineAnchor end
+		elseif step==2 or step==6 then target=island.CentralHub.DepositPads:FindFirstChild("Deposit"..d.PlotId)
+		elseif step==3 or step==7 then target=plot.PersonalShopArea.CollectIncome
+		elseif step==4 or step==8 then target=plot.PurchaseButtons.Buy1
+		elseif step==9 then target=plot.MergeBoard end
+		if not target then return end
+		marker.Adornee=target; marker.Enabled=true; marker.StudsOffset=Vector3.new(0,5+math.sin(os.clock()*4)*.4,0)
+		-- Lead through the open central aisle and entrance when crossing the bridge.
+		local cf=plot:GetPivot(); local localPos=cf:PointToObjectSpace(r.Position)
+		local destination=target.Position
+		if step==2 or step==6 then
+			if localPos.Z>-54 then destination=cf:PointToWorldSpace(Vector3.new(0,0,-58)) end
+		elseif localPos.Z< -62 then destination=cf:PointToWorldSpace(Vector3.new(0,0,-55)) end
+		local direction=Vector3.new(destination.X-r.Position.X,0,destination.Z-r.Position.Z)
+		if direction.Magnitude<1 then return end
+		local distance=direction.Magnitude; direction=direction.Unit
+		local params=RaycastParams.new(); params.FilterType=Enum.RaycastFilterType.Exclude
+		params.FilterDescendantsInstances={folder,player.Character}
+		for i,m in ipairs(arrows) do
+			local offset=2+(i-1)*3
+			if offset<distance then
+				local pos=r.Position+direction*offset
+				local hit=workspace:Raycast(pos+Vector3.new(0,3,0),Vector3.new(0,-20,0),params)
+				if hit then
+					pos=Vector3.new(pos.X,hit.Position.Y+.12,pos.Z)
+					local base=CFrame.lookAt(pos,pos+direction)
+					for _,p in ipairs(m:GetChildren()) do
+						local side=p:GetAttribute("Side")
+						p.CFrame=base*CFrame.new(side*.5,0,.5)*CFrame.Angles(0,side*math.pi/4,0)
+						p.Transparency=.1+.2*(.5+.5*math.sin(os.clock()*5-i))
+					end
+				end
+			end
+		end
+	end)
+	screen.Destroying:Once(function() connection:Disconnect(); folder:Destroy() end)
+end
+return Tutorial
+]]></ProtectedString>
+				<string name="ScriptGuid">{CA384A70-26A7-4AAB-83C6-30AA18A7A82F}</string>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+				<bool name="DefinesCapabilities">false</bool>
+				<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+				<string name="Name">DessertTutorial</string>
+				<BinaryString name="SerializedOverrides"></BinaryString>
+				<int64 name="SourceAssetId">-1</int64>
+				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+				<UniqueId name="UniqueId">24be45843d2709660ae0e4c000043d97</UniqueId>
 			</Properties>
 		</Item>
 	</Item>
@@ -1822184,7 +1822364,7 @@ local function multiplier(p)
 end
 local function snapshot(player)
 &#9;local p=profiles[player]; if not p then return nil end; local d=p.Data
-&#9;return {Cash=d.Cash,Bag=d.Bag,Pending=d.Pending,CafeQueue=d.CafeQueue,CafeLevel=d.CafeLevel,
+&#9;return {TutorialStep=d.TutorialStep,Cash=d.Cash,Bag=d.Bag,Pending=d.Pending,CafeQueue=d.CafeQueue,CafeLevel=d.CafeLevel,
 &#9;&#9;AFKStored=d.AFKStored,OfflineStored=d.OfflineStored,TotalCashEarned=d.TotalCashEarned,TotalMiniCollected=d.TotalMiniCollected,PlaySeconds=d.PlaySeconds,
 &#9;&#9;CafeRate=Rules.CafeRate(d),CafeUpgradeCost=Rules.CafeUpgradeCost(d),Index=d.Index,Highest=Rules.Highest(d),
 &#9;&#9;NormalTokens=d.NormalTokens,PerkTokens=d.PerkTokens,PaidNormalTokens=d.PaidNormalTokens,PaidPerkTokens=d.PaidPerkTokens,NextGift=d.NextGift,AFKSeconds=d.AFKSeconds,
@@ -1822200,8 +1822380,8 @@ local function update(player,message)
 &#9;if s then
 &#9;&#9;for _,count in ipairs({1,10,100,1000}) do
 &#9;&#9;&#9;local pad=s.Plot.PurchaseButtons[&quot;Buy&quot;..count]
-&#9;&#9;&#9;UI.Pad(pad,p.Data.Cash,Rules.BuyCost(count))
-&#9;&#9;&#9;UI.Label(pad,&quot;Buy &quot;..count,&quot;$&quot;..UI.Format(Rules.BuyCost(count)),pad.Color)
+&#9;&#9;&#9;UI.Pad(pad,p.Data.Cash,Rules.BuyCost(count,p.Data))
+&#9;&#9;&#9;UI.Label(pad,&quot;Buy &quot;..UI.Format(Rules.BuyQuantity(count,p.Data)),&quot;$&quot;..UI.Format(Rules.BuyCost(count,p.Data)),pad.Color)
 &#9;&#9;end
 &#9;&#9;local baskets=s.Plot:FindFirstChild(&quot;DessertBaskets&quot;)
 &#9;&#9;if baskets then require(RS.DessertBaskets).Refresh(s.Plot,p.Data.AFKStored,p.Data.OfflineStored) end
@@ -1822269,6 +1822449,7 @@ local function perform(player,verb,arg)
 &#9;elseif verb==&quot;Activity&quot; then p.LastActivity=os.clock(); return true
 &#9;elseif verb==&quot;Equip&quot; then
 &#9;&#9;if not Rules.ToggleEquip(d,arg) then return false end
+&#9;&#9;Rules.TutorialEvent(d,&quot;Equip&quot;)
 &#9;&#9;if p.Companion then p.Companion:Destroy(); p.Companion=nil end
 &#9;&#9;if d.Equipped then
 &#9;&#9;&#9;local tier,shiny,variant=Rules.Decode(d.Equipped); local m=Visuals.Build(tier,shiny,variant); m:ScaleTo(m:GetScale()*.65)
@@ -1822278,6 +1822459,7 @@ local function perform(player,verb,arg)
 &#9;&#9;end
 &#9;&#9;update(player); return true
 &#9;elseif verb==&quot;Crate&quot; then
+&#9;&#9;if (d.TutorialStep or 11)&lt;11 then return false,&quot;Follow the arrows first&quot; end
 &#9;&#9;if type(arg)~=&quot;table&quot; or (arg.Kind~=&quot;Normal&quot; and arg.Kind~=&quot;Perk&quot;) or (arg.Count~=1 and arg.Count~=10) then return false end
 &#9;&#9;local key=arg.Kind==&quot;Perk&quot; and &quot;PerkTokens&quot; or &quot;NormalTokens&quot;
 &#9;&#9;local paidKey=&quot;Paid&quot;..key; local paid=d[paidKey] or 0
@@ -1822286,7 +1822468,7 @@ local function perform(player,verb,arg)
 &#9;&#9;local knownBefore=table.clone(d.Index); local highestBefore=Rules.Highest(d)
 &#9;&#9;local found={}; local results={}
 &#9;&#9;for _=1,arg.Count do table.insert(results,Rules.Roll(d,arg.Kind,rng,Rules.PassMultiplier(p.Passes,&quot;Luck&quot;),found,friendBonus(player,p))) end
-&#9;&#9;if p.Passes.AutoMerge then Rules.Merge(d,found) end
+&#9;&#9;if p.Passes.AutoMerge and (p.Data.TutorialStep or 11)&gt;=11 then Rules.Merge(d,found,rng,Rules.PassMultiplier(p.Passes,&quot;Luck&quot;),friendBonus(player,p)) end
 &#9;&#9;render(player)
 &#9;&#9;-- Rewards are already granted here. The carousel only presents these results.
 &#9;&#9;events:FireClient(player,&quot;Crates&quot;,{Results=results,KnownBefore=knownBefore,Discoveries=found,Highest=highestBefore,Kind=arg.Kind})
@@ -1822302,19 +1822484,28 @@ local function perform(player,verb,arg)
 &#9;end
 &#9;if not s or s.Owner~=player or s.Plot:GetAttribute(&quot;OwnerUserId&quot;)~=player.UserId then return false end
 &#9;local area=s.Plot.PersonalShopArea
+&#9;local step=d.TutorialStep or 11
+&#9;if step&lt;11 then
+&#9;&#9;if verb==&quot;Buy&quot; and ((step~=4 and step~=8) or arg~=1) then return false,&quot;Follow the arrows first&quot; end
+&#9;&#9;if verb==&quot;Merge&quot; and step~=9 then return false,&quot;Follow the arrows first&quot; end
+&#9;&#9;if verb==&quot;Upgrade&quot; then return false,&quot;Follow the arrows first&quot; end
+&#9;&#9;if (verb==&quot;Deposit&quot; or verb==&quot;Sell&quot;) and step~=2 and step~=6 then return false,&quot;Follow the arrows first&quot; end
+&#9;end
 &#9;if verb==&quot;Buy&quot; then
 &#9;&#9;if arg~=1 and arg~=10 and arg~=100 and arg~=1000 then return false end
 &#9;&#9;if not near(player,s.Plot.PurchaseButtons[&quot;Buy&quot;..arg]) then return false end
-&#9;&#9;local ok,result=Rules.Buy(d,arg,rng,Rules.PassMultiplier(p.Passes,&quot;Luck&quot;),p.Passes.AutoMerge,friendBonus(player,p))
-&#9;&#9;if ok then render(player); discoveries(player,result); update(player,&quot;Purchased &quot;..arg..&quot; puddings&quot;) else update(player,result) end; return ok
+&#9;&#9;local quantity=Rules.BuyQuantity(arg,d)
+&#9;&#9;local ok,result=Rules.Buy(d,arg,rng,Rules.PassMultiplier(p.Passes,&quot;Luck&quot;),p.Passes.AutoMerge and step&gt;=11,friendBonus(player,p))
+&#9;&#9;if ok then Rules.TutorialEvent(d,&quot;Buy&quot;); render(player); discoveries(player,result); update(player,&quot;Purchased &quot;..UI.Format(quantity)..&quot; pudding equivalents&quot;) else update(player,result) end; return ok
 &#9;elseif verb==&quot;Merge&quot; then
 &#9;&#9;if not near(player,s.Plot.MergeBoard) then return false end
-&#9;&#9;local found={}; Rules.Merge(d,found); render(player); discoveries(player,found); update(player,&quot;Matching desserts merged&quot;)
+&#9;&#9;local found={}; Rules.Merge(d,found,rng,Rules.PassMultiplier(p.Passes,&quot;Luck&quot;),friendBonus(player,p)); Rules.TutorialEvent(d,&quot;Merge&quot;); render(player); discoveries(player,found); update(player,&quot;Same-tier desserts merged&quot;)
 &#9;elseif verb==&quot;Deposit&quot; or verb==&quot;Sell&quot; then
 &#9;&#9;local pad=island.CentralHub.DepositPads[&quot;Deposit&quot;..player:GetAttribute(&quot;PlotId&quot;)]
 &#9;&#9;if not near(player,pad) then return false end
 &#9;&#9;refreshMarket()
 &#9;&#9;local amount,credited=Rules.Deposit(d,CafeMarket.Multiplier(market))
+&#9;&#9;if amount&gt;0 then Rules.TutorialEvent(d,&quot;Deposit&quot;) end
 &#9;&#9;-- Each owner&apos;s queue begins its own full two-second cycle after a deposit.
 &#9;&#9;if amount&gt;0 and not p.NextCafeTick then p.NextCafeTick=os.clock()+Config.CafeInterval end
 &#9;&#9;if amount&gt;0 then events:FireAllClients(&quot;CafeDelivery&quot;,pad.Position,island.CentralHub.CentralShop:GetPivot().Position) end
@@ -1822324,7 +1822515,7 @@ local function perform(player,verb,arg)
 &#9;&#9;local ok,message=Rules.UpgradeCafe(d); update(player,message or &quot;Converter upgraded&quot;); return ok
 &#9;elseif verb==&quot;Collect&quot; then
 &#9;&#9;if not near(player,area.CollectIncome) then return false end
-&#9;&#9;d.Cash+=d.Pending; d.Pending=0; update(player,&quot;Cash collected&quot;)
+&#9;&#9;d.Cash+=d.Pending; d.Pending=0; Rules.TutorialEvent(d,&quot;Collect&quot;); update(player,&quot;Cash collected&quot;)
 &#9;else return false end
 &#9;return true
 end
@@ -1822501,6 +1822692,7 @@ Run.Heartbeat:Connect(function(dt)
 &#9;if workspace:GetServerTimeNow()&gt;=market.NextChange then refreshMarket() end
 &#9;for _,s in ipairs(states) do local p=s.Owner and profiles[s.Owner]
 &#9;&#9;if p and not p.Busy and not p.Closing and not p.Faulted then
+&#9;&#9;&#9;local collectedBefore=p.Data.TotalMiniCollected
 &#9;&#9;&#9;for _,pet in ipairs(s.Pets) do if now&gt;=pet.Next then
 &#9;&#9;&#9;&#9;emit(s,pet,now)
 &#9;&#9;&#9;&#9;pet.Next=now+Config.ProductionInterval
@@ -1822523,10 +1822715,23 @@ Run.Heartbeat:Connect(function(dt)
 &#9;&#9;&#9;&#9;&#9;p.Data.AFKStored+=drop.Value;drop.Model:Destroy();table.remove(s.Drops,n);picked=true
 &#9;&#9;&#9;&#9;end
 &#9;&#9;&#9;end
+&#9;&#9;&#9;if p.Data.TotalMiniCollected&gt;collectedBefore then
+&#9;&#9;&#9;&#9;Rules.TutorialEvent(p.Data,&quot;Pickup&quot;)
+&#9;&#9;&#9;&#9;events:FireClient(s.Owner,&quot;Pickup&quot;)
+&#9;&#9;&#9;&#9;picked=true
+&#9;&#9;&#9;end
 &#9;&#9;&#9;if picked then update(s.Owner) end
 &#9;&#9;end
 &#9;end
 &#9;for player,p in pairs(profiles) do
+&#9;&#9;if (p.Data.TutorialStep==3 or p.Data.TutorialStep==7) and not p.Busy and not p.Closing and not p.Faulted then
+&#9;&#9;&#9;local s=stateFor(player); local r=root(player)
+&#9;&#9;&#9;local pad=s and s.Plot.PersonalShopArea.CollectIncome
+&#9;&#9;&#9;local pos=pad and r and pad.CFrame:PointToObjectSpace(r.Position)
+&#9;&#9;&#9;if pos and math.abs(pos.X)&lt;=pad.Size.X/2 and math.abs(pos.Z)&lt;=pad.Size.Z/2 and pos.Y&gt;0 and pos.Y&lt;6 then
+&#9;&#9;&#9;&#9;perform(player,&quot;Collect&quot;)
+&#9;&#9;&#9;end
+&#9;&#9;end
 &#9;&#9;if p.Passes.MoneyMagnet and not p.Busy and not p.Closing and not p.Faulted and p.Data.Pending&gt;0 then p.Data.Cash+=p.Data.Pending; p.Data.Pending=0; update(player) end
 &#9;&#9;-- Companions are cosmetic; each client follows the replicated character every render frame.
 &#9;&#9;if p.NextCafeTick and now&gt;=p.NextCafeTick and not p.Busy and not p.Closing and not p.Faulted then
@@ -1822544,7 +1822749,7 @@ Run.Heartbeat:Connect(function(dt)
 &#9;&#9;&#9;-- Include idle time spent waiting for a save instead of losing busy-frame seconds.
 &#9;&#9;&#9;local connectedSeconds=math.max(0,now-(p.LastPlayCheck or now))
 &#9;&#9;&#9;p.Data.PlaySeconds+=connectedSeconds; Rules.AFK(p.Data,connectedSeconds,p.Premium); p.LastPlayCheck=now
-&#9;&#9;&#9;if p.Passes.AutoMerge then local found={}; local before=Rules.Count(p.Data); Rules.Merge(p.Data,found); if before~=Rules.Count(p.Data) then render(player); discoveries(player,found) end end
+&#9;&#9;&#9;if p.Passes.AutoMerge and (p.Data.TutorialStep or 11)&gt;=11 then local found={}; local before=Rules.Count(p.Data); Rules.Merge(p.Data,found,rng,Rules.PassMultiplier(p.Passes,&quot;Luck&quot;),friendBonus(player,p)); if before~=Rules.Count(p.Data) then render(player); discoveries(player,found) end end
 &#9;&#9;&#9;update(player)
 &#9;&#9;end end
 &#9;end

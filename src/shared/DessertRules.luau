@@ -18,12 +18,14 @@ function Rules.RollVariant(tier,shiny,rng)
 	return rng:NextNumber()<.5 and 1 or 2
 end
 function Rules.New(now)
-	return {Version=2, Cash=0, Bag=0, Pending=0, CafeQueue=0, CafeLevel=0, Pets={["1n"]=1}, Index={["1n"]=true},
+	return {Version=2, TutorialStep=1, Cash=0, Bag=0, Pending=0, CafeQueue=0, CafeLevel=0, Pets={["1n"]=1}, Index={["1n"]=true},
 		TotalCashEarned=0,TotalMiniCollected=0,PlaySeconds=0,AFKStored=0,OfflineStored=0,LastSeen=now,
 		NormalTokens=0, PerkTokens=0, PaidNormalTokens=0, PaidPerkTokens=0, NextGift=now+INTERVAL, AFKSeconds=0,
 		Settings={Music=true, Effects=true, MusicVolume=.4, EffectsVolume=.5, HideOthers=false}, Receipts={}, HotUntil=0}
 end
 function Rules.NormalizeCafe(data)
+	-- Missing marker means a pre-tutorial save, never replay onboarding for veterans.
+	data.TutorialStep=type(data.TutorialStep)=="number" and math.clamp(math.floor(data.TutorialStep),1,11) or 11
 	data.CafeQueue=math.max(0,data.CafeQueue or 0)
 	data.CafeLevel=math.clamp(math.floor(data.CafeLevel or 0),0,Config.CafeMaxLevel)
 	data.Version=2
@@ -79,15 +81,54 @@ function Rules.AccrueOffline(data,now,multiplier)
 	return earned
 end
 -- Capacity is queued units per SECOND; no percentage of the remaining queue.
-function Rules.CafeRate(data) return Config.CafeBaseRate*Config.CafeRateGrowth^data.CafeLevel end
-function Rules.CafeUpgradeCost(data) return Config.CafeUpgradeBaseCost*Config.CafeUpgradeCostGrowth^data.CafeLevel end
+function Rules.UnlockedTier(data)
+	local tier=1
+	for key,owned in pairs(data.Index) do if owned then tier=math.max(tier,Rules.Decode(key) or 1) end end
+	return tier
+end
+function Rules.CafeRate(data) return Config.CafeBaseRate*3^(Rules.UnlockedTier(data)-1)*Config.CafeRateGrowth^data.CafeLevel end
+function Rules.CafeUpgradeCost(data) return Config.CafeUpgradeBaseCost*3^(Rules.UnlockedTier(data)-1)*Config.CafeUpgradeCostGrowth^data.CafeLevel end
 -- Companion selection is independent of the producing desserts on the plot.
 function Rules.ToggleEquip(data,key)
 	if not Rules.Decode(key) or not data.Index[key] then return false end
 	data.Equipped=data.Equipped~=key and key or nil
 	return true
 end
-function Rules.BuyCost(count) return Config.BuyCosts[count] end
+function Rules.Equivalent(data)
+	local total=0
+	for key,count in pairs(data.Pets) do local tier=Rules.Decode(key); if tier then total+=count*3^(tier-1) end end
+	return total
+end
+function Rules.BuyTier(data) return math.max(1,Rules.UnlockedTier(data)-6) end
+function Rules.BuyQuantity(count,data) return count*3^(Rules.BuyTier(data)-1) end
+function Rules.BuyCost(count,data)
+	if not Config.BuyCosts[count] then return nil end
+	if not data then return Config.BuyCosts[count] end -- Unowned pads show starter prices.
+	local start=Rules.Equivalent(data); local remaining=Rules.BuyQuantity(count,data); local cost=0
+	for tier=1,30 do
+		local boundary=tier==30 and math.huge or 3^tier
+		if start<boundary and remaining>0 then
+			local units=math.min(remaining,boundary-start)
+			local hours=(Config.ProgressionHours[math.min(30,tier+1)]-Config.ProgressionHours[math.min(29,tier)])
+			local price=tier==1 and Config.PuddingCost or hours*3600/(Config.ProductionInterval*math.log(3)) * Config.ProgressionCostScale
+			cost+=units*price; start+=units; remaining-=units
+		end
+	end
+	return cost*Config.BuyDiscounts[count]
+end
+function Rules.TutorialEvent(data,event)
+	local step=data.TutorialStep or 11
+	local expected=({"Pickup","Deposit","Collect","Buy","Pickup","Deposit","Collect","Buy","Merge","Equip"})[step]
+	if event~=expected then return false end
+	if event=="Pickup" and data.Bag<10 then return false end
+	if event=="Collect" and data.Cash<Rules.BuyCost(1,data) then return false end
+	if event=="Merge" and not (data.Index["2n"] or data.Index["2s"] or data.Index["2s2"]) then return false end
+	if event=="Equip" and data.Equipped~="1n" then return false end
+	data.TutorialStep=step+1
+	-- A player who already selected Pudding should never be guided to unequip it.
+	if data.TutorialStep==10 and data.Equipped=="1n" then data.TutorialStep=11 end
+	return true
+end
 function Rules.Deposit(data,multiplier)
 	local amount=math.max(0,data.Bag)
 	local credited=amount*(multiplier or 1)
@@ -117,14 +158,26 @@ function Rules.Add(data,tier,shiny,count,discoveries,variant)
 		if discoveries then table.insert(discoveries,{Tier=tier,Shiny=shiny,Variant=variant,Key=key}) end
 	end
 end
-function Rules.Merge(data,discoveries)
-	for tier=1,29 do for variant=0,2 do
-		local shiny=variant>0; local key=Rules.Key(tier,shiny,variant)
-		local count=data.Pets[key] or 0
-		local nextCount=math.floor(count/3)
-		data.Pets[key]=count%3
-		if nextCount>0 then Rules.Add(data,tier+1,shiny,nextCount,discoveries,variant) end
-	end end
+function Rules.Merge(data,discoveries,rng,luck,friendBonus)
+	rng=rng or Random.new()
+	local chance=Rules.ShinyChance("Normal",luck,friendBonus)
+	for tier=1,29 do
+		local total=0
+		for variant=0,2 do total+=data.Pets[Rules.Key(tier,variant>0,variant)] or 0 end
+		local nextCount=math.floor(total/3)
+		-- Consume normals first, preserving rare leftovers when possible. Result odds
+		-- are rolled independently; even three identical shinies confer no bonus.
+		local consume=nextCount*3
+		for variant=0,2 do
+			local key=Rules.Key(tier,variant>0,variant)
+			local used=math.min(data.Pets[key] or 0,consume)
+			data.Pets[key]=(data.Pets[key] or 0)-used; consume-=used
+		end
+		for _=1,nextCount do
+			local shiny=rng:NextNumber()<chance
+			Rules.Add(data,tier+1,shiny,1,discoveries,Rules.RollVariant(tier+1,shiny,rng))
+		end
+	end
 end
 function Rules.Count(data)
 	local count=0; for _,n in pairs(data.Pets) do count+=n end; return count
@@ -161,15 +214,16 @@ function Rules.CanBuyPass(passes,key)
 end
 function Rules.Buy(data,count,rng,luck,autoMerge,friendBonus)
 	if count~=1 and count~=10 and count~=100 and count~=1000 then return false,"Invalid quantity" end
-	local cost=Rules.BuyCost(count)
+	local cost=Rules.BuyCost(count,data)
 	if data.Cash<cost then return false,"Not enough cash" end
 	local trial={Pets=table.clone(data.Pets), Index=table.clone(data.Index)}
 	local discoveries={}
+	local buyTier=Rules.BuyTier(data)
 	for _=1,count do
 		local shiny=rng:NextNumber()<Rules.ShinyChance("Normal",luck,friendBonus)
-		Rules.Add(trial,1,shiny,1,discoveries,Rules.RollVariant(1,shiny,rng))
+		Rules.Add(trial,buyTier,shiny,1,discoveries,Rules.RollVariant(buyTier,shiny,rng))
 	end
-	if count>1 or autoMerge then Rules.Merge(trial,discoveries) end
+	if count>1 or autoMerge then Rules.Merge(trial,discoveries,rng,luck,friendBonus) end
 	if Rules.Count(trial)>Config.Capacity then return false,"Plates are full. Merge desserts first." end
 	data.Pets,data.Index=trial.Pets,trial.Index
 	data.Cash-=cost

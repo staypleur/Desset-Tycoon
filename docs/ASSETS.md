@@ -415,3 +415,7 @@ Files: assets/marketing/launch-v1/originals/ (six generated originals), ready-to
 Recommended starting combination: 01-icon-pudding and 03-banner-world. Alternative icon: 02-icon-galaxy. Supplemental promos: 04-promo-merge (three puddings to custard), 05-promo-shiny (normal and two croffle variants), 06-promo-factory (characters producing faceless minis). Recommendation is visual judgment; click-through performance has not yet been measured.
 
 Roblox size guidance checked: https://create.roblox.com/docs/production/publishing/experience-icons and https://create.roblox.com/docs/production/publishing/thumbnails. Six outputs visually inspected at original and reduced preview sizes; no text, clear main faces, correct intended proportions. Upload copies are under 3 MB each.
+
+## Tutorial and pickup feedback — 2026-10-16
+
+User explicitly requested arrow-based onboarding and mini-dessert pickup audio. Local neon chevrons and a down-arrow glyph are code-native guidance, created for that request; no imported models or scripts. Pickup audio reuses Roblox's bundled `rbxasset://sounds/volume_slider.ogg` (already used for approved click feedback), playback speed 1.5, effects-volume gain .45, .12-second minimum retrigger interval. No external audio upload or new marketplace dependency.

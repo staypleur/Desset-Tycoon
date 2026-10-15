@@ -6,10 +6,10 @@ local rng={NextNumber=function() return .5 end}
 local d=R.New(0); d.Cash=10000
 assert(R.Buy(d,1,rng,false) and R.Buy(d,1,rng,false))
 assert(d.Pets['1n']==3 and not d.Pets['2n'],'Buy 1 must not auto-merge')
-R.Merge(d); assert(d.Pets['2n']==1 and d.Pets['1n']==0)
+R.Merge(d,{},rng); assert(d.Pets['2n']==1 and d.Pets['1n']==0)
 for _,count in ipairs({10,100,1000}) do
- local p=R.New(0); p.Cash=10000; local before=p.Cash
- assert(R.Buy(p,count,rng,false)); assert(p.Cash==before-C.BuyCosts[count])
+ local p=R.New(0); p.Cash=1e12; local before=p.Cash;local cost=R.BuyCost(count,p)
+ assert(R.Buy(p,count,rng,false)); assert(p.Cash==before-cost)
  local units=0; for key,n in pairs(p.Pets) do local tier=R.Decode(key); units+=n*3^(tier-1); assert(tier==30 or n<3) end
  assert(units==count+1,'Bulk merge must conserve all logical desserts')
 end
@@ -33,7 +33,7 @@ assert(R.AccrueOffline(offline,120,2)==60 and offline.OfflineStored==60)
 assert(R.AccrueOffline(offline,120,2)==0,'Same timestamp must not duplicate offline credits')
 assert(R.AccrueOffline(offline,110,2)==0,'Clock going backwards must not subtract credits')
 local excess=R.New(0); excess.Pets={['1n']=60,['30n']=1}
-assert(R.ProductionPerSecond(excess)==20,'Hidden inventory must not earn offline production')
+assert(R.ProductionPerSecond(excess)==(3^29+59)/3,'Hidden inventory must not earn offline production')
 local island=workspace.DessertJellyIsland
 assert(island:GetAttribute('PromenadeVersion')>=2)
 for _,pad in ipairs(island:GetDescendants()) do local base=pad:IsA('BasePart') and pad:FindFirstChild('ButtonBase')

@@ -57,6 +57,8 @@ local function text(parent,label,size,pos)
 	t.TextColor3=colors.Text; t.TextSize=20; t.TextWrapped=true; t.BackgroundTransparency=1; t.ZIndex=parent.ZIndex+1; t.Parent=parent; return t
 end
 local click=Instance.new("Sound"); click.Name="DessertClick"; click.SoundId=Config.ClickSoundId; click.Volume=.3; click.Parent=SoundService
+local pickupSound=Instance.new("Sound"); pickupSound.Name="DessertPickup"; pickupSound.SoundId=Config.PickupSoundId; pickupSound.PlaybackSpeed=1.5; pickupSound.Volume=.2; pickupSound.Parent=SoundService
+local lastPickup=-math.huge
 local revealSound=Instance.new("Sound"); revealSound.Name="DessertDiscovery"; revealSound.SoundId=Config.DiscoverySoundId; revealSound.Volume=.3; revealSound.Parent=SoundService
 local music=Instance.new("Sound"); music.Name="DessertCafeMusic"; music.SoundId=Config.MusicId; music.Volume=.12; music.Looped=true; music.Parent=SoundService
 local audioDraft,volumeControls={},{}
@@ -66,7 +68,7 @@ local function volumeValue(key)
 end
 local function applyAudio()
 	music.Volume=.3*volumeValue("Music")
-	click.Volume=.6*volumeValue("Effects"); revealSound.Volume=click.Volume
+	click.Volume=.6*volumeValue("Effects"); revealSound.Volume=click.Volume; pickupSound.Volume=.45*volumeValue("Effects")
 	if music.Volume>0 then
 		if not music.Playing then if music.TimePosition>0 then music:Resume() else music:Play() end end
 	elseif music.Playing then music:Pause() end
@@ -265,7 +267,7 @@ show=function(name)
 				mystery.AnchorPoint=Vector2.new(.5,.5); mystery.Name="MysteryMark"; mystery.TextSize=58
 			end
 			text(card,owned and DessertImages.Name(tier,shiny,variant) or "Undiscovered",UDim2.new(1,-8,0,26),UDim2.fromOffset(4,126)).TextSize=((tier==9 or tier==13 or tier==14 or tier==15 or tier>=17) and shiny) and 10 or (shiny and 12 or 14)
-			if owned then button(card,data.Equipped==key and "Unequip" or "Equip",UDim2.new(1,-16,0,32),UDim2.fromOffset(8,152),function() request("Equip",key) end,colors.Mint) end
+			if owned then local equipButton=button(card,data.Equipped==key and "Unequip" or "Equip",UDim2.new(1,-16,0,32),UDim2.fromOffset(8,152),function() request("Equip",key) end,colors.Mint); equipButton.Name="TutorialEquip"..key end
 		end end
 	elseif name=="Join Group" then
 		local claimed=data.CommunityRewardClaimed
@@ -356,7 +358,7 @@ show=function(name)
 end
 local communityButton=button(gui,"Join Group",UDim2.fromOffset(118,54),UDim2.new(0,18,.5,-132),function() show("Join Group") end,colors.Pink,true)
 communityButton.Name="JoinGroupButton"
-button(gui,"Index",UDim2.fromOffset(118,54),UDim2.new(0,18,.5,-70),function() show("Index") end,colors.Pink,true)
+local indexButton=button(gui,"Index",UDim2.fromOffset(118,54),UDim2.new(0,18,.5,-70),function() show("Index") end,colors.Pink,true)
 button(gui,"Shop",UDim2.fromOffset(118,48),UDim2.new(0,18,.5,-8),function() show("Shop") end,colors.Mint,true)
 local topbar=Instance.new("ScreenGui"); topbar.Name="DessertTopbar"; topbar.IgnoreGuiInset=true; topbar.ResetOnSpawn=false; topbar.Parent=screen.Parent
 local microphone=Instance.new("ImageButton"); microphone.Name="MicrophoneButton"; microphone.Size=UDim2.fromOffset(56,56)
@@ -460,7 +462,11 @@ local function transfer(kind,start,finish)
 	table.insert(transfers,{Model=model,Start=start+Vector3.new(0,2,0),Finish=finish+Vector3.new(0,2,0),Time=os.clock(),Duration=kind=="CafeCash" and 1.8 or .8})
 end
 event.OnClientEvent:Connect(function(kind,value,message)
-	if kind=="State" then
+	if kind=="Pickup" then
+		if os.clock()-lastPickup>=.12 and volumeValue("Effects")>0 then
+			lastPickup=os.clock(); pickupSound.TimePosition=0; pickupSound:Play()
+		end
+	elseif kind=="State" then
 		local previousIndex=data and data.Index or {}
 		local previousEquipped=data and data.Equipped
 		local previousHighest=data and data.Highest
@@ -602,3 +608,6 @@ task.spawn(function()
 		data=state; updateShinyChance(); cash.Text="$"..format(data.Cash); bag.Text=format(data.Bag); boost.Text="×"..data.Multiplier; applySettings(); break
 	end; task.wait(1) end
 end)
+
+indexButton.Name="TutorialIndexButton"
+require(RS:WaitForChild("DessertTutorial")).Start(screen,function() return data end)

@@ -8,6 +8,10 @@ local Config = {
 	ProductionInterval = 3,
 	PuddingCost = 5,
 	BuyCosts = {[1]=5, [10]=48, [100]=450, [1000]=4000},
+	-- Cumulative active F2P hours; collection/sale/bank cycle reference is 60 seconds.
+	ProgressionHours = {0,.05,.2,.55,1.2,2.4,4.2,6.8,10.2,15,18.9,23.2,27.9,33,38.5,44.4,50.7,57.4,64.5,72,79.8,88,96.6,105.6,115,124.8,135,145.6,156.6,168},
+	BuyDiscounts = {[1]=1,[10]=.98,[100]=.96,[1000]=.94},
+	ProgressionCostScale = .97,
 	MaxDrops = 100,
 	IdleCameraNudgeEnabled = true, -- Experimental; user will verify in published game.
 	IdleCameraStartSeconds = 120,
@@ -33,6 +37,7 @@ local Config = {
 	HotTimeMultiplier = 2,
 	MusicId = "rbxassetid://73635875504187", -- Approved Smooth Focus Rain Melody / DistrokidOfficial.
 	ClickSoundId = "rbxasset://sounds/volume_slider.ogg",
+	PickupSoundId = "rbxasset://sounds/volume_slider.ogg",
 	DiscoverySoundId = "rbxassetid://158050602",
 	Products = {
 		Normal1 = {Id=0, Price=9, Count=1, Crate="Normal"},

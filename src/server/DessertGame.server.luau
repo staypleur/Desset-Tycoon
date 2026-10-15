@@ -56,7 +56,7 @@ local function multiplier(p)
 end
 local function snapshot(player)
 	local p=profiles[player]; if not p then return nil end; local d=p.Data
-	return {Cash=d.Cash,Bag=d.Bag,Pending=d.Pending,CafeQueue=d.CafeQueue,CafeLevel=d.CafeLevel,
+	return {TutorialStep=d.TutorialStep,Cash=d.Cash,Bag=d.Bag,Pending=d.Pending,CafeQueue=d.CafeQueue,CafeLevel=d.CafeLevel,
 		AFKStored=d.AFKStored,OfflineStored=d.OfflineStored,TotalCashEarned=d.TotalCashEarned,TotalMiniCollected=d.TotalMiniCollected,PlaySeconds=d.PlaySeconds,
 		CafeRate=Rules.CafeRate(d),CafeUpgradeCost=Rules.CafeUpgradeCost(d),Index=d.Index,Highest=Rules.Highest(d),
 		NormalTokens=d.NormalTokens,PerkTokens=d.PerkTokens,PaidNormalTokens=d.PaidNormalTokens,PaidPerkTokens=d.PaidPerkTokens,NextGift=d.NextGift,AFKSeconds=d.AFKSeconds,
@@ -72,8 +72,8 @@ local function update(player,message)
 	if s then
 		for _,count in ipairs({1,10,100,1000}) do
 			local pad=s.Plot.PurchaseButtons["Buy"..count]
-			UI.Pad(pad,p.Data.Cash,Rules.BuyCost(count))
-			UI.Label(pad,"Buy "..count,"$"..UI.Format(Rules.BuyCost(count)),pad.Color)
+			UI.Pad(pad,p.Data.Cash,Rules.BuyCost(count,p.Data))
+			UI.Label(pad,"Buy "..UI.Format(Rules.BuyQuantity(count,p.Data)),"$"..UI.Format(Rules.BuyCost(count,p.Data)),pad.Color)
 		end
 		local baskets=s.Plot:FindFirstChild("DessertBaskets")
 		if baskets then require(RS.DessertBaskets).Refresh(s.Plot,p.Data.AFKStored,p.Data.OfflineStored) end
@@ -141,6 +141,7 @@ local function perform(player,verb,arg)
 	elseif verb=="Activity" then p.LastActivity=os.clock(); return true
 	elseif verb=="Equip" then
 		if not Rules.ToggleEquip(d,arg) then return false end
+		Rules.TutorialEvent(d,"Equip")
 		if p.Companion then p.Companion:Destroy(); p.Companion=nil end
 		if d.Equipped then
 			local tier,shiny,variant=Rules.Decode(d.Equipped); local m=Visuals.Build(tier,shiny,variant); m:ScaleTo(m:GetScale()*.65)
@@ -150,6 +151,7 @@ local function perform(player,verb,arg)
 		end
 		update(player); return true
 	elseif verb=="Crate" then
+		if (d.TutorialStep or 11)<11 then return false,"Follow the arrows first" end
 		if type(arg)~="table" or (arg.Kind~="Normal" and arg.Kind~="Perk") or (arg.Count~=1 and arg.Count~=10) then return false end
 		local key=arg.Kind=="Perk" and "PerkTokens" or "NormalTokens"
 		local paidKey="Paid"..key; local paid=d[paidKey] or 0
@@ -158,7 +160,7 @@ local function perform(player,verb,arg)
 		local knownBefore=table.clone(d.Index); local highestBefore=Rules.Highest(d)
 		local found={}; local results={}
 		for _=1,arg.Count do table.insert(results,Rules.Roll(d,arg.Kind,rng,Rules.PassMultiplier(p.Passes,"Luck"),found,friendBonus(player,p))) end
-		if p.Passes.AutoMerge then Rules.Merge(d,found) end
+		if p.Passes.AutoMerge and (p.Data.TutorialStep or 11)>=11 then Rules.Merge(d,found,rng,Rules.PassMultiplier(p.Passes,"Luck"),friendBonus(player,p)) end
 		render(player)
 		-- Rewards are already granted here. The carousel only presents these results.
 		events:FireClient(player,"Crates",{Results=results,KnownBefore=knownBefore,Discoveries=found,Highest=highestBefore,Kind=arg.Kind})
@@ -174,19 +176,28 @@ local function perform(player,verb,arg)
 	end
 	if not s or s.Owner~=player or s.Plot:GetAttribute("OwnerUserId")~=player.UserId then return false end
 	local area=s.Plot.PersonalShopArea
+	local step=d.TutorialStep or 11
+	if step<11 then
+		if verb=="Buy" and ((step~=4 and step~=8) or arg~=1) then return false,"Follow the arrows first" end
+		if verb=="Merge" and step~=9 then return false,"Follow the arrows first" end
+		if verb=="Upgrade" then return false,"Follow the arrows first" end
+		if (verb=="Deposit" or verb=="Sell") and step~=2 and step~=6 then return false,"Follow the arrows first" end
+	end
 	if verb=="Buy" then
 		if arg~=1 and arg~=10 and arg~=100 and arg~=1000 then return false end
 		if not near(player,s.Plot.PurchaseButtons["Buy"..arg]) then return false end
-		local ok,result=Rules.Buy(d,arg,rng,Rules.PassMultiplier(p.Passes,"Luck"),p.Passes.AutoMerge,friendBonus(player,p))
-		if ok then render(player); discoveries(player,result); update(player,"Purchased "..arg.." puddings") else update(player,result) end; return ok
+		local quantity=Rules.BuyQuantity(arg,d)
+		local ok,result=Rules.Buy(d,arg,rng,Rules.PassMultiplier(p.Passes,"Luck"),p.Passes.AutoMerge and step>=11,friendBonus(player,p))
+		if ok then Rules.TutorialEvent(d,"Buy"); render(player); discoveries(player,result); update(player,"Purchased "..UI.Format(quantity).." pudding equivalents") else update(player,result) end; return ok
 	elseif verb=="Merge" then
 		if not near(player,s.Plot.MergeBoard) then return false end
-		local found={}; Rules.Merge(d,found); render(player); discoveries(player,found); update(player,"Matching desserts merged")
+		local found={}; Rules.Merge(d,found,rng,Rules.PassMultiplier(p.Passes,"Luck"),friendBonus(player,p)); Rules.TutorialEvent(d,"Merge"); render(player); discoveries(player,found); update(player,"Same-tier desserts merged")
 	elseif verb=="Deposit" or verb=="Sell" then
 		local pad=island.CentralHub.DepositPads["Deposit"..player:GetAttribute("PlotId")]
 		if not near(player,pad) then return false end
 		refreshMarket()
 		local amount,credited=Rules.Deposit(d,CafeMarket.Multiplier(market))
+		if amount>0 then Rules.TutorialEvent(d,"Deposit") end
 		-- Each owner's queue begins its own full two-second cycle after a deposit.
 		if amount>0 and not p.NextCafeTick then p.NextCafeTick=os.clock()+Config.CafeInterval end
 		if amount>0 then events:FireAllClients("CafeDelivery",pad.Position,island.CentralHub.CentralShop:GetPivot().Position) end
@@ -196,7 +207,7 @@ local function perform(player,verb,arg)
 		local ok,message=Rules.UpgradeCafe(d); update(player,message or "Converter upgraded"); return ok
 	elseif verb=="Collect" then
 		if not near(player,area.CollectIncome) then return false end
-		d.Cash+=d.Pending; d.Pending=0; update(player,"Cash collected")
+		d.Cash+=d.Pending; d.Pending=0; Rules.TutorialEvent(d,"Collect"); update(player,"Cash collected")
 	else return false end
 	return true
 end
@@ -373,6 +384,7 @@ Run.Heartbeat:Connect(function(dt)
 	if workspace:GetServerTimeNow()>=market.NextChange then refreshMarket() end
 	for _,s in ipairs(states) do local p=s.Owner and profiles[s.Owner]
 		if p and not p.Busy and not p.Closing and not p.Faulted then
+			local collectedBefore=p.Data.TotalMiniCollected
 			for _,pet in ipairs(s.Pets) do if now>=pet.Next then
 				emit(s,pet,now)
 				pet.Next=now+Config.ProductionInterval
@@ -395,10 +407,23 @@ Run.Heartbeat:Connect(function(dt)
 					p.Data.AFKStored+=drop.Value;drop.Model:Destroy();table.remove(s.Drops,n);picked=true
 				end
 			end
+			if p.Data.TotalMiniCollected>collectedBefore then
+				Rules.TutorialEvent(p.Data,"Pickup")
+				events:FireClient(s.Owner,"Pickup")
+				picked=true
+			end
 			if picked then update(s.Owner) end
 		end
 	end
 	for player,p in pairs(profiles) do
+		if (p.Data.TutorialStep==3 or p.Data.TutorialStep==7) and not p.Busy and not p.Closing and not p.Faulted then
+			local s=stateFor(player); local r=root(player)
+			local pad=s and s.Plot.PersonalShopArea.CollectIncome
+			local pos=pad and r and pad.CFrame:PointToObjectSpace(r.Position)
+			if pos and math.abs(pos.X)<=pad.Size.X/2 and math.abs(pos.Z)<=pad.Size.Z/2 and pos.Y>0 and pos.Y<6 then
+				perform(player,"Collect")
+			end
+		end
 		if p.Passes.MoneyMagnet and not p.Busy and not p.Closing and not p.Faulted and p.Data.Pending>0 then p.Data.Cash+=p.Data.Pending; p.Data.Pending=0; update(player) end
 		-- Companions are cosmetic; each client follows the replicated character every render frame.
 		if p.NextCafeTick and now>=p.NextCafeTick and not p.Busy and not p.Closing and not p.Faulted then
@@ -416,7 +441,7 @@ Run.Heartbeat:Connect(function(dt)
 			-- Include idle time spent waiting for a save instead of losing busy-frame seconds.
 			local connectedSeconds=math.max(0,now-(p.LastPlayCheck or now))
 			p.Data.PlaySeconds+=connectedSeconds; Rules.AFK(p.Data,connectedSeconds,p.Premium); p.LastPlayCheck=now
-			if p.Passes.AutoMerge then local found={}; local before=Rules.Count(p.Data); Rules.Merge(p.Data,found); if before~=Rules.Count(p.Data) then render(player); discoveries(player,found) end end
+			if p.Passes.AutoMerge and (p.Data.TutorialStep or 11)>=11 then local found={}; local before=Rules.Count(p.Data); Rules.Merge(p.Data,found,rng,Rules.PassMultiplier(p.Passes,"Luck"),friendBonus(player,p)); if before~=Rules.Count(p.Data) then render(player); discoveries(player,found) end end
 			update(player)
 		end end
 	end
