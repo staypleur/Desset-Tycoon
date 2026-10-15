@@ -1044,5 +1044,82 @@
   "souffleAtlas": {
     "imageId": 84736068710282,
     "decalId": 128429991110472
+  },
+  "mini-wagashi": {
+    "sourceArchive": "Meshy_AI_wagashi_no_face_no_li_1015115819_texture_fbx.zip",
+    "archiveSha256": "40177c8809a493d81e38e100d9c5de243b52049d4fbbb4c01cd151780785aba0",
+    "heightCm": 18,
+    "triangles": 306,
+    "files": {
+      "color-game.png": "293873dfd985463095ed2d2fbe254b944aad67294730d306259f638146d2b6dd",
+      "color.png": "f2551549d49c478a6b63cf0f54a671373ba2c1ebd4e9fe5e316a4468b246c638",
+      "mini-wagashi-import.fbx": "c3242481a9802d49ad9865fdc7adb19c3d19251c701ba674f117d75dbc692843",
+      "source.fbx": "88400c5b770382ff6c4581d93c31abf5c017abda265fc22957a8fabdb80844db"
+    },
+    "template": "MiniWagashi",
+    "meshId": 115806006919998,
+    "textureImageId": 92456304500593,
+    "textureDecalId": 121400562753294,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "wagashi": {
+    "sourceArchive": "Meshy_AI_wagashi_character_3k_1015115837_texture_fbx.zip",
+    "archiveSha256": "429c435e28e62c4f353724318e53acb32cb8aac8b5cb15e97c594fcb4cf53280",
+    "heightCm": 70,
+    "triangles": 3008,
+    "files": {
+      "color-game.png": "1d480dae98638a7990e03c08fc90bfd6a115a488f9aa19698d9c0cba7fb1fcce",
+      "color.png": "61dfd309e8a4b1bbde84cfd624d9de5015a9dfc25255f344e34d2e618376a13e",
+      "source.fbx": "88a0a7187318236d76065e19f0e9cbd36fbfecc2418d8aee9fe1618cbb1fb56d",
+      "wagashi-import.fbx": "687c7c6364ecbd56ea64160c08e51b27c1ab11a5d0e19885181f1b00dbe370f8"
+    },
+    "template": "NormalWagashi",
+    "meshId": 89412733864055,
+    "textureImageId": 115717825036231,
+    "textureDecalId": 103010644527647,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "mint-wagashi": {
+    "sourceArchive": "Meshy_AI_mint_emerald_chrysant_1015115857_texture_fbx.zip",
+    "archiveSha256": "c29fc73f0c02395ca35f9a81ed62962d7dc868a52e4dfacc2f377493fc425db7",
+    "heightCm": 70,
+    "triangles": 3026,
+    "files": {
+      "color-game.png": "c9ee1ad3644f080cdf974dcf195e27703ae60bf10f346364349f01e7a2e5a440",
+      "color.png": "364d0d01f3d771ed8b5c9b43ee915d0d53a7dad56f545fbdccc8983127d608ad",
+      "mint-wagashi-import.fbx": "492616f80aa7ba51db3e596736c10133c87cba5de6eac227e1cc0114d710bea5",
+      "source.fbx": "a89e2544a50fa7f5958745d0e0d1cc7fd463bcaee61bf81f27550cd8222efc7f"
+    },
+    "template": "MintWagashi",
+    "meshId": 130088801703886,
+    "textureImageId": 72213574554646,
+    "textureDecalId": 71124067743204,
+    "uploadFormat": "PNG, 2048x2048, RGB-identical to original",
+    "previousUpload": {
+      "imageId": 136146119698971,
+      "decalId": 74344153567523,
+      "note": "BMP texture failed to load in Play; replaced with identical RGB PNG."
+    }
+  },
+  "dark-wagashi": {
+    "sourceArchive": "Meshy_AI_deep_choco_gold_wagas_1015115925_texture_fbx.zip",
+    "archiveSha256": "0865b3eefa117dfb3c056610195580bdb110af46ea74ccac202f86a627d9646c",
+    "heightCm": 70,
+    "triangles": 3189,
+    "files": {
+      "color-game.png": "1c30dddfe307f080a10db51afdc5adab88c53a704deb2d7da5159a17af77da54",
+      "color.png": "de3e4435108089add8778999a3c155349a86d3a285f2c0e136ed29afed644f9c",
+      "dark-wagashi-import.fbx": "a42afe4ca5e600d6e9d61e883880f3bc0f04fbc988d69d7ebbb92b3cd3dbc2ac",
+      "source.fbx": "c027b2672ecfc67dd4d7814a8e50ff79b6bee9aebe2bfdb24bd181926661310a"
+    },
+    "template": "DarkWagashi",
+    "meshId": 78295578524703,
+    "textureImageId": 121851885184498,
+    "textureDecalId": 113554622444831,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "wagashiAtlas": {
+    "imageId": 117055066619950,
+    "decalId": 99297828955434
   }
 }

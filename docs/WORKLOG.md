@@ -381,3 +381,11 @@ PASS: PlayerProfiles deterministic mock verifies persisted gift/AFK clocks, dupl
 - Play PASS: thirty-nine bounded 2D index images without ViewportFrames/WorldModels; discovery one fixed-facing model, 0.351-stud floating span and cleanup. Nine live mini drops verified. Black-hole BMP texture failed to load; replaced with RGB-identical PNG and verified all three producer meshes/textures preload Success. Mini and atlas preload Success. Tier-thirteen shiny captions fit at 10px. Saved souffle-world.png and souffle-index.png.
 - Final Perk crate regression PASS: ten server grants once, spent-credit replay rejected, 194 stopped-arrow alignment samples and image-only carousel. Removed both fixtures and enabled normal game.
 - Saved XML audit PASS: 32 exact sources, zero foreign scripts/packages or temporary fixtures, 95,118,190 bytes; exported all fifty-two native templates.
+
+## 2026-10-15 — Tier-fourteen Wagashi family
+- Imported MiniWagashi (306 triangles), NormalWagashi (3,008), Mint Emerald Crystal Wagashi (3,026), Dark Choco Gold Wagashi (3,189). Original geometry/UVs and 2048px RGB colors retained; fifty-six script-free templates cover tiers 1–14.
+- Added separate 14n/14s/14s2 ownership, discovery/equipment, conditional shiny 50:50 selection, tier-thirteen merge lineage and transparent 2D atlas. Source hashes, asset IDs and image_gen cutout prompt recorded.
+- Native regression PASS: 280,000 conditional shiny trials, legacy saves, merge/equip, deterministic dark-choco crate result, forty-two full models and mini heights/pivots.
+- Play PASS: forty-two bounded 2D index images without ViewportFrames/WorldModels; discovery one fixed-facing model, 0.180-stud floating span and cleanup. Nine live mini drops verified. Mint BMP texture failed to load; replaced with RGB-identical PNG and verified all three producer meshes/textures preload Success. Mini and atlas preload Success. Tier-fourteen shiny captions fit at 10px. Saved wagashi-world.png and wagashi-index.png.
+- Final Perk crate regression PASS: ten server grants once, spent-credit replay rejected, 195 stopped-arrow alignment samples and image-only carousel. Removed both temporary fixtures and enabled normal game.
+- Saved XML audit PASS: 32 exact sources, zero foreign scripts/packages or temporary fixtures, 95,270,566 bytes; exported all fifty-six native templates.

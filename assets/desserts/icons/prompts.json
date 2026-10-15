@@ -161,5 +161,14 @@
       "sakura-souffle.png",
       "blackhole-souffle.png"
     ]
+  },
+  "wagashiCutouts": {
+    "tool": "image_gen",
+    "prompt": "Remove only the plain background and floor shadow from this supplied wagashi character. Preserve the complete original character, silhouette, face, colors, materials, highlights and proportions exactly. Center the single full-body character with clear padding, transparent RGBA background, no text, no added elements. Game inventory icon cutout.",
+    "outputs": [
+      "wagashi.png",
+      "mint-wagashi.png",
+      "dark-wagashi.png"
+    ]
   }
 }

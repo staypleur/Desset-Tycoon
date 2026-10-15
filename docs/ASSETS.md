@@ -302,3 +302,18 @@ Single script-free anchored MeshPart templates, collision/touch/query/shadows di
 Built-in image_gen transparent inventory cutouts from supplied character references; exact prompt and paths in `assets/desserts/icons/prompts.json`. Atlas `icons/souffle-atlas.png`, 1024px RGBA; 512px cells: 13n=(0,0), 13s=(512,0), 13s2=(0,512). Image 84736068710282; decal 128429991110472. Proof: `docs/previews/souffle-world.png`, `souffle-index.png`.
 
 BlackholeSouffle uses the RGB-identical PNG upload after the BMP image failed to load in Play. Both upload IDs are recorded in the manifest.
+
+## Tier 14 — Wagashi family (2026-10-15)
+User-supplied Meshy archives: `Meshy_AI_wagashi_no_face_no_li_1015115819_texture_fbx.zip`, `Meshy_AI_wagashi_character_3k_1015115837_texture_fbx.zip`, `Meshy_AI_mint_emerald_chrysant_1015115857_texture_fbx.zip`, `Meshy_AI_deep_choco_gold_wagas_1015115925_texture_fbx.zip`. User provided designs and authorized import. Original geometry/UVs and 2048px RGB textures retained; embedded texture links removed from import copies. Source hashes in `assets/desserts/manifest.json`.
+
+| Template | Triangles | Mesh ID | Texture image ID | Decal ID |
+|---|---:|---:|---:|---:|
+| MiniWagashi | 306 | 115806006919998 | 92456304500593 | 121400562753294 |
+| NormalWagashi | 3008 | 89412733864055 | 115717825036231 | 103010644527647 |
+| MintWagashi | 3026 | 130088801703886 | 72213574554646 | 71124067743204 |
+| DarkWagashi | 3189 | 78295578524703 | 121851885184498 | 113554622444831 |
+
+Single script-free anchored MeshPart templates, collision/touch/query/shadows disabled, white SmoothPlastic and bottom-center pivots. Full base height 2.5 studs (5 in production); mini 18/28 stud. Shiny minis reuse the face-free ordinary mini with existing sparkle treatment.
+Built-in image_gen transparent inventory cutouts from supplied character references; exact prompt and paths in `assets/desserts/icons/prompts.json`. Atlas `icons/wagashi-atlas.png`, 1024px RGBA; 512px cells: 14n=(0,0), 14s=(512,0), 14s2=(0,512). Image 117055066619950; decal 99297828955434. Proof: `docs/previews/wagashi-world.png`, `wagashi-index.png`.
+
+MintWagashi uses the RGB-identical PNG upload after the BMP image failed to load in Play. Both upload IDs are recorded in the manifest.
