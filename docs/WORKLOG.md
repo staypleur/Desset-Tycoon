@@ -365,3 +365,11 @@ PASS: PlayerProfiles deterministic mock verifies persisted gift/AFK clocks, dupl
 - Play PASS: thirty-three bounded 2D index images without ViewportFrames/WorldModels; discovery one fixed-facing model, 0.237-stud floating span and cleanup. Ten live mini drops verified; producer and mini mesh/texture preload Success; all three atlas icons loaded and fit their cards. Saved eclair-world.png and eclair-index.png.
 - Final Perk crate regression PASS: ten server grants once, spent-credit replay rejected, 196 stopped-arrow alignment samples, image-only carousel. Removed both temporary fixtures and enabled normal game.
 - Saved XML audit PASS: 32 exact sources, zero foreign scripts/packages or temporary fixtures, 94,811,805 bytes; exported all forty-four native templates.
+
+## 2026-10-15 — Tier-twelve Panna Cotta family
+- Imported MiniPannaCotta (292 triangles), NormalPannaCotta (3,053), Ruby Strawberry Panna Cotta (2,885), Mint Ocean Crystal Panna Cotta (3,014). Original geometry/UVs and 2048px RGB textures retained; forty-eight script-free templates cover tiers 1–12.
+- Added separate 12n/12s/12s2 ownership, discovery/equipment, conditional shiny 50:50 selection, tier-eleven merge lineage and transparent 2D index/roulette atlas. Source hashes, IDs and image_gen cutout prompts recorded.
+- Native regression PASS: 240,000 conditional shiny trials, legacy saves, merge/equip, deterministic mint crate result, thirty-six full models and mini heights/pivots.
+- Play PASS: thirty-six bounded 2D index images without ViewportFrames/WorldModels; discovery one fixed-facing model, 0.181-stud floating span and cleanup. Nine live mini drops verified; producer/mini meshes and textures and all atlas icons preload Success. Saved pannacotta-world.png and pannacotta-index.png.
+- Final Perk crate regression PASS: ten server grants once, spent-credit replay rejected, 195 stopped-arrow alignment samples and image-only carousel. Removed both temporary fixtures and enabled normal game.
+- Saved XML audit PASS: 32 exact sources, zero foreign scripts/packages or temporary fixtures, 94,965,111 bytes; exported all forty-eight native templates.

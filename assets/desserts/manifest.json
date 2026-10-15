@@ -879,5 +879,93 @@
       ]
     },
     "cellSize": 512
+  },
+  "mini-pannacotta": {
+    "sourceArchive": "Meshy_AI_panna_cotta_no_face_n_1015113945_texture_fbx.zip",
+    "archiveSha256": "7e50dfe61b4a521194f0f044a829c7b9b56b6c1366db489891305ff0bdd061e3",
+    "heightCm": 18,
+    "triangles": 292,
+    "files": {
+      "color-game.png": "eef95d284be9a9d03f20e9594b90bac2e764b9b57c2a9eb1b1c907509f1ab2b8",
+      "color.png": "b916ed96b261cc87f47f171dd00fcf2161d58cef79688b6fa3a6a9ce1f83f288",
+      "mini-pannacotta-import.fbx": "b3a15d3edc68d320a987179b65a172e43290fa18511752c2408a1646bda64ba8",
+      "source.fbx": "10c648d9ffc45324e8e462cf7d72164eb73649281d3741ef767b8d397de96d0b"
+    },
+    "template": "MiniPannaCotta",
+    "meshId": 106697195628179,
+    "textureImageId": 83349677026041,
+    "textureDecalId": 78681840573855,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "pannacotta": {
+    "sourceArchive": "Meshy_AI_panna_cotta_character_1015113957_texture_fbx.zip",
+    "archiveSha256": "946ce1a6fba3ed0a8355510a89c491fc85b5a464f935753142d27c7514ef49b3",
+    "heightCm": 70,
+    "triangles": 3053,
+    "files": {
+      "color-game.png": "9938360f4868d0585b2e4fc4fbd13141af00dc7e9bb1eb7554a896770276f39c",
+      "color.png": "23d5a5a11cf16a37bba54999af09a2a99da755b8bbfb6e390b6b94bbf3042d53",
+      "pannacotta-import.fbx": "5ba812acd2d74689dbf6b6f6950d6510f25de0afe20259dcb16c83147c07302c",
+      "source.fbx": "1770935f63aa7f89968792c5f39554da27afd8aa436f1f79a3a547c744cf0145"
+    },
+    "template": "NormalPannaCotta",
+    "meshId": 131878326688965,
+    "textureImageId": 99941629957659,
+    "textureDecalId": 87597268620683,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "ruby-pannacotta": {
+    "sourceArchive": "Meshy_AI_ruby_strawberry_panna_1015114008_texture_fbx.zip",
+    "archiveSha256": "2f7cadc41a121c6b6ac8be82dfe7326b3ce116b5b1970100d73c32dce33e62e6",
+    "heightCm": 70,
+    "triangles": 2885,
+    "files": {
+      "color-game.png": "c782d726e06d90b8009af5a8d967c3d7c233c4d6ba869327a907122ffd95a4f9",
+      "color.png": "0b986641339965351d0af90717e728c9c8269ce66353c104357de6ea7793d0e3",
+      "ruby-pannacotta-import.fbx": "222a5ddfe56ab4b0718146aca06ec5d6b04b0595211d8dd693eb5b318c38ae48",
+      "source.fbx": "13d3d9ca7bb15eb57fe6aa7e560a382b510733bad1f5da29acf517a6df1b5d04"
+    },
+    "template": "RubyPannaCotta",
+    "meshId": 123135227096378,
+    "textureImageId": 74069374840338,
+    "textureDecalId": 103456926738502,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "mint-pannacotta": {
+    "sourceArchive": "Meshy_AI_mint_ocean_crystal_pa_1015114017_texture_fbx.zip",
+    "archiveSha256": "1d471b36c776e49dd5d26b9a3a58c5d3e1ed744a8f7aaf68eda1a1903ceb5933",
+    "heightCm": 70,
+    "triangles": 3014,
+    "files": {
+      "color-game.png": "37afa761b222c56723fd075f02a8f374953ab45799ae17c8e9a3deec5527979a",
+      "color.png": "47762e30a215002bcff017693730cede472310fc3a5267ceadff11e94eb96142",
+      "mint-pannacotta-import.fbx": "a3598ed21fa32239a731dae3b19e7c0c6629dab9a71f0494155e989a3278ce46",
+      "source.fbx": "88a686e961ff10da6c65d9683a56b73898de39917f437107c07eedab69a2ff22"
+    },
+    "template": "MintPannaCotta",
+    "meshId": 123147196733240,
+    "textureImageId": 101499084538020,
+    "textureDecalId": 120908687039155,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "pannacottaIndexAtlas": {
+    "decalId": 123904122357231,
+    "imageId": 92406130456099,
+    "file": "icons/pannacotta-atlas.png",
+    "cells": {
+      "12n": [
+        0,
+        0
+      ],
+      "12s": [
+        512,
+        0
+      ],
+      "12s2": [
+        0,
+        512
+      ]
+    },
+    "cellSize": 512
   }
 }

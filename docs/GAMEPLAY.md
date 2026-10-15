@@ -125,3 +125,5 @@ Tier 9 is Tiramisu Cake. Prism Cube Tiramisu Cake (9s) and Pink Quartz Rose Gold
 - Tier 10 is Madeleine: normal, Pearl Prism Madeleine (10s), Mint Ocean Crystal Madeleine (10s2). Shiny selection splits 50:50 conditional on a shiny roll; separate inventory/equip/discovery identities, tier-nine merge lineage and image-only index/roulette. Production uses the MiniMadeleine template; higher tiers retain front-row priority.
 
 - Tier 11 is Eclair: normal, Pink Quartz Rose Gold Eclair (11s), Galaxy Aurora Eclair (11s2). Conditional shiny split is 50:50, with separate inventory/equip/discovery and tier-ten merge lineage. Index and roulette use transparent 2D art; mini production uses MiniEclair. Higher tiers retain front-row priority.
+
+- Tier 12 is Panna Cotta: normal, Ruby Strawberry Panna Cotta (12s), Mint Ocean Crystal Panna Cotta (12s2). Conditional shiny split is 50:50, with separate ownership/equip/discovery and tier-eleven merge lineage. Index and roulette use transparent 2D art; mini production uses MiniPannaCotta. Higher tiers retain front-row priority.

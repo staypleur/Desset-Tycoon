@@ -274,3 +274,16 @@ User-supplied Meshy archives: `Meshy_AI_eclair_no_face_no_lim_1015112459_texture
 
 Single script-free anchored MeshPart templates, collision/touch/query/shadows disabled, white SmoothPlastic and bottom-center pivots. Full base height 2.5 studs (5 in production); mini 18/28 stud. Shiny minis reuse the face-free ordinary mini with existing sparkle treatment.
 Built-in image_gen transparent inventory cutouts preserve user reference characters. Exact prompt and paths in `assets/desserts/icons/prompts.json`. Atlas `icons/eclair-atlas.png`, 1024px RGBA; 512px cells: 11n=(0,0), 11s=(512,0), 11s2=(0,512). Image 91034076326961; decal 120016916731846. Proof: `docs/previews/eclair-world.png`, `eclair-index.png`.
+
+## Tier 12 — Panna Cotta family (2026-10-15)
+User-supplied Meshy archives: `Meshy_AI_panna_cotta_no_face_n_1015113945_texture_fbx.zip`, `Meshy_AI_panna_cotta_character_1015113957_texture_fbx.zip`, `Meshy_AI_ruby_strawberry_panna_1015114008_texture_fbx.zip`, `Meshy_AI_mint_ocean_crystal_pa_1015114017_texture_fbx.zip`. User provided designs and authorized import. Original geometry/UVs and 2048px RGB texture content retained; embedded texture links removed from import copies. Source hashes in `assets/desserts/manifest.json`.
+
+| Template | Triangles | Mesh ID | Texture image ID | Decal ID |
+|---|---:|---:|---:|---:|
+| MiniPannaCotta | 292 | 106697195628179 | 83349677026041 | 78681840573855 |
+| NormalPannaCotta | 3053 | 131878326688965 | 99941629957659 | 87597268620683 |
+| RubyPannaCotta | 2885 | 123135227096378 | 74069374840338 | 103456926738502 |
+| MintPannaCotta | 3014 | 123147196733240 | 101499084538020 | 120908687039155 |
+
+Single script-free anchored MeshPart templates, collision/touch/query/shadows disabled, white SmoothPlastic and bottom-center pivots. Full base height 2.5 studs (5 in production); mini 18/28 stud. Shiny minis reuse the face-free ordinary mini with existing sparkle treatment.
+Built-in image_gen transparent inventory cutouts from supplied character references; exact prompt and paths in `assets/desserts/icons/prompts.json`. Atlas `icons/pannacotta-atlas.png`, 1024px RGBA; 512px cells: 12n=(0,0), 12s=(512,0), 12s2=(0,512). Image 92406130456099; decal 123904122357231. Proof: `docs/previews/pannacotta-world.png`, `pannacotta-index.png`.
