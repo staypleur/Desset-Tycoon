@@ -392,7 +392,7 @@ local transfers={}
 local function transfer(kind,start,finish)
 	if #transfers>=30 then return end
 	local model
-	if kind=="CafeDelivery" then model=Visuals.Build(1,false); model:ScaleTo(.4)
+	if kind=="CafeDelivery" then model=Visuals.BuildMini(1,false)
 	else
 		model=Instance.new("Model"); local coin=Instance.new("Part"); coin.Shape=Enum.PartType.Ball; coin.Size=Vector3.new(1.8,1.8,1.8); coin.Color=Color3.fromRGB(255,215,112); coin.Material=Enum.Material.Neon; coin.Parent=model
 	end

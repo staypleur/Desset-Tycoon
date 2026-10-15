@@ -111,7 +111,7 @@ local function emit(s,pet,now)
 		Vector3.new(0,.8,-7),Vector3.new(rng:NextNumber(-4,4),.45,rng:NextNumber(-13,-9))}
 	local durations={}; for n=1,#points-1 do durations[n]=(points[n+1]-points[n]).Magnitude/9 end
 	if #s.Drops>=Config.MaxDrops then p.Data.AFKStored+=value; return end
-	local m=Visuals.Build(pet.Tier,pet.Shiny); m.Name="MiniDessert"; m:ScaleTo(.25)
+	local m=Visuals.BuildMini(pet.Tier,pet.Shiny); m.Name="MiniDessert"
 	m:SetAttribute("OwnerUserId",s.Owner.UserId); m.Parent=s.Products; m:PivotTo(cf*CFrame.new(points[1]))
 	table.insert(s.Drops,{Model=m,Points=points,Durations=durations,Start=now,Value=value,CF=cf})
 end
@@ -128,7 +128,7 @@ local function perform(player,verb,arg)
 		if not Rules.ToggleEquip(d,arg) then return false end
 		if p.Companion then p.Companion:Destroy(); p.Companion=nil end
 		if d.Equipped then
-			local tier,shiny=Rules.Decode(d.Equipped); local m=Visuals.Build(tier,shiny); m:ScaleTo(.65)
+			local tier,shiny=Rules.Decode(d.Equipped); local m=Visuals.Build(tier,shiny); m:ScaleTo(m:GetScale()*.65)
 			m.Name="DessertCompanion"; m:SetAttribute("OwnerUserId",player.UserId); m.Parent=workspace; p.Companion=m
 		end
 		update(player); return true

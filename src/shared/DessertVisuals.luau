@@ -1,7 +1,27 @@
 -- Native, script-free dessert models shared by world pets and ViewportFrame previews.
 local Catalog=require(script.Parent.DessertCatalog)
 local Visuals={}
+local function imported(name,tier,shiny)
+	local folder=script.Parent:FindFirstChild("DessertModelTemplates")
+	local template=folder and folder:FindFirstChild(name)
+	if not template then return nil end
+	local m=template:Clone(); m.Name=Catalog[tier].Name
+	m:SetAttribute("Tier",tier); m:SetAttribute("Shiny",shiny)
+	if shiny then
+		for _,part in ipairs(m:GetDescendants()) do
+			if part:IsA("BasePart") then part.Color=Color3.fromRGB(255,220,115) end
+		end
+		local sparkle=Instance.new("ParticleEmitter"); sparkle.Texture="rbxasset://textures/particles/sparkles_main.dds"
+		sparkle.Rate=3; sparkle.Lifetime=NumberRange.new(.8,1.3); sparkle.Speed=NumberRange.new(.3,.8)
+		sparkle.Color=ColorSequence.new(Color3.fromRGB(255,225,129)); sparkle.Size=NumberSequence.new(.18); sparkle.Parent=m.PrimaryPart
+	end
+	return m
+end
 function Visuals.Build(tier,shiny)
+	if tier==1 then
+		local m=imported("NormalPudding",tier,shiny)
+		if m then return m end
+	end
 	local m=Instance.new("Model"); m.Name=Catalog[tier].Name; m:SetAttribute("Tier",tier); m:SetAttribute("Shiny",shiny)
 	local tint=shiny and Color3.fromRGB(255,220,115) or Color3.fromHSV((tier*.071+.07)%1,.24,1)
 	if not shiny then
@@ -83,6 +103,14 @@ function Visuals.Build(tier,shiny)
 		sparkle.Rate=3; sparkle.Lifetime=NumberRange.new(.8,1.3); sparkle.Speed=NumberRange.new(.3,.8)
 		sparkle.Color=ColorSequence.new(Color3.fromRGB(255,225,129)); sparkle.Size=NumberSequence.new(.18); sparkle.Parent=body
 	end
+	return m
+end
+function Visuals.BuildMini(tier,shiny)
+	if tier==1 then
+		local m=imported("MiniPudding",tier,shiny)
+		if m then return m end
+	end
+	local m=Visuals.Build(tier,shiny); m:ScaleTo(m:GetScale()*.25)
 	return m
 end
 return Visuals

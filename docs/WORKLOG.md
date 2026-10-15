@@ -245,3 +245,8 @@ PASS: PlayerProfiles deterministic mock verifies persisted gift/AFK clocks, dupl
 ## 2026-10-15 — Larger and quicker cafe chef
 - User found the chef too small/slow: increased height from 5.8 to 8 studs (+38%) and movement speed from 3.2 to 6 studs/sec (+88%). Updated both live model and clean template, sped up walking clip to 1.15, shortened heading turns to 0.12s.
 - Navigation clearance/height now derive from the actual scaled mesh. Revalidated all edges and 40 routes against cafe props, plus live movement/bone deformation.
+
+## 2026-10-15 — Apply supplied normal and mini pudding models
+- Replaced tier-1 producer/Index/companion with the user-supplied face-and-limbs pudding; introduced BuildMini for the separate face-free collection model, also used by cafe delivery effects. Heights 70 cm and 18 cm, bottom-center pivots. Shared reusable mesh templates included in the Rojo project. Companion sizing uses relative model scale.
+- Studio importer material uploads failed; preserved geometry/UVs and registered color textures separately. Mini PNG image delivery failed while generating and returned HTTP 502; RGB-identical BMP registration loaded successfully in a fresh Play client. Both final textures visually checked in game.
+- PuddingModels passed: mesh selection, heights/pivots, shiny variants, companion scaling and remaining 29 tiers. PuddingGameplay passed: real producer/drop meshes, 100-drop cap, equip/unequip and server-authoritative collection credit. Final source/place audit checks 27 matching scripts and no foreign executable/package links. No purchases or experience publication.

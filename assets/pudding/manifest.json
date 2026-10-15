@@ -1,0 +1,54 @@
+{
+  "source": "User-supplied Meshy AI FBX exports, approved 2026-10-15",
+  "normal": {
+    "meshId": 96350150554296,
+    "colorDecalId": 112799935838007,
+    "colorTextureId": 138637996171751,
+    "triangles": 2914,
+    "heightCm": 70,
+    "sourceArchive": "Meshy_AI_cute_pudding_characte_1015004459_texture_fbx.zip"
+  },
+  "mini": {
+    "meshId": 103427896417724,
+    "triangles": 314,
+    "heightCm": 18,
+    "colorDecalId": 128560628779702,
+    "colorTextureId": 133696575078119,
+    "textureConversion": "Original PNG to BMP; identical RGB pixels, 2048x2048",
+    "sourceArchive": "Meshy_AI_pastel_pudding_no_fac_1015004443_texture_fbx.zip"
+  },
+  "files": {
+    "DessertModelTemplates.rbxmx": {
+      "bytes": 14370,
+      "sha256": "c74bc65450ad6c5adb212d2eb2610006dc8b84a85593dabc7a8ef4facb96d8ef"
+    },
+    "mini-color.bmp": {
+      "bytes": 12582966,
+      "sha256": "05bc2c6d1dede16566d36d13d4f9038f02292e0e73a5c6254c34b320925737ca"
+    },
+    "mini-color.png": {
+      "bytes": 3269462,
+      "sha256": "c0c5e59e13eec9894f8d98022598bcf5d92a1825e2834e9e5212a163645ad6a6"
+    },
+    "mini-import.fbx": {
+      "bytes": 3307404,
+      "sha256": "63e2d4d74e18c34e54c6f26b81de7661b935adcb0050744b4ab99fefcca96acc"
+    },
+    "mini.fbx": {
+      "bytes": 7545516,
+      "sha256": "f36c019845adcd15647313beca918c80fe71c2f93b6e7f176ef8ab8afe834bc1"
+    },
+    "pudding-color.png": {
+      "bytes": 3908704,
+      "sha256": "b83bf09be8b050629f8a6ec8c93fc33591aad9da31f96102cc14f107f42acdf7"
+    },
+    "pudding-import.fbx": {
+      "bytes": 4037373,
+      "sha256": "1967b3d2d7fe3ac3658eb6b8c1b6da1ed91c54fa9a9698af2faff7fb73804672"
+    },
+    "pudding.fbx": {
+      "bytes": 5175260,
+      "sha256": "09a61a4cd3256b63646a225690b693df20b3505f8cf023e42d962d8b911fda97"
+    }
+  }
+}

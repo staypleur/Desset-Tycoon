@@ -25,6 +25,9 @@
       "DessertVisuals": {
         "$path": "src/shared/DessertVisuals.luau"
       },
+      "DessertModelTemplates": {
+        "$path": "assets/pudding/DessertModelTemplates.rbxmx"
+      },
       "ProductionPlot": {
         "$path": "src/shared/ProductionPlot.luau"
       },
