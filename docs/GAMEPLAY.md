@@ -104,3 +104,6 @@ Pad activation uses a consistent home-space footprint and leave/re-enter hystere
 
 ### Tier-three jelly variants
 Strawberry Jelly uses the supplied normal/mini models. Conditional shiny rolls select Strawberry Mint Sherbet Jelly (3s) or Strawberry Mint Ruby Crystal Jelly (3s2) equally. Existing 3s saves retain their counts and now render as Sherbet Jelly; merges preserve variant lineage. Each variant has separate discovery, ownership and equipment identity, with 2D index/carousel art and fixed-facing floating 3D discovery presentation. Shiny minis reuse the supplied face-free MiniJelly with the existing gold treatment until distinct mini variants are provided.
+
+### Tier-four Shortcake update
+Tier 4 is Shortcake. Galaxy Aurora Shortcake (4s) and Rainbow Unicorn Shortcake (4s2) split shiny rolls 50:50, with separate inventory/index/equip identities and matching merge lineage. Existing tier-four counts stay intact. Index/roulette use transparent images; discovery keeps the single floating 3D model and approved star/heart effects. MiniShortcake uses the existing guided physical-drop system.

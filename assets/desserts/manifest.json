@@ -201,5 +201,85 @@
         512
       ]
     }
+  },
+  "mini-shortcake": {
+    "sourceArchive": "Meshy_AI_shortcake_no_face_300_1015083541_texture_fbx.zip",
+    "archiveSha256": "ee3f7ea79810be7fde758206004078759166a82c1a8cdf7e42168f2cb1d1e2c9",
+    "heightCm": 18,
+    "triangles": 314,
+    "files": {
+      "color.png": "8217de90e4cdea648d935649b3375cf884b0ef671209f0559e8fc4792696cb92",
+      "mini-shortcake-import.fbx": "d4f8029643bed530f5d574dc441352cad085252a7eb56981702eb6f830e99aae",
+      "source.fbx": "89b72ec84cbd7aa597ba067ef80c3111fd9d247180d4a3c4ef2aec49f5d89711"
+    },
+    "meshId": 133382875474692,
+    "textureId": 136176615288172,
+    "textureDecalId": 114414387131983,
+    "textureUploadFormat": "BMP; RGB-identical conversion of color.png"
+  },
+  "shortcake": {
+    "sourceArchive": "Meshy_AI_cute_shortcake_charac_1015083555_texture_fbx.zip",
+    "archiveSha256": "d6345b6dc4143a7c1879facd72aded95f9da02659e92a193dcebce6fcd6cc618",
+    "heightCm": 70,
+    "triangles": 2717,
+    "files": {
+      "color.png": "7df7ef1bd4e9ecfed8d7e38319cad4becc17b1791fe54ada7d25df5df4177e26",
+      "shortcake-import.fbx": "c837267b11b5575595a7913c20f53474c465e9b80bd4d6fbf49afe772d47c2fa",
+      "source.fbx": "995aeddafdb48bfb4ef6b5254ccb9d566cbcf80db3ed1e9ccef172dd54285b39"
+    },
+    "meshId": 134037438711345,
+    "textureId": 85574957138753,
+    "textureDecalId": 77573626616781,
+    "textureUploadFormat": "BMP; RGB-identical conversion of color.png"
+  },
+  "galaxy-shortcake": {
+    "sourceArchive": "Meshy_AI_galaxy_aurora_shortca_1015083607_texture_fbx.zip",
+    "archiveSha256": "0f53f23bd1ab3ed478a00c28645d9aaa5b95251c80383584849779bfa4c41585",
+    "heightCm": 70,
+    "triangles": 2961,
+    "files": {
+      "color.png": "9e2b065fef034bc80a4f129cb82335cd71c925a1a69efb423603cd4ae413e1df",
+      "galaxy-shortcake-import.fbx": "b805f4b8b58dd5080d81f94eccea34db371ec5a36a462b435e5244805259a47e",
+      "source.fbx": "c2c950605cf76daa2f4c145b1cfc602e31dd6298dee93827e15c36c627e4106f"
+    },
+    "meshId": 121135970370674,
+    "textureId": 138497601929830,
+    "textureDecalId": 79159279617063,
+    "textureUploadFormat": "BMP; RGB-identical conversion of color.png"
+  },
+  "unicorn-shortcake": {
+    "sourceArchive": "Meshy_AI_pastel_rainbow_unicor_1015083703_texture_fbx.zip",
+    "archiveSha256": "accaa6ede300d15234db8f3d3530b12013919dea5844375863c689afb7952fe9",
+    "heightCm": 70,
+    "triangles": 2848,
+    "files": {
+      "color.png": "0a878dab0be1aa1191bedeafcc9fd717cfe742b9b8de921ad182d53a1e9b294b",
+      "source.fbx": "5830364ee0090f10ed9adac553edee0c74f999e7851c676263536a800819c404",
+      "unicorn-shortcake-import.fbx": "eb721d1dd6da0e98d3c33e0902f0eeb8679e74208eb224e8ffb67f018d2d635e"
+    },
+    "meshId": 81256150384408,
+    "textureId": 106272870540753,
+    "textureDecalId": 111354431300300,
+    "textureUploadFormat": "BMP; RGB-identical conversion of color.png"
+  },
+  "shortcakeIndexAtlas": {
+    "decalId": 126559086519407,
+    "imageId": 96411714992673,
+    "file": "icons/shortcake-index-atlas.png",
+    "cells": {
+      "4n": [
+        0,
+        0
+      ],
+      "4s": [
+        512,
+        0
+      ],
+      "4s2": [
+        0,
+        512
+      ]
+    },
+    "cellSize": 512
   }
 }

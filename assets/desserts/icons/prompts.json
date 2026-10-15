@@ -35,5 +35,20 @@
       "sherbet-jelly": "Background-extraction edit for a game index icon. Remove only gray background and ground shadow. Preserve exactly the strawberry mint sherbet jelly character, mint lid, pastel sparkles, polygon silhouette, face, colors, pose and front view. Full character centered, no cropping, no added elements, no text. True transparent background.",
       "ruby-jelly": "Background-extraction edit for a game index icon. Remove only gray background and ground shadow. Preserve exactly the ruby crystal strawberry jelly character, mint lid, red facets and glowing seeds, polygon silhouette, face, colors, pose and front view. Full character centered, no cropping, no added elements, no text. True transparent background."
     }
+  },
+  "shortcakeCutouts": {
+    "mode": "built-in image_gen",
+    "transparent_background": true,
+    "outputs": [
+      "shortcake.png",
+      "galaxy-shortcake.png",
+      "unicorn-shortcake.png"
+    ],
+    "packing": "Three 512px cells in a 1024px RGBA atlas; aspect-preserving max480px resize with transparent padding.",
+    "prompts": {
+      "shortcake": "Background-extraction edit for a Roblox index icon. Remove only the gray background and ground shadow. Preserve exactly the complete shortcake character, polygon silhouette, strawberries, cream, face, hands, feet, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background.",
+      "galaxy-shortcake": "Remove only the white background and ground shadow from this supplied Galaxy Aurora Shortcake character for a game index icon. Preserve the complete original character, face, stars, strawberries, colors, silhouette, proportions and pose. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background.",
+      "unicorn-shortcake": "Remove only the white background and ground shadow from this supplied Rainbow Unicorn Shortcake character for a game index icon. Preserve the complete original character, face, ears, horn, stars, strawberry, colors, silhouette, proportions and pose. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background."
+    }
   }
 }

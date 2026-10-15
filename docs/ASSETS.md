@@ -170,3 +170,16 @@ Index thumbnails have a clipped 20px inset and Fit scaling; unknown marks are ce
 - Mesh IDs respectively 113858503243198, 138699807859155, 99142049695757 and 79986430669397. Color IDs and original archive/file hashes are recorded in assets/desserts/manifest.json. Source files live under assets/desserts/{mini-strawberry-jelly,strawberry-jelly,sherbet-jelly,ruby-jelly}.
 - Three supplied character references received transparent background cutouts using the built-in image_gen edit tool. Prompts/mode recorded in assets/desserts/icons/prompts.json; packed atlas jelly-index-atlas.png uses image 78200800148968 (decal 101974423900380). Index, crate carousel and summaries reuse this 2D atlas; discovery uses the native floating 3D model. No external visual source was added.
 - Normal Jelly PNG image delivery returned AssetFetchStatus.Failure in Play. Re-uploaded an RGB-identical BMP without changing any pixels: decal 99000398352397 → final texture 136064848332451. Native client preload and visible rendering succeeded; source PNG is preserved.
+
+## Tier 4 Shortcake — user assets, 2026-10-15
+
+User-supplied Meshy FBX archives and matching references replace the old tier-four Brownie placeholder. Original FBX/PNG and hashes are preserved in assets/desserts/manifest.json. Import FBX strips embedded texture references; one script-free MeshPart per template preserves source UVs. Textures uploaded to the existing group as RGB-identical BMPs after PNG preload failures; no permission changes. Live client texture loading verified.
+
+| Template | Triangles | Mesh | Texture | Base height |
+|---|---:|---:|---:|---:|
+| MiniShortcake | 314 | 133382875474692 | 136176615288172 | 18/28 studs |
+| NormalShortcake | 2717 | 134037438711345 | 85574957138753 | 2.5 studs |
+| GalaxyShortcake | 2961 | 121135970370674 | 138497601929830 | 2.5 studs |
+| UnicornShortcake | 2848 | 81256150384408 | 106272870540753 | 2.5 studs |
+
+Producer display height remains 5 studs, with the existing companion scale. Shiny mini desserts reuse the face-free mini with the existing gold tint/sparkles because no separate shiny mini geometry was supplied. Three built-in image_gen transparent cutouts share a 1024px atlas (image 96411714992673, decal 126559086519407); index and roulette use 512px cells. Prompts recorded in assets/desserts/icons/prompts.json. Proof: docs/previews/shortcake-world.png and shortcake-index.png.
