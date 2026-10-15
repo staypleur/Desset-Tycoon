@@ -615,5 +615,93 @@
       ]
     },
     "cellSize": 512
+  },
+  "mini-tiramisu": {
+    "sourceArchive": "Meshy_AI_tiramisu_no_face_no_l_1015105030_texture_fbx.zip",
+    "archiveSha256": "32d941134063ee56d0f0d6b3393911e83c1de36a74dfbebfe38e8a37918ebeb6",
+    "heightCm": 18,
+    "triangles": 312,
+    "files": {
+      "color-game.png": "edfb78c26460e4662dd18f1d1a1a2313f15ebe3aae9430e8cfb6e6afbb5a0f30",
+      "color.png": "9e180436a4fd986feb5772a94a5387651dfe3e36d6a6d1f6eb255da36e317c04",
+      "mini-tiramisu-import.fbx": "0f194fe996f66f0fda51a7216bacc71721258f54a414fddb0f26f8c7c6864a69",
+      "source.fbx": "fcc2db51638b0f08bed8e48f050b870e8cded0be850773227e84950687d7528d"
+    },
+    "template": "MiniTiramisu",
+    "meshId": 129130838775985,
+    "textureImageId": 114068885584080,
+    "textureDecalId": 76355668108438,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "tiramisu": {
+    "sourceArchive": "Meshy_AI_tiramisu_character_3k_1015105047_texture_fbx.zip",
+    "archiveSha256": "51c5d8b77397fb0c4c35fd5414e9e5808b53e032346e02beaa66b048facdafb4",
+    "heightCm": 70,
+    "triangles": 3050,
+    "files": {
+      "color-game.png": "dfdb77a6477c7fecba0692a57995eb3769a06c4e5b16e6ab0ac7bd31cd1144a6",
+      "color.png": "14efd1e10c85f90cf4c66ba4f7e975082ae2328ac03d20631c457d1a1a2aeeba",
+      "source.fbx": "cb50873b2f920dfc80538a9cd626c310aa1f8dfd794343d1e3a310cb5a58e41b",
+      "tiramisu-import.fbx": "ff5cb3f2f3e4836a914ecc31497c03548311b7061d29435a9bcbf3e9f73e50b5"
+    },
+    "template": "NormalTiramisu",
+    "meshId": 110949717610709,
+    "textureImageId": 126710686451658,
+    "textureDecalId": 77240341515880,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "prism-tiramisu": {
+    "sourceArchive": "Meshy_AI_prism_cube_tiramisu_3_1015105112_texture_fbx.zip",
+    "archiveSha256": "8c322f2131339df0368f9270d43e5fc1d617c292ec4b7811d1cba4425c3b8117",
+    "heightCm": 70,
+    "triangles": 2960,
+    "files": {
+      "color-game.png": "70d90fe37c914586db63cf90ebde3502140b119a7dbec33dba5809587dbedb89",
+      "color.png": "e0694ff4cb18654b9a8f10d19862402bee5a6e2559260c7693a87c5e18b0e988",
+      "prism-tiramisu-import.fbx": "87327b8dd072388752ac31638760212e9de7fbd62aff4c0513ba2a51c591e559",
+      "source.fbx": "710e4d059314493d15afbd6918d77b104d2791442e8b47bcdf9b5ff3d1fbf6b8"
+    },
+    "template": "PrismTiramisu",
+    "meshId": 117290725160266,
+    "textureImageId": 86354568951883,
+    "textureDecalId": 110427581646193,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "quartz-tiramisu": {
+    "sourceArchive": "Meshy_AI_pink_quartz_rose_gold_1015105127_texture_fbx.zip",
+    "archiveSha256": "694a7fd2f1b6a571296d718ad1f6ae3a7a192722d7187d5c20f79fa0621090f3",
+    "heightCm": 70,
+    "triangles": 3138,
+    "files": {
+      "color-game.png": "27e2d5b35d42007c5fa1fbdb442a0ee2abe9cb2adfa5082809d01aae80b4b95f",
+      "color.png": "ca3162ed6f8cef6f3bd37ffc0b9b2e7ec18b7dd6a4a67d59310430975a9271d5",
+      "quartz-tiramisu-import.fbx": "ce1d8d27bb124dcbd56210df9959c25d930e36226cf9271261cc11e74ac576c6",
+      "source.fbx": "67b5cd55a549b36e23093b716ada6c6d93aff606d980688d5bc7b39478048a50"
+    },
+    "template": "QuartzTiramisu",
+    "meshId": 113858916080254,
+    "textureImageId": 132179357477332,
+    "textureDecalId": 72828253208032,
+    "uploadFormat": "BMP, 2048x2048, RGB-identical to original"
+  },
+  "tiramisuIndexAtlas": {
+    "decalId": 86695871378793,
+    "imageId": 110416862812071,
+    "file": "icons/tiramisu-atlas.png",
+    "cells": {
+      "9n": [
+        0,
+        0
+      ],
+      "9s": [
+        512,
+        0
+      ],
+      "9s2": [
+        0,
+        512
+      ]
+    },
+    "cellSize": 512
   }
 }

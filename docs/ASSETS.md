@@ -235,3 +235,16 @@ Four user-supplied Meshy archives replace the tier-eight Cream Puff placeholder.
 | MangoBingsu | 3073 | 96524354777183 | 138029057603227 |
 
 Transparent user-reference cutouts created with built-in image_gen; exact prompts in assets/desserts/icons/prompts.json. Three 512px cells in 1024px atlas image 91644959397587 ([decal](https://create.roblox.com/dashboard/creations/store/126346920723969/configure)). Shiny minis reuse MiniBingsu with the existing gold tint/sparkles. Proof: docs/previews/bingsu-world.png and bingsu-index.png.
+
+## Tier 9 Tiramisu Cake — user assets, 2026-10-15
+
+Four user-supplied Meshy archives replace the tier-nine Macaron placeholder. Original geometry, UVs and 2048px textures retained, with archive/file hashes and upload IDs in manifest.json. One script-free MeshPart per template, automatic render fidelity, disabled shadows and bottom-center pivots. Mini height 18/28 studs, full base 2.5 / producer 5 studs.
+
+| Template | Triangles | Mesh | Texture |
+|---|---:|---:|---:|
+| MiniTiramisu | 312 | 129130838775985 | 114068885584080 |
+| NormalTiramisu | 3050 | 110949717610709 | 126710686451658 |
+| PrismTiramisu | 2960 | 117290725160266 | 86354568951883 |
+| QuartzTiramisu | 3138 | 113858916080254 | 132179357477332 |
+
+Transparent user-reference cutouts created with built-in image_gen; exact prompts in assets/desserts/icons/prompts.json. Three aspect-preserving 512px cells in 1024px atlas image 110416862812071 ([decal](https://create.roblox.com/dashboard/creations/store/86695871378793/configure)). Shiny minis reuse MiniTiramisu with existing gold tint/sparkles. Proof: docs/previews/tiramisu-world.png and tiramisu-index.png.

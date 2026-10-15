@@ -341,3 +341,11 @@ PASS: PlayerProfiles deterministic mock verifies persisted gift/AFK clocks, dupl
 - Play PASS: 24 bounded 2D index images without 3D previews, discovery single model and 0.240-stud floating span with cleanup. Fifteen live mini drops verified; producer and mini meshes/textures preload successfully.
 - Final Perk crate regression PASS: ten grants exactly once, spent-credit replay rejected, 194 stopped-arrow samples and image-only animation. Three index icons preload successfully and fit their cards; saved world/index screenshots. Removed both temporary fixture scripts and enabled the normal game.
 - Saved XML audit PASS: 32 exact sources, zero foreign scripts/packages or temporary fixtures, 94,347,761 bytes; exported all 32 native templates.
+
+## 2026-10-15 — Tier-nine Tiramisu Cake family
+- Imported user MiniTiramisu (312 triangles), NormalTiramisu (3,050), Prism Cube Tiramisu Cake (2,960), Pink Quartz Rose Gold Tiramisu Cake (3,138). Original geometry, UVs and 2048px texture colors retained; 36 script-free templates cover tiers 1–9.
+- Added 9n/9s/9s2 ownership, discovery, equipment, conditional 50:50 shiny selection, patbingsu merge lineage and transparent 2D index/roulette art. Source hashes, asset IDs and exact image_gen prompts recorded.
+- Native regression PASS: 180,000 conditional shiny samples across tiers 1–9, legacy saves, merge/equip, deterministic quartz crate result, 27 full models and mini heights/pivots.
+- Play PASS: 27 bounded 2D index images, zero ViewportFrames/WorldModels; discovery one fixed-facing model, 0.395-stud floating span and cleanup. Twelve live mini drops verified; all producer and mini meshes/maps and atlas preloaded successfully. Long tier-nine shiny captions reduced to 10px to fit their cards. Proof: tiramisu-world.png and tiramisu-index.png.
+- Final Perk crate regression PASS: ten server grants exactly once, spent-credit replay rejected, 194 stopped-arrow alignment samples and image-only animation. Removed both fixtures and enabled normal game.
+- Saved XML audit PASS: 32 exact sources, zero foreign scripts/packages or temporary fixtures, 94,500,659 bytes; exported all 36 native templates.

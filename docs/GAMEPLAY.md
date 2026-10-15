@@ -118,3 +118,6 @@ Tier 7 is Waffle. Cotton Candy Unicorn Waffle (7s) and Pink Dark Choco Honey Waf
 
 ### Tier-eight Patbingsu update
 Tier 8 is Patbingsu. Extra Red Bean Bingsu (8s) and Mango Bingsu (8s2) split conditional shiny rolls 50:50. Waffle merges preserve variant lineage; ownership, discovery and equipment remain separate. Existing tier-eight counts remain intact. Transparent index/roulette images and one floating, fixed-facing 3D discovery model use existing presentation. MiniBingsu uses guided physical drops.
+
+### Tier-nine Tiramisu Cake update
+Tier 9 is Tiramisu Cake. Prism Cube Tiramisu Cake (9s) and Pink Quartz Rose Gold Tiramisu Cake (9s2) split conditional shiny rolls 50:50. Patbingsu merges preserve variant lineage; ownership, discovery and equipment remain separate. Existing tier-nine counts remain intact. Transparent index/roulette images and one floating, fixed-facing 3D discovery model retain existing presentation. MiniTiramisu uses guided physical drops.

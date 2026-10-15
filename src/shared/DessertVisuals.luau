@@ -20,8 +20,8 @@ local function imported(name,tier,shiny,variant,nativeShiny)
 	return m
 end
 function Visuals.Build(tier,shiny,variant)
-	if tier<=8 then
-		local name=tier==8 and (shiny and (variant==2 and "MangoBingsu" or "RedBeanBingsu") or "NormalBingsu") or tier==7 and (shiny and (variant==2 and "HoneybeeWaffle" or "UnicornWaffle") or "NormalWaffle") or tier==6 and (shiny and (variant==2 and "QuartzCroissant" or "GalaxyCroissant") or "NormalCroissant") or tier==5 and (shiny and (variant==2 and "DarkMacaron" or "CrystalMacaron") or "NormalMacaron") or tier==4 and (shiny and (variant==2 and "UnicornShortcake" or "GalaxyShortcake") or "NormalShortcake") or tier==3 and (shiny and (variant==2 and "RubyJelly" or "SherbetJelly") or "NormalJelly") or tier==2 and (shiny and (variant==2 and "DarkChocoCustard" or "RainbowCustard") or "NormalCustard") or shiny and (variant==2 and "GalaxyPudding" or "MilkPudding") or "NormalPudding"
+	if tier<=9 then
+		local name=tier==9 and (shiny and (variant==2 and "QuartzTiramisu" or "PrismTiramisu") or "NormalTiramisu") or tier==8 and (shiny and (variant==2 and "MangoBingsu" or "RedBeanBingsu") or "NormalBingsu") or tier==7 and (shiny and (variant==2 and "HoneybeeWaffle" or "UnicornWaffle") or "NormalWaffle") or tier==6 and (shiny and (variant==2 and "QuartzCroissant" or "GalaxyCroissant") or "NormalCroissant") or tier==5 and (shiny and (variant==2 and "DarkMacaron" or "CrystalMacaron") or "NormalMacaron") or tier==4 and (shiny and (variant==2 and "UnicornShortcake" or "GalaxyShortcake") or "NormalShortcake") or tier==3 and (shiny and (variant==2 and "RubyJelly" or "SherbetJelly") or "NormalJelly") or tier==2 and (shiny and (variant==2 and "DarkChocoCustard" or "RainbowCustard") or "NormalCustard") or shiny and (variant==2 and "GalaxyPudding" or "MilkPudding") or "NormalPudding"
 		local m=imported(name,tier,shiny,variant,shiny)
 		if m then m:ScaleTo(m:GetScale()*DISPLAY_SCALE); return m end
 	end
@@ -111,8 +111,8 @@ function Visuals.Build(tier,shiny,variant)
 	return m
 end
 function Visuals.BuildMini(tier,shiny,variant)
-	if tier<=8 then
-		local m=imported(tier==8 and "MiniBingsu" or tier==7 and "MiniWaffle" or tier==6 and "MiniCroissant" or tier==5 and "MiniMacaron" or tier==4 and "MiniShortcake" or tier==3 and "MiniJelly" or tier==2 and "MiniCustard" or "MiniPudding",tier,shiny,variant)
+	if tier<=9 then
+		local m=imported(tier==9 and "MiniTiramisu" or tier==8 and "MiniBingsu" or tier==7 and "MiniWaffle" or tier==6 and "MiniCroissant" or tier==5 and "MiniMacaron" or tier==4 and "MiniShortcake" or tier==3 and "MiniJelly" or tier==2 and "MiniCustard" or "MiniPudding",tier,shiny,variant)
 		if m then return m end
 	end
 	local m=Visuals.Build(tier,shiny,variant); m:ScaleTo(m:GetScale()*.25/DISPLAY_SCALE)
