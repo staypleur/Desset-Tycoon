@@ -12,6 +12,8 @@ local Layout=require(RS:WaitForChild("ProductionPlot"))
 local UI=require(RS:WaitForChild("DessertUI"))
 local CafeMarket=require(RS:WaitForChild("CafeMarket"))
 local Profiles=require(script.Parent:WaitForChild("PlayerProfiles"))
+local Codes=require(script.Parent:WaitForChild("DessertCodes"))
+local CodePets=require(RS:WaitForChild("DessertCodePets"))
 local CommunityReward=require(script.Parent:WaitForChild("CommunityReward"))
 local island=workspace:WaitForChild("DessertJellyIsland",30)
 assert(island,"Dessert island missing")
@@ -56,11 +58,11 @@ local function multiplier(p)
 end
 local function snapshot(player)
 	local p=profiles[player]; if not p then return nil end; local d=p.Data
-	return {TutorialStep=d.TutorialStep,Cash=d.Cash,Bag=d.Bag,Pending=d.Pending,CafeQueue=d.CafeQueue,CafeLevel=d.CafeLevel,
+	return {CodePets=d.CodePets,CodeShiny50=d.CodeShiny50,TutorialStep=d.TutorialStep,Cash=d.Cash,Bag=d.Bag,Pending=d.Pending,CafeQueue=d.CafeQueue,CafeLevel=d.CafeLevel,
 		AFKStored=d.AFKStored,OfflineStored=d.OfflineStored,TotalCashEarned=d.TotalCashEarned,TotalMiniCollected=d.TotalMiniCollected,PlaySeconds=d.PlaySeconds,
 		CafeRate=Rules.CafeRate(d),CafeUpgradeCost=Rules.CafeUpgradeCost(d),Index=d.Index,Highest=Rules.Highest(d),
 		NormalTokens=d.NormalTokens,PerkTokens=d.PerkTokens,PaidNormalTokens=d.PaidNormalTokens,PaidPerkTokens=d.PaidPerkTokens,NextGift=d.NextGift,AFKSeconds=d.AFKSeconds,
-		Multiplier=multiplier(p),Luck=Rules.PassMultiplier(p.Passes,"Luck"),FriendBonus=friendBonus(player,p),ShinyChance=Rules.ShinyChance("Normal",Rules.PassMultiplier(p.Passes,"Luck"),friendBonus(player,p)),OwnedPasses=table.clone(p.Passes),Settings=d.Settings,Equipped=d.Equipped,
+		Multiplier=multiplier(p),Luck=Rules.PassMultiplier(p.Passes,"Luck"),FriendBonus=friendBonus(player,p),ShinyChance=Rules.ShinyChance("Normal",Rules.PassMultiplier(p.Passes,"Luck"),friendBonus(player,p),d.CodeShiny50),OwnedPasses=table.clone(p.Passes),Settings=d.Settings,Equipped=d.Equipped,
 		CommunityRewardClaimed=d.Receipts[Config.CommunityRewardReceipt]==true,Durable=p.Durable,Premium=p.Premium,Restricted=p.Restricted,HotUntil=d.HotUntil,
 		Active=Rules.Count(d),PlotId=player:GetAttribute("PlotId"),ServerTime=os.time()}
 end
@@ -121,12 +123,32 @@ local function emit(s,pet,now)
 	local drop=DropPhysics.New(m,points,s.Products,collector);drop.Value=value
 	table.insert(s.Drops,drop)
 end
+local function refreshCompanion(player)
+ local p=profiles[player];if not p then return end
+ if p.Companion then p.Companion:Destroy();p.Companion=nil end
+ local key=p.Data.Equipped;if not key then return end
+ local tier,shiny,variant=Rules.Decode(key)
+ local model
+ if tier and p.Data.Index[key] then model=Visuals.Build(tier,shiny,variant)
+ elseif CodePets.Items[key] and p.Data.CodePets[key] then model=Visuals.BuildCodePet(key)
+ else p.Data.Equipped=nil;return end
+ model:ScaleTo(model:GetScale()*.65);model.Name="DessertCompanion";model:SetAttribute("OwnerUserId",player.UserId)
+ local r=root(player);local s=stateFor(player)
+ model:PivotTo(r and r.CFrame*CFrame.new(-3,3,2) or s and s.Plot:GetPivot() or CFrame.new(0,5,0))
+ model.Parent=workspace;p.Companion=model
+end
 local function perform(player,verb,arg)
 	local p=profiles[player]; local s=stateFor(player)
 	if not p or p.Busy or p.Closing or p.Faulted then return false,"Please wait" end
 	local d=p.Data
 	if verb=="State" then return snapshot(player) end
-	if verb=="CommunityReward" then
+	if verb=="RedeemCode" then
+  if os.clock()-(p.LastCodeAttempt or -math.huge)<1 then return false,"Please wait a moment." end
+  p.LastCodeAttempt=os.clock()
+  local ok,message=Profiles.Mutate(p,function(trial) return Codes.Redeem(trial,arg) end)
+  if p.Faulted then player:Kick(message);return false,message end
+  update(player);return ok,message
+ elseif verb=="CommunityReward" then
 		if os.clock()-(p.LastCommunityCheck or -math.huge)<8 then return false,"Please wait before checking again" end
 		p.LastCommunityCheck=os.clock()
 		local ok,message=CommunityReward.Claim(p,function() return player:IsInGroupAsync(Config.CommunityId) end,function(profile,id,grant)
@@ -142,13 +164,7 @@ local function perform(player,verb,arg)
 	elseif verb=="Equip" then
 		if not Rules.ToggleEquip(d,arg) then return false end
 		Rules.TutorialEvent(d,"Equip")
-		if p.Companion then p.Companion:Destroy(); p.Companion=nil end
-		if d.Equipped then
-			local tier,shiny,variant=Rules.Decode(d.Equipped); local m=Visuals.Build(tier,shiny,variant); m:ScaleTo(m:GetScale()*.65)
-			m.Name="DessertCompanion"; m:SetAttribute("OwnerUserId",player.UserId)
-			local r=root(player); m:PivotTo(r and r.CFrame*CFrame.new(-3,3,2) or s.Plot:GetPivot())
-			m.Parent=workspace; p.Companion=m
-		end
+		refreshCompanion(player)
 		update(player); return true
 	elseif verb=="Crate" then
 		if (d.TutorialStep or 11)<11 then return false,"Follow the arrows first" end
@@ -346,7 +362,7 @@ local function join(player)
  local stats=Instance.new("Folder"); stats.Name="leaderstats"; stats.Parent=player
  local cash=Instance.new("NumberValue"); cash.Name="Cash"; cash.Parent=stats
  player:GetAttributeChangedSignal("PlotId"):Connect(function() render(player); update(player) end)
- Rules.Gift(p.Data,os.time(),p.Premium); render(player); update(player)
+ Rules.Gift(p.Data,os.time(),p.Premium); render(player); refreshCompanion(player); update(player)
  print("[DessertGame] Profile ready: "..(p.Durable and "saved" or "Studio session").."; gifts every 5h")
 end
 Players.PlayerAdded:Connect(join); for _,player in ipairs(Players:GetPlayers()) do task.spawn(join,player) end

@@ -1,0 +1,33 @@
+[
+  {
+    "key": "cookie-fish",
+    "archive": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\사진\\디저트 타이쿤\\Meshy_AI_cookie_fish_3k_1015150957_texture_fbx.zip",
+    "sha256": "35c7ffa14464a8ba9e1051851b86d76607f6b1f3cc40a0747cc5c6c1e6edef88",
+    "triangles": 3043,
+    "meshId": "72744273700913",
+    "textureId": "72517480623025",
+    "atlasId": "139938748808911",
+    "supersededTextureId": "84666571718951",
+    "supersededAtlasId": "109737420173177"
+  },
+  {
+    "key": "chocolate-fish",
+    "archive": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\사진\\디저트 타이쿤\\Meshy_AI_chocolate_fish_3k_1015151017_texture_fbx.zip",
+    "sha256": "7fffdcb6f4e04c6766b0fdfc7d49f9df5fc0e3e2735dea93d9aff9d2019b858a",
+    "triangles": 2958,
+    "meshId": "87053168210980",
+    "textureId": "86967891745411",
+    "atlasId": "139938748808911",
+    "supersededAtlasId": "109737420173177"
+  },
+  {
+    "key": "rainbow-fish",
+    "archive": "C:\\Users\\wucha\\OneDrive\\바탕 화면\\사진\\디저트 타이쿤\\Meshy_AI_rainbow_fish_3k_1015151034_texture_fbx.zip",
+    "sha256": "74c34930612f5ab091d5ebb67ec58db76754efee2d3007e6ee21c3793327c640",
+    "triangles": 2967,
+    "meshId": "95815184341742",
+    "textureId": "128540107837497",
+    "atlasId": "139938748808911",
+    "supersededAtlasId": "109737420173177"
+  }
+]

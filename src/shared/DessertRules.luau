@@ -21,9 +21,12 @@ function Rules.New(now)
 	return {Version=2, TutorialStep=1, Cash=0, Bag=0, Pending=0, CafeQueue=0, CafeLevel=0, Pets={["1n"]=1}, Index={["1n"]=true},
 		TotalCashEarned=0,TotalMiniCollected=0,PlaySeconds=0,AFKStored=0,OfflineStored=0,LastSeen=now,
 		NormalTokens=0, PerkTokens=0, PaidNormalTokens=0, PaidPerkTokens=0, NextGift=now+INTERVAL, AFKSeconds=0,
+		CodePets={},RedeemedCodes={},CodeShiny50=false,CodeCashActive=false,
 		Settings={Music=true, Effects=true, MusicVolume=.4, EffectsVolume=.5, HideOthers=false}, Receipts={}, HotUntil=0}
 end
 function Rules.NormalizeCafe(data)
+	data.CodePets=data.CodePets or {};data.RedeemedCodes=data.RedeemedCodes or {}
+	data.CodeShiny50=data.CodeShiny50==true;data.CodeCashActive=data.CodeCashActive==true
 	-- Missing marker means a pre-tutorial save, never replay onboarding for veterans.
 	data.TutorialStep=type(data.TutorialStep)=="number" and math.clamp(math.floor(data.TutorialStep),1,11) or 11
 	data.CafeQueue=math.max(0,data.CafeQueue or 0)
@@ -90,7 +93,8 @@ function Rules.CafeRate(data) return Config.CafeBaseRate*3^(Rules.UnlockedTier(d
 function Rules.CafeUpgradeCost(data) return Config.CafeUpgradeBaseCost*3^(Rules.UnlockedTier(data)-1)*Config.CafeUpgradeCostGrowth^data.CafeLevel end
 -- Companion selection is independent of the producing desserts on the plot.
 function Rules.ToggleEquip(data,key)
-	if not Rules.Decode(key) or not data.Index[key] then return false end
+	if type(key)~="string" then return false end
+	if not (Rules.Decode(key) and data.Index[key]) and not (data.CodePets and data.CodePets[key]==true) then return false end
 	data.Equipped=data.Equipped~=key and key or nil
 	return true
 end
@@ -160,7 +164,7 @@ function Rules.Add(data,tier,shiny,count,discoveries,variant)
 end
 function Rules.Merge(data,discoveries,rng,luck,friendBonus)
 	rng=rng or Random.new()
-	local chance=Rules.ShinyChance("Normal",luck,friendBonus)
+	local chance=Rules.ShinyChance("Normal",luck,friendBonus,data.CodeShiny50)
 	for tier=1,29 do
 		local total=0
 		for variant=0,2 do total+=data.Pets[Rules.Key(tier,variant>0,variant)] or 0 end
@@ -187,7 +191,8 @@ function Rules.Highest(data)
 	for key,n in pairs(data.Pets) do if n>0 then local tier=Rules.Decode(key); highest=math.max(highest,tier) end end
 	return highest
 end
-function Rules.ShinyChance(kind,luck,friendBonus)
+function Rules.ShinyChance(kind,luck,friendBonus,forceHalf)
+ if forceHalf==true then return .5 end
  local multiplier=type(luck)=="number" and luck or (luck and 2 or 1)
  return math.clamp((kind=="Perk" and .1 or .01)*multiplier+(friendBonus or 0),0,1)
 end
@@ -216,11 +221,11 @@ function Rules.Buy(data,count,rng,luck,autoMerge,friendBonus)
 	if count~=1 and count~=10 and count~=100 and count~=1000 then return false,"Invalid quantity" end
 	local cost=Rules.BuyCost(count,data)
 	if data.Cash<cost then return false,"Not enough cash" end
-	local trial={Pets=table.clone(data.Pets), Index=table.clone(data.Index)}
+	local trial={Pets=table.clone(data.Pets), Index=table.clone(data.Index),CodeShiny50=data.CodeShiny50}
 	local discoveries={}
 	local buyTier=Rules.BuyTier(data)
 	for _=1,count do
-		local shiny=rng:NextNumber()<Rules.ShinyChance("Normal",luck,friendBonus)
+		local shiny=rng:NextNumber()<Rules.ShinyChance("Normal",luck,friendBonus,data.CodeShiny50)
 		Rules.Add(trial,buyTier,shiny,1,discoveries,Rules.RollVariant(buyTier,shiny,rng))
 	end
 	if count>1 or autoMerge then Rules.Merge(trial,discoveries,rng,luck,friendBonus) end
@@ -246,7 +251,7 @@ function Rules.Roll(data,kind,rng,luck,discoveries,friendBonus)
 	for tier=1,lastTier do
 		sum+=odds[tier] or 0
 		if roll<sum or tier==lastTier then
-			local shiny=rng:NextNumber()<Rules.ShinyChance(kind,luck,friendBonus)
+			local shiny=rng:NextNumber()<Rules.ShinyChance(kind,luck,friendBonus,data.CodeShiny50)
 			local variant=Rules.RollVariant(tier,shiny,rng)
 			Rules.Add(data,tier,shiny,1,discoveries,variant)
 			return {Tier=tier,Shiny=shiny,Variant=variant,Key=Rules.Key(tier,shiny,variant)}

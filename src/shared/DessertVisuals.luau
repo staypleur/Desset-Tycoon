@@ -126,4 +126,11 @@ function Visuals.BuildMini(tier,shiny,variant)
 	local m=Visuals.Build(tier,shiny,variant); m:ScaleTo(m:GetScale()*.25/DISPLAY_SCALE)
 	return m
 end
+function Visuals.BuildCodePet(key)
+	local spec=assert(require(game.ReplicatedStorage.DessertCodePets).Items[key],"Unknown cosmetic pet")
+	local model=assert(game.ReplicatedStorage.DessertModelTemplates:FindFirstChild(spec.Template),"Missing code pet template"):Clone()
+	model:SetAttribute("CodePetKey",key);model:SetAttribute("CosmeticOnly",true)
+	model:ScaleTo(model:GetScale()*DISPLAY_SCALE)
+	return model
+end
 return Visuals

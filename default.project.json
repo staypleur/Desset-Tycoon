@@ -78,6 +78,9 @@
       },
       "DessertTutorial": {
         "$path": "src/shared/DessertTutorial.luau"
+      },
+      "DessertCodePets": {
+        "$path": "src/shared/DessertCodePets.luau"
       }
     },
     "ServerScriptService": {
@@ -108,6 +111,9 @@
       },
       "CommunityReward": {
         "$path": "src/server/CommunityReward.luau"
+      },
+      "DessertCodes": {
+        "$path": "src/server/DessertCodes.luau"
       }
     },
     "StarterPlayer": {

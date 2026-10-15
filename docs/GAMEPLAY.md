@@ -139,3 +139,9 @@ Tier 9 is Tiramisu Cake. Prism Cube Tiramisu Cake (9s) and Pink Quartz Rose Gold
 - Tier 16: Financier; shiny variants Pure Gold Financier and Pink Quartz Financier.
 - Each tier has a dedicated miniature, normal character and two independent shiny identities. Conditional on a shiny result, each variant has 50% probability; the overall shiny chance is unchanged. Merge lineage, equip, discovery and crate results preserve the exact identity.
 - Index and crate art use transparent 2D atlases; discovery keeps one fixed-facing floating 3D preview.
+
+## Redemption codes
+
+Settings > Codes opens a separate entry panel. Codes are trimmed and case-insensitive, validated only by the server, and rate-limited. jungbin0629 / jungbin0410 / jungbin0514 each grant Cookie Fish / Chocolate Fish / Rainbow Fish once per account. Ownership and redemption ledger commit together before success is returned; uncertain saves require rejoin rather than risk overwriting a committed reward. Code pets remain hidden in Index until owned, then can be equipped as companions; they never enter producing inventory, merging, tier discovery or income calculations.
+
+woochan0207 toggles an exact 50% shiny probability for purchases, merges and both crate kinds, bypassing luck/friend multipliers while enabled; entering again restores ordinary calculations. YWC14 toggles cash to 1e30, then to zero on the next entry. Both toggle states persist per account. These two codes are the explicit exceptions to once-only redemption.

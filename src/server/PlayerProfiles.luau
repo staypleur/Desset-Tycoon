@@ -59,4 +59,25 @@ function Profiles.Receipt(profile,id,grant)
 	profile.Busy=false
 	return ok and committed
 end
+-- Durable code rewards/toggles. Never acknowledge before the profile write succeeds.
+function Profiles.Mutate(profile,mutate)
+	if profile.Busy or profile.Faulted then return false,"Please wait." end
+	profile.Busy=true
+	local trial=clone(profile.Data)
+	local accepted,message=mutate(trial)
+	if not accepted then profile.Busy=false;return false,message end
+	if not profile.Durable then profile.Data=trial;profile.Busy=false;return true,message end
+	trial.LastSeen=os.time()
+	local committed=false
+	local ok,result=pcall(function() return Store:UpdateAsync(profile.Key,function(old)
+		committed=false
+		if not old or not old.Lock or old.Lock.Session~=session or old.Lock.Expires<os.time() then return nil end
+		committed=true
+		return {Data=trial,Lock={Session=session,Expires=os.time()+180}}
+	end) end)
+	if ok and committed and result then profile.Data=result.Data else profile.Faulted=true end
+	profile.Busy=false
+	if profile.Faulted then return false,"Save confirmation pending. Please rejoin." end
+	return true,message
+end
 return Profiles

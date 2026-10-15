@@ -419,3 +419,9 @@ Roblox size guidance checked: https://create.roblox.com/docs/production/publishi
 ## Tutorial and pickup feedback — 2026-10-16
 
 User explicitly requested arrow-based onboarding and mini-dessert pickup audio. Local neon chevrons and a down-arrow glyph are code-native guidance, created for that request; no imported models or scripts. Pickup audio reuses Roblox's bundled `rbxasset://sounds/volume_slider.ogg` (already used for approved click feedback), playback speed 1.5, effects-volume gain .45, .12-second minimum retrigger interval. No external audio upload or new marketplace dependency.
+
+## Code-only fish companions — 2026-10-16
+
+User-supplied Meshy cookie, chocolate and rainbow fish FBX archives and reference images. Sources, hashes, triangle counts and Roblox asset IDs: `assets/code-pets/manifest.json`. Uploaded geometry has 3043 / 2958 / 2967 triangles; embedded FBX video textures stripped for import and RGB color textures resized to at most 2048 pixels. Geometry and UVs retained. Templates CookieFish, ChocolateFish, RainbowFish use 2.5-stud height, bottom pivot, no executable descendants, no collisions or miniature production. Reference images form the 1024-square code-fish-atlas.png. Companion-only ownership stays separate from tier progression and index entries appear only after redemption.
+
+Tutorial chevrons and target arrow now use RGB(0,105,50), as explicitly requested.

@@ -10,7 +10,7 @@ function Tutorial.Start(screen,getData)
 		for side=-1,1,2 do
 			local p=Instance.new("Part"); p.Name="Chevron"; p.Size=Vector3.new(.35,.1,1.7)
 			p.Anchored=true; p.CanCollide=false; p.CanTouch=false; p.CanQuery=false
-			p.Material=Enum.Material.Neon; p.Color=Color3.fromRGB(255,215,103); p.Transparency=1; p.Parent=model
+			p.Material=Enum.Material.Neon; p.Color=Color3.fromRGB(0,105,50); p.Transparency=1; p.Parent=model
 			p:SetAttribute("Side",side)
 		end
 		arrows[i]=model
@@ -18,7 +18,7 @@ function Tutorial.Start(screen,getData)
 	local marker=Instance.new("BillboardGui"); marker.Name="TutorialTarget"; marker.Size=UDim2.fromOffset(70,80)
 	marker.AlwaysOnTop=true; marker.StudsOffset=Vector3.new(0,5,0); marker.Parent=screen
 	local glyph=Instance.new("TextLabel"); glyph.Size=UDim2.fromScale(1,1); glyph.BackgroundTransparency=1
-	glyph.Text="▼"; glyph.TextColor3=Color3.fromRGB(255,215,103); glyph.TextStrokeTransparency=.2; glyph.TextSize=62; glyph.Parent=marker
+	glyph.Text="▼"; glyph.TextColor3=Color3.fromRGB(0,105,50); glyph.TextStrokeTransparency=.2; glyph.TextSize=62; glyph.Parent=marker
 	local pointer=glyph:Clone(); pointer.Name="TutorialMenuArrow"; pointer.Size=UDim2.fromOffset(54,54); pointer.AnchorPoint=Vector2.new(.5,1); pointer.ZIndex=100; pointer.Visible=false; pointer.Parent=screen
 	local lastEquip,elapsed=nil,0
 	local connection

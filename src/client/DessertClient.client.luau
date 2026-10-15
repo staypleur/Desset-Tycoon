@@ -17,6 +17,7 @@ local Art=require(RS:WaitForChild("PastelArt"))
 local ShopUI=require(RS:WaitForChild("KawaiiShop"))
 local UserArt=require(RS:WaitForChild("UserArt"))
 local DessertImages=require(RS:WaitForChild("DessertImages"))
+local CodePets=require(RS:WaitForChild("DessertCodePets"))
 local Rewards=require(RS:WaitForChild("DessertRewards"))
 local remotes=RS:WaitForChild("DessertRemotes")
 local action=remotes:WaitForChild("Action"); local event=remotes:WaitForChild("Event")
@@ -235,6 +236,7 @@ show=function(name)
 	if draggingVolume then local key=draggingVolume.Key; draggingVolume=nil; setVolume(key,volumeValue(key),true) end
 	volumeControls={}; scroll.ScrollingEnabled=true
 	if kawaiiShop then kawaiiShop.Destroy(); kawaiiShop=nil end
+	if panelName~=name then scroll.CanvasPosition=Vector2.zero end
 	panelName=name; window.Visible=name~="Shop"; title.Text=name; scroll:ClearAllChildren(); giftLabel=nil; statLabels={}; indexGrid=nil
 	if name=="Shop" then
 		kawaiiShop=ShopUI.Open(screen,data,{
@@ -268,6 +270,14 @@ show=function(name)
 			end
 			text(card,owned and DessertImages.Name(tier,shiny,variant) or "Undiscovered",UDim2.new(1,-8,0,26),UDim2.fromOffset(4,126)).TextSize=((tier==9 or tier==13 or tier==14 or tier==15 or tier>=17) and shiny) and 10 or (shiny and 12 or 14)
 			if owned then local equipButton=button(card,data.Equipped==key and "Unequip" or "Equip",UDim2.new(1,-16,0,32),UDim2.fromOffset(8,152),function() request("Equip",key) end,colors.Mint); equipButton.Name="TutorialEquip"..key end
+		end end
+		for _,key in ipairs(CodePets.Order) do if (data.CodePets or {})[key] then
+			local spec=CodePets.Items[key]
+			local card=Instance.new("Frame");card.Name="IndexCard"..key;card.LayoutOrder=index;index+=1
+			card.ZIndex=scroll.ZIndex+1;card.Parent=scroll;Art.Apply(card,"Card")
+			CodePets.CreateImage(card,key,UDim2.new(1,-40,0,104),UDim2.fromOffset(20,20))
+			text(card,spec.Name,UDim2.new(1,-8,0,26),UDim2.fromOffset(4,126)).TextSize=14
+			button(card,data.Equipped==key and "Unequip" or "Equip",UDim2.new(1,-16,0,32),UDim2.fromOffset(8,152),function() request("Equip",key) end,colors.Mint).Name="EquipCodePet"
 		end end
 	elseif name=="Join Group" then
 		local claimed=data.CommunityRewardClaimed
@@ -306,6 +316,32 @@ show=function(name)
 			request("Settings",{HideOthers=not data.Settings.HideOthers}); task.delay(.3,function() if panelName=="Settings" then show("Settings") end end)
 		end,colors.Lavender)
 		text(scroll,voiceStatus,UDim2.new(1,-18,0,54),UDim2.fromOffset(6,326)).TextSize=15
+		button(scroll,"Codes",UDim2.new(1,-18,0,54),UDim2.fromOffset(6,390),function() show("Codes") end,colors.Mint).Name="OpenCodes"
+	elseif name=="Codes" then
+		text(scroll,"Enter your code",UDim2.new(1,-20,0,42),UDim2.fromOffset(10,16)).TextSize=23
+		local entry=Instance.new("TextBox");entry.Name="CodeInput";entry.Text="";entry.PlaceholderText="Enter code here"
+		entry.ClearTextOnFocus=false;entry.MultiLine=false;entry.Font=Enum.Font.Gotham;entry.TextSize=20
+		entry.TextColor3=colors.Text;entry.PlaceholderColor3=Color3.fromRGB(153,125,143);entry.BackgroundColor3=colors.Cream
+		entry.Size=UDim2.new(1,-32,0,60);entry.Position=UDim2.fromOffset(16,76);entry.ZIndex=scroll.ZIndex+2;entry.Parent=scroll;corner(entry,14)
+		local border=Instance.new("UIStroke");border.Color=colors.Lavender;border.Thickness=2;border.ApplyStrokeMode=Enum.ApplyStrokeMode.Border;border.Parent=entry
+		entry:GetPropertyChangedSignal("Text"):Connect(function() if #entry.Text>64 then entry.Text=entry.Text:sub(1,64) end end)
+		local status=text(scroll,"",UDim2.new(1,-24,0,70),UDim2.fromOffset(12,214));status.Name="CodeStatus";status.TextSize=17
+		local busy=false
+		local redeem
+		local function submit()
+			if busy then return end
+			busy=true;status.Text="Checking code...";redeem.Text="Checking..."
+			local called,granted,message=pcall(action.InvokeServer,action,"RedeemCode",entry.Text)
+			if status.Parent then
+				status.Text=called and (message or "Please try again.") or "Connection unavailable. Please try again."
+				status.TextColor3=called and granted and Color3.fromRGB(0,105,50) or colors.Text
+				redeem.Text="Redeem";if called and granted then entry.Text="" end
+			end
+			busy=false
+		end
+		redeem=button(scroll,"Redeem",UDim2.new(1,-32,0,54),UDim2.fromOffset(16,150),submit,colors.Mint);redeem.Name="RedeemCode"
+		entry.FocusLost:Connect(function(enterPressed) if enterPressed then submit() end end)
+		button(scroll,"Back to Settings",UDim2.new(1,-32,0,46),UDim2.fromOffset(16,298),function() show("Settings") end,colors.Lavender)
 	elseif name=="Stats" then
 		for n,item in ipairs({{"TotalCashEarned","Total Cash Earned"},{"TotalMiniCollected","Mini Desserts Collected"},{"PlaySeconds","Total Play Time"}}) do
 			local card=Instance.new("Frame"); card.Size=UDim2.new(1,-32,0,108); card.Position=UDim2.fromOffset(16,(n-1)*126); card.ZIndex=scroll.ZIndex+1; card.Parent=scroll; Art.Apply(card,"Card")
@@ -346,7 +382,7 @@ show=function(name)
 			end
 			text(card,"Free "..free.."  |  Paid "..paid,UDim2.new(1,-12,0,28),UDim2.fromOffset(6,300)).TextSize=13
 			if crateDetails[kind] then
-				local odds=Rules.Odds(data.Highest,kind); local entries={}; local shiny=Rules.ShinyChance(kind,data.Luck,data.FriendBonus)
+				local odds=Rules.Odds(data.Highest,kind); local entries={}; local shiny=Rules.ShinyChance(kind,data.Luck,data.FriendBonus,data.CodeShiny50)
 				for tier=1,30 do if odds[tier] then table.insert(entries,Catalog[tier].Name..": "..string.format("%.2f%% normal / %.2f%% shiny",odds[tier]*(1-shiny),odds[tier]*shiny)) end end
 				local detail=text(choices,kind.." Details\n"..table.concat(entries,"\n"),UDim2.new(1,-12,0,0),UDim2.fromOffset(6,350))
 				detail.TextSize=14; detail.AutomaticSize=Enum.AutomaticSize.Y
@@ -468,6 +504,7 @@ event.OnClientEvent:Connect(function(kind,value,message)
 		end
 	elseif kind=="State" then
 		local previousIndex=data and data.Index or {}
+		local previousCodePets=data and data.CodePets or {}
 		local previousEquipped=data and data.Equipped
 		local previousHighest=data and data.Highest
 		local previousNormal=data and data.NormalTokens
@@ -482,6 +519,7 @@ event.OnClientEvent:Connect(function(kind,value,message)
 		if panelName=="Index" then
    local changed=previousEquipped~=data.Equipped
    for key in pairs(data.Index) do if not previousIndex[key] then changed=true; break end end
+   for key in pairs(data.CodePets or {}) do if not previousCodePets[key] then changed=true; break end end
    if changed then show("Index") end
   end
 		if panelName=="Crates" and (previousHighest~=data.Highest or previousNormal~=data.NormalTokens or previousPerk~=data.PerkTokens or previousPaidNormal~=data.PaidNormalTokens or previousPaidPerk~=data.PaidPerkTokens or previousChance~=data.ShinyChance) then show("Crates") end

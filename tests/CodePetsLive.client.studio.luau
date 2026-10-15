@@ -1,0 +1,26 @@
+assert(game:GetService('RunService'):IsStudio());
+local a=game.ReplicatedStorage:WaitForChild('DessertRemotes'):WaitForChild('Action');
+task.wait(8);
+local d=a:InvokeServer('State');
+assert(type(d)=='table');
+assert(not a:InvokeServer('Equip','code:cookie-fish'));
+for i,c in ipairs({'jungbin0629','jungbin0410','jungbin0514'}) do task.wait(1.1);
+assert(a:InvokeServer('RedeemCode',c));
+local key=({'code:cookie-fish','code:chocolate-fish','code:rainbow-fish'})[i];
+task.wait(.3);
+assert(a:InvokeServer('Equip',key));
+task.wait(.5);
+local m=workspace:FindFirstChild('DessertCompanion');
+assert(m and m:GetAttribute('CosmeticOnly'));
+end;
+task.wait(1.1);
+assert(not a:InvokeServer('RedeemCode','jungbin0629'));
+for _,c in ipairs({'woochan0207','woochan0207','YWC14','YWC14'}) do task.wait(1.1);
+assert(a:InvokeServer('RedeemCode',c)) end;
+local state=a:InvokeServer('State');
+assert(not state.CodeShiny50 and state.Cash==0);
+local assets={'rbxassetid://139938748808911','rbxassetid://72517480623025','rbxassetid://86967891745411','rbxassetid://128540107837497'};
+local failures={};
+game:GetService('ContentProvider'):PreloadAsync(assets,function(id,status) if status~=Enum.AssetFetchStatus.Success then table.insert(failures,id) end end);
+assert(#failures==0,table.concat(failures,','));
+print('CODE_LIVE_PASS: 3 rewards, duplicate rejected, 3 equips, toggle reset, all textures loaded')
