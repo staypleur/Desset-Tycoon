@@ -95,5 +95,20 @@
       "unicorn-waffle": "Background-extraction edit for a Roblox index icon. Remove only the white background and ground shadow. Preserve exactly the complete cotton candy unicorn waffle character, waffle grid, pastel cream hair, ears and horn, face, hands, feet, silhouette, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background.",
       "honeybee-waffle": "Background-extraction edit for a Roblox index icon. Remove only the white background and ground shadow. Preserve exactly the complete dark chocolate honeybee waffle character, waffle grid, chocolate drizzle, striped cap, antennae, honey wings, face, hands, feet, silhouette, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background."
     }
+  },
+  "bingsuCutouts": {
+    "mode": "built-in image_gen",
+    "transparent_background": true,
+    "outputs": [
+      "bingsu.png",
+      "redbean-bingsu.png",
+      "mango-bingsu.png"
+    ],
+    "packing": "Three 512px cells in a 1024px RGBA atlas; aspect-preserving max480px resize with transparent padding.",
+    "prompts": {
+      "bingsu": "Background-extraction edit for a Roblox index icon. Remove only the white background and ground shadow. Preserve exactly the complete pink patbingsu character, shaved ice, strawberries, red beans, rice cake, cherry, pink bowl, face, hands, feet, silhouette, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background.",
+      "redbean-bingsu": "Background-extraction edit for a Roblox index icon. Remove only the white background and ground shadow. Preserve exactly the complete extra red bean patbingsu character, shaved ice, strawberries, abundant red beans, rice cake, pink bowl, face, hands, feet, silhouette, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background.",
+      "mango-bingsu": "Background-extraction edit for a Roblox index icon. Remove only the off-white background and ground shadow. Preserve exactly the complete mango bingsu character, shaved ice, mango cubes and slices, cream, mango garnish, pastel bowl, face, hands, feet, silhouette, colors, pose and view. Center with transparent margin, no cropping, no text, no redesign. True transparent alpha background."
+    }
   }
 }

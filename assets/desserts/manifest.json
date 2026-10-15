@@ -525,5 +525,95 @@
       ]
     },
     "cellSize": 512
+  },
+  "mini-bingsu": {
+    "sourceArchive": "Meshy_AI_patbingsu_no_face_no__1015101545_texture_fbx.zip",
+    "archiveSha256": "5972d22b3752bcb4d69b48b2f538573b4265c94a945f894e4ba3f5f354083e81",
+    "heightCm": 18,
+    "triangles": 314,
+    "files": {
+      "color.png": "4cfb2b2b1a98030e4d407e12abc4c10e2c2f79eafbacdd24b77b6646f5fa39c2",
+      "mini-bingsu-import.fbx": "49c047cb1300125e9f449fb42430ca21f1da4edb4f2487764a7ccb3c5d3e619d",
+      "source.fbx": "c4856e496789e5db7e51c41857e1857d9da65890197886de2b2fc4802b6be1f7"
+    },
+    "template": "MiniBingsu",
+    "meshId": 120796736973866,
+    "textureImageId": 75050430216843,
+    "textureDecalId": 99361063170653,
+    "uploadFormat": "BMP, 2048x2048",
+    "textureResizedFrom4096": false
+  },
+  "bingsu": {
+    "sourceArchive": "Meshy_AI_cute_patbingsu_front__1015102923_texture_fbx.zip",
+    "archiveSha256": "7ede9776f362b3d52b843eda85f2460877e4bde27b7dc39fb9468f42ea3709b9",
+    "heightCm": 70,
+    "triangles": 3126,
+    "files": {
+      "bingsu-import.fbx": "88ea36e876384021e721abb579cfc635cde9086a5d2c55106436d3c9c431c625",
+      "color-2k.png": "5d0a09c358f5e9b60e9d6470d6fbf8a19c80f76272425839b7e804ec67d4a0d9",
+      "color.png": "c3c5fe308dffe00d09d7f4a873318f566c86e5ff4f618ace18b8e4da02133b99",
+      "source.fbx": "ce18a42ec3caa7ff22426c9a9f53748877bd8fbc16a59f992e82fa73de6a558d"
+    },
+    "template": "NormalBingsu",
+    "meshId": 106720525032637,
+    "textureImageId": 122156990895461,
+    "textureDecalId": 80553100205304,
+    "uploadFormat": "BMP, 2048x2048",
+    "textureResizedFrom4096": true
+  },
+  "redbean-bingsu": {
+    "sourceArchive": "Meshy_AI_cute_red_bean_patbing_1015102930_texture_fbx.zip",
+    "archiveSha256": "bc23225b7a5e076de0cbe3e268824e682b1271224bdd47ed7ade5794cfcac014",
+    "heightCm": 70,
+    "triangles": 3126,
+    "files": {
+      "color.png": "864b2f08360f750365b5dc54bfbb5f282acc0690da7b2f406034f260cb6f227d",
+      "redbean-bingsu-import.fbx": "290d5a2aad44c2cec18180e8eae82fa17d912581c323468e919a34b38947313a",
+      "source.fbx": "81cbcf4771f04da5ca83fb0b8dcc60ad517d81fd4aff6b28de339d2367655c44"
+    },
+    "template": "RedBeanBingsu",
+    "meshId": 128120281024779,
+    "textureImageId": 134906036349280,
+    "textureDecalId": 139640454637763,
+    "uploadFormat": "BMP, 2048x2048",
+    "textureResizedFrom4096": false
+  },
+  "mango-bingsu": {
+    "sourceArchive": "Meshy_AI_mango_patbingsu_front_1015103648_texture_fbx.zip",
+    "archiveSha256": "8ce839904b52099591a40cc66e73ed914d96dbd40c16aa0d8442a304198944d5",
+    "heightCm": 70,
+    "triangles": 3073,
+    "files": {
+      "color-2k.png": "9cc6ac37840a4b9b0d53cbb13d78291a179211cc1d85b868f4a8954033318a6d",
+      "color.png": "4899d73e2826f5a41ca179af714584aa5232b3f5c869af6bb320f8538e49bddb",
+      "mango-bingsu-import.fbx": "f19b8676be95fb11a4486acc7c41f4e8495acd6155f535a3c16d307fffbac87c",
+      "source.fbx": "0631bacd04f85ebf999aceceb1689f0bb836d8b0ea64a73b71b7b645c398edf7"
+    },
+    "template": "MangoBingsu",
+    "meshId": 96524354777183,
+    "textureImageId": 138029057603227,
+    "textureDecalId": 107744080533834,
+    "uploadFormat": "BMP, 2048x2048",
+    "textureResizedFrom4096": true
+  },
+  "bingsuIndexAtlas": {
+    "decalId": 126346920723969,
+    "imageId": 91644959397587,
+    "file": "icons/bingsu-atlas.png",
+    "cells": {
+      "8n": [
+        0,
+        0
+      ],
+      "8s": [
+        512,
+        0
+      ],
+      "8s2": [
+        0,
+        512
+      ]
+    },
+    "cellSize": 512
   }
 }

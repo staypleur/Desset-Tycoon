@@ -222,3 +222,16 @@ Four user-supplied Meshy archives replace the tier-seven Egg Tart placeholder. O
 | HoneybeeWaffle | 3114 | 130076525799889 | 94136436247267 |
 
 User-provided reference images were cut out with built-in image_gen; exact prompts are in assets/desserts/icons/prompts.json. Transparent 1024px atlas image 91766508733195 ([decal](https://create.roblox.com/dashboard/creations/store/87381359525723/configure)) contains three aspect-preserving 512px cells. Shiny minis reuse the supplied face-free mini with existing gold tint/sparkles. The user's fourth name is preserved as Pink Dark Choco Honey Waffle without altering the supplied chocolate/honeybee colors. Proof: docs/previews/waffle-world.png and waffle-index.png.
+
+## Tier 8 Patbingsu — user assets, 2026-10-15
+
+Four user-supplied Meshy archives replace the tier-eight Cream Puff placeholder. The first mango archive contained 843,964 triangles and was never imported; the user supplied replacement 1015103648 with 3,073 triangles, which is the final source. Original geometry/UVs and PNG textures retained, hashes and upload IDs recorded in manifest.json. Normal/mango 4096px maps are downsampled to 2048px for game use; others are native 2048px. One script-free MeshPart per template, automatic render fidelity, disabled shadows and bottom-center pivots; mini height 18/28 studs, full base 2.5 / producer 5 studs.
+
+| Template | Triangles | Mesh | Texture |
+|---|---:|---:|---:|
+| MiniBingsu | 314 | 120796736973866 | 75050430216843 |
+| NormalBingsu | 3126 | 106720525032637 | 122156990895461 |
+| RedBeanBingsu | 3126 | 128120281024779 | 134906036349280 |
+| MangoBingsu | 3073 | 96524354777183 | 138029057603227 |
+
+Transparent user-reference cutouts created with built-in image_gen; exact prompts in assets/desserts/icons/prompts.json. Three 512px cells in 1024px atlas image 91644959397587 ([decal](https://create.roblox.com/dashboard/creations/store/126346920723969/configure)). Shiny minis reuse MiniBingsu with the existing gold tint/sparkles. Proof: docs/previews/bingsu-world.png and bingsu-index.png.

@@ -115,3 +115,6 @@ Tier 6 is Croissant. Galaxy Crescent Croissant (6s) and Pink Quartz Rose Gold Cr
 
 ### Tier-seven Waffle update
 Tier 7 is Waffle. Cotton Candy Unicorn Waffle (7s) and Pink Dark Choco Honey Waffle (7s2) split conditional shiny rolls 50:50. Croissant merges preserve variant lineage; ownership, index and equipment identities are separate. Existing tier-seven counts remain intact. Index and roulette use transparent images; discovery retains one floating, fixed-facing 3D model with approved star/heart effects. MiniWaffle uses guided physical drops.
+
+### Tier-eight Patbingsu update
+Tier 8 is Patbingsu. Extra Red Bean Bingsu (8s) and Mango Bingsu (8s2) split conditional shiny rolls 50:50. Waffle merges preserve variant lineage; ownership, discovery and equipment remain separate. Existing tier-eight counts remain intact. Transparent index/roulette images and one floating, fixed-facing 3D discovery model use existing presentation. MiniBingsu uses guided physical drops.

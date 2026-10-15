@@ -333,3 +333,11 @@ PASS: PlayerProfiles deterministic mock verifies persisted gift/AFK clocks, dupl
 - Native regression PASS: 140,000 conditional shiny samples across tiers 1–7, legacy saves, merge/equip, deterministic tier-seven honey waffle crate result, all 21 full models and mini heights.
 - Play PASS: 21 bounded 2D index images, no ViewportFrames/WorldModels; three waffle cards and atlas preload Success. Discovery fixed facing, 0.321-stud floating span and cleanup. Fifteen live mini waffle drops had matching mesh/texture and successful preload. All three producer textures loaded successfully; world and index screenshots recorded.
 - Final Perk crate regression PASS: ten grants once, spent-credit replay rejected, 195 stopped-arrow alignment samples and image-only carousel. Removed fixtures, enabled game, saved Studio and exported all 28 templates. Saved XML audit PASS: 32 exact sources, zero foreign scripts/packages or temporary fixtures, 94,195,740 bytes.
+
+## 2026-10-15 — Tier-eight Patbingsu family
+- Imported MiniBingsu (314 triangles), NormalBingsu (3,126), Extra Red Bean Bingsu (3,126), Mango Bingsu (3,073). Rejected the initial 843,964-triangle mango source before import and used the user's replacement. Normal/mango maps downsampled from 4096 to 2048 pixels; original maps retained.
+- Added separate 8n/8s/8s2 ownership/discovery/equipment, conditional 50:50 shiny selection, waffle merge lineage, transparent 2D index/roulette atlas and floating fixed-facing 3D discovery.
+- Native regression PASS: 160,000 shiny samples across tiers 1–8, legacy saves, merge/equip, deterministic mango crate result, 24 full models and mini heights/pivots.
+- Play PASS: 24 bounded 2D index images without 3D previews, discovery single model and 0.240-stud floating span with cleanup. Fifteen live mini drops verified; producer and mini meshes/textures preload successfully.
+- Final Perk crate regression PASS: ten grants exactly once, spent-credit replay rejected, 194 stopped-arrow samples and image-only animation. Three index icons preload successfully and fit their cards; saved world/index screenshots. Removed both temporary fixture scripts and enabled the normal game.
+- Saved XML audit PASS: 32 exact sources, zero foreign scripts/packages or temporary fixtures, 94,347,761 bytes; exported all 32 native templates.
