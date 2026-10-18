@@ -15,34 +15,76 @@
     "template": "MilkPudding"
   },
   "galaxy-pudding": {
-    "sourceArchive": "Meshy_AI_galaxy_glow_milk_pudd_1015051800_texture_fbx.zip",
-    "archiveSha256": "44f64620009c3aa44f19db5b9d6d9273a90983e2354dd051acb804dcec5e088e",
+    "template": "GalaxyPudding",
+    "sourceArchive": "Meshy_AI_galaxy_glow_pudding_c_1018101647_texture_fbx.zip",
+    "archiveSha256": "0280192a132e59087b359d6a9cdeb7fcd6de8d86772452af284bec4be1252158",
+    "triangles": 4459,
+    "originalTextureSize": [
+      4096,
+      4096
+    ],
     "heightCm": 70,
-    "triangles": 3116,
+    "colorTextureId": 135096880253166,
+    "meshId": 80312002941700,
     "files": {
-      "color.png": "33ae6bc0d3fc7bac92475ad9f10da7bb3fb75382126a18f9297e9de19f99ffbf",
-      "galaxy-pudding-import.fbx": "a5d89ebdc368794ae1ae72e2b5533fc2f5031204a536c399f03af89d03c2abfc",
-      "source.fbx": "6b385612dca142b2762957598f125df64a59a63f38e85a62ff6aba753802cdf0"
+      "source.fbx": "46b80cd4dfe7dda696d759807aab211de47f2fb9a39153c799664613746ba85b",
+      "color.png": "d522f185897230b8d0c7697481e2f5f3df37d55e650abad01c829fca7ca3154d",
+      "color-game.png": "85aa210a82eb46dd8a47526c18bb3e79b5cbd6f1c2077ac0df30d2e53bf10856",
+      "galaxy-pudding-import.fbx": "408d165cc0498af8d5c38f6cc65229bef5ff88f353cbc21b3cab9a04178bc9ab"
     },
-    "meshId": 113259910578805,
-    "colorDecalId": 91816957432597,
-    "colorTextureId": 103470845017352,
-    "template": "GalaxyPudding"
+    "creator": "User-supplied Meshy AI model",
+    "creatorGroupId": 203626899,
+    "replacedVersion": {
+      "sourceArchive": "Meshy_AI_galaxy_glow_milk_pudd_1015051800_texture_fbx.zip",
+      "archiveSha256": "44f64620009c3aa44f19db5b9d6d9273a90983e2354dd051acb804dcec5e088e",
+      "heightCm": 70,
+      "triangles": 3116,
+      "files": {
+        "color.png": "33ae6bc0d3fc7bac92475ad9f10da7bb3fb75382126a18f9297e9de19f99ffbf",
+        "galaxy-pudding-import.fbx": "a5d89ebdc368794ae1ae72e2b5533fc2f5031204a536c399f03af89d03c2abfc",
+        "source.fbx": "6b385612dca142b2762957598f125df64a59a63f38e85a62ff6aba753802cdf0"
+      },
+      "meshId": 113259910578805,
+      "colorDecalId": 91816957432597,
+      "colorTextureId": 103470845017352,
+      "template": "GalaxyPudding"
+    }
   },
   "custard": {
-    "sourceArchive": "Meshy_AI_cute_custard_characte_1015051854_texture_fbx.zip",
-    "archiveSha256": "b4e28f2f1f93a836fed1729a8f7bbdd5f2b3a251a658d2c760864c06fd947ccc",
+    "template": "NormalCustard",
+    "sourceArchive": "Meshy_AI_custard_character_cle_1018101625_texture_fbx.zip",
+    "archiveSha256": "8ec0265169180e476446af80d5551af27099327ec5608ad9413f7a14a00c7be7",
+    "triangles": 4880,
+    "originalTextureSize": [
+      4096,
+      4096
+    ],
     "heightCm": 70,
-    "triangles": 2907,
+    "colorTextureId": 112313507975917,
+    "meshId": 85728816250739,
     "files": {
-      "color.png": "8580d361f4a6a50e10c651f8653c79a7798e7716036ffb419123364c519e88b9",
-      "custard-import.fbx": "957f52c663f11550dc68cd60ee9b3b3e48f9a22732eeb2f5d36a43f22a96c143",
-      "source.fbx": "b3351bb726aaad7fc047d0a1e31c89100fc608a23b9504e93b36c81cb5eac826"
+      "source.fbx": "1367ce74d9608000acc72ed91d501053de123e8949cd079570576dc2e2206980",
+      "color.png": "d997ba94f2cbd9dac9cd34fb8f73b676baec7c267c78269edae88c1bd7901f4a",
+      "color-game.png": "01c90dd29146d51338fe8338bec829a8ddfcd7c9e9546bef067ab41bd06cdaa7",
+      "custard-import.fbx": "2825cc686a652cb90c5ec52dfa9261c1710660966520743e34c6d0bfed2f5bb1"
     },
-    "meshId": 92687501796872,
-    "colorDecalId": 114590222157955,
-    "colorTextureId": 97064014004437,
-    "template": "NormalCustard"
+    "creator": "User-supplied Meshy AI model",
+    "creatorGroupId": 203626899,
+    "replacedVersion": {
+      "sourceArchive": "Meshy_AI_cute_custard_characte_1015051854_texture_fbx.zip",
+      "archiveSha256": "b4e28f2f1f93a836fed1729a8f7bbdd5f2b3a251a658d2c760864c06fd947ccc",
+      "heightCm": 70,
+      "triangles": 2907,
+      "files": {
+        "color.png": "8580d361f4a6a50e10c651f8653c79a7798e7716036ffb419123364c519e88b9",
+        "custard-import.fbx": "957f52c663f11550dc68cd60ee9b3b3e48f9a22732eeb2f5d36a43f22a96c143",
+        "source.fbx": "b3351bb726aaad7fc047d0a1e31c89100fc608a23b9504e93b36c81cb5eac826"
+      },
+      "meshId": 92687501796872,
+      "colorDecalId": 114590222157955,
+      "colorTextureId": 97064014004437,
+      "template": "NormalCustard"
+    }
   },
   "mini-custard": {
     "sourceArchive": "Meshy_AI_mini_custard_dessert__1015051942_texture_fbx.zip",
@@ -90,19 +132,40 @@
     "template": "RainbowCustard"
   },
   "dark-choco-custard": {
-    "sourceArchive": "Meshy_AI_iridescent_black_choc_1015073924_texture_fbx.zip",
-    "archiveSha256": "f0b504900483ac30b3d95b3f71c91de2a2a60f9c3e0cf66659e9cf3e116f7cc4",
+    "template": "DarkChocoCustard",
+    "sourceArchive": "Meshy_AI_black_choco_custard_c_1018101658_texture_fbx.zip",
+    "archiveSha256": "51501728f27a63494b974c6c1a5b3a7e19f5409a4ccc405c8a371e99ea489555",
+    "triangles": 5080,
+    "originalTextureSize": [
+      4096,
+      4096
+    ],
     "heightCm": 70,
-    "triangles": 3081,
+    "colorTextureId": 89445412322899,
+    "meshId": 94641170215772,
     "files": {
-      "color.png": "8b5dfa62868c34fcf334fc3717e26df734dba324f65fbe8c8c4e4a832d1afc83",
-      "dark-choco-custard-import.fbx": "a44e94a52069f1f8b0a9fe85f894b42e6e9eb3d0eee154046c056a5d8f7a9939",
-      "source.fbx": "cfe32e30f4590f508d9fd33329776703bfdc353cd763a493a891826efd1f5ea4"
+      "source.fbx": "0559464effc2468a639ce8d8d9652fd27849b88355fd4b9d2ecab3373df0b2f2",
+      "color.png": "f29d2135b85b26dbac50556f5cba18a18f42cf5f786e7a2f0f71273a464cc822",
+      "color-game.png": "03883aa4add3a9dcb68ad714a7f0db2a1e4b6fe094ee4bb5686444cd88a26bb0",
+      "dark-choco-custard-import.fbx": "ead7bb653bc12690b8a98a42e04c869814613e975b1ee93f2f1821fc8824a58c"
     },
-    "meshId": 109807250478265,
-    "colorDecalId": 105095541091725,
-    "colorTextureId": 82354773271014,
-    "template": "DarkChocoCustard"
+    "creator": "User-supplied Meshy AI model",
+    "creatorGroupId": 203626899,
+    "replacedVersion": {
+      "sourceArchive": "Meshy_AI_iridescent_black_choc_1015073924_texture_fbx.zip",
+      "archiveSha256": "f0b504900483ac30b3d95b3f71c91de2a2a60f9c3e0cf66659e9cf3e116f7cc4",
+      "heightCm": 70,
+      "triangles": 3081,
+      "files": {
+        "color.png": "8b5dfa62868c34fcf334fc3717e26df734dba324f65fbe8c8c4e4a832d1afc83",
+        "dark-choco-custard-import.fbx": "a44e94a52069f1f8b0a9fe85f894b42e6e9eb3d0eee154046c056a5d8f7a9939",
+        "source.fbx": "cfe32e30f4590f508d9fd33329776703bfdc353cd763a493a891826efd1f5ea4"
+      },
+      "meshId": 109807250478265,
+      "colorDecalId": 105095541091725,
+      "colorTextureId": 82354773271014,
+      "template": "DarkChocoCustard"
+    }
   },
   "custardShinyAtlas": {
     "file": "icons/custard-shiny-index-atlas.png",

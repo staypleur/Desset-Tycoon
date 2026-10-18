@@ -441,3 +441,15 @@ Tutorial chevrons and target arrow now use RGB(0,105,50), as explicitly requeste
 2026-10-18 full-range crates: updated text, card height and details placement within the same approved crate and odds panels. No new art or external asset sources.
 
 Owner's final simplicity request: reused the same approved crate pictures, cards and buttons in a shorter 314px card layout. Removed shard controls and main-page explanatory tables. View Odds uses the existing approved panel with separate text rows; no new external sources or artwork.
+
+## User-requested custard and galaxy pudding replacements — 2026-10-18
+
+Creator/source: owner-supplied [Meshy AI](https://www.meshy.ai/) FBX archives, explicitly selected by the owner. Exact archive names, SHA-256 hashes, prior versions and uploaded IDs are recorded in `assets/desserts/manifest.json`. Uploaded under Cosmon Studio (group 203626899).
+
+| Template | Source archive | Triangles | Mesh ID | Color image ID |
+| --- | --- | ---: | ---: | ---: |
+| NormalCustard (tier 2 normal) | Meshy_AI_custard_character_cle_1018101625_texture_fbx.zip | 4,880 | 85728816250739 | 112313507975917 |
+| DarkChocoCustard (tier 2 shiny variant 2) | Meshy_AI_black_choco_custard_c_1018101658_texture_fbx.zip | 5,080 | 94641170215772 | 89445412322899 |
+| GalaxyPudding (tier 1 shiny variant 2) | Meshy_AI_galaxy_glow_pudding_c_1018101647_texture_fbx.zip | 4,459 | 80312002941700 | 135096880253166 |
+
+Retained original FBX/color files and UV geometry. Removed embedded Texture/Video nodes and their connections from import FBX; resized runtime color textures from 4096 to 2048 pixels. Only the matching FBX and base-color PNG were read from each archive; unrelated nested archives in the dark-chocolate ZIP were ignored. Decorative instances contain one anchored, noncolliding MeshPart and no scripts, packages or interactions. Normalized template height to 2.5 studs with a bottom-center pivot and front toward -Z. Existing world display scaling produces 5-stud models and companion scaling produces 3.25-stud models. Mini-dessert models, variant keys, reference icon art and all other 120 templates are unchanged. All six uploaded mesh/color IDs passed Studio ContentProvider loading; actual runtime Build previews and companion dimensions passed verification.
