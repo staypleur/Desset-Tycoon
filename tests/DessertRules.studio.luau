@@ -12,7 +12,7 @@ assert(d.NormalTokens==2 and d.PerkTokens==1)
 assert(Rules.AFK(d,17999)==0)
 assert(Rules.AFK(d,1)==1 and d.AFKSeconds==0 and d.NormalTokens==3)
 assert(Rules.AFK(d,36001)==2 and d.AFKSeconds==1)
-local normal=Rules.Odds(10,"Normal"); assert(normal[6]==70 and normal[7]==20 and normal[8]==9 and normal[9]==1)
+local normal=Rules.Odds(10,"Normal"); assert(normal[6]==40 and normal[7]==30 and normal[8]==20 and normal[9]==10)
 local perk=Rules.Odds(10,"Perk"); assert(perk[7]==40 and perk[8]==30 and perk[9]==20 and perk[10]==10)
 assert(Rules.Odds(1,"Normal")[1]==100 and Rules.Odds(1,"Perk")[1]==100)
 local random={NextNumber=function() return .5 end}

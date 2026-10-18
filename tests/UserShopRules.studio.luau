@@ -25,10 +25,10 @@ for highest=1,30 do for _,kind in ipairs({"Normal","Perk"}) do
  assert(math.abs(sum-100)<1e-9)
 end end
 local odds=R.Odds(10,"Normal")
-assert(math.abs(odds[1]-(40/6+30/7+20/8+10/9))<1e-9 and odds[10]==nil and math.abs(odds[9]-10/9)<1e-9)
+assert(odds[1]==nil and odds[10]==nil and odds[6]==40 and odds[7]==30 and odds[8]==20 and odds[9]==10)
 local d=R.New(0); d.Pets={['10n']=1}; local rng={NextNumber=function() return 0 end}; local discoveries={}
 R.Roll(d,"Normal",rng,1,discoveries); R.Roll(d,"Normal",rng,1,discoveries)
-assert(d.Pets['1s']==2 and #discoveries==1,"Shinies may repeat; discovery only happens once")
+assert(d.Pets['6s']==2 and #discoveries==1,"Shinies may repeat; discovery only happens once")
 d=R.New(0); R.AFK(d,2*3600,false)
 local json=game:GetService("HttpService"); d=json:JSONDecode(json:JSONEncode(d))
 assert(R.AFK(d,3600,true)==1 and d.NormalTokens==1 and d.PerkTokens==1 and d.AFKSeconds==0)
@@ -38,4 +38,4 @@ assert(not R.Gift(d,5*3600,true))
 for _,spec in pairs(C.Passes) do assert(spec.Id>=0 and spec.Id%1==0) end
 assert(C.Products.Normal10.Price==69 and C.Products.Perk10.Price==269)
 f:Destroy()
-print("[UserShopRules] PASS: sequential gates, isolated highest multipliers, all uniform-range odds, repeated shinies, luck plus friend bonus, stored 3h/Premium rewards, 5h gift deadline, locked IDs and prices")
+print("[UserShopRules] PASS: sequential gates, isolated highest multipliers, nearby-tier crate odds, repeated shinies, luck plus friend bonus, stored 3h/Premium rewards, 5h gift deadline, locked IDs and prices")

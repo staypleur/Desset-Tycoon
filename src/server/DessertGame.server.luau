@@ -61,7 +61,7 @@ local function snapshot(player)
 	return {CodePets=d.CodePets,CodeShiny50=d.CodeShiny50,TutorialStep=d.TutorialStep,Cash=d.Cash,Bag=d.Bag,Pending=d.Pending,CafeQueue=d.CafeQueue,CafeLevel=d.CafeLevel,
 		AFKStored=d.AFKStored,OfflineStored=d.OfflineStored,TotalCashEarned=d.TotalCashEarned,TotalMiniCollected=d.TotalMiniCollected,PlaySeconds=d.PlaySeconds,
 		CafeRate=Rules.CafeRate(d),CafeUpgradeCost=Rules.CafeUpgradeCost(d),Index=d.Index,Highest=Rules.Highest(d),
-		NormalTokens=d.NormalTokens,PerkTokens=d.PerkTokens,PaidNormalTokens=d.PaidNormalTokens,PaidPerkTokens=d.PaidPerkTokens,NextGift=d.NextGift,AFKSeconds=d.AFKSeconds,
+		NormalTokens=d.NormalTokens,PerkTokens=d.PerkTokens,PaidNormalTokens=d.PaidNormalTokens,PaidPerkTokens=d.PaidPerkTokens,CrateShards=d.CrateShards or 0,NextGift=d.NextGift,AFKSeconds=d.AFKSeconds,
 		Multiplier=multiplier(p),Luck=Rules.PassMultiplier(p.Passes,"Luck"),FriendBonus=friendBonus(player,p),ShinyTier=Rules.BuyTier(d),ShinyChance=Rules.ShinyChance("Normal",Rules.PassMultiplier(p.Passes,"Luck"),friendBonus(player,p),d.CodeShiny50,Rules.BuyTier(d)),OwnedPasses=table.clone(p.Passes),Settings=d.Settings,Equipped=d.Equipped,
 		CommunityRewardClaimed=d.Receipts[Config.CommunityRewardReceipt]==true,Durable=p.Durable,Premium=p.Premium,Restricted=p.Restricted,HotUntil=d.HotUntil,
 		Active=Rules.Count(d),PlotId=player:GetAttribute("PlotId"),ServerTime=os.time()}
@@ -189,20 +189,28 @@ local function perform(player,verb,arg)
 		refreshCompanion(player)
 		update(player); return true
 	elseif verb=="Crate" then
-		if (d.TutorialStep or 11)<11 then return false,"Follow the arrows first" end
-		if type(arg)~="table" or (arg.Kind~="Normal" and arg.Kind~="Perk") or (arg.Count~=1 and arg.Count~=10) then return false end
-		local key=arg.Kind=="Perk" and "PerkTokens" or "NormalTokens"
-		local paidKey="Paid"..key; local paid=d[paidKey] or 0
-		if d[key]+(p.Restricted and 0 or paid)<arg.Count then return false,"Not enough available crate credits" end
-		local freeUsed=math.min(d[key],arg.Count); d[key]-=freeUsed; d[paidKey]=paid-(arg.Count-freeUsed)
-		local knownBefore=table.clone(d.Index); local highestBefore=Rules.Highest(d)
-		local found={}; local results={}
-		for _=1,arg.Count do table.insert(results,Rules.Roll(d,arg.Kind,rng,Rules.PassMultiplier(p.Passes,"Luck"),found,friendBonus(player,p))) end
-		if p.Passes.AutoMerge and (p.Data.TutorialStep or 11)>=11 then Rules.Merge(d,found,rng,Rules.PassMultiplier(p.Passes,"Luck"),friendBonus(player,p)) end
+		if type(arg)~="table" then return false end
+		local batch
+		local ok,message=Profiles.Mutate(p,function(trial)
+			local accepted,result=Rules.OpenCrates(trial,arg.Kind,arg.Count,rng,Rules.PassMultiplier(p.Passes,"Luck"),friendBonus(player,p),p.Restricted,p.Passes.AutoMerge)
+			if accepted then batch=result;return true end
+			return false,result
+		end)
+		if not ok then update(player,message);return false,message end
 		render(player)
 		-- Rewards are already granted here. The carousel only presents these results.
-		events:FireClient(player,"Crates",{Results=results,KnownBefore=knownBefore,Discoveries=found,Highest=highestBefore,Kind=arg.Kind})
+		events:FireClient(player,"Crates",batch)
 		update(player); return true
+	elseif verb=="ExchangeShards" then
+		if type(arg)~="table" then return false end
+		local found
+		local ok,message=Profiles.Mutate(p,function(trial)
+			local accepted,result=Rules.ExchangeShards(trial,arg.Tier,arg.Variant)
+			if accepted then found=result;return true end
+			return false,result
+		end)
+		if not ok then update(player,message);return false,message end
+		render(player);discoveries(player,found);update(player,"Shard exchange complete");return true
 	elseif verb=="Purchase" then
 		if type(arg)~="string" then return false end
 		local product=Config.Products[arg]; local spec=product or Config.Passes[arg]

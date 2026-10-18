@@ -20,11 +20,13 @@ end
 function Rules.New(now)
 	return {Version=2, TutorialStep=1, Cash=0, Bag=0, Pending=0, CafeQueue=0, CafeLevel=0, Pets={["1n"]=1}, Index={["1n"]=true},
 		TotalCashEarned=0,TotalMiniCollected=0,PlaySeconds=0,AFKStored=0,OfflineStored=0,LastSeen=now,
-		NormalTokens=0, PerkTokens=0, PaidNormalTokens=0, PaidPerkTokens=0, NextGift=now+INTERVAL, AFKSeconds=0,
+		NormalTokens=0, PerkTokens=0, PaidNormalTokens=0, PaidPerkTokens=0, CrateShards=0, NextGift=now+INTERVAL, AFKSeconds=0,
 		CodePets={},RedeemedCodes={},CodeShiny50=false,CodeCashActive=false,
 		Settings={Music=true, Effects=true, MusicVolume=.4, EffectsVolume=.5, HideOthers=false}, Receipts={}, HotUntil=0}
 end
 function Rules.NormalizeCafe(data)
+	local shards=data.CrateShards
+	data.CrateShards=type(shards)=="number" and shards==shards and shards<math.huge and math.max(0,math.floor(shards)) or 0
 	data.CodePets=data.CodePets or {};data.RedeemedCodes=data.RedeemedCodes or {}
 	data.CodeShiny50=data.CodeShiny50==true;data.CodeCashActive=data.CodeCashActive==true
 	-- Missing marker means a pre-tutorial save, never replay onboarding for veterans.
@@ -239,8 +241,8 @@ function Rules.Odds(highest,kind)
 	local weights={40,30,20,10}
 	local odds={}
 	for i,offset in ipairs(offsets) do
-		local cap=math.max(1,highest-offset)
-		for tier=1,cap do odds[tier]=(odds[tier] or 0)+weights[i]/cap end
+		local tier=math.max(1,highest-offset)
+		odds[tier]=(odds[tier] or 0)+weights[i]
 	end
 	return odds
 end
@@ -268,6 +270,32 @@ function Rules.Roll(data,kind,rng,luck,discoveries,friendBonus)
 			return {Tier=tier,Shiny=shiny,Variant=variant,Key=Rules.Key(tier,shiny,variant)}
 		end
 	end
+end
+-- Used inside one durable profile transaction: credits, rewards and shards commit together.
+function Rules.OpenCrates(data,kind,count,rng,luck,friendBonus,restricted,autoMerge)
+	if (data.TutorialStep or 11)<11 then return false,"Follow the arrows first" end
+	if (kind~="Normal" and kind~="Perk") or (count~=1 and count~=10) then return false,"Invalid crate request" end
+	local key=kind=="Perk" and "PerkTokens" or "NormalTokens"
+	local paidKey="Paid"..key;local free=data[key] or 0;local paid=data[paidKey] or 0
+	if free+(restricted and 0 or paid)<count then return false,"Not enough available crate credits" end
+	local paidUsed=count-math.min(free,count)
+	local batch={Results={},KnownBefore=table.clone(data.Index),Discoveries={},Highest=Rules.Highest(data),Kind=kind,PaidUsed=paidUsed}
+	data[key]=free-(count-paidUsed);data[paidKey]=paid-paidUsed
+	for _=1,count do table.insert(batch.Results,Rules.Roll(data,kind,rng,luck,batch.Discoveries,friendBonus)) end
+	if autoMerge then Rules.Merge(data,batch.Discoveries,rng,luck,friendBonus) end
+	batch.ShardsEarned=paidUsed*Config.CrateShards[kind]
+	data.CrateShards=(data.CrateShards or 0)+batch.ShardsEarned;batch.ShardBalance=data.CrateShards
+	return true,batch
+end
+function Rules.ExchangeShards(data,tier,variant)
+	if (data.TutorialStep or 11)<11 then return false,"Follow the arrows first" end
+	if type(tier)~="number" or tier~=tier or tier%1~=0 or tier<1 or tier>Rules.UnlockedTier(data)
+		or (variant~=0 and variant~=1 and variant~=2) then return false,"Choose a discovered tier and a valid variant" end
+	local cost=variant==0 and Config.ShardMaterialCost or Config.ShardShinyCost
+	if (data.CrateShards or 0)<cost then return false,"Not enough shards" end
+	local found={}
+	data.CrateShards-=cost;Rules.Add(data,tier,variant>0,1,found,variant)
+	return true,found
 end
 -- A missed offline interval does not accumulate unlimited gifts. Start the next 5h cycle now.
 -- Both Premium and normal rewards share ONE deadline and are delivered atomically.

@@ -60,3 +60,9 @@ ProcessReceipt writes reward and purchase ledger atomically before acknowledging
 
 
 2026-10-18 18:08 KST: published version 10, tier-based shiny rates (1/0.7/0.5/0.3/0.1/0.05 percent), relative friend +10% and own Premium +30%, actual-tier HUD/details, individual crate outcome disclosures. Six-million-draw statistical check plus boundary/rules/Play verification passed. Saved 35-source XML audit passed. Existing Luck/Perk benefits and 50% test override retained. See WORKLOG for exact results.
+
+2026-10-18 crate reward update: Normal crates award highest owned tier minus 4/3/2/1 with weights 40/30/20/10%; Perk uses minus 3/2/1/0 with the same weights. Clamp each result to tier 1, combining duplicate weights. This replaces uniform rolls from tier 1 through each cap, for both earned and paid credits. Conditional shiny rates and pass prices/IDs are unchanged. All final named outcome probabilities remain available before purchase.
+
+Paid credits consumed at opening award 1 shard per Normal or 3 per Perk. Free credits are consumed first and award no shards. Shards persist, do not expire and survive progression reset. Exchange 30 for one exact normal dessert or 150 for one chosen shiny variant, at any already-discovered tier; no random roll or luck effect. Server commits credit consumption, rolled inventory and shards together; exchanges debit shards and grant inventory in one profile mutation. No retroactive grant for previously spent credits; existing unused paid credits qualify when opened after this update.
+
+Published successfully at 2026-10-18 18:35:29 KST to the existing Cosmon Studio place. Native 35-source comparison/compile and saved XML audit passed. Actual Play verified exact exchange/equipment and paid Perk shard increment with temporary isolated Studio data; fixtures were removed. Receipt and fake durable-store regressions passed. No real payment. Join an updated server to receive the changes.

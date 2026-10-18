@@ -12,6 +12,9 @@ local Config = {
 	ShinyFriendBoost = .10, -- Relative +10% per friend; never percentage points.
 	ShinyPremiumBoost = .30,
 	PerkShinyMultiplier = 10,
+	CrateShards = {Normal=1,Perk=3}, -- Only paid credits consumed by an opening earn shards.
+	ShardMaterialCost = 30,
+	ShardShinyCost = 150,
 	BuyCosts = {[1]=5, [10]=48, [100]=450, [1000]=4000},
 	-- Cumulative active F2P hours; collection/sale/bank cycle reference is 60 seconds.
 	ProgressionHours = {0,.08,.35,.9,2,2.6,3.4,4.4,5.6,7,9,11.3,13.9,16.8,20,24,28.4,33.2,38.4,44,49.8,56,62.6,69.6,77,85.4,94.2,103.4,113,123},
