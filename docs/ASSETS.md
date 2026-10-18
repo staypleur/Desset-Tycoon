@@ -433,3 +433,5 @@ Tutorial chevrons and target arrow now use RGB(0,105,50), as explicitly requeste
 
 
 2026-10-18 patch: reused approved BryanROBLOXgamer10 StreetLamp asset 11146095708; promenade migration 3 turns each of 24 heads toward its neighboring plot area. Original creator/link/cleanup requirements unchanged. Discovery loading fallback reuses the previously approved DessertImages reference atlas. No new art imported.
+
+2026-10-18 shiny balance: existing approved stat-card artwork is now clickable to open the existing approved panel style for the Shiny Odds table. No new graphics or external assets.

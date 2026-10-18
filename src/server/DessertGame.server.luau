@@ -62,7 +62,7 @@ local function snapshot(player)
 		AFKStored=d.AFKStored,OfflineStored=d.OfflineStored,TotalCashEarned=d.TotalCashEarned,TotalMiniCollected=d.TotalMiniCollected,PlaySeconds=d.PlaySeconds,
 		CafeRate=Rules.CafeRate(d),CafeUpgradeCost=Rules.CafeUpgradeCost(d),Index=d.Index,Highest=Rules.Highest(d),
 		NormalTokens=d.NormalTokens,PerkTokens=d.PerkTokens,PaidNormalTokens=d.PaidNormalTokens,PaidPerkTokens=d.PaidPerkTokens,NextGift=d.NextGift,AFKSeconds=d.AFKSeconds,
-		Multiplier=multiplier(p),Luck=Rules.PassMultiplier(p.Passes,"Luck"),FriendBonus=friendBonus(player,p),ShinyChance=Rules.ShinyChance("Normal",Rules.PassMultiplier(p.Passes,"Luck"),friendBonus(player,p),d.CodeShiny50),OwnedPasses=table.clone(p.Passes),Settings=d.Settings,Equipped=d.Equipped,
+		Multiplier=multiplier(p),Luck=Rules.PassMultiplier(p.Passes,"Luck"),FriendBonus=friendBonus(player,p),ShinyTier=Rules.BuyTier(d),ShinyChance=Rules.ShinyChance("Normal",Rules.PassMultiplier(p.Passes,"Luck"),friendBonus(player,p),d.CodeShiny50,Rules.BuyTier(d)),OwnedPasses=table.clone(p.Passes),Settings=d.Settings,Equipped=d.Equipped,
 		CommunityRewardClaimed=d.Receipts[Config.CommunityRewardReceipt]==true,Durable=p.Durable,Premium=p.Premium,Restricted=p.Restricted,HotUntil=d.HotUntil,
 		Active=Rules.Count(d),PlotId=player:GetAttribute("PlotId"),ServerTime=os.time()}
 end

@@ -164,8 +164,8 @@ function Rules.Add(data,tier,shiny,count,discoveries,variant)
 end
 function Rules.Merge(data,discoveries,rng,luck,friendBonus)
 	rng=rng or Random.new()
-	local chance=Rules.ShinyChance("Normal",luck,friendBonus,data.CodeShiny50)
 	for tier=1,29 do
+		local chance=Rules.ShinyChance("Normal",luck,friendBonus,data.CodeShiny50,tier+1)
 		local total=0
 		for variant=0,2 do total+=data.Pets[Rules.Key(tier,variant>0,variant)] or 0 end
 		local nextCount=math.floor(total/3)
@@ -191,13 +191,15 @@ function Rules.Highest(data)
 	for key,n in pairs(data.Pets) do if n>0 then local tier=Rules.Decode(key); highest=math.max(highest,tier) end end
 	return highest
 end
-function Rules.ShinyChance(kind,luck,friendBonus,forceHalf)
+function Rules.ShinyChance(kind,luck,friendBonus,forceHalf,tier)
  if forceHalf==true then return .5 end
  local multiplier=type(luck)=="number" and luck or (luck and 2 or 1)
- return math.clamp((kind=="Perk" and .1 or .01)*multiplier+(friendBonus or 0),0,1)
+ local band=math.ceil(math.clamp(tier or 1,1,30)/5)
+ local base=Config.ShinyBaseRates[band]
+ return math.clamp(base*(kind=="Perk" and Config.PerkShinyMultiplier or 1)*multiplier*(1+(friendBonus or 0)),0,1)
 end
 function Rules.FriendBonus(premium,friends)
-	return (premium and .03 or 0)+#friends*.01
+	return (premium and Config.ShinyPremiumBoost or 0)+#friends*Config.ShinyFriendBoost
 end
 function Rules.NextPass(passes,group)
 	local tiers=group=="Production" and Config.ProductionTiers or group=="Speed" and Config.SpeedTiers or Config.LuckTiers
@@ -223,7 +225,7 @@ function Rules.Buy(data,count,rng,luck,autoMerge,friendBonus)
 	local discoveries={}
 	local buyTier=Rules.BuyTier(data)
 	for _=1,count do
-		local shiny=rng:NextNumber()<Rules.ShinyChance("Normal",luck,friendBonus,data.CodeShiny50)
+		local shiny=rng:NextNumber()<Rules.ShinyChance("Normal",luck,friendBonus,data.CodeShiny50,buyTier)
 		Rules.Add(trial,buyTier,shiny,1,discoveries,Rules.RollVariant(buyTier,shiny,rng))
 	end
 	if count>1 or autoMerge then Rules.Merge(trial,discoveries,rng,luck,friendBonus) end
@@ -242,6 +244,17 @@ function Rules.Odds(highest,kind)
 	end
 	return odds
 end
+-- Itemized final outcomes used by the pre-purchase details panel.
+function Rules.CrateOutcomeOdds(highest,kind,luck,friendBonus,forceHalf)
+	local entries={};local tiers=Rules.Odds(highest,kind)
+	for tier=1,30 do if tiers[tier] then
+		local shiny=Rules.ShinyChance(kind,luck,friendBonus,forceHalf,tier)
+		for variant=0,2 do
+			table.insert(entries,{Tier=tier,Shiny=variant>0,Variant=variant,Percent=tiers[tier]*(variant==0 and 1-shiny or shiny/2)})
+		end
+	end end
+	return entries
+end
 function Rules.Roll(data,kind,rng,luck,discoveries,friendBonus)
 	local roll=rng:NextNumber()*100; local sum=0
 	local highest=Rules.Highest(data); local lastTier=kind=="Perk" and highest or math.max(1,highest-1)
@@ -249,7 +262,7 @@ function Rules.Roll(data,kind,rng,luck,discoveries,friendBonus)
 	for tier=1,lastTier do
 		sum+=odds[tier] or 0
 		if roll<sum or tier==lastTier then
-			local shiny=rng:NextNumber()<Rules.ShinyChance(kind,luck,friendBonus,data.CodeShiny50)
+			local shiny=rng:NextNumber()<Rules.ShinyChance(kind,luck,friendBonus,data.CodeShiny50,tier)
 			local variant=Rules.RollVariant(tier,shiny,rng)
 			Rules.Add(data,tier,shiny,1,discoveries,variant)
 			return {Tier=tier,Shiny=shiny,Variant=variant,Key=Rules.Key(tier,shiny,variant)}

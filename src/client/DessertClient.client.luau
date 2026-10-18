@@ -108,8 +108,9 @@ local boost=box("×1",UDim2.fromOffset(180,48),UDim2.new(1,-198,.5,38),colors.La
 local shinyChance=box("Shiny 1%",UDim2.fromOffset(180,48),UDim2.new(1,-198,.5,-18),colors.Pink,"Sparkles")
 shinyChance.Name="ShinyChanceValue"; shinyChance.TextSize=16; boost.TextSize=16
 local function updateShinyChance()
- local percent=100*(data.ShinyChance or Rules.ShinyChance("Normal",data.Luck,data.FriendBonus))
- shinyChance.Text="Shiny "..string.format(percent%1<.00001 and "%.0f%%" or "%.1f%%",percent)
+ local tier=data.ShinyTier or Rules.BuyTier(data)
+ local percent=100*(data.ShinyChance or Rules.ShinyChance("Normal",data.Luck,data.FriendBonus,data.CodeShiny50,tier))
+ shinyChance.Text=string.format("Shiny T%d\n%.4g%%",tier,percent)
 end
 local cafeRateLabel,cafeGauge,marketIsland
 task.spawn(function()
@@ -362,6 +363,15 @@ show=function(name)
 			text(card,item[2],UDim2.new(1,-24,0,38),UDim2.fromOffset(12,12)).TextSize=20
 			statLabels[item[1]]=text(card,"",UDim2.new(1,-24,0,40),UDim2.fromOffset(12,54)); statLabels[item[1]].TextSize=27
 		end
+	elseif name=="Shiny Odds" then
+		text(scroll,"Rates depend on the RESULT tier. Each purchase or merge result rolls separately. Two shiny variants share the shiny rate equally.",UDim2.new(1,-16,0,100),UDim2.fromOffset(8,0)).TextSize=16
+		text(scroll,string.format("Luck x%.2g | Social boost +%.0f%% (relative)",data.Luck or 1,(data.FriendBonus or 0)*100),UDim2.new(1,-16,0,40),UDim2.fromOffset(8,104)).TextSize=16
+		for band=1,6 do
+			local tier=band*5
+			local normal=Rules.ShinyChance("Normal",data.Luck,data.FriendBonus,data.CodeShiny50,tier)*100
+			local perk=Rules.ShinyChance("Perk",data.Luck,data.FriendBonus,data.CodeShiny50,tier)*100
+			text(scroll,string.format("Tiers %d-%d: %.4g%% buy / merge / Normal Crate | %.4g%% Perk",tier-4,tier,normal,perk),UDim2.new(1,-16,0,58),UDim2.fromOffset(8,150+(band-1)*62)).TextSize=16
+		end
 	elseif name=="Crates" then
 		giftLabel=text(scroll,giftText(),UDim2.new(1,-18,0,72),UDim2.fromOffset(6,0))
 		local choices=Instance.new("Frame"); choices.Name="CrateChoices"; choices.BackgroundTransparency=1
@@ -400,8 +410,10 @@ show=function(name)
 			end
 			text(card,"Free "..free.."  |  Paid "..paid,UDim2.new(1,-12,0,28),UDim2.fromOffset(6,300)).TextSize=13
 			if crateDetails[kind] then
-				local odds=Rules.Odds(data.Highest,kind); local entries={}; local shiny=Rules.ShinyChance(kind,data.Luck,data.FriendBonus,data.CodeShiny50)
-				for tier=1,30 do if odds[tier] then table.insert(entries,Catalog[tier].Name..": "..string.format("%.2f%% normal / %.2f%% shiny",odds[tier]*(1-shiny),odds[tier]*shiny)) end end
+				local entries={"Odds per result. Rounded values may not total 100%."}
+				for _,outcome in ipairs(Rules.CrateOutcomeOdds(data.Highest,kind,data.Luck,data.FriendBonus,data.CodeShiny50)) do
+					table.insert(entries,DessertImages.Name(outcome.Tier,outcome.Shiny,outcome.Variant)..": "..string.format("%.6g%%",outcome.Percent))
+				end
 				local detail=text(choices,kind.." Details\n"..table.concat(entries,"\n"),UDim2.new(1,-12,0,0),UDim2.fromOffset(6,350))
 				detail.TextSize=14; detail.AutomaticSize=Enum.AutomaticSize.Y
 			end
@@ -411,6 +423,8 @@ show=function(name)
  for key,label in pairs(statLabels) do local value=data[key] or 0; label.Text=key=="PlaySeconds" and string.format("%dh %02dm %02ds",math.floor(value/3600),math.floor(value/60)%60,math.floor(value)%60) or (key=="TotalCashEarned" and "$" or "")..format(value) end
 end
 local communityButton=button(gui,"Join Group",UDim2.fromOffset(118,54),UDim2.new(0,18,.5,-132),function() show("Join Group") end,colors.Pink,true)
+local shinyInfo=Instance.new("TextButton");shinyInfo.Name="ShinyOddsButton";shinyInfo.Text="";shinyInfo.BackgroundTransparency=1;shinyInfo.Size=UDim2.fromScale(1,1);shinyInfo.ZIndex=shinyChance.ZIndex+1;shinyInfo.Parent=shinyChance.Parent
+shinyInfo.Activated:Connect(function() show("Shiny Odds") end)
 communityButton.Name="JoinGroupButton"
 local indexButton=button(gui,"Index",UDim2.fromOffset(118,54),UDim2.new(0,18,.5,-70),function() show("Index") end,colors.Pink,true)
 button(gui,"Shop",UDim2.fromOffset(118,48),UDim2.new(0,18,.5,-8),function() show("Shop") end,colors.Mint,true)
@@ -505,6 +519,7 @@ event.OnClientEvent:Connect(function(kind,value,message)
    if changed then show("Index") end
   end
 		if panelName=="Crates" and (previousHighest~=data.Highest or previousNormal~=data.NormalTokens or previousPerk~=data.PerkTokens or previousPaidNormal~=data.PaidNormalTokens or previousPaidPerk~=data.PaidPerkTokens or previousChance~=data.ShinyChance) then show("Crates") end
+		if panelName=="Shiny Odds" and (previousHighest~=data.Highest or previousChance~=data.ShinyChance) then show("Shiny Odds") end
 		if panelName=="Shop" then
 			for key in pairs(Config.Passes) do if previousPasses[key]~=data.OwnedPasses[key] then show("Shop"); break end end
 		end

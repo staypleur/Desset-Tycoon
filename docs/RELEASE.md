@@ -57,3 +57,6 @@ ProcessReceipt writes reward and purchase ledger atomically before acknowledging
 
 
 2026-10-18 17:41 KST: published version 8 with the requested UI, balance, preview, repeatable reset and saved idle-reconnect patch. See WORKLOG for test evidence and the unverified published 18-minute reconnect limitation. Dashboard UI auto-translation enabled for 17 target languages with English source; string capture/translation population may take days. Standard TextChatService enabled; chat translation respects player settings.
+
+
+2026-10-18 18:08 KST: published version 10, tier-based shiny rates (1/0.7/0.5/0.3/0.1/0.05 percent), relative friend +10% and own Premium +30%, actual-tier HUD/details, individual crate outcome disclosures. Six-million-draw statistical check plus boundary/rules/Play verification passed. Saved 35-source XML audit passed. Existing Luck/Perk benefits and 50% test override retained. See WORKLOG for exact results.

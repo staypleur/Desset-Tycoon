@@ -45,7 +45,7 @@ for stage=1,4 do
 end
 screen:Destroy()
 local state=RS.DessertRemotes.Action:InvokeServer("State")
-assert(state.OwnedPasses and state.FriendBonus>=0 and math.abs(state.ShinyChance-(.01*state.Luck+state.FriendBonus))<1e-6)
+assert(state.OwnedPasses and state.FriendBonus>=0 and math.abs(state.ShinyChance-require(game.ReplicatedStorage.DessertRules).ShinyChance("Normal",state.Luck,state.FriendBonus,state.CodeShiny50,state.ShinyTier))<1e-6)
 local topbar=game.Players.LocalPlayer.PlayerGui.DessertTopbar
 assert(not topbar:FindFirstChild("MicrophoneButton"))
 assert(topbar.StatsButton.Position.X.Offset==topbar.SettingsButton.Position.X.Offset+topbar.SettingsButton.Size.X.Offset+8)
