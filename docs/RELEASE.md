@@ -7,6 +7,7 @@ Published 2026-10-18, place version 4.
 - Current title: [BETA] Dessert Tycoon. Existing owner-edited description and icon retained.
 - Access: Public; group-members-only restriction disabled. Creator Dashboard currently permits players aged 16+. Under-16 reach remains subject to Roblox's review; identity, 2FA, content review and Kids/Select fee show completed. Refund date shown: 2027-01-13. No additional fee was paid.
 - Game icon and promotional thumbnails are managed by the owner. All monetization images reuse the approved existing UI art.
+- Server capacity corrected from the default 50 to 6 players, matching the six personal plots. Existing Roblox-optimized social slots retained.
 
 ## Permanent passes
 

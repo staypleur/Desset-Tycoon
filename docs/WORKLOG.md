@@ -440,3 +440,4 @@ PASS: PlayerProfiles deterministic mock verifies persisted gift/AFK clocks, dupl
 - Fixed chef animation use permission for the group universe; actual clip fetch now succeeds. Studio Play verified English HUD, green guidance marker and existing shop art.
 - Published place 98510499854486, universe 10771069736, version 4 successfully. Public access has no group-members-only restriction. Roblox currently limits availability to 16+; under-16 review remains external. Identity, 2FA, content review and Kids/Select fee show completed.
 - Retained owner-updated [BETA] title, description and game icon. Owner handles promotional images. Product catalog and validation details: docs/RELEASE.md.
+- Final dashboard inspection found the default 50-player limit; changed it to 6 to match the personal plots and saved. Evidence: docs/previews/release-server-settings.jpg.
