@@ -90,11 +90,6 @@ function Rewards.Open(gui,ui)
 		end
 		mask:Destroy(); arrow:Destroy(); skipButton:Destroy()
 		heading.Text="Crate Rewards"
-		if (batch.ShardsEarned or 0)>0 then
-			local note=Instance.new("TextLabel");note.Name="ShardsEarned";note.BackgroundTransparency=1
-			note.Text="+"..batch.ShardsEarned.." shards | Total: "..batch.ShardBalance;note.Font=Enum.Font.GothamBold;note.TextSize=16
-			note.TextColor3=Color3.fromRGB(0,105,50);note.Size=UDim2.fromScale(.9,.06);note.Position=UDim2.fromScale(.05,.13);note.ZIndex=p.ZIndex+2;note.Parent=p
-		end
 		local results=Instance.new("ScrollingFrame"); results.Name="CrateResults"; results.BackgroundTransparency=1; results.BorderSizePixel=0
 		results.Size=UDim2.fromScale(.9,.61); results.Position=UDim2.fromScale(.05,.19); results.ZIndex=p.ZIndex+1
 		results.AutomaticCanvasSize=Enum.AutomaticSize.Y; results.CanvasSize=UDim2.new(); results.ScrollBarThickness=5; results.Parent=p

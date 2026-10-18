@@ -61,7 +61,7 @@ local function snapshot(player)
 	return {CodePets=d.CodePets,CodeShiny50=d.CodeShiny50,TutorialStep=d.TutorialStep,Cash=d.Cash,Bag=d.Bag,Pending=d.Pending,CafeQueue=d.CafeQueue,CafeLevel=d.CafeLevel,
 		AFKStored=d.AFKStored,OfflineStored=d.OfflineStored,TotalCashEarned=d.TotalCashEarned,TotalMiniCollected=d.TotalMiniCollected,PlaySeconds=d.PlaySeconds,
 		CafeRate=Rules.CafeRate(d),CafeUpgradeCost=Rules.CafeUpgradeCost(d),Index=d.Index,Highest=Rules.Highest(d),
-		NormalTokens=d.NormalTokens,PerkTokens=d.PerkTokens,PaidNormalTokens=d.PaidNormalTokens,PaidPerkTokens=d.PaidPerkTokens,CrateShards=d.CrateShards or 0,NextGift=d.NextGift,AFKSeconds=d.AFKSeconds,
+		NormalTokens=d.NormalTokens,PerkTokens=d.PerkTokens,PaidNormalTokens=d.PaidNormalTokens,PaidPerkTokens=d.PaidPerkTokens,NextGift=d.NextGift,AFKSeconds=d.AFKSeconds,
 		Multiplier=multiplier(p),Luck=Rules.PassMultiplier(p.Passes,"Luck"),FriendBonus=friendBonus(player,p),ShinyTier=Rules.BuyTier(d),ShinyChance=Rules.ShinyChance("Normal",Rules.PassMultiplier(p.Passes,"Luck"),friendBonus(player,p),d.CodeShiny50,Rules.BuyTier(d)),OwnedPasses=table.clone(p.Passes),Settings=d.Settings,Equipped=d.Equipped,
 		CommunityRewardClaimed=d.Receipts[Config.CommunityRewardReceipt]==true,Durable=p.Durable,Premium=p.Premium,Restricted=p.Restricted,HotUntil=d.HotUntil,
 		Active=Rules.Count(d),PlotId=player:GetAttribute("PlotId"),ServerTime=os.time()}
@@ -201,16 +201,6 @@ local function perform(player,verb,arg)
 		-- Rewards are already granted here. The carousel only presents these results.
 		events:FireClient(player,"Crates",batch)
 		update(player); return true
-	elseif verb=="ExchangeShards" then
-		if type(arg)~="table" then return false end
-		local found
-		local ok,message=Profiles.Mutate(p,function(trial)
-			local accepted,result=Rules.ExchangeShards(trial,arg.Tier,arg.Variant)
-			if accepted then found=result;return true end
-			return false,result
-		end)
-		if not ok then update(player,message);return false,message end
-		render(player);discoveries(player,found);update(player,"Shard exchange complete");return true
 	elseif verb=="Purchase" then
 		if type(arg)~="string" then return false end
 		local product=Config.Products[arg]; local spec=product or Config.Passes[arg]

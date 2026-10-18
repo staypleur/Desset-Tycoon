@@ -15,20 +15,20 @@ for _,group in ipairs({"Production","Luck","Speed"}) do
 end
 assert(R.PassMultiplier({Boost5=true},"Production")==1)
 assert(R.PassMultiplier({Speed12=true,Speed3=true},"Speed")==1.2 and R.PassMultiplier({Speed3=true},"Production")==1)
-assert(math.abs(R.ShinyChance("Normal",2,.4)-.028)<1e-9)
-assert(R.FriendBonus(false,{false,false})==.2 and R.FriendBonus(false,{true,true})==.2)
-assert(math.abs(R.FriendBonus(true,{false})-.4)<1e-9 and R.FriendBonus(false,{true})==.1 and R.FriendBonus(true,{})==.3)
-assert(math.abs(R.ShinyChance("Perk",3,.4)-.42)<1e-9 and R.ShinyChance("Perk",20,.05)==1)
+assert(math.abs(R.ShinyChance("Normal",2,.04)-.10)<1e-9)
+assert(R.FriendBonus(false,{false,false})==.01 and R.FriendBonus(false,{true,true,true})==.01)
+assert(math.abs(R.FriendBonus(true,{false})-.04)<1e-9 and R.FriendBonus(false,{true})==.01 and R.FriendBonus(true,{})==.03)
+assert(math.abs(R.ShinyChance("Perk",3,.04)-.42)<1e-9 and R.ShinyChance("Perk",20,.05)==1)
 for highest=1,30 do for _,kind in ipairs({"Normal","Perk"}) do
  local odds=R.Odds(highest,kind); local sum=0
  for tier,chance in pairs(odds) do assert(tier>=1 and tier<=highest and chance>0); sum+=chance end
  assert(math.abs(sum-100)<1e-9)
 end end
 local odds=R.Odds(10,"Normal")
-assert(odds[1]==nil and odds[10]==nil and odds[6]==40 and odds[7]==30 and odds[8]==20 and odds[9]==10)
+for tier=1,10 do assert(odds[tier]==10) end
 local d=R.New(0); d.Pets={['10n']=1}; local rng={NextNumber=function() return 0 end}; local discoveries={}
 R.Roll(d,"Normal",rng,1,discoveries); R.Roll(d,"Normal",rng,1,discoveries)
-assert(d.Pets['6s']==2 and #discoveries==1,"Shinies may repeat; discovery only happens once")
+assert(d.Pets['1s']==2 and #discoveries==1,"Shinies may repeat; discovery only happens once")
 d=R.New(0); R.AFK(d,2*3600,false)
 local json=game:GetService("HttpService"); d=json:JSONDecode(json:JSONEncode(d))
 assert(R.AFK(d,3600,true)==1 and d.NormalTokens==1 and d.PerkTokens==1 and d.AFKSeconds==0)
@@ -38,4 +38,4 @@ assert(not R.Gift(d,5*3600,true))
 for _,spec in pairs(C.Passes) do assert(spec.Id>=0 and spec.Id%1==0) end
 assert(C.Products.Normal10.Price==69 and C.Products.Perk10.Price==269)
 f:Destroy()
-print("[UserShopRules] PASS: sequential gates, isolated highest multipliers, nearby-tier crate odds, repeated shinies, luck plus friend bonus, stored 3h/Premium rewards, 5h gift deadline, locked IDs and prices")
+print("[UserShopRules] PASS: sequential gates, isolated highest multipliers, full-range equal crate odds, repeated shinies, additive nonstacking friend/Premium bonus, stored 3h/Premium rewards, 5h gift deadline, locked IDs and prices")

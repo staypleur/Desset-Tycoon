@@ -437,3 +437,7 @@ Tutorial chevrons and target arrow now use RGB(0,105,50), as explicitly requeste
 2026-10-18 shiny balance: existing approved stat-card artwork is now clickable to open the existing approved panel style for the Shiny Odds table. No new graphics or external assets.
 
 2026-10-18 crate guarantees: reused the approved PastelArt panel/card/button treatment and existing UserArt crate pictures for shard balance, deterministic exchange choices and opening-summary labels. Existing creators, links and cleanup records above apply; no new external assets, scripts, packages or graphics imported.
+
+2026-10-18 full-range crates: updated text, card height and details placement within the same approved crate and odds panels. No new art or external asset sources.
+
+Owner's final simplicity request: reused the same approved crate pictures, cards and buttons in a shorter 314px card layout. Removed shard controls and main-page explanatory tables. View Odds uses the existing approved panel with separate text rows; no new external sources or artwork.

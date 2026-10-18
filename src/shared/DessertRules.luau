@@ -20,13 +20,11 @@ end
 function Rules.New(now)
 	return {Version=2, TutorialStep=1, Cash=0, Bag=0, Pending=0, CafeQueue=0, CafeLevel=0, Pets={["1n"]=1}, Index={["1n"]=true},
 		TotalCashEarned=0,TotalMiniCollected=0,PlaySeconds=0,AFKStored=0,OfflineStored=0,LastSeen=now,
-		NormalTokens=0, PerkTokens=0, PaidNormalTokens=0, PaidPerkTokens=0, CrateShards=0, NextGift=now+INTERVAL, AFKSeconds=0,
+		NormalTokens=0, PerkTokens=0, PaidNormalTokens=0, PaidPerkTokens=0, NextGift=now+INTERVAL, AFKSeconds=0,
 		CodePets={},RedeemedCodes={},CodeShiny50=false,CodeCashActive=false,
 		Settings={Music=true, Effects=true, MusicVolume=.4, EffectsVolume=.5, HideOthers=false}, Receipts={}, HotUntil=0}
 end
 function Rules.NormalizeCafe(data)
-	local shards=data.CrateShards
-	data.CrateShards=type(shards)=="number" and shards==shards and shards<math.huge and math.max(0,math.floor(shards)) or 0
 	data.CodePets=data.CodePets or {};data.RedeemedCodes=data.RedeemedCodes or {}
 	data.CodeShiny50=data.CodeShiny50==true;data.CodeCashActive=data.CodeCashActive==true
 	-- Missing marker means a pre-tutorial save, never replay onboarding for veterans.
@@ -196,12 +194,12 @@ end
 function Rules.ShinyChance(kind,luck,friendBonus,forceHalf,tier)
  if forceHalf==true then return .5 end
  local multiplier=type(luck)=="number" and luck or (luck and 2 or 1)
- local band=math.ceil(math.clamp(tier or 1,1,30)/5)
- local base=Config.ShinyBaseRates[band]
- return math.clamp(base*(kind=="Perk" and Config.PerkShinyMultiplier or 1)*multiplier*(1+(friendBonus or 0)),0,1)
+ local band=math.ceil(math.clamp(tier or 1,1,30)/10)
+ local base=kind=="Perk" and Config.CrateShinyRates.Perk or kind=="NormalCrate" and Config.CrateShinyRates.Normal or Config.ShinyBaseRates[band]
+ return math.clamp((base+(friendBonus or 0))*multiplier,0,1)
 end
 function Rules.FriendBonus(premium,friends)
-	return (premium and Config.ShinyPremiumBoost or 0)+#friends*Config.ShinyFriendBoost
+	return (premium and Config.ShinyPremiumBoost or 0)+(#friends>0 and Config.ShinyFriendBoost or 0)
 end
 function Rules.NextPass(passes,group)
 	local tiers=group=="Production" and Config.ProductionTiers or group=="Speed" and Config.SpeedTiers or Config.LuckTiers
@@ -237,20 +235,16 @@ function Rules.Buy(data,count,rng,luck,autoMerge,friendBonus)
 	return true,discoveries
 end
 function Rules.Odds(highest,kind)
-	local offsets=kind=="Perk" and {3,2,1,0} or {4,3,2,1}
-	local weights={40,30,20,10}
+	highest=math.clamp(math.floor(highest),1,30)
 	local odds={}
-	for i,offset in ipairs(offsets) do
-		local tier=math.max(1,highest-offset)
-		odds[tier]=(odds[tier] or 0)+weights[i]
-	end
+	for tier=1,highest do odds[tier]=100/highest end
 	return odds
 end
 -- Itemized final outcomes used by the pre-purchase details panel.
 function Rules.CrateOutcomeOdds(highest,kind,luck,friendBonus,forceHalf)
 	local entries={};local tiers=Rules.Odds(highest,kind)
 	for tier=1,30 do if tiers[tier] then
-		local shiny=Rules.ShinyChance(kind,luck,friendBonus,forceHalf,tier)
+		local shiny=Rules.ShinyChance(kind=="Normal" and "NormalCrate" or kind,luck,friendBonus,forceHalf,tier)
 		for variant=0,2 do
 			table.insert(entries,{Tier=tier,Shiny=variant>0,Variant=variant,Percent=tiers[tier]*(variant==0 and 1-shiny or shiny/2)})
 		end
@@ -259,19 +253,19 @@ function Rules.CrateOutcomeOdds(highest,kind,luck,friendBonus,forceHalf)
 end
 function Rules.Roll(data,kind,rng,luck,discoveries,friendBonus)
 	local roll=rng:NextNumber()*100; local sum=0
-	local highest=Rules.Highest(data); local lastTier=kind=="Perk" and highest or math.max(1,highest-1)
+	local highest=Rules.Highest(data); local lastTier=highest
 	local odds=Rules.Odds(highest,kind)
 	for tier=1,lastTier do
 		sum+=odds[tier] or 0
 		if roll<sum or tier==lastTier then
-			local shiny=rng:NextNumber()<Rules.ShinyChance(kind,luck,friendBonus,data.CodeShiny50,tier)
+			local shiny=rng:NextNumber()<Rules.ShinyChance(kind=="Normal" and "NormalCrate" or kind,luck,friendBonus,data.CodeShiny50,tier)
 			local variant=Rules.RollVariant(tier,shiny,rng)
 			Rules.Add(data,tier,shiny,1,discoveries,variant)
 			return {Tier=tier,Shiny=shiny,Variant=variant,Key=Rules.Key(tier,shiny,variant)}
 		end
 	end
 end
--- Used inside one durable profile transaction: credits, rewards and shards commit together.
+-- Used inside one durable profile transaction: credits and rewards commit together.
 function Rules.OpenCrates(data,kind,count,rng,luck,friendBonus,restricted,autoMerge)
 	if (data.TutorialStep or 11)<11 then return false,"Follow the arrows first" end
 	if (kind~="Normal" and kind~="Perk") or (count~=1 and count~=10) then return false,"Invalid crate request" end
@@ -283,19 +277,7 @@ function Rules.OpenCrates(data,kind,count,rng,luck,friendBonus,restricted,autoMe
 	data[key]=free-(count-paidUsed);data[paidKey]=paid-paidUsed
 	for _=1,count do table.insert(batch.Results,Rules.Roll(data,kind,rng,luck,batch.Discoveries,friendBonus)) end
 	if autoMerge then Rules.Merge(data,batch.Discoveries,rng,luck,friendBonus) end
-	batch.ShardsEarned=paidUsed*Config.CrateShards[kind]
-	data.CrateShards=(data.CrateShards or 0)+batch.ShardsEarned;batch.ShardBalance=data.CrateShards
 	return true,batch
-end
-function Rules.ExchangeShards(data,tier,variant)
-	if (data.TutorialStep or 11)<11 then return false,"Follow the arrows first" end
-	if type(tier)~="number" or tier~=tier or tier%1~=0 or tier<1 or tier>Rules.UnlockedTier(data)
-		or (variant~=0 and variant~=1 and variant~=2) then return false,"Choose a discovered tier and a valid variant" end
-	local cost=variant==0 and Config.ShardMaterialCost or Config.ShardShinyCost
-	if (data.CrateShards or 0)<cost then return false,"Not enough shards" end
-	local found={}
-	data.CrateShards-=cost;Rules.Add(data,tier,variant>0,1,found,variant)
-	return true,found
 end
 -- A missed offline interval does not accumulate unlimited gifts. Start the next 5h cycle now.
 -- Both Premium and normal rewards share ONE deadline and are delivered atomically.
