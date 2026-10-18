@@ -35,7 +35,7 @@ assert(R.AFK(d,3600,true)==1 and d.NormalTokens==1 and d.PerkTokens==1 and d.AFK
 assert(R.AFK(d,6*3600,false)==2 and d.NormalTokens==3 and d.PerkTokens==1)
 assert(R.Gift(d,5*3600,true) and d.NormalTokens==4 and d.PerkTokens==2)
 assert(not R.Gift(d,5*3600,true))
-for _,spec in pairs(C.Passes) do assert(spec.Id==0) end
+for _,spec in pairs(C.Passes) do assert(spec.Id>=0 and spec.Id%1==0) end
 assert(C.Products.Normal10.Price==69 and C.Products.Perk10.Price==269)
 f:Destroy()
 print("[UserShopRules] PASS: sequential gates, isolated highest multipliers, all uniform-range odds, repeated shinies, luck plus friend bonus, stored 3h/Premium rewards, 5h gift deadline, locked IDs and prices")

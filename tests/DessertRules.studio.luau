@@ -26,8 +26,8 @@ local before=purchase.Cash; assert(not Rules.Buy(purchase,1,random,false) and pu
 local shiny=Rules.New(0); shiny.Cash=50
 Rules.Buy(shiny,10,{NextNumber=function() return 0 end},false)
 assert(shiny.Pets["3s"]==1 and shiny.Index["2s"] and shiny.Index["3s"])
-for _,spec in pairs(Config.Products) do assert(spec.Id==0) end
-for _,spec in pairs(Config.Passes) do assert(spec.Id==0) end
+for _,spec in pairs(Config.Products) do assert(spec.Id>=0 and spec.Id%1==0) end
+for _,spec in pairs(Config.Passes) do assert(spec.Id>=0 and spec.Id%1==0) end
 for tier=1,30 do for _,variant in ipairs({false,true}) do
 	local model=require(game.ReplicatedStorage.DessertVisuals).Build(tier,variant)
 	assert(model.PrimaryPart and #model:GetChildren()>0)

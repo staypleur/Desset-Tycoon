@@ -425,3 +425,8 @@ User explicitly requested arrow-based onboarding and mini-dessert pickup audio. 
 User-supplied Meshy cookie, chocolate and rainbow fish FBX archives and reference images. Sources, hashes, triangle counts and Roblox asset IDs: `assets/code-pets/manifest.json`. Uploaded geometry has 3043 / 2958 / 2967 triangles; embedded FBX video textures stripped for import and RGB color textures resized to at most 2048 pixels. Geometry and UVs retained. Templates CookieFish, ChocolateFish, RainbowFish use 2.5-stud height, bottom pivot, no executable descendants, no collisions or miniature production. Reference images form the 1024-square code-fish-atlas.png. Companion-only ownership stays separate from tier progression and index entries appear only after redemption.
 
 Tutorial chevrons and target arrow now use RGB(0,105,50), as explicitly requested.
+
+
+## 2026-10-18 release asset access
+- Reused the approved existing UI images from assets/ui/manifest.json for all 16 passes and five developer products; no new art was commissioned. All 21 Marketplace records return nonzero icon asset IDs.
+- Existing user-supplied chef Walking animation 79831780716711 was granted usage by the Cosmon Studio universe 10771069736. No replacement animation or geometry. AnimationClipProvider successfully loaded KeyframeSequence (27 children) after the grant.

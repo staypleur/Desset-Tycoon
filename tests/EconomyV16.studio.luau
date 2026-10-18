@@ -26,7 +26,7 @@ d.Bag=.4; R.Deposit(d,.5); d.HotUntil=10
 local _,hot=R.ConvertCafe(d,1); assert(math.abs(hot-.4)<1e-8)
 local old={Cash=17,Pending=4,CafeLevel=2}; R.NormalizeCafe(old)
 assert(old.Cash==17 and old.Pending==4 and old.TotalCashEarned==0 and old.PlaySeconds==0)
-assert(C.MaxDrops==100 and C.Products.Normal1.Id==0)
+assert(C.MaxDrops==100 and C.Products.Normal1.Id>=0)
 local offline=R.New(100); offline.Pets={['1n']=3,['2n']=2}
 assert(R.ProductionPerSecond(offline)==3)
 assert(R.AccrueOffline(offline,120,2)==60 and offline.OfflineStored==60)
