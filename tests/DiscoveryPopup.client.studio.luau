@@ -10,6 +10,7 @@ local model=world:GetChildren()[1];local original=model:GetPivot();local minY,ma
 local finish=os.clock()+1.4
 repeat
  game:GetService("RunService").RenderStepped:Wait()
+ assert(not view.Visible or view:GetAttribute("PreviewReady"),"Never display a partially loaded model")
  local cf=model:GetPivot();minY=math.min(minY,cf.Y);maxY=math.max(maxY,cf.Y)
  assert(cf.LookVector:Dot(original.LookVector)>.99999 and cf.UpVector:Dot(original.UpVector)>.99999,"No spinning")
 until os.clock()>finish

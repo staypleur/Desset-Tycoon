@@ -98,14 +98,14 @@ local function format(n)
 	for _,v in ipairs({{1e9,"B"},{1e6,"M"},{1e3,"K"}}) do if n>=v[1] then return string.format("%.1f%s",n/v[1],v[2]) end end
 	return math.abs(n-math.floor(n))>.00001 and string.format("%.1f",n) or tostring(math.floor(n))
 end
-local cash=box("$0",UDim2.fromOffset(180,60),UDim2.new(0,18,1,-80),colors.Mint,"Coins"); cash.Name="CashValue"; cash.TextSize=28
+local cash=box("$0",UDim2.fromOffset(180,60),UDim2.new(1,-198,.5,-86),colors.Mint,"Coins"); cash.Name="CashValue"; cash.TextSize=28
 local plate=Instance.new("ImageLabel"); plate.Name="MiniDessertPlate"; plate.BackgroundTransparency=1
 plate.Size=UDim2.fromOffset(112,112); plate.AnchorPoint=Vector2.new(.5,1); plate.Position=UDim2.new(.5,0,1,-12)
 plate.Image=Config.PlateImageId or ""; plate.ScaleType=Enum.ScaleType.Fit; plate.Parent=gui
 local bag=text(plate,"0",UDim2.fromScale(.68,.5),UDim2.fromScale(.16,.32)); bag.Name="BagValue"; bag.TextScaled=true
 local numberLimit=Instance.new("UITextSizeConstraint"); numberLimit.MinTextSize=14; numberLimit.MaxTextSize=27; numberLimit.Parent=bag
-local boost=box("×1",UDim2.fromOffset(150,48),UDim2.new(1,-168,1,-68),colors.Lavender,"Multiplier")
-local shinyChance=box("Shiny 1%",UDim2.fromOffset(150,48),UDim2.new(1,-168,1,-124),colors.Pink,"Sparkles")
+local boost=box("×1",UDim2.fromOffset(180,48),UDim2.new(1,-198,.5,38),colors.Lavender,"Multiplier")
+local shinyChance=box("Shiny 1%",UDim2.fromOffset(180,48),UDim2.new(1,-198,.5,-18),colors.Pink,"Sparkles")
 shinyChance.Name="ShinyChanceValue"; shinyChance.TextSize=16; boost.TextSize=16
 local function updateShinyChance()
  local percent=100*(data.ShinyChance or Rules.ShinyChance("Normal",data.Luck,data.FriendBonus))
@@ -203,7 +203,8 @@ Input.InputEnded:Connect(function(input)
 end)
 local function preview(parent,tier,shiny,size,pos,variant)
 	local view=Instance.new("ViewportFrame"); view.Size=size; view.Position=pos; view.BackgroundTransparency=1
-	view.ZIndex=parent.ZIndex+1; view.Ambient=Color3.fromRGB(220,208,220); view.LightColor=Color3.fromRGB(255,247,233); view.Parent=parent
+	view.Visible=false; view.ZIndex=parent.ZIndex+1; view.Ambient=Color3.fromRGB(220,208,220); view.LightColor=Color3.fromRGB(255,247,233); view.Parent=parent
+	local fallback=DessertImages.Create(parent,tier,shiny,variant,size,pos)
 	local world=Instance.new("WorldModel"); world.Parent=view
 	local model=Visuals.Build(tier,shiny,variant); model.Parent=world
 	local box,bounds=model:GetBoundingBox()
@@ -215,7 +216,20 @@ local function preview(parent,tier,shiny,size,pos,variant)
 		camera.CFrame=CFrame.lookAt(box.Position+Vector3.new(0,.15,-distance),box.Position)
 	end
 	fitCamera();view:GetPropertyChangedSignal("AbsoluteSize"):Connect(fitCamera)
-	table.insert(spinning,{Model=model,View=view,Base=model:GetPivot()})
+	task.spawn(function()
+        local loaded=true
+        local ok=pcall(function()
+            game:GetService("ContentProvider"):PreloadAsync(model:GetDescendants(),function(_,status)
+                if status~=Enum.AssetFetchStatus.Success then loaded=false end
+            end)
+        end)
+        if not ok or not loaded or not view.Parent then return end
+        box,bounds=model:GetBoundingBox();fitCamera()
+        Run.RenderStepped:Wait();Run.RenderStepped:Wait()
+        if not view.Parent then return end
+        view.Visible=true;view:SetAttribute("PreviewReady",true);fallback:Destroy()
+    end)
+    table.insert(spinning,{Model=model,View=view,Base=model:GetPivot()})
 	return view
 end
 local show,kawaiiShop
@@ -371,7 +385,11 @@ show=function(name)
 				local purchasable=spec.Id>0 and data.Durable and not data.Restricted
 				local x=(column-1)*.5
 				local open=button(card,"Open "..count,UDim2.new(.5,-16,0,42),UDim2.new(x,8,0,224),function()
-					if hasCredits then request("Crate",{Kind=kind,Count=count}) elseif purchasable then request("Purchase",key) end
+					if hasCredits then
+                        window.Visible=false;panelName=nil
+                        local accepted=request("Crate",{Kind=kind,Count=count})
+                        if not accepted then show("Crates") end
+                    elseif purchasable then request("Purchase",key) end
 				end,colors.Mint); open.Name="Open"..count; open.Active=hasCredits or purchasable; open.AutoButtonColor=false
 				open:SetAttribute("Purchasable",purchasable==true); open:SetAttribute("Quantity",count)
 				local price=text(card,hasCredits and (free>=count and "FREE" or "Credits") or spec.Price.." Robux",UDim2.new(.5,-16,0,28),UDim2.new(x,8,0,269)); price.TextSize=15
@@ -397,42 +415,6 @@ communityButton.Name="JoinGroupButton"
 local indexButton=button(gui,"Index",UDim2.fromOffset(118,54),UDim2.new(0,18,.5,-70),function() show("Index") end,colors.Pink,true)
 button(gui,"Shop",UDim2.fromOffset(118,48),UDim2.new(0,18,.5,-8),function() show("Shop") end,colors.Mint,true)
 local topbar=Instance.new("ScreenGui"); topbar.Name="DessertTopbar"; topbar.IgnoreGuiInset=true; topbar.ResetOnSpawn=false; topbar.Parent=screen.Parent
-local microphone=Instance.new("ImageButton"); microphone.Name="MicrophoneButton"; microphone.Size=UDim2.fromOffset(56,56)
-microphone.BackgroundColor3=Color3.fromRGB(35,36,40); microphone.Parent=topbar; corner(microphone,28)
-microphone.Image="rbxasset://textures/ui/VoiceChat/MicLight/Muted.png"
-local voiceHint=Instance.new("Frame"); voiceHint.Name="MicrophoneStatus"; voiceHint.Size=UDim2.fromOffset(290,60)
-voiceHint.BackgroundColor3=colors.Cream; voiceHint.ZIndex=20; voiceHint.Visible=false; voiceHint.Parent=topbar; corner(voiceHint,14)
-local voiceHintText=text(voiceHint,voiceStatus,UDim2.new(1,-20,1,-12),UDim2.fromOffset(10,6)); voiceHintText.TextSize=14
-local voiceInput,voiceConnection
-refreshVoice=function()
-	local available=not Run:IsStudio() and voiceEligible and voiceInput and voiceInput.Parent and voiceInput.Player==player
-	local muted=not available or voiceInput.Muted
-	microphone.Image="rbxasset://textures/ui/VoiceChat/MicLight/"..(muted and "Muted.png" or "Unmuted0.png")
-	microphone.ImageTransparency=available and 0 or .4
-	microphone:SetAttribute("VoiceAvailable",available and true or false); microphone:SetAttribute("Muted",muted and true or false)
-	voiceHintText.Text=available and (muted and "Microphone muted" or "Microphone on") or voiceStatus
-end
-local function bindVoiceInput()
-	if voiceConnection then voiceConnection:Disconnect(); voiceConnection=nil end
-	voiceInput=player:FindFirstChildWhichIsA("AudioDeviceInput",true)
-	if voiceInput then voiceConnection=voiceInput:GetPropertyChangedSignal("Muted"):Connect(refreshVoice) end
-	refreshVoice()
-end
-player.DescendantAdded:Connect(function(child) if child:IsA("AudioDeviceInput") then bindVoiceInput() end end)
-player.DescendantRemoving:Connect(function(child)
-	if child==voiceInput then voiceInput=nil; if voiceConnection then voiceConnection:Disconnect(); voiceConnection=nil end; refreshVoice() end
-end)
-microphone.Activated:Connect(function()
-	if microphone:GetAttribute("VoiceAvailable") then
-		local ok=pcall(function() voiceInput.Muted=not voiceInput.Muted end)
-		if not ok then voiceStatus="Voice Chat: microphone unavailable" end
-		refreshVoice()
-	end
-	voiceHint.Visible=true; task.delay(3,function() voiceHint.Visible=false end)
-end)
-microphone.MouseEnter:Connect(function() voiceHint.Visible=true end)
-microphone.MouseLeave:Connect(function() voiceHint.Visible=false end)
-bindVoiceInput()
 local settings=Instance.new("ImageButton"); settings.Name="SettingsButton"; settings.Size=UDim2.fromOffset(56,56)
 settings.Image=Style.Icons.Settings; settings.ImageColor3=Color3.fromRGB(255,240,245); settings.BackgroundColor3=Color3.fromRGB(35,36,40); settings.Parent=topbar; corner(settings,28)
 local statsButton=Instance.new("ImageButton"); statsButton.Name="StatsButton"; statsButton.Size=UDim2.fromOffset(56,56); statsButton.Image="rbxthumb://type=AvatarHeadShot&id="..player.UserId.."&w=150&h=150"; statsButton.BackgroundColor3=Color3.fromRGB(35,36,40); statsButton.Parent=topbar; corner(statsButton,28)
@@ -440,12 +422,10 @@ statsButton.Activated:Connect(function() show("Stats") end)
 local function positionSettings()
 	local inset=game:GetService("GuiService").TopbarInset
 	local width=workspace.CurrentCamera.ViewportSize.X
-	local size=math.clamp(math.floor((width-inset.Min.X-32)/3),24,56)
-	for _,b in ipairs({microphone,settings,statsButton}) do b.Size=UDim2.fromOffset(size,size) end
-	microphone.Position=UDim2.fromOffset(inset.Min.X+8,inset.Min.Y+math.max(8,(inset.Height-size)/2))
-	settings.Position=microphone.Position+UDim2.fromOffset(size+8,0)
+	local size=math.clamp(math.floor((width-inset.Min.X-24)/2),24,56)
+	for _,b in ipairs({settings,statsButton}) do b.Size=UDim2.fromOffset(size,size) end
+	settings.Position=UDim2.fromOffset(inset.Min.X+8,inset.Min.Y+math.max(8,(inset.Height-size)/2))
 	statsButton.Position=settings.Position+UDim2.fromOffset(size+8,0)
-	voiceHint.Position=UDim2.fromOffset(math.max(0,math.min(microphone.Position.X.Offset,width-298)),microphone.Position.Y.Offset+size+8)
 end
 positionSettings(); game:GetService("GuiService"):GetPropertyChangedSignal("TopbarInset"):Connect(positionSettings)
 workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(positionSettings)
@@ -518,6 +498,8 @@ event.OnClientEvent:Connect(function(kind,value,message)
 		if giftLabel and giftLabel.Parent then giftLabel.Text=giftText() end
 		if panelName=="Index" then
    local changed=previousEquipped~=data.Equipped
+   for key in pairs(previousIndex) do if not data.Index[key] then changed=true;break end end
+   for key in pairs(previousCodePets) do if not (data.CodePets or {})[key] then changed=true;break end end
    for key in pairs(data.Index) do if not previousIndex[key] then changed=true; break end end
    for key in pairs(data.CodePets or {}) do if not previousCodePets[key] then changed=true; break end end
    if changed then show("Index") end
@@ -528,12 +510,12 @@ event.OnClientEvent:Connect(function(kind,value,message)
 		end
 	elseif kind=="Panel" then show(value)
 	elseif kind=="Discovery" then rewards.Discovery(value)
-	elseif kind=="Crates" then rewards.Crates(value)
+	elseif kind=="Crates" then window.Visible=false;panelName=nil;rewards.Crates(value)
 	elseif kind=="CafeDelivery" or kind=="CafeCash" then transfer(kind,value,message)
 	end
 end)
 local lastActivity=0
-local actualLastInput=os.clock(); local lastCameraNudge=os.clock()
+local actualLastInput=os.clock(); local lastRejoinAttempt=-math.huge
 local function recordInput(input)
  actualLastInput=os.clock()
  if os.clock()-lastActivity>5 then lastActivity=os.clock(); task.spawn(request,"Activity") end
@@ -542,15 +524,14 @@ Input.InputBegan:Connect(recordInput)
 Input.InputChanged:Connect(function(input)
  if input.UserInputType==Enum.UserInputType.MouseMovement or input.UserInputType==Enum.UserInputType.Touch then recordInput(input) end
 end)
--- Experimental ordinary camera motion, NOT virtual input and NOT a proven idle bypass.
--- It never sends Activity pings itself or changes character/economy state.
-Run:BindToRenderStep("DessertIdleCameraMotion",Enum.RenderPriority.Camera.Value+1,function()
- local now=os.clock(); local camera=workspace.CurrentCamera
- if Config.IdleCameraNudgeEnabled and camera and now-actualLastInput>=Config.IdleCameraStartSeconds
-  and now-lastCameraNudge>=Config.IdleCameraInterval then
-  lastCameraNudge=now
-  camera.CFrame=camera.CFrame*CFrame.Angles(0,math.rad(.03),0)
-  screen:SetAttribute("IdleCameraNudges",(screen:GetAttribute("IdleCameraNudges") or 0)+1)
+-- Real reconnect; camera animation cannot reset Roblox's idle timer.
+task.spawn(function()
+ while screen.Parent do
+  task.wait(5)
+  local now=os.clock()
+  if not Run:IsStudio() and now-actualLastInput>=Config.IdleRejoinSeconds and now-lastRejoinAttempt>=30 then
+   lastRejoinAttempt=now;request("IdleRejoin")
+  end
  end
 end)
 local visibilityTimer=0

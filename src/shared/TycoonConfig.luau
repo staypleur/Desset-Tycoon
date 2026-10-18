@@ -9,13 +9,11 @@ local Config = {
 	PuddingCost = 5,
 	BuyCosts = {[1]=5, [10]=48, [100]=450, [1000]=4000},
 	-- Cumulative active F2P hours; collection/sale/bank cycle reference is 60 seconds.
-	ProgressionHours = {0,.05,.2,.55,1.2,2.4,4.2,6.8,10.2,15,18.9,23.2,27.9,33,38.5,44.4,50.7,57.4,64.5,72,79.8,88,96.6,105.6,115,124.8,135,145.6,156.6,168},
+	ProgressionHours = {0,.08,.35,.9,2,2.6,3.4,4.4,5.6,7,9,11.3,13.9,16.8,20,24,28.4,33.2,38.4,44,49.8,56,62.6,69.6,77,85.4,94.2,103.4,113,123},
 	BuyDiscounts = {[1]=1,[10]=.98,[100]=.96,[1000]=.94},
 	ProgressionCostScale = .97,
 	MaxDrops = 100,
-	IdleCameraNudgeEnabled = true, -- Experimental; user will verify in published game.
-	IdleCameraStartSeconds = 120,
-	IdleCameraInterval = 60,
+	IdleRejoinSeconds = 18 * 60, -- Save, then request a real Roblox reconnect before idle expiry.
 	Capacity = 60,
 	PlateImageId = "rbxassetid://73464157423623",
 	PastelAtlasId = "rbxassetid://127272710931588",

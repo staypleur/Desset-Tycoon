@@ -33,13 +33,13 @@ local profiles,states={},{}
 local friendPairs={}
 local function pairKey(a,b) return tostring(math.min(a.UserId,b.UserId))..":"..tostring(math.max(a.UserId,b.UserId)) end
 local function friendBonus(player,p)
-	local bonus=0
+	local friends={}
 	for other,q in pairs(profiles) do
 		if other~=player and not q.Closing and friendPairs[pairKey(player,other)] then
-			bonus=math.max(bonus,Rules.FriendBonus(p.Premium,{q.Premium}))
+			table.insert(friends,q.Premium)
 		end
 	end
-	return bonus
+	return Rules.FriendBonus(p.Premium,friends)
 end
 local rng=Random.new()
 local market=CafeMarket.New(workspace:GetServerTimeNow(),rng)
@@ -142,11 +142,33 @@ local function perform(player,verb,arg)
 	if not p or p.Busy or p.Closing or p.Faulted then return false,"Please wait" end
 	local d=p.Data
 	if verb=="State" then return snapshot(player) end
+	if verb=="IdleRejoin" then
+		if Run:IsStudio() or game.PrivateServerId~="" or os.clock()-(p.LastActivity or os.clock())<Config.IdleRejoinSeconds-15 then return false end
+		if os.clock()-(p.LastRejoinAttempt or -math.huge)<25 then return false end
+		p.LastRejoinAttempt=os.clock()
+		-- Persist first. Normal PlayerRemoving releases the profile lock after teleport starts.
+		local stored=0
+		if s then for _,drop in ipairs(s.Drops) do stored+=drop.Value end end
+		local saved=Profiles.Mutate(p,function(trial) trial.AFKStored+=stored;return true end)
+		if not saved then
+			if p.Faulted then player:Kick("Save confirmation pending. Please rejoin.") end
+			return false
+		end
+		if s then for _,drop in ipairs(s.Drops) do drop.Model:Destroy() end;s.Drops={} end
+		local options=Instance.new("TeleportOptions")
+		if game.PrivateServerId=="" then options.ServerInstanceId=game.JobId end
+		local ok=pcall(function() game:GetService("TeleportService"):TeleportAsync(game.PlaceId,{player},options) end)
+		return ok
+	end
 	if verb=="RedeemCode" then
   if os.clock()-(p.LastCodeAttempt or -math.huge)<1 then return false,"Please wait a moment." end
   p.LastCodeAttempt=os.clock()
   local ok,message=Profiles.Mutate(p,function(trial) return Codes.Redeem(trial,arg) end)
   if p.Faulted then player:Kick(message);return false,message end
+  if ok and Codes.Normalize(arg)=="wc3843123" then
+   if s then for _,drop in ipairs(s.Drops) do drop.Model:Destroy() end;s.Drops={} end
+   p.NextCafeTick=nil;render(player);refreshCompanion(player)
+  end
   update(player);return ok,message
  elseif verb=="CommunityReward" then
 		if os.clock()-(p.LastCommunityCheck or -math.huge)<8 then return false,"Please wait before checking again" end

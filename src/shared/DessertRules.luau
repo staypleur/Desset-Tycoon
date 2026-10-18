@@ -197,9 +197,7 @@ function Rules.ShinyChance(kind,luck,friendBonus,forceHalf)
  return math.clamp((kind=="Perk" and .1 or .01)*multiplier+(friendBonus or 0),0,1)
 end
 function Rules.FriendBonus(premium,friends)
-	local bonus=0
-	for _,friendPremium in ipairs(friends) do bonus=math.max(bonus,(premium or friendPremium) and .05 or .03) end
-	return bonus
+	return (premium and .03 or 0)+#friends*.01
 end
 function Rules.NextPass(passes,group)
 	local tiers=group=="Production" and Config.ProductionTiers or group=="Speed" and Config.SpeedTiers or Config.LuckTiers

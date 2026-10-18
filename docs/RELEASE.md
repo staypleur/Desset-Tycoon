@@ -54,3 +54,6 @@ ProcessReceipt writes reward and purchase ledger atomically before acknowledging
 - Studio Play rendered the English HUD, dark-green tutorial marker and existing shop art. Studio profiles do not write production saves or grant paid receipts.
 - Chef animation 79831780716711 was granted use by universe 10771069736. AnimationClipProvider then loaded its KeyframeSequence with 27 children successfully.
 - Studio confirmed PublishSuccessful and published place version 4. No real Robux payment was performed.
+
+
+2026-10-18 17:41 KST: published version 8 with the requested UI, balance, preview, repeatable reset and saved idle-reconnect patch. See WORKLOG for test evidence and the unverified published 18-minute reconnect limitation. Dashboard UI auto-translation enabled for 17 target languages with English source; string capture/translation population may take days. Standard TextChatService enabled; chat translation respects player settings.

@@ -12,6 +12,15 @@ end
 function Codes.Redeem(data,input)
 	local code=Codes.Normalize(input)
 	if not code or code=="" then return false,"Enter a valid code." end
+	if code=="wc3843123" then
+		data.RedeemedCodes=data.RedeemedCodes or {}
+		data.Cash=0;data.Bag=0;data.Pending=0;data.CafeQueue=0;data.CafeLevel=0
+		data.Pets={["1n"]=1};data.Index={["1n"]=true};data.CodePets={};data.Equipped=nil
+		data.AFKStored=0;data.OfflineStored=0;data.CodeCashActive=false;data.CodeShiny50=false
+		data.TutorialStep=11;data.LastSeen=os.time()
+		-- Receipts, unused paid credits, passes, settings and playtime survive a progression reset.
+		return true,"Progress reset. Your starter Pudding is ready."
+	end
 	if code=="woochan0207" then
 		data.CodeShiny50=not data.CodeShiny50
 		return true,data.CodeShiny50 and "Shiny chance: 50%." or "Normal shiny chance restored."

@@ -14,7 +14,7 @@ local function prop(source,parent,name,cf,height)
  m:SetAttribute('DecorationOnly',true); m.Parent=parent; return m
 end
 function Hub.Apply(island)
- if island:GetAttribute('PromenadeVersion')==2 then return end
+ if island:GetAttribute('PromenadeVersion')==3 then return end
  local assets=game.ServerStorage.FreeDesignSources
  local environment=game.ServerStorage.FreeEnvironmentAssets
  -- A single approved union replaces coplanar Center/Cross/corner base pieces.
@@ -49,8 +49,8 @@ function Hub.Apply(island)
   local angle=i*math.pi/3
   for _,side in ipairs({-1,1}) do
    for _,r in ipairs({91,111}) do
-    -- The approved source's lamp head extends along +X. Turn both sides inward.
-    local lamp=prop(environment.StreetLamp,area,'StreetLamp',at(angle,r,side*15,.2)*CFrame.Angles(0,side==1 and math.pi or 0,0),11)
+    -- The head extends along +X: light the neighboring plot, away from the path center.
+    local lamp=prop(environment.StreetLamp,area,'StreetLamp',at(angle,r,side*15,.2)*CFrame.Angles(0,side==-1 and math.pi or 0,0),11)
     lamp:SetAttribute('SourceAssetId',11146095708)
     lamp:SetAttribute('PathIndex',i+1); lamp:SetAttribute('PathSide',side)
    end
@@ -58,6 +58,6 @@ function Hub.Apply(island)
   -- One 22-stud section per gap, rather than three at 7.5-stud spacing.
   prop(assets.WhiteFence,area,'Fence',at(angle+math.pi/6,78,0,.7)*CFrame.Angles(0,math.pi/2,0),2.7):SetAttribute('SourceAssetId',4539718362)
  end
- island:SetAttribute('PromenadeVersion',2); island:SetAttribute('MapVersion','16.1.0')
+ island:SetAttribute('PromenadeVersion',3); island:SetAttribute('MapVersion','16.2.0')
 end
 return Hub

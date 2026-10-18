@@ -16,8 +16,8 @@ end
 assert(R.PassMultiplier({Boost5=true},"Production")==1)
 assert(R.PassMultiplier({Speed12=true,Speed3=true},"Speed")==1.2 and R.PassMultiplier({Speed3=true},"Production")==1)
 assert(math.abs(R.ShinyChance("Normal",2,.03)-.05)<1e-9)
-assert(R.FriendBonus(false,{false,false})==.03 and R.FriendBonus(false,{true,true})==.05)
-assert(R.FriendBonus(true,{false})==.05 and R.FriendBonus(false,{true})==.05 and R.FriendBonus(true,{})==0)
+assert(R.FriendBonus(false,{false,false})==.02 and R.FriendBonus(false,{true,true})==.02)
+assert(R.FriendBonus(true,{false})==.04 and R.FriendBonus(false,{true})==.01 and R.FriendBonus(true,{})==.03)
 assert(math.abs(R.ShinyChance("Perk",3,.05)-.35)<1e-9 and R.ShinyChance("Perk",20,.05)==1)
 for highest=1,30 do for _,kind in ipairs({"Normal","Perk"}) do
  local odds=R.Odds(highest,kind); local sum=0

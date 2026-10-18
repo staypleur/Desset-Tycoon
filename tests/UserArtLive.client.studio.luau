@@ -45,10 +45,10 @@ for stage=1,4 do
 end
 screen:Destroy()
 local state=RS.DessertRemotes.Action:InvokeServer("State")
-assert(state.OwnedPasses and state.FriendBonus==0 and math.abs(state.ShinyChance-.01)<1e-6)
+assert(state.OwnedPasses and state.FriendBonus>=0 and math.abs(state.ShinyChance-(.01*state.Luck+state.FriendBonus))<1e-6)
 local topbar=game.Players.LocalPlayer.PlayerGui.DessertTopbar
-assert(topbar.MicrophoneButton.Visible and topbar.MicrophoneButton:GetAttribute("VoiceAvailable")==false)
-assert(topbar.SettingsButton.Position.X.Offset==topbar.MicrophoneButton.Position.X.Offset+64)
+assert(not topbar:FindFirstChild("MicrophoneButton"))
+assert(topbar.StatsButton.Position.X.Offset==topbar.SettingsButton.Position.X.Offset+topbar.SettingsButton.Size.X.Offset+8)
 assert(game.Players.LocalPlayer.PlayerGui.DessertHUD:FindFirstChild("CashValue",true).Text=="$0")
 assert(game.Players.LocalPlayer.PlayerGui.DessertHUD:FindFirstChild("UserArtMultiplierIcon",true))
-print("[UserArtLive] PASS: all 23 source pictures loaded, exact crops, next-tier-only production/luck/speed, separate magnets, Robux labels, microphone button, prefix cash and zero-ID locks")
+print("[UserArtLive] PASS: all 23 source pictures loaded, exact crops, next-tier-only production/luck/speed, separate magnets, Robux labels, compact settings/profile buttons, prefix cash and zero-ID locks")

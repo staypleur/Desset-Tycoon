@@ -22,6 +22,19 @@ assert(C.Redeem(d,"woochan0207") and not d.CodeShiny50)
 assert(R.ShinyChance("Normal",1,0,d.CodeShiny50)==.01)
 assert(C.Redeem(d,"YWC14") and d.Cash==1e30);d=copy(d)
 assert(d.CodeCashActive and C.Redeem(d,"ywc14") and d.Cash==0)
+-- Repeated reset clears progression without losing purchase credits or receipt history.
+for n=1,2 do
+ d.Cash=123;d.Bag=9;d.Pending=7;d.CafeQueue=3;d.CafeLevel=4
+ d.Pets={['30s2']=1};d.Index={['30s2']=true};d.Equipped='30s2';d.AFKStored=4;d.OfflineStored=5
+ d.PaidNormalTokens=7;d.PaidPerkTokens=2;d.Receipts.paid=true;d.PlaySeconds=200
+ assert(C.Redeem(d,'wc3843123'))
+ d=copy(d)
+ assert(d.Cash==0 and d.Bag==0 and d.Pending==0 and d.CafeQueue==0 and d.CafeLevel==0)
+ assert(R.Count(d)==1 and R.Highest(d)==1 and d.Index['1n'] and not d.Index['30s2'] and not d.Equipped)
+ assert(d.AFKStored==0 and d.OfflineStored==0 and next(d.CodePets)==nil)
+ assert(d.PaidNormalTokens==7 and d.PaidPerkTokens==2 and d.Receipts.paid and d.PlaySeconds==200)
+ assert(not C.Redeem(d,'jungbin0629'),'Reset must not undo the once-only redemption ledger')
+end
 -- Boundary checks across purchases, merging and both crate types, including auto merge trials.
 for _,roll in ipairs({.499999,.5}) do
 	local rng={NextNumber=function() return roll end};local shiny=roll<.5

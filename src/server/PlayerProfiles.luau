@@ -13,12 +13,18 @@ function Profiles.Load(player)
 	end
 	local profile={Key=tostring(player.UserId),Durable=true,Busy=false}
 	local claimed=false
-	local ok,result=pcall(function() return Store:UpdateAsync(profile.Key,function(old)
+	local ok,result
+	-- Teleport arrival can briefly race the departing server's final save/release.
+	for attempt=1,5 do
+	ok,result=pcall(function() return Store:UpdateAsync(profile.Key,function(old)
 		claimed=false
 		if old and old.Lock and old.Lock.Session~=session and old.Lock.Expires>os.time() then return nil end
 		claimed=true
 		return {Data=old and old.Data or Rules.New(os.time()),Lock={Session=session,Expires=os.time()+180}}
 	end) end)
+	if not ok or claimed or player.Parent~=game:GetService("Players") then break end
+	if attempt<5 then task.wait(2) end
+	end
 	if not ok or not claimed or not result then return nil,"Your save is unavailable. Please rejoin." end
 	profile.Data=result.Data
 	return profile

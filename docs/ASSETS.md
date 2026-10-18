@@ -430,3 +430,6 @@ Tutorial chevrons and target arrow now use RGB(0,105,50), as explicitly requeste
 ## 2026-10-18 release asset access
 - Reused the approved existing UI images from assets/ui/manifest.json for all 16 passes and five developer products; no new art was commissioned. All 21 Marketplace records return nonzero icon asset IDs.
 - Existing user-supplied chef Walking animation 79831780716711 was granted usage by the Cosmon Studio universe 10771069736. No replacement animation or geometry. AnimationClipProvider successfully loaded KeyframeSequence (27 children) after the grant.
+
+
+2026-10-18 patch: reused approved BryanROBLOXgamer10 StreetLamp asset 11146095708; promenade migration 3 turns each of 24 heads toward its neighboring plot area. Original creator/link/cleanup requirements unchanged. Discovery loading fallback reuses the previously approved DessertImages reference atlas. No new art imported.

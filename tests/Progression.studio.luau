@@ -53,11 +53,11 @@ local function simulate(cycle)
 			if not bought then break end
 		end
 		hours=tick*cycle/3600
-		for _,tier in ipairs({10,20,30}) do if R.Highest(p)>=tier and not times[tier] then times[tier]=hours end end
+		for _,tier in ipairs({5,10,15,20,25,30}) do if R.Highest(p)>=tier and not times[tier] then times[tier]=hours end end
 		if times[30] then break end
 	end
-	print("PROGRESSION_HOURS",cycle,times[10],times[20],times[30])
-	if cycle==60 then for _,tier in ipairs({10,20,30}) do assert(times[tier] and math.abs(times[tier]/C.ProgressionHours[tier]-1)<.08,"Target time "..tier) end end
+	print("PROGRESSION_HOURS",cycle,times[5],times[10],times[15],times[20],times[25],times[30])
+	if cycle==60 then for _,tier in ipairs({5,10,15,20,25,30}) do assert(times[tier] and math.abs(times[tier]/C.ProgressionHours[tier]-1)<.08,"Target time "..tier) end end
 end
 simulate(60); simulate(120)
 f:Destroy();print("[Progression] PASS mixed merges, independent RNG, tutorial, migration, F2P targets")

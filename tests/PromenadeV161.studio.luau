@@ -23,7 +23,7 @@ for _,m in ipairs(area:GetChildren()) do
   local side=m:GetAttribute('PathSide')
   local right=CFrame.lookAt(Vector3.zero,Vector3.new(math.sin(angle),0,math.cos(angle))).RightVector
   local facing=head.Position-pole.Position; facing=Vector3.new(facing.X,0,facing.Z).Unit
-  assert(facing:Dot(right*(-side))>.98,'Lamp head does not face the path')
+  assert(facing:Dot(right*side)>.98,'Lamp head does not face the neighboring plot')
  elseif m.Name=='Fence' then
   table.insert(fences,m)
   local pos=m:GetBoundingBox().Position
@@ -43,4 +43,4 @@ for _,luck in ipairs({false,true}) do
  assert((d.Pets['1s'] or 0)==(luck and 1 or 0),'Displayed probability differs from purchase roll')
 end
 folder:Destroy()
-print('[PromenadeV161] PASS: 24 lamps face paths, 6 nonoverlapping plaza fences, no path fences, idempotent props, matching shiny purchase/crate probabilities')
+print('[PromenadeV161] PASS: 24 lamps face plots, 6 nonoverlapping plaza fences, no path fences, idempotent props, matching shiny purchase/crate probabilities')
